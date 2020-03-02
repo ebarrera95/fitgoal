@@ -102,7 +102,6 @@
 				F14233C0240CF77F000E8873 /* FitGoalTests */,
 				F14233CB240CF77F000E8873 /* FitGoalUITests */,
 				F14233A8240CF77D000E8873 /* Products */,
-				05012C89240D1C940065E560 /* fonts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -126,6 +125,7 @@
 				F14233B3240CF77F000E8873 /* Assets.xcassets */,
 				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
 				F14233B8240CF77F000E8873 /* Info.plist */,
+				05012C89240D1C940065E560 /* fonts */,
 			);
 			path = FitGoal;
 			sourceTree = "<group>";
