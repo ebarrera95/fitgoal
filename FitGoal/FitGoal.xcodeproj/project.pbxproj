@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05012CA1240D21EC0065E560 /* Oswald-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9D240D1FCE0065E560 /* Oswald-Medium.ttf */; };
+		05012CA2240D21EE0065E560 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */; };
+		05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012CA0240D1FD70065E560 /* Roboto-Light.ttf */; };
+		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
 		F14233AF240CF77D000E8873 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* ViewController.swift */; };
@@ -35,6 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05012C9D240D1FCE0065E560 /* Oswald-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Oswald-Medium.ttf"; sourceTree = "<group>"; };
+		05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
+		05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
+		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,6 +84,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05012C89240D1C940065E560 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				05012C9D240D1FCE0065E560 /* Oswald-Medium.ttf */,
+				05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */,
+				05012CA0240D1FD70065E560 /* Roboto-Light.ttf */,
+				05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		F142339E240CF77D000E8873 = {
 			isa = PBXGroup;
 			children = (
@@ -83,6 +102,7 @@
 				F14233C0240CF77F000E8873 /* FitGoalTests */,
 				F14233CB240CF77F000E8873 /* FitGoalUITests */,
 				F14233A8240CF77D000E8873 /* Products */,
+				05012C89240D1C940065E560 /* fonts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -233,6 +253,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F14233B7240CF77F000E8873 /* LaunchScreen.storyboard in Resources */,
+				05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */,
+				05012CA1240D21EC0065E560 /* Oswald-Medium.ttf in Resources */,
+				05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */,
+				05012CA2240D21EE0065E560 /* Roboto-Bold.ttf in Resources */,
 				F14233B4240CF77F000E8873 /* Assets.xcassets in Resources */,
 				F14233B2240CF77D000E8873 /* Main.storyboard in Resources */,
 			);
@@ -435,6 +459,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8L88PNR4B2;
 				INFOPLIST_FILE = FitGoal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,6 +477,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 8L88PNR4B2;
 				INFOPLIST_FILE = FitGoal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
