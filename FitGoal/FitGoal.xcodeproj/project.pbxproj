@@ -11,9 +11,16 @@
 		05012CA2240D21EE0065E560 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */; };
 		05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012CA0240D1FD70065E560 /* Roboto-Light.ttf */; };
 		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
+		05012CB2240DE1370065E560 /* MyGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CB1240DE1370065E560 /* MyGoalViewController.swift */; };
+		05012CB4240DE14C0065E560 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CB3240DE14C0065E560 /* SettingsViewController.swift */; };
+		05012CB7240DE3AA0065E560 /* ExploreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CB6240DE3AA0065E560 /* ExploreViewController.swift */; };
+		05012CBB240E00DB0065E560 /* Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CBA240E00DB0065E560 /* Exercise.swift */; };
+		05012CBD240E02150065E560 /* Rutine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CBC240E02150065E560 /* Rutine.swift */; };
+		05012CBF240E06BC0065E560 /* WorkOutSuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05012CBE240E06BC0065E560 /* WorkOutSuggestionCell.swift */; };
+		05B2E1E0240E1469009B0443 /* UserRutines.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1DF240E1469009B0443 /* UserRutines.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
-		F14233AF240CF77D000E8873 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* ViewController.swift */; };
+		F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* HomeViewController.swift */; };
 		F14233B2240CF77D000E8873 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F14233B0240CF77D000E8873 /* Main.storyboard */; };
 		F14233B4240CF77F000E8873 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F14233B3240CF77F000E8873 /* Assets.xcassets */; };
 		F14233B7240CF77F000E8873 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */; };
@@ -43,10 +50,17 @@
 		05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		05012CB1240DE1370065E560 /* MyGoalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGoalViewController.swift; sourceTree = "<group>"; };
+		05012CB3240DE14C0065E560 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		05012CB6240DE3AA0065E560 /* ExploreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreViewController.swift; sourceTree = "<group>"; };
+		05012CBA240E00DB0065E560 /* Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise.swift; sourceTree = "<group>"; };
+		05012CBC240E02150065E560 /* Rutine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rutine.swift; sourceTree = "<group>"; };
+		05012CBE240E06BC0065E560 /* WorkOutSuggestionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkOutSuggestionCell.swift; sourceTree = "<group>"; };
+		05B2E1DF240E1469009B0443 /* UserRutines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRutines.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		F14233AE240CF77D000E8873 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F14233AE240CF77D000E8873 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		F14233B1240CF77D000E8873 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F14233B3240CF77F000E8873 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F14233B6240CF77F000E8873 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -95,6 +109,29 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		05012CA6240DDF2A0065E560 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
+				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
+				F14233B3240CF77F000E8873 /* Assets.xcassets */,
+				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting files";
+			sourceTree = "<group>";
+		};
+		05012CB5240DE1C60065E560 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
+				05012CBE240E06BC0065E560 /* WorkOutSuggestionCell.swift */,
+				05012CB6240DE3AA0065E560 /* ExploreViewController.swift */,
+				05012CB1240DE1370065E560 /* MyGoalViewController.swift */,
+				05012CB3240DE14C0065E560 /* SettingsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
 		F142339E240CF77D000E8873 = {
 			isa = PBXGroup;
 			children = (
@@ -118,14 +155,14 @@
 		F14233A9240CF77D000E8873 /* FitGoal */ = {
 			isa = PBXGroup;
 			children = (
-				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
-				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
-				F14233AE240CF77D000E8873 /* ViewController.swift */,
 				F14233B0240CF77D000E8873 /* Main.storyboard */,
-				F14233B3240CF77F000E8873 /* Assets.xcassets */,
-				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
 				F14233B8240CF77F000E8873 /* Info.plist */,
+				05012CBA240E00DB0065E560 /* Exercise.swift */,
+				05012CBC240E02150065E560 /* Rutine.swift */,
+				05B2E1DF240E1469009B0443 /* UserRutines.swift */,
+				05012CB5240DE1C60065E560 /* ViewControllers */,
 				05012C89240D1C940065E560 /* fonts */,
+				05012CA6240DDF2A0065E560 /* Supporting files */,
 			);
 			path = FitGoal;
 			sourceTree = "<group>";
@@ -283,9 +320,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F14233AF240CF77D000E8873 /* ViewController.swift in Sources */,
+				05B2E1E0240E1469009B0443 /* UserRutines.swift in Sources */,
+				05012CB2240DE1370065E560 /* MyGoalViewController.swift in Sources */,
+				05012CBB240E00DB0065E560 /* Exercise.swift in Sources */,
+				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
+				05012CB7240DE3AA0065E560 /* ExploreViewController.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
+				05012CBF240E06BC0065E560 /* WorkOutSuggestionCell.swift in Sources */,
+				05012CB4240DE14C0065E560 /* SettingsViewController.swift in Sources */,
+				05012CBD240E02150065E560 /* Rutine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
