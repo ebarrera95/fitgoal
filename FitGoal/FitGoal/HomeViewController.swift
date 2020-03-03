@@ -9,45 +9,36 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-    
-    var topView: UIView!
-    var gradient: CAGradientLayer!
+    lazy var topView: UIView = {
+        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+        gradientView.layer.cornerRadius = 150
+        gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
+        gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
+        let rotation = CGAffineTransform(rotationAngle: -26 / 180 * CGFloat.pi)
+        gradientView.transform = rotation.translatedBy(x: 10, y: -600)
+        return gradientView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBackground()
-        gradient = createGradient()
-        topView.layer.addSublayer(gradient)
         
+        self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(topView)
-        
-    }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        gradient.frame = topView.bounds
     }
 }
 
-extension HomeViewController {
-    private func configureBackground() {
-        self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
-        view.layer.masksToBounds = true
-        view.layer.cornerRadius = 150
-        view.layer.maskedCorners = [.layerMinXMaxYCorner]
-        let rotation = CGAffineTransform(rotationAngle: -26 / 180 * CGFloat.pi)
-        let transform = rotation.translatedBy(x: 10, y: -600)
-        view.transform = transform
-        self.topView = view
+class GradientView: UIView {
+    override class var layerClass: AnyClass {
+        return CAGradientLayer.self
     }
     
-    private func createGradient() -> CAGradientLayer {
-        let gradient = CAGradientLayer()
-        let fistColour = #colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1)
-        let secondColour = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
-        gradient.colors = [fistColour.cgColor, secondColour.cgColor]
-        gradient.locations = [0, 1]
-        return gradient
+    private var gradientLayer: CAGradientLayer {
+        return layer as! CAGradientLayer
+    }
+    
+    var colors: [UIColor] = [] {
+        didSet {
+            gradientLayer.colors = colors.map { $0.cgColor }
+        }
     }
 }
-
