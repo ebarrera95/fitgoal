@@ -2,15 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Home_outside.jpg",
+      "filename" : "icons - System - Add.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icons - System - Add@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
+      "filename" : "icons - System - Add@3x.png",
       "scale" : "3x"
     }
   ],

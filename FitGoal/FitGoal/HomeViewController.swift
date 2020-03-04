@@ -20,10 +20,9 @@ class HomeViewController: UIViewController {
     }()
     
     weak var suggestionCollectionView: UICollectionView!
-    var workoutSuggestions: [Routine] = [
-        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15]),
-        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15]),
-        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15])]
+    
+    var workoutSuggestions = [Routine]()
+    
     
  
     override func viewDidLoad() {
@@ -38,6 +37,15 @@ class HomeViewController: UIViewController {
         self.suggestionCollectionView.register(SuggestedRoutineCell.self, forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier)
         self.suggestionCollectionView.alwaysBounceVertical = true
         self.suggestionCollectionView.backgroundColor = .none
+        
+        fetchRoutinesFormJSON { (routines, error) in
+            if let routines = routines {
+                DispatchQueue.main.async {
+                    self.workoutSuggestions = routines
+                    self.suggestionCollectionView.reloadData()
+                }
+            }
+        }
     }
     
     private func layoutCollectionView() {
@@ -53,6 +61,8 @@ class HomeViewController: UIViewController {
         ])
         self.suggestionCollectionView = collectionView
     }
+    
+    
 }
 
 class GradientView: UIView {
@@ -68,5 +78,24 @@ class GradientView: UIView {
         didSet {
             gradientLayer.colors = colors.map { $0.cgColor }
         }
+    }
+    
+}
+
+extension HomeViewController {
+    func fetchRoutinesFormJSON(completion: @escaping ([Routine]?, Error?) -> Void) {
+        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
+        
+        guard let url = URL(string: jsonUrlString) else { return }
+        
+        URLSession.shared.dataTask(with: url){ (data, response, error) in
+            guard let data = data else { return}
+            do {
+                let routines = try JSONDecoder().decode([Routine].self, from: data)
+                completion(routines, nil)
+            } catch {
+                completion(nil, error)
+            }
+        }.resume()
     }
 }

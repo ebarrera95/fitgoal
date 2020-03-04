@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct Routine {
+struct Routine: Decodable {
     var name: String
     var url: String
-    var excercices: [Int]
+    var exercices: [Int]
 }
