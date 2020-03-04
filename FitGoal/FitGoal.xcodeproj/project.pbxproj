@@ -11,6 +11,10 @@
 		05012CA2240D21EE0065E560 /* Roboto-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */; };
 		05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012CA0240D1FD70065E560 /* Roboto-Light.ttf */; };
 		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
+		05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E1240F28EB009B0443 /* Routine.swift */; };
+		05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */; };
+		05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */; };
+		05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
 		F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* HomeViewController.swift */; };
@@ -43,6 +47,10 @@
 		05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
+		05B2E1E1240F28EB009B0443 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
+		05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRoutineCell.swift; sourceTree = "<group>"; };
+		05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
+		05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionViewDelegateFlowLayout .swift"; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +129,10 @@
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
 				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
+				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift */,
+				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
+				05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */,
+				05B2E1E1240F28EB009B0443 /* Routine.swift */,
 				F14233B0240CF77D000E8873 /* Main.storyboard */,
 				F14233B3240CF77F000E8873 /* Assets.xcassets */,
 				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
@@ -284,8 +296,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
+				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
+				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
+				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
+				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

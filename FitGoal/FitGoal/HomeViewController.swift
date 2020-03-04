@@ -19,11 +19,39 @@ class HomeViewController: UIViewController {
         return gradientView
     }()
     
+    weak var suggestionCollectionView: UICollectionView!
+    var workoutSuggestions: [Routine] = [
+        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15]),
+        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15]),
+        Routine(name: "HOME WOROUT", url: "https://i.ibb.co/0K0MxzZ/home-gym.jpg", excercices: [3, 7, 14, 15])]
+    
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(topView)
+        layoutCollectionView()
+        
+        self.suggestionCollectionView.dataSource = self
+        self.suggestionCollectionView.delegate = self
+        
+        self.suggestionCollectionView.register(SuggestedRoutineCell.self, forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier)
+        self.suggestionCollectionView.alwaysBounceVertical = true
+        self.suggestionCollectionView.backgroundColor = .none
+    }
+    
+    private func layoutCollectionView() {
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(collectionView)
+        
+        NSLayoutConstraint.activate([
+            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor),
+            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
+            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
+        ])
+        self.suggestionCollectionView = collectionView
     }
 }
 
