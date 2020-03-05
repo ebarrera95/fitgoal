@@ -30,43 +30,25 @@ extension HomeViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath)
         
         if let suggestionCell = cell as? SuggestedRoutineCell {
+            //Configure Title
             let title = workoutSuggestions[indexPath.row].name
             suggestionCell.title.attributedText = configureCellTitle(with: title)
             
+            //Configure Subtitle
             let numberOfExcercices = workoutSuggestions[indexPath.row].exercices.count
             let subtitle = "\(numberOfExcercices) new"
             suggestionCell.subtitle.attributedText = configureCellSubtitle(with: subtitle)
+            
+            //Configure Image
             let stringUrl = workoutSuggestions[indexPath.row].url
-            guard let url = URL(string: stringUrl) else { return cell }
-            let placeHolder = suggestionCell.placeholder
-            placeHolder.isHidden = false
-            placeHolder.startAnimating()
-            self.fetchImage(with: url) { (image, error) in
-                if let image = image {
-                    DispatchQueue.main.async {
-                        suggestionCell.backgroundImage.image = image
-                        placeHolder.stopAnimating()// is this staying in memory?
-                        placeHolder.isHidden = true
-                        suggestionCell.gradientView.isHidden = false // is this staying in memory?
-                    }
-                }
-            }
+            suggestionCell.imageURL = stringUrl
+            
             return suggestionCell
         }
+        
         return cell
     }
-    
-    func fetchImage(with url: URL, completion: @escaping (UIImage?, Error?) -> Void) {
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url) else { return }
-            if let image = UIImage(data: data) {
-                completion(image, nil)
-            } else {
-                completion(nil, nil)
-            }
-        }
-    }
-    
+
     func configureCellTitle(with string: String) -> NSAttributedString {
         let capString = string.localizedUppercase
         let atributes: [NSAttributedString.Key : Any] = [
@@ -77,6 +59,7 @@ extension HomeViewController: UICollectionViewDataSource {
         let cellTitle = NSAttributedString(string: capString, attributes: atributes)
         return cellTitle
     }
+    
     func configureCellSubtitle(with string: String) -> NSAttributedString {
         let capString = string.localizedLowercase
         let atributes: [NSAttributedString.Key : Any] = [
@@ -88,3 +71,27 @@ extension HomeViewController: UICollectionViewDataSource {
         return cellTitle
     }
 }
+
+extension UIImage {
+    static func loadImage(from stringURL: String ,completion: @escaping (UIImage?) -> Void) {
+        guard let url = URL(string: stringURL) else { return }
+        if let image =  imageCache[url] {
+            completion(image)
+        } else {
+            DispatchQueue.global().async {
+                guard let data = try? Data(contentsOf: url) else { return }
+                if let image = UIImage(data: data) {
+                    imageCache[url] = image
+                    DispatchQueue.main.async {
+                        completion(image)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
+                }
+            }
+        }
+    }
+}
+

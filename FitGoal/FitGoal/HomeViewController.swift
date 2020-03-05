@@ -8,7 +8,9 @@
 
 import UIKit
 
+var imageCache: [URL:UIImage] = [:]
 class HomeViewController: UIViewController {
+    
     lazy var topView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
         gradientView.layer.cornerRadius = 150
@@ -23,8 +25,8 @@ class HomeViewController: UIViewController {
     
     var workoutSuggestions = [Routine]()
     
-    
- 
+    var imageCache: [URL:UIImage] = [:]
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -61,8 +63,6 @@ class HomeViewController: UIViewController {
         ])
         self.suggestionCollectionView = collectionView
     }
-    
-    
 }
 
 class GradientView: UIView {
@@ -79,13 +79,11 @@ class GradientView: UIView {
             gradientLayer.colors = colors.map { $0.cgColor }
         }
     }
-    
 }
 
 extension HomeViewController {
     func fetchRoutinesFormJSON(completion: @escaping ([Routine]?, Error?) -> Void) {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
-        
         guard let url = URL(string: jsonUrlString) else { return }
         
         URLSession.shared.dataTask(with: url){ (data, response, error) in

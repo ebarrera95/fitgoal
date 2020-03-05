@@ -12,6 +12,23 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     static var indentifier: String = "Suggestions"
     
+    var imageURL: String? {
+        didSet {
+            if let url = imageURL {
+                self.placeholder.isHidden = false
+                self.placeholder.startAnimating()
+                UIImage.loadImage(from: url) { (image) in
+                    if url == self.imageURL {
+                        self.backgroundImage.image = image
+                        self.gradientView.isHidden = false
+                        self.placeholder.isHidden = true
+                        self.placeholder.stopAnimating()
+                    }
+                }
+            }
+        }
+    }
+    
     var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 7
@@ -37,9 +54,9 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }()
     
     var subtitle: UILabel = {
-           let title = UILabel(frame: .zero)
-            title.translatesAutoresizingMaskIntoConstraints = false
-            return title
+        let title = UILabel(frame: .zero)
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
     }()
     var backgroundImage: UIImageView = {
         let imageView = UIImageView()
@@ -53,8 +70,6 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     var roundedButton: UIButton = {
         let button = UIButton(frame: .zero)
-        //button.backgroundColor = .green
-        
         button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -89,6 +104,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             self.subtitle.leadingAnchor.constraint(equalTo: title.leadingAnchor)
         ])
     }
+    
     private func layoutBackgroundImageView() {
         backgroundImage.bounds.size = CGSize(width: contentView.bounds.size.width - 32, height: contentView.bounds.height)
         
@@ -108,6 +124,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             self.roundedButton.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
+    
     private func layoutPlaceHolder() {
         NSLayoutConstraint.activate([
             self.placeholder.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor),
@@ -138,4 +155,9 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.addSubview(roundedButton)
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        backgroundImage.image = nil
+        gradientView.isHidden = true
+    }
 }
