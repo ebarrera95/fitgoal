@@ -12,19 +12,18 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     static var indentifier: String = "Suggestions"
     
-    var cellState: CellState? {
+    private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
-            switch cellState {
-            case .loading:
-                placeholder.isHidden = true
+            switch imageLoadingState {
+            case .inProgress:
                 gradientView.isHidden = true
                 placeholder.startAnimating()
-            case .displayed:
-                placeholder.isHidden = false
+            case .finished(let image):
                 gradientView.isHidden = false
                 placeholder.stopAnimating()
-            default:
-                return
+                backgroundImage.image = image
+            case .failed(let error):
+                print("Unable to load image with error: \(error)")
             }
         }
     }
@@ -39,8 +38,8 @@ class SuggestedRoutineCell: UICollectionViewCell {
             self.title.attributedText = cellTitle
             
             //configure subtitle
-            guard let numberOfexercises = routine?.exercises.count else { return }
-            let subtitle = "\(numberOfexercises) new"
+            guard let numberOfExercises = routine?.exercises.count else { return }
+            let subtitle = "\(numberOfExercises) new"
             let cellSubtitle = configureCellSubtitle(with: subtitle)
             self.subtitle.attributedText = cellSubtitle
         }
@@ -49,11 +48,10 @@ class SuggestedRoutineCell: UICollectionViewCell {
     var stringURL: String? {
         didSet {
             if let string = stringURL {
-                cellState = .loading
+                imageLoadingState = .inProgress
                 if let imageURL = URL(string: string) {
                     if let image = imageCache[imageURL] {
-                        cellState = .displayed
-                        backgroundImage.image = image
+                        imageLoadingState = .finished(image)
                     } else {
                         currentImageDownloadTask = getDataTask(with: imageURL)
                         currentImageDownloadTask?.resume()
@@ -210,12 +208,11 @@ class SuggestedRoutineCell: UICollectionViewCell {
             }
             
             DispatchQueue.global().async {
-                if let  data = data, let image = UIImage(data: data) {
+                if let data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
                         imageCache[url] = image
                         if url.absoluteString == self.stringURL {
-                            self.backgroundImage.image = image
-                            self.cellState = .displayed
+                            self.imageLoadingState = .finished(image)
                         }
                     }
                 }
@@ -224,7 +221,8 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
 }
 
-enum CellState {
-    case loading
-    case displayed
+enum ImageLoadingState {
+    case inProgress
+    case finished(UIImage)
+    case failed(Error)
 }
