@@ -11,24 +11,58 @@ import UIKit
 class SuggestedRoutineCell: UICollectionViewCell {
     
     static var indentifier: String = "Suggestions"
-    
-    var imageURL: String? {
+    var cellState: CellState? {
         didSet {
-            if let url = imageURL {
-                self.placeholder.isHidden = false
-                self.placeholder.startAnimating()
-                UIImage.loadImage(from: url) { (image) in
-                    if url == self.imageURL {
-                        self.backgroundImage.image = image
-                        self.gradientView.isHidden = false
-                        self.placeholder.isHidden = true
-                        self.placeholder.stopAnimating()
+            switch cellState {
+            case .loading:
+                placeholder.isHidden = true
+                gradientView.isHidden = true
+                placeholder.startAnimating()
+            case .displayed:
+                placeholder.isHidden = false
+                gradientView.isHidden = false
+                placeholder.stopAnimating()
+            default:
+                return
+            }
+        }
+    }
+    
+    var routine: Routine? {
+        didSet {
+            stringURL = routine?.url
+            
+            //configure title
+            guard let title = routine?.name else { return }
+            let cellTitle = configureCellTitle(with: title)
+            self.title.attributedText = cellTitle
+            
+            //configure subtitle
+            guard let numberOfexercises = routine?.exercices.count else { return }
+            let subtitle = "\(numberOfexercises) new"
+            let cellSubtitle = configureCellSubtitle(with: subtitle)
+            self.subtitle.attributedText = cellSubtitle
+        }
+    }
+
+    var stringURL: String? {
+        didSet {
+            if let string = stringURL {
+                cellState = .loading
+                if let imageURL = URL(string: string) {
+                    if let image = imageCache[imageURL] {
+                        cellState = .displayed
+                        backgroundImage.image = image
+                    } else {
+                        task = getDataTask(with: imageURL)
+                        task?.resume()
                     }
                 }
             }
         }
     }
-    
+    var task: URLSessionDataTask?
+
     var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 7
@@ -77,31 +111,40 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         contentView.addSubview(backgroundImage)
         addBackgroundImageSubview()
-        
-        layoutBackgroundImageView()
-        layoutBackgroundImageSubviews()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        backgroundImage.image = nil
+        stringURL = nil
+        gradientView.isHidden = true
+        task?.cancel()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layoutBackgroundImageView()
+        layoutBackgroundImageSubviews()
     }
     
     //MARK: - View Layouts
     private func layoutTitelLabel() {
         contentView.addSubview(title)
         NSLayoutConstraint.activate([
-            self.title.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 2/3 * backgroundImage.bounds.height),
-            self.title.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
+            title.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 2/3 * backgroundImage.bounds.height),
+            title.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
         ])
     }
     
     private func layoutSubtitleLabel() {
         NSLayoutConstraint.activate([
-            self.subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 4),
-            self.subtitle.leadingAnchor.constraint(equalTo: title.leadingAnchor)
+            subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 4),
+            subtitle.leadingAnchor.constraint(equalTo: title.leadingAnchor)
         ])
     }
     
@@ -109,34 +152,34 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.bounds.size = CGSize(width: contentView.bounds.size.width - 32, height: contentView.bounds.height)
         
         NSLayoutConstraint.activate([
-            self.backgroundImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            self.backgroundImage.heightAnchor.constraint(equalToConstant: backgroundImage.bounds.height),
-            self.backgroundImage.widthAnchor.constraint(equalToConstant: backgroundImage.bounds.size.width),
-            self.backgroundImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+            backgroundImage.topAnchor.constraint(equalTo: contentView.topAnchor),
+            backgroundImage.heightAnchor.constraint(equalToConstant: backgroundImage.bounds.height),
+            backgroundImage.widthAnchor.constraint(equalToConstant: backgroundImage.bounds.size.width),
+            backgroundImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
         ])
     }
     
     private func layoutButton() {
         NSLayoutConstraint.activate([
-            self.roundedButton.topAnchor.constraint(equalTo: title.topAnchor),
-            self.roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
-            self.roundedButton.widthAnchor.constraint(equalToConstant: 25),
-            self.roundedButton.heightAnchor.constraint(equalToConstant: 25)
+            roundedButton.topAnchor.constraint(equalTo: title.topAnchor),
+            roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
+            roundedButton.widthAnchor.constraint(equalToConstant: 25),
+            roundedButton.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
     private func layoutPlaceHolder() {
         NSLayoutConstraint.activate([
-            self.placeholder.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor),
-            self.placeholder.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor)
+            placeholder.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor),
+            placeholder.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor)
         ])
     }
     private func layoutOverlay() {
         NSLayoutConstraint.activate([
-            self.gradientView.topAnchor.constraint(equalTo: backgroundImage.topAnchor),
-            self.gradientView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),
-            self.gradientView.widthAnchor.constraint(equalTo: backgroundImage.widthAnchor),
-            self.gradientView.heightAnchor.constraint(equalTo: backgroundImage.heightAnchor)
+            gradientView.topAnchor.constraint(equalTo: backgroundImage.topAnchor),
+            gradientView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),
+            gradientView.widthAnchor.constraint(equalTo: backgroundImage.widthAnchor),
+            gradientView.heightAnchor.constraint(equalTo: backgroundImage.heightAnchor)
         ])
     }
     private func layoutBackgroundImageSubviews() {
@@ -155,9 +198,55 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.addSubview(roundedButton)
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        backgroundImage.image = nil
-        gradientView.isHidden = true
+    
+    
+    // MARK: - text configuration
+    
+    func configureCellTitle(with string: String) -> NSAttributedString {
+        let capString = string.localizedUppercase
+        let atributes: [NSAttributedString.Key : Any] = [
+            .font: UIFont(name: "Roboto-Bold", size: 12)!,
+            .foregroundColor: UIColor.white,
+            .kern: 0.14
+        ]
+        let cellTitle = NSAttributedString(string: capString, attributes: atributes)
+        return cellTitle
     }
+    
+    func configureCellSubtitle(with string: String) -> NSAttributedString {
+        let capString = string.localizedLowercase
+        let atributes: [NSAttributedString.Key : Any] = [
+            .font: UIFont(name: "Roboto-Regular", size: 9)!,
+            .foregroundColor: UIColor.white,
+            .kern: 0.11
+        ]
+        let cellSubtitle = NSAttributedString(string: capString, attributes: atributes)
+        return cellSubtitle
+    }
+    
+    //MARK: - Others
+    
+    private func getDataTask(with url: URL) -> URLSessionDataTask? {
+        return URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print(error)
+                return
+            }
+            DispatchQueue.global().async {
+                if let  data = data, let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        imageCache[url] = image
+                        if url.absoluteString == self.stringURL {
+                            self.backgroundImage.image = image
+                            self.cellState = .displayed
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+enum CellState {
+    case loading
+    case displayed
 }
