@@ -48,8 +48,11 @@ class HomeViewController: UIViewController {
         self.suggestionCollectionView.alwaysBounceVertical = true
         self.suggestionCollectionView.backgroundColor = .none
 
-        fetchRoutines { routines, _ in
-            if let routines = routines {
+        fetchRoutines { result in
+            switch result {
+            case .failure(let error):
+                print("Unable to get routines with error: \(error)")
+            case .success(let routines):
                 DispatchQueue.main.async {
                     self.workoutSuggestions = routines
                     self.suggestionCollectionView.reloadData()
@@ -90,17 +93,26 @@ class GradientView: UIView {
 }
 
 extension HomeViewController {
-    func fetchRoutines(completion: @escaping ([Routine]?, Error?) -> Void) {
+    func fetchRoutines(completion: @escaping (Result<[Routine], Error>) -> Void) {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
 
         URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else { return }
+            guard let data = data else {
+                guard let error = error else {
+                    assertionFailure("Error shouldn't be nil when there is no data")
+                    return
+                }
+                
+                completion(.failure(error))
+                return
+            }
+            
             do {
                 let routines = try JSONDecoder().decode([Routine].self, from: data)
-                completion(routines, nil)
+                completion(.success(routines))
             } catch {
-                completion(nil, error)
+                completion(.failure(error))
             }
         }.resume()
     }
