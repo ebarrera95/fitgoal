@@ -38,7 +38,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             self.title.attributedText = cellTitle
             
             //configure subtitle
-            guard let numberOfexercises = routine?.exercices.count else { return }
+            guard let numberOfexercises = routine?.exercises.count else { return }
             let subtitle = "\(numberOfexercises) new"
             let cellSubtitle = configureCellSubtitle(with: subtitle)
             self.subtitle.attributedText = cellSubtitle
