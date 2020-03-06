@@ -24,6 +24,7 @@
 		F14233B7240CF77F000E8873 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */; };
 		F14233C2240CF77F000E8873 /* FitGoalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233C1240CF77F000E8873 /* FitGoalTests.swift */; };
 		F14233CD240CF77F000E8873 /* FitGoalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233CC240CF77F000E8873 /* FitGoalUITests.swift */; };
+		F14233F624127500000E8873 /* UIColor+.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233F524127500000E8873 /* UIColor+.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		F14233C8240CF77F000E8873 /* FitGoalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FitGoalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233CC240CF77F000E8873 /* FitGoalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitGoalUITests.swift; sourceTree = "<group>"; };
 		F14233CE240CF77F000E8873 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F14233F524127500000E8873 /* UIColor+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		F14233A9240CF77D000E8873 /* FitGoal */ = {
 			isa = PBXGroup;
 			children = (
+				F14233F524127500000E8873 /* UIColor+.swift */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
 				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
@@ -306,6 +309,7 @@
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
+				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

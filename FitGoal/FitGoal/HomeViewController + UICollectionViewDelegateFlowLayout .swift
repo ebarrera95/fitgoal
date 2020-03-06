@@ -22,10 +22,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        switch section {
-        case 0:
+        guard let homeSection = HomeSection(rawValue: section) else {
+            fatalError()
+        }
+        
+        switch homeSection {
+        case .goalTracking, .routine:
             return .zero
-        default:
+        case .suggestions:
             return CGSize(width: view.bounds.width, height: 48)
         }
     }

@@ -69,18 +69,15 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             fatalError()
         case .routine:
-            header.sectionName = nil
-            header.link.isHidden = true
-            return header
+            fatalError()
         case .suggestions:
             header.sectionName = "suggested"
-            header.link.isHidden = false
             return header
         }
     }
 }
 
-private enum HomeSection: Int {
+enum HomeSection: Int {
     case goalTracking
     case routine
     case suggestions
