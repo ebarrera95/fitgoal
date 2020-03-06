@@ -139,15 +139,15 @@ class SuggestedRoutineCell: UICollectionViewCell {
     private func layoutTitelLabel() {
         contentView.addSubview(title)
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: backgroundImage.topAnchor, constant: 2/3 * backgroundImage.bounds.height),
+            title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -4),
             title.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
         ])
     }
     
     private func layoutSubtitleLabel() {
         NSLayoutConstraint.activate([
-            subtitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 4),
-            subtitle.leadingAnchor.constraint(equalTo: title.leadingAnchor)
+            subtitle.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -12),
+            subtitle.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
         ])
     }
     
@@ -164,7 +164,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     private func layoutButton() {
         NSLayoutConstraint.activate([
-            roundedButton.topAnchor.constraint(equalTo: title.topAnchor),
+            roundedButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
             roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
             roundedButton.widthAnchor.constraint(equalToConstant: 25),
             roundedButton.heightAnchor.constraint(equalToConstant: 25)
@@ -190,8 +190,8 @@ class SuggestedRoutineCell: UICollectionViewCell {
     private func layoutBackgroundImageSubviews() {
         layoutOverlay()
         layoutPlaceHolder()
-        layoutTitelLabel()
         layoutSubtitleLabel()
+        layoutTitelLabel()
         layoutButton()
     }
     
