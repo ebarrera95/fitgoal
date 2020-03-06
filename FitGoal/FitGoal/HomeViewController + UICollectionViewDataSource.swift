@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
@@ -21,12 +22,15 @@ extension HomeViewController: UICollectionViewDataSource {
             return 0
         }
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath)
         switch indexPath.section {
         case 2:
@@ -39,10 +43,19 @@ extension HomeViewController: UICollectionViewDataSource {
         }
         return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        let header = collectionView
+            .dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: RoutineSectionHeader.identifier,
+                for: indexPath
+            )
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RoutineSectionHeader.identifier, for: indexPath)
         if let sectionHeader = header as? RoutineSectionHeader {
             switch indexPath.section {
             case 1:
@@ -57,7 +70,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 return header
             }
         }
+
         return header
     }
 }
-

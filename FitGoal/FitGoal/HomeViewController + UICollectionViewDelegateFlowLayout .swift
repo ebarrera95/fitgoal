@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
@@ -28,5 +29,4 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.bounds.width, height: 48)
         }
     }
-    
 }
