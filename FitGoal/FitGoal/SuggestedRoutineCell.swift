@@ -61,6 +61,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             }
         }
     }
+    
     var task: URLSessionDataTask?
 
     var gradientView: UIView = {
@@ -92,6 +93,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
+    
     var backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -118,6 +120,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         backgroundImage.image = nil
@@ -174,6 +177,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             placeholder.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor)
         ])
     }
+    
     private func layoutOverlay() {
         NSLayoutConstraint.activate([
             gradientView.topAnchor.constraint(equalTo: backgroundImage.topAnchor),
@@ -182,6 +186,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
             gradientView.heightAnchor.constraint(equalTo: backgroundImage.heightAnchor)
         ])
     }
+    
     private func layoutBackgroundImageSubviews() {
         layoutOverlay()
         layoutPlaceHolder()
@@ -197,9 +202,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.addSubview(subtitle)
         backgroundImage.addSubview(roundedButton)
     }
-    
-    
-    
+
     // MARK: - text configuration
     
     func configureCellTitle(with string: String) -> NSAttributedString {
@@ -232,6 +235,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
                 print(error)
                 return
             }
+            
             DispatchQueue.global().async {
                 if let  data = data, let image = UIImage(data: data) {
                     DispatchQueue.main.async {
@@ -246,6 +250,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         }
     }
 }
+
 enum CellState {
     case loading
     case displayed

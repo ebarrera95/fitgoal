@@ -10,7 +10,7 @@ import UIKit
 
 class RoutineSectionHeader: UICollectionReusableView {
     
-    static var indetifier = "RoutineCellHeader"
+    static var identifier = "RoutineCellHeader"
     
     var sectionName: String? {
         didSet {
@@ -54,12 +54,14 @@ class RoutineSectionHeader: UICollectionReusableView {
         backgroundView.addSubview(headerLabel)
         backgroundView.addSubview(link)
     }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         layoutBackgroundView()
         layoutHeaderLabel()
         layoutLink()
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
         sectionName = nil
@@ -83,6 +85,7 @@ class RoutineSectionHeader: UICollectionReusableView {
             headerLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor)
         ])
     }
+    
     private func layoutLink() {
         NSLayoutConstraint.activate([
             link.topAnchor.constraint(equalTo: backgroundView.topAnchor),

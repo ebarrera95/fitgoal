@@ -37,7 +37,7 @@ class HomeViewController: UIViewController {
         self.suggestionCollectionView.delegate = self
         
         self.suggestionCollectionView.register(SuggestedRoutineCell.self, forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier)
-        self.suggestionCollectionView.register(RoutineSectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "RoutineCellHeader")
+        self.suggestionCollectionView.register(RoutineSectionHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: RoutineSectionHeader.identifier)
         
         self.suggestionCollectionView.alwaysBounceVertical = true
         self.suggestionCollectionView.backgroundColor = .none

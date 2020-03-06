@@ -42,7 +42,7 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "RoutineCellHeader", for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RoutineSectionHeader.identifier, for: indexPath)
         if let sectionHeader = header as? RoutineSectionHeader {
             switch indexPath.section {
             case 1:
