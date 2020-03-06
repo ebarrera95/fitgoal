@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
         return gradientView
     }()
 
-    weak var suggestionCollectionView: UICollectionView!
+    let suggestionsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var workoutSuggestions = [Routine]()
 
@@ -29,24 +29,24 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(topView)
-        layoutCollectionView()
+        self.view.addSubview(suggestionsCollectionView)
 
-        self.suggestionCollectionView.dataSource = self
-        self.suggestionCollectionView.delegate = self
+        self.suggestionsCollectionView.dataSource = self
+        self.suggestionsCollectionView.delegate = self
 
-        self.suggestionCollectionView.register(
+        self.suggestionsCollectionView.register(
             SuggestedRoutineCell.self,
             forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier
         )
         
-        self.suggestionCollectionView.register(
+        self.suggestionsCollectionView.register(
             RoutineSectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
 
-        self.suggestionCollectionView.alwaysBounceVertical = true
-        self.suggestionCollectionView.backgroundColor = .none
+        self.suggestionsCollectionView.alwaysBounceVertical = true
+        self.suggestionsCollectionView.backgroundColor = .none
 
         fetchRoutines { result in
             switch result {
@@ -55,24 +55,15 @@ class HomeViewController: UIViewController {
             case .success(let routines):
                 DispatchQueue.main.async {
                     self.workoutSuggestions = routines
-                    self.suggestionCollectionView.reloadData()
+                    self.suggestionsCollectionView.reloadData()
                 }
             }
         }
     }
-
-    private func layoutCollectionView() {
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(collectionView)
-
-        NSLayoutConstraint.activate([
-            self.view.topAnchor.constraint(equalTo: collectionView.topAnchor),
-            self.view.bottomAnchor.constraint(equalTo: collectionView.bottomAnchor),
-            self.view.leadingAnchor.constraint(equalTo: collectionView.leadingAnchor),
-            self.view.trailingAnchor.constraint(equalTo: collectionView.trailingAnchor),
-        ])
-        self.suggestionCollectionView = collectionView
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        suggestionsCollectionView.frame = view.bounds
     }
 }
 
