@@ -11,6 +11,7 @@ import UIKit
 class SuggestedRoutineCell: UICollectionViewCell {
     
     static var indentifier: String = "Suggestions"
+    
     var cellState: CellState? {
         didSet {
             switch cellState {
@@ -54,60 +55,46 @@ class SuggestedRoutineCell: UICollectionViewCell {
                         cellState = .displayed
                         backgroundImage.image = image
                     } else {
-                        task = getDataTask(with: imageURL)
-                        task?.resume()
+                        currentImageDownloadTask = getDataTask(with: imageURL)
+                        currentImageDownloadTask?.resume()
                     }
                 }
             }
         }
     }
     
-    var task: URLSessionDataTask?
+    private var currentImageDownloadTask: URLSessionDataTask?
 
-    var gradientView: UIView = {
+    private var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 7
         gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
-        gradientView.translatesAutoresizingMaskIntoConstraints = false
-        gradientView.isHidden = true
         return gradientView
     }()
     
-    var placeholder: UIActivityIndicatorView = {
+    private var placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
         placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         placeholder.style = .medium
-        placeholder.translatesAutoresizingMaskIntoConstraints = false
-        placeholder.isHidden = true
         return placeholder
     }()
     
-    var title: UILabel = {
-        let title = UILabel(frame: .zero)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
+    private var title = UILabel()
+    private var subtitle = UILabel()
     
-    var subtitle: UILabel = {
-        let title = UILabel(frame: .zero)
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
-    
-    var backgroundImage: UIImageView = {
+    private var backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 7
-        imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    var roundedButton: UIButton = {
-        let button = UIButton(frame: .zero)
+    private var roundedButton: UIButton = {
+        let button = UIButton(type: .system)
         button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
+        button.tintColor = .white
         return button
     }()
     
@@ -115,6 +102,14 @@ class SuggestedRoutineCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(backgroundImage)
         addBackgroundImageSubview()
+        
+        roundedButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+        
+        layoutBackgroundImageSubviews()
+    }
+    
+    @objc private func handleTouch() {
+        print("Button clicked!")
     }
     
     required init?(coder: NSCoder) {
@@ -126,18 +121,21 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.image = nil
         stringURL = nil
         gradientView.isHidden = true
-        task?.cancel()
+        currentImageDownloadTask?.cancel()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutBackgroundImageView()
-        layoutBackgroundImageSubviews()
+        
+        backgroundImage.frame = contentView.bounds
+        gradientView.frame = contentView.bounds
+        placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
     }
     
     //MARK: - View Layouts
-    private func layoutTitelLabel() {
-        contentView.addSubview(title)
+    private func layoutTitleLabel() {
+        title.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             title.bottomAnchor.constraint(equalTo: subtitle.topAnchor, constant: -4),
             title.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
@@ -145,24 +143,17 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     private func layoutSubtitleLabel() {
+        subtitle.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             subtitle.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -12),
             subtitle.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor, constant: 16)
         ])
     }
     
-    private func layoutBackgroundImageView() {
-        backgroundImage.bounds.size = CGSize(width: contentView.bounds.size.width - 32, height: contentView.bounds.height)
-        
-        NSLayoutConstraint.activate([
-            backgroundImage.topAnchor.constraint(equalTo: contentView.topAnchor),
-            backgroundImage.heightAnchor.constraint(equalToConstant: backgroundImage.bounds.height),
-            backgroundImage.widthAnchor.constraint(equalToConstant: backgroundImage.bounds.size.width),
-            backgroundImage.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
-        ])
-    }
-    
     private func layoutButton() {
+        roundedButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             roundedButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
             roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
@@ -171,36 +162,18 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func layoutPlaceHolder() {
-        NSLayoutConstraint.activate([
-            placeholder.centerXAnchor.constraint(equalTo: backgroundImage.centerXAnchor),
-            placeholder.centerYAnchor.constraint(equalTo: backgroundImage.centerYAnchor)
-        ])
-    }
-    
-    private func layoutOverlay() {
-        NSLayoutConstraint.activate([
-            gradientView.topAnchor.constraint(equalTo: backgroundImage.topAnchor),
-            gradientView.leadingAnchor.constraint(equalTo: backgroundImage.leadingAnchor),
-            gradientView.widthAnchor.constraint(equalTo: backgroundImage.widthAnchor),
-            gradientView.heightAnchor.constraint(equalTo: backgroundImage.heightAnchor)
-        ])
-    }
-    
     private func layoutBackgroundImageSubviews() {
-        layoutOverlay()
-        layoutPlaceHolder()
         layoutSubtitleLabel()
-        layoutTitelLabel()
+        layoutTitleLabel()
         layoutButton()
     }
     
     private func addBackgroundImageSubview() {
-        backgroundImage.addSubview(gradientView)
-        backgroundImage.addSubview(placeholder)
-        backgroundImage.addSubview(title)
-        backgroundImage.addSubview(subtitle)
-        backgroundImage.addSubview(roundedButton)
+        contentView.addSubview(gradientView)
+        contentView.addSubview(placeholder)
+        contentView.addSubview(title)
+        contentView.addSubview(subtitle)
+        contentView.addSubview(roundedButton)
     }
 
     // MARK: - text configuration
