@@ -8,56 +8,77 @@
 
 import Foundation
 import UIKit
+
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        switch section {
-        case 0:
+        guard let homeSection = HomeSection(rawValue: section) else {
+            fatalError("Section value should have a corresponding case in the HomeSection enum")
+        }
+
+        switch homeSection {
+        case .goalTracking, .routine:
             return 0
-        case 1:
-            return 0
-        case 2:
+        case .suggestions:
             return workoutSuggestions.count
-        default:
-            return 0
         }
     }
-    
+
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath)
-        switch indexPath.section {
-        case 2:
-            if let suggestionCell = cell as? SuggestedRoutineCell {
-                suggestionCell.routine = workoutSuggestions[indexPath.row]
-                return suggestionCell
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let homeSection = HomeSection(rawValue: indexPath.section) else {
+            fatalError()
+        }
+
+        // TODO: Improve cell dequeue once other sections are handle
+        switch homeSection {
+        case .goalTracking, .routine:
+            fatalError("Configuration for cells should be handled here")
+        case .suggestions:
+            guard let cell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
+                fatalError()
             }
-        default:
+
+            cell.routine = workoutSuggestions[indexPath.item]
             return cell
         }
-        return cell
     }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: RoutineSectionHeader.identifier, for: indexPath)
-        if let sectionHeader = header as? RoutineSectionHeader {
-            switch indexPath.section {
-            case 1:
-                sectionHeader.sectionName = nil
-                sectionHeader.link.isHidden = true
-                return sectionHeader
-            case 2:
-                sectionHeader.sectionName = "suggested"
-                sectionHeader.link.isHidden = false
-                return sectionHeader
-            default:
-                return header
-            }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        viewForSupplementaryElementOfKind kind: String,
+        at indexPath: IndexPath
+    ) -> UICollectionReusableView {
+        guard let header = collectionView
+            .dequeueReusableSupplementaryView(
+                ofKind: kind,
+                withReuseIdentifier: RoutineSectionHeader.identifier,
+                for: indexPath
+            ) as? RoutineSectionHeader,
+            let homeSection = HomeSection(rawValue: indexPath.section) else {
+            fatalError()
         }
-        return header
+        
+        switch homeSection {
+        case .goalTracking:
+            fatalError()
+        case .routine:
+            fatalError()
+        case .suggestions:
+            header.sectionName = "suggested"
+            return header
+        }
     }
 }
 
+enum HomeSection: Int {
+    case goalTracking
+    case routine
+    case suggestions
+}

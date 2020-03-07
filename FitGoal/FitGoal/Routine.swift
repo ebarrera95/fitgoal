@@ -11,5 +11,10 @@ import Foundation
 struct Routine: Decodable {
     var name: String
     var url: String
-    var exercices: [Int]
+    var exercises: [Int]
+    
+    private enum CodingKeys: String, CodingKey {
+        case name, url
+        case exercises = "exercices"
+    }
 }
