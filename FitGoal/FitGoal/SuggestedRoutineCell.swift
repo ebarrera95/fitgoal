@@ -53,7 +53,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
                     if let image = imageCache[imageURL] {
                         imageLoadingState = .finished(image)
                     } else {
-                        currentImageDownloadTask = getDataTask(with: imageURL)
+                        let currentImageDownloadTask = downloadCurrentImage(from: imageURL)
                         currentImageDownloadTask?.resume()
                     }
                 }
@@ -200,23 +200,40 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     //MARK: - Others
     
-    private func getDataTask(with url: URL) -> URLSessionDataTask? {
+    private func downloadCurrentImage(from url: URL) -> URLSessionTask? {
+        let currentImageDownloadTask = fetchImage(from: url, completion: { (result) in
+            DispatchQueue.main.async {
+                guard url.absoluteString == self.stringURL else {
+                    return
+                }
+                switch result {
+                case .failure(let error):
+                    self.imageLoadingState = .failed(error)
+                case .success(let image):
+                    imageCache[url] = image
+                    self.imageLoadingState = .finished(image)
+                }
+            }
+        })
+        return currentImageDownloadTask
+    }
+    
+    private func fetchImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
         return URLSession.shared.dataTask(with: url) { (data, response, error) in
-            if let error = error {
-                print(error)
+            guard let data = data else {
+                guard let error = error else {
+                    fatalError("Error shouldn't be nil")
+                }
+                completion(.failure(error))
+                return 
+            }
+            
+            guard let image = UIImage(data: data) else {
+                completion(.failure(NetworkError.invalidImage))
                 return
             }
             
-            DispatchQueue.global().async {
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        imageCache[url] = image
-                        if url.absoluteString == self.stringURL {
-                            self.imageLoadingState = .finished(image)
-                        }
-                    }
-                }
-            }
+            completion(.success(image))
         }
     }
 }
@@ -225,4 +242,8 @@ enum ImageLoadingState {
     case inProgress
     case finished(UIImage)
     case failed(Error)
+}
+
+enum NetworkError: Error {
+    case invalidImage
 }
