@@ -10,7 +10,7 @@ import Foundation
 
 struct Routine: Decodable {
     var name: String
-    var url: String
+    var url: URL
     var exercises: [Int]
     
     private enum CodingKeys: String, CodingKey {
