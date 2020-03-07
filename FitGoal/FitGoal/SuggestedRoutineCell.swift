@@ -30,7 +30,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     var routine: Routine? {
         didSet {
-            stringURL = routine?.url
+            imageURL = routine?.url
             
             //configure title
             guard let title = routine?.name else { return }
@@ -45,23 +45,30 @@ class SuggestedRoutineCell: UICollectionViewCell {
         }
     }
 
-    var stringURL: String? {
+    var imageURL: URL? {
         didSet {
-            if let string = stringURL {
-                imageLoadingState = .inProgress
-                if let imageURL = URL(string: string) {
-                    if let image = imageCache[imageURL] {
-                        imageLoadingState = .finished(image)
-                    } else {
-                        let currentImageDownloadTask = downloadCurrentImage(from: imageURL)
-                        currentImageDownloadTask?.resume()
+            guard let imageURL = imageURL else {
+                return
+            }
+            
+            imageLoadingState = .inProgress
+            
+            currentImageDownloadTask = fetchImage(from: imageURL) { result in
+                DispatchQueue.main.async {
+                    guard self.imageURL == imageURL else { return }
+                    
+                    switch result {
+                    case .failure(let error):
+                        self.imageLoadingState = .failed(error)
+                    case .success(let image):
+                        self.imageLoadingState = .finished(image)
                     }
                 }
             }
         }
     }
     
-    private var currentImageDownloadTask: URLSessionDataTask?
+    private var currentImageDownloadTask: URLSessionTask?
 
     private var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
@@ -117,7 +124,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         backgroundImage.image = nil
-        stringURL = nil
+        imageURL = nil
         gradientView.isHidden = true
         currentImageDownloadTask?.cancel()
     }
@@ -199,26 +206,19 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     //MARK: - Others
-    
-    private func downloadCurrentImage(from url: URL) -> URLSessionTask? {
-        let currentImageDownloadTask = fetchImage(from: url, completion: { (result) in
-            DispatchQueue.main.async {
-                guard url.absoluteString == self.stringURL else {
-                    return
-                }
-                switch result {
-                case .failure(let error):
-                    self.imageLoadingState = .failed(error)
-                case .success(let image):
-                    imageCache[url] = image
-                    self.imageLoadingState = .finished(image)
-                }
-            }
-        })
-        return currentImageDownloadTask
+    func fetchImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionTask? {
+        if let cachedImage = imageCache[url] {
+            completion(.success(cachedImage))
+            return nil
+        }
+        else {
+            let task = downloadImage(from: url, completion: completion)
+            task?.resume()
+            return task
+        }
     }
     
-    private func fetchImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
+    private func downloadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
         return URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
                 guard let error = error else {
