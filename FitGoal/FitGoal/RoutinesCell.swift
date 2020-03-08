@@ -33,7 +33,7 @@ class RoutinesCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         routineCollectionView.frame = self.bounds
-        routineCollectionView.backgroundColor = .white
+        routineCollectionView.backgroundColor = .none
     }
 }
 
@@ -44,14 +44,15 @@ extension RoutinesCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = routineCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell Exercise", for: indexPath) as! ExerciseCell
-        cell.exersice = routines[indexPath.item]
+        cell.exercise = routines[indexPath.item]
         return cell
     }
 }
 
 extension RoutinesCell: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 124, height: 155)
+        return CGSize(width: 170, height: 200)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16

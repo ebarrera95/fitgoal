@@ -22,7 +22,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         case .goalTracking:
             return CGSize(width: view.bounds.width - 32, height: 320)
         case .routine:
-            return CGSize(width: view.bounds.width - 32, height: 155)
+            return CGSize(width: view.bounds.width - 32, height: 200)
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 140)
             

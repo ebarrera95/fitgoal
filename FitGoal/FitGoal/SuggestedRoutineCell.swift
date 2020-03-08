@@ -140,7 +140,6 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         backgroundImage.frame = contentView.bounds
         gradientView.frame = contentView.bounds
         placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)

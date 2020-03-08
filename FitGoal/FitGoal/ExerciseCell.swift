@@ -10,11 +10,27 @@ import UIKit
 
 class ExerciseCell: UICollectionViewCell {
     
-    var exersice: Exercise? {
+    private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
-             imageURL = exersice?.url
+            switch imageLoadingState {
+            case .inProgress:
+                gradientView.isHidden = true
+                placeholder.startAnimating()
+            case .finished(let image):
+                gradientView.isHidden = false
+                placeholder.stopAnimating()
+                backgroundImage.image = image
+            case .failed(let error):
+                print("Unable to load image with error: \(error)")
+            }
+        }
+    }
+    
+    var exercise: Exercise? {//TODO: Custom the title for this cell
+        didSet {
+             imageURL = exercise?.url
             //Title
-            guard let title = exersice?.name else { return }
+            guard let title = exercise?.name else { return }
             let cellTitle = title.uppercased().formattedText(
                 font: "Roboto-Bold",
                 size: 12,
@@ -25,66 +41,86 @@ class ExerciseCell: UICollectionViewCell {
         }
     }
     
-    
     static var identifier = "Cell Exercise"
     
     var backgroundImage: UIImageView = {
         let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 7
         return imageView
     }()
     
+    var currentImageDownloadTask: URLSessionTask?
+
     var imageURL: URL? {
         didSet {
             guard let imageURL = imageURL else { return }
             
+            imageLoadingState = .inProgress
+            
+            currentImageDownloadTask = imageURL.fetchImage { result in
+                DispatchQueue.main.async {
+                    guard self.imageURL == imageURL else { return }
+    
+                    switch result {
+                    case .failure(let error):
+                        self.imageLoadingState = .failed(error)
+                    case .success(let image):
+                        self.imageLoadingState = .finished(image)
+                    }
+                }
+            }
             
         }
     }
-    /*
-     didSet {
-        guard let imageURL = imageURL else {
-            return
-        }
-        
-        imageLoadingState = .inProgress
-        
-        currentImageDownloadTask = fetchImage(from: imageURL) { result in
-            DispatchQueue.main.async {
-                guard self.imageURL == imageURL else { return }
-                
-                switch result {
-                case .failure(let error):
-                    self.imageLoadingState = .failed(error)
-                case .success(let image):
-                    self.imageLoadingState = .finished(image)
-                }
-            }
-        }
-    }
-     */
-    var placeHolder = UIActivityIndicatorView()
+
+    private var placeholder: UIActivityIndicatorView = {
+        let placeholder = UIActivityIndicatorView()
+        placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        placeholder.style = .medium
+        return placeholder
+    }()
+    
     var title = UILabel()
-    var gradient = UIView()
+    private var gradientView: UIView = {
+        let gradientView = GradientView(frame: .zero)
+        gradientView.layer.cornerRadius = 7
+        gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
+        return gradientView
+    }()
+    
     var dayIndicatorLabel = UILabel()
     var exersiceStatus = UIImageView()
-    
-    
-    var view = UIView()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .red
-        contentView.addSubview(view)
+        self.backgroundColor = .white
+        self.layer.cornerRadius = 7
+        self.clipsToBounds = true
+        contentView.addSubview(backgroundImage)
+        contentView.addSubview(placeholder)
+        contentView.addSubview(gradientView)
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        view.frame = contentView.bounds
-        view.backgroundColor = .red
-    }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundImage.frame = contentView.bounds
+        gradientView.frame = contentView.bounds
+        placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
+
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        backgroundImage.image = nil
+        imageURL = nil
+        gradientView.isHidden = true
+        currentImageDownloadTask?.cancel()
+    }
 }
