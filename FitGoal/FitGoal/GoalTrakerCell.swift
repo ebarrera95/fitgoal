@@ -23,13 +23,23 @@ class GoalTrakerCell: UICollectionViewCell {
     
     lazy var cellTitle: UILabel = {
         let label = UILabel()
-        label.attributedText = configureCellTitle(with: "my goal")
+        label.attributedText = "MY GOAL".formattedText(
+            font: "Oswald-Medium",
+            size: 34,
+            color: .white,
+            kern: -0.14
+        )
         return label
     }()
 
     lazy var monthLabel: UILabel = {
         let label = UILabel()
-        label.attributedText = configureMonthLabel(with: "February")
+        label.attributedText = "February".formattedText (
+            font: "Roboto-Regular",
+            size: 15,
+            color: .white,
+            kern: 0.18
+        )
         return label
     }()
     
@@ -61,7 +71,6 @@ class GoalTrakerCell: UICollectionViewCell {
     var shadowView: UIView = {
         var shadow = UIView()
         shadow.clipsToBounds = false
-        //shadow.backgroundColor = .red
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
         shadow.layer.shadowColor = UIColor(r: 131, g: 164, b: 133, a: 12).cgColor
         shadow.layer.shadowOpacity = 1
@@ -150,28 +159,5 @@ class GoalTrakerCell: UICollectionViewCell {
             cellTitle.leadingAnchor.constraint(equalTo: imageAvatar.trailingAnchor, constant: 8)
         ])
     }
-    
-    
-    //MARK: -TextConfiguration
-    
-    private func configureCellTitle(with string: String) -> NSAttributedString {
-        let capString = string.localizedUppercase
-        let atributes: [NSAttributedString.Key : Any] = [
-            .font: UIFont(name: "Oswald-Medium", size: 34)!,
-            .foregroundColor: UIColor.white,
-            .kern: -0.12
-        ]
-        let cellTitle = NSAttributedString(string: capString, attributes: atributes)
-        return cellTitle
-    }
-    private func configureMonthLabel(with string: String) -> NSAttributedString {
-        //let capString = string.localizedUppercase
-        let atributes: [NSAttributedString.Key : Any] = [
-            .font: UIFont(name: "Roboto-Regular", size: 15)!,
-            .foregroundColor: UIColor.white,
-            .kern: 0.18
-        ]
-        let cellTitle = NSAttributedString(string: string, attributes: atributes)
-        return cellTitle
-    }
+
 }

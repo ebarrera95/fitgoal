@@ -15,7 +15,12 @@ class RoutineSectionHeader: UICollectionReusableView {
     var sectionName: String? {
         didSet {
             if let string = sectionName {
-                headerLabel.attributedText = formatted(header: string)
+                headerLabel.attributedText = string.uppercased().formattedText(
+                    font: "Oswald-Medium",
+                    size: 16,
+                    color: UIColor(r: 98, g: 99, b: 99, a: 100),
+                    kern: 0.17
+                )
             } else {
                 headerLabel.attributedText = nil
             }
@@ -24,7 +29,12 @@ class RoutineSectionHeader: UICollectionReusableView {
     
     private lazy var link: UILabel = {
         let linkLabel = UILabel()
-        linkLabel.attributedText = formatted(link: "See All")
+        linkLabel.attributedText = "See All".formattedText(
+            font: "Roboto-Regular",
+            size: 14,
+            color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
+            kern: 0.1
+        )
         return linkLabel
     }()
     
@@ -70,27 +80,5 @@ class RoutineSectionHeader: UICollectionReusableView {
             link.topAnchor.constraint(equalTo: headerLabel.topAnchor),
             link.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
         ])
-    }
-    
-    private func formatted(link: String) -> NSAttributedString {
-        return NSAttributedString(
-            string: link,
-            attributes: [
-                .font: UIFont(name: "Roboto-Regular", size: 14)!,
-                .foregroundColor: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
-                .kern: 0.1
-            ]
-        )
-    }
-    
-    private func formatted(header: String) -> NSAttributedString {
-        return NSAttributedString(
-            string: header.localizedUppercase,
-            attributes: [
-                .font: UIFont(name: "Oswald-Medium", size: 16)!,
-                .foregroundColor: UIColor(r: 98, g: 99, b: 99, a: 100),
-                .kern: 0.17
-            ]
-        )
     }
 }
