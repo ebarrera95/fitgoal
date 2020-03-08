@@ -47,22 +47,28 @@ class HomeViewController: UIViewController {
             GoalTrakerCell.self,
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
+        self.homeCollectionView.register(
+            RoutinesCell.self,
+            forCellWithReuseIdentifier: RoutinesCell.identifier
+        )
         
 
         self.homeCollectionView.alwaysBounceVertical = true
         self.homeCollectionView.backgroundColor = .none
+        
+        fetchWorkoutRoutines()
 
-        fetchRoutines { result in
-            switch result {
-            case .failure(let error):
-                print("Unable to get routines with error: \(error)")
-            case .success(let routines):
-                DispatchQueue.main.async {
-                    self.workoutSuggestions = routines
-                    self.homeCollectionView.reloadData()
-                }
-            }
-        }
+//        fetchRoutines { result in
+//            switch result {
+//            case .failure(let error):
+//                print("Unable to get routines with error: \(error)")
+//            case .success(let routines):
+//                DispatchQueue.main.async {
+//                    self.workoutSuggestions = routines
+//                    self.homeCollectionView.reloadData()
+//                }
+//            }
+//        }
         
     }
     
@@ -90,27 +96,43 @@ class GradientView: UIView {
 }
 
 extension HomeViewController {
-    func fetchRoutines(completion: @escaping (Result<[Routine], Error>) -> Void) {
+    
+    func fetchWorkoutRoutines() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                guard let error = error else {
-                    assertionFailure("Error shouldn't be nil when there is no data")
-                    return
+        url.fetch { (result: Result<[Routine], Error>) in
+            switch result {
+            case .failure(let error):
+                print("Unable to get routines with error: \(error)")
+            case .success(let routines):
+                DispatchQueue.main.async {
+                    self.workoutSuggestions = routines
+                    self.homeCollectionView.reloadData()
                 }
-                
-                completion(.failure(error))
-                return
             }
-            
-            do {
-                let routines = try JSONDecoder().decode([Routine].self, from: data)
-                completion(.success(routines))
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
+        }
     }
+//    func fetchRoutines(completion: @escaping (Result<[Routine], Error>) -> Void) {
+//        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
+//        guard let url = URL(string: jsonUrlString) else { return }
+//
+//        URLSession.shared.dataTask(with: url) { data, _, error in
+//            guard let data = data else {
+//                guard let error = error else {
+//                    assertionFailure("Error shouldn't be nil when there is no data")
+//                    return
+//                }
+//
+//                completion(.failure(error))
+//                return
+//            }
+//
+//            do {
+//                let routines = try JSONDecoder().decode([Routine].self, from: data)
+//                completion(.success(routines))
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }.resume()
+//    }
 }

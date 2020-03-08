@@ -63,10 +63,9 @@ class SuggestedRoutineCell: UICollectionViewCell {
             
             imageLoadingState = .inProgress
             
-            currentImageDownloadTask = fetchImage(from: imageURL) { result in
+            currentImageDownloadTask = imageURL.fetchImage { result in
                 DispatchQueue.main.async {
                     guard self.imageURL == imageURL else { return }
-                    
                     switch result {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
@@ -189,38 +188,6 @@ class SuggestedRoutineCell: UICollectionViewCell {
         contentView.addSubview(title)
         contentView.addSubview(subtitle)
         contentView.addSubview(roundedButton)
-    }
-    
-    //MARK: - Others
-    func fetchImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionTask? {
-        if let cachedImage = imageCache[url] {
-            completion(.success(cachedImage))
-            return nil
-        }
-        else {
-            let task = downloadImage(from: url, completion: completion)
-            task?.resume()
-            return task
-        }
-    }
-    
-    private func downloadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
-        return URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                guard let error = error else {
-                    fatalError("Error shouldn't be nil")
-                }
-                completion(.failure(error))
-                return 
-            }
-            
-            guard let image = UIImage(data: data) else {
-                completion(.failure(NetworkError.invalidImage))
-                return
-            }
-            
-            completion(.success(image))
-        }
     }
 }
 

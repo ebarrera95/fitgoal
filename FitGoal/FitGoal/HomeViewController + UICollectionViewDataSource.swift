@@ -19,7 +19,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return 0
+            return 1
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -46,13 +46,16 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             return cell
         case .routine:
-            fatalError("Configuration for cells should be handled here")
+            guard let cell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: "Routines Cell", for: indexPath) as? RoutinesCell else {
+                fatalError()
+            }
+            return cell
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
-
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
         }
@@ -78,7 +81,8 @@ extension HomeViewController: UICollectionViewDataSource {
             header.sectionName = "Progress"
             return header
         case .routine:
-            fatalError()
+            header.sectionName = "Routine"
+            return header
         case .suggestions:
             header.sectionName = "suggested"
             return header
