@@ -55,9 +55,6 @@ class GoalTrakerCell: UICollectionViewCell {
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 7
         imageView.clipsToBounds = true
-        imageView.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
-        imageView.layer.shadowOpacity = 0.7
-        imageView.layer.shadowRadius = 10
         return imageView
     }()
     
@@ -66,7 +63,7 @@ class GoalTrakerCell: UICollectionViewCell {
         shadow.clipsToBounds = false
         //shadow.backgroundColor = .red
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
-        shadow.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        shadow.layer.shadowColor = UIColor(r: 131, g: 164, b: 133, a: 12).cgColor
         shadow.layer.shadowOpacity = 1
         shadow.layer.shadowRadius = 10
         return shadow
