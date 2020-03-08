@@ -21,7 +21,7 @@ class HomeViewController: UIViewController {
         return gradientView
     }()
 
-    let suggestionsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var workoutSuggestions = [Routine]()
 
@@ -29,29 +29,29 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(topView)
-        self.view.addSubview(suggestionsCollectionView)
+        self.view.addSubview(homeCollectionView)
 
-        self.suggestionsCollectionView.dataSource = self
-        self.suggestionsCollectionView.delegate = self
+        self.homeCollectionView.dataSource = self
+        self.homeCollectionView.delegate = self
 
-        self.suggestionsCollectionView.register(
+        self.homeCollectionView.register(
             SuggestedRoutineCell.self,
             forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier
         )
         
-        self.suggestionsCollectionView.register(
+        self.homeCollectionView.register(
             RoutineSectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
-        self.suggestionsCollectionView.register(
+        self.homeCollectionView.register(
             GoalTrakerCell.self,
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
         
 
-        self.suggestionsCollectionView.alwaysBounceVertical = true
-        self.suggestionsCollectionView.backgroundColor = .none
+        self.homeCollectionView.alwaysBounceVertical = true
+        self.homeCollectionView.backgroundColor = .none
 
         fetchRoutines { result in
             switch result {
@@ -60,7 +60,7 @@ class HomeViewController: UIViewController {
             case .success(let routines):
                 DispatchQueue.main.async {
                     self.workoutSuggestions = routines
-                    self.suggestionsCollectionView.reloadData()
+                    self.homeCollectionView.reloadData()
                 }
             }
         }
@@ -68,7 +68,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        suggestionsCollectionView.frame = view.bounds
+        homeCollectionView.frame = view.bounds
     }
 }
 
