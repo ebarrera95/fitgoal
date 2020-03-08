@@ -14,7 +14,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.bounds.width - 32, height: 140)
+        guard let homeSection = HomeSection(rawValue: indexPath.section) else {
+            fatalError()
+        }
+        
+        switch homeSection {
+        case .goalTracking:
+            return CGSize(width: view.bounds.width - 32, height: 200)
+        case .routine:
+            return .zero
+        case .suggestions:
+            return CGSize(width: view.bounds.width - 32, height: 140)
+            
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -30,7 +43,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         case .goalTracking, .routine:
             return .zero
         case .suggestions:
-            return CGSize(width: view.bounds.width, height: 48)
+            return CGSize(width: view.bounds.width - 32, height: 72)
         }
     }
 }

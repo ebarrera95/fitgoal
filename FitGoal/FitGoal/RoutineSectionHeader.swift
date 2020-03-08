@@ -36,13 +36,13 @@ class RoutineSectionHeader: UICollectionReusableView {
         self.addSubview(backgroundView)
         backgroundView.addSubview(headerLabel)
         backgroundView.addSubview(link)
+        layoutHeaderLabel()
+        layoutLink()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        layoutBackgroundView()
-        layoutHeaderLabel()
-        layoutLink()
+        backgroundView.frame = self.bounds.insetBy(dx: 16, dy: 0)
     }
     
     override func prepareForReuse() {
@@ -53,23 +53,12 @@ class RoutineSectionHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    private func layoutBackgroundView() {
-        backgroundView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            backgroundView.topAnchor.constraint(equalTo: self.topAnchor),
-            backgroundView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant:  16),
-            backgroundView.widthAnchor.constraint(equalToConstant: self.bounds.size.width - 32),
-            backgroundView.heightAnchor.constraint(equalToConstant: self.bounds.size.height)
-        ])
-    }
-    
+
     private func layoutHeaderLabel() {
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            headerLabel.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            headerLabel.bottomAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: -12),
             headerLabel.leadingAnchor.constraint(equalTo: backgroundView.leadingAnchor)
         ])
     }
@@ -78,7 +67,7 @@ class RoutineSectionHeader: UICollectionReusableView {
         link.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            link.topAnchor.constraint(equalTo: backgroundView.topAnchor),
+            link.topAnchor.constraint(equalTo: headerLabel.topAnchor),
             link.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
         ])
     }

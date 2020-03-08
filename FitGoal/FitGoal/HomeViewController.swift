@@ -44,6 +44,11 @@ class HomeViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
+        self.suggestionsCollectionView.register(
+            GoalTrakerCell.self,
+            forCellWithReuseIdentifier: GoalTrakerCell.identifier
+        )
+        
 
         self.suggestionsCollectionView.alwaysBounceVertical = true
         self.suggestionsCollectionView.backgroundColor = .none
