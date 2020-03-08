@@ -54,20 +54,40 @@ class GoalTrakerCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFit
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 7
+        imageView.clipsToBounds = true
+        imageView.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        imageView.layer.shadowOpacity = 0.7
+        imageView.layer.shadowRadius = 10
         return imageView
     }()
+    
+    var shadowView: UIView = {
+        var shadow = UIView()
+        shadow.clipsToBounds = false
+        //shadow.backgroundColor = .red
+        shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
+        shadow.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        shadow.layer.shadowOpacity = 1
+        shadow.layer.shadowRadius = 10
+        return shadow
+    }()
+    
         
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(topView)
-        contentView.addSubview(goalImageView)
+        
+        contentView.addSubview(shadowView)
         contentView.addSubview(monthLabel)
         contentView.addSubview(cellTitle)
         contentView.addSubview(imageAvatar)
         contentView.addSubview(addButton)
         
-        setGoalImageConstraints()
+        shadowView.addSubview(goalImageView)
+        
+        
+        setShadowConstraints()
         setMonthLabelConstrains()
         setcellTitleConstrains()
         setImageAvatarConstrains()
@@ -81,6 +101,7 @@ class GoalTrakerCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        goalImageView.frame = shadowView.bounds
     }
     
     //MARK: - Constrains
@@ -104,14 +125,15 @@ class GoalTrakerCell: UICollectionViewCell {
         
     }
     
-    private func setGoalImageConstraints() {
-        goalImageView.translatesAutoresizingMaskIntoConstraints = false
+    private func setShadowConstraints() {
+        shadowView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            goalImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            goalImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            goalImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            goalImageView.heightAnchor.constraint(equalToConstant: 200)
+            shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            shadowView.heightAnchor.constraint(equalToConstant: 200)
+            
         ])
     }
     
