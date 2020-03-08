@@ -27,10 +27,25 @@ class GoalTrakerCell: UICollectionViewCell {
         return label
     }()
 
-    var monthLable = UILabel()
+    lazy var monthLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = configureMonthLabel(with: "February")
+        return label
+    }()
     
-    var imageAvatar = UIImageView()
-    var addButton = UIButton()
+    var imageAvatar: UIImageView = {
+        let avatar = UIImageView(image: UIImage(imageLiteralResourceName: "Avatar"))
+        avatar.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
+        avatar.contentMode = .scaleAspectFill
+        return avatar
+    }()
+    var addButton: UIButton = {
+       let button = UIButton(type: .system)
+        button.bounds = CGRect(x: 0, y: 0, width: 28, height: 28)
+        button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
+        button.tintColor = .white
+        return button
+    }()
     
     
     var goalImageView: UIImageView = {
@@ -47,7 +62,17 @@ class GoalTrakerCell: UICollectionViewCell {
         super.init(frame: frame)
         contentView.addSubview(topView)
         contentView.addSubview(goalImageView)
+        contentView.addSubview(monthLabel)
+        contentView.addSubview(cellTitle)
+        contentView.addSubview(imageAvatar)
+        contentView.addSubview(addButton)
+        
         setGoalImageConstraints()
+        setMonthLabelConstrains()
+        setcellTitleConstrains()
+        setImageAvatarConstrains()
+        setAddButtonConstrains()
+        
         
     }
     required init?(coder: NSCoder) {
@@ -59,6 +84,26 @@ class GoalTrakerCell: UICollectionViewCell {
     }
     
     //MARK: - Constrains
+    
+    private func setAddButtonConstrains() {
+        addButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            addButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            addButton.centerYAnchor.constraint(equalTo: cellTitle.centerYAnchor)
+        ])
+    }
+    
+    private func setImageAvatarConstrains() {
+        imageAvatar.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageAvatar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            imageAvatar.centerYAnchor.constraint(equalTo: cellTitle.centerYAnchor)
+        ])
+        
+    }
+    
     private func setGoalImageConstraints() {
         goalImageView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -69,13 +114,24 @@ class GoalTrakerCell: UICollectionViewCell {
             goalImageView.heightAnchor.constraint(equalToConstant: 200)
         ])
     }
+    
     private func setMonthLabelConstrains() {
-        cellTitle.translatesAutoresizingMaskIntoConstraints = true
+        monthLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
-            cellTitle.topAnchor.constraint(equalTo: contentView.topAnchor),
-            cellTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
+            monthLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            monthLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
     }
+    private func setcellTitleConstrains() {
+        cellTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            cellTitle.bottomAnchor.constraint(equalTo: goalImageView.topAnchor, constant: -16),
+            cellTitle.leadingAnchor.constraint(equalTo: imageAvatar.trailingAnchor, constant: 8)
+        ])
+    }
+    
     
     //MARK: -TextConfiguration
     
@@ -87,6 +143,16 @@ class GoalTrakerCell: UICollectionViewCell {
             .kern: -0.12
         ]
         let cellTitle = NSAttributedString(string: capString, attributes: atributes)
+        return cellTitle
+    }
+    private func configureMonthLabel(with string: String) -> NSAttributedString {
+        //let capString = string.localizedUppercase
+        let atributes: [NSAttributedString.Key : Any] = [
+            .font: UIFont(name: "Roboto-Regular", size: 15)!,
+            .foregroundColor: UIColor.white,
+            .kern: 0.18
+        ]
+        let cellTitle = NSAttributedString(string: string, attributes: atributes)
         return cellTitle
     }
 }
