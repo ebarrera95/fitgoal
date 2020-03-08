@@ -11,6 +11,13 @@ import UIKit
 var imageCache: [URL: UIImage] = [:]
 
 class HomeViewController: UIViewController {
+    
+    private var gradientView: UIView = {
+        let gradientView = GradientView()
+        gradientView.layer.cornerRadius = 7
+        gradientView.colors = [#colorLiteral(red: 0.03921568627, green: 0, blue: 0, alpha: 0.27), #colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0)]
+        return gradientView
+    }()
 
     let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
@@ -19,10 +26,10 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-
         self.view.addSubview(homeCollectionView)
-        //homeCollectionView.contentInset = UIEdgeInsets(top: 48, left: 0, bottom: 0, right: 0)
-
+        self.view.addSubview(gradientView)
+        
+        
         self.homeCollectionView.dataSource = self
         self.homeCollectionView.delegate = self
 
@@ -56,11 +63,13 @@ class HomeViewController: UIViewController {
                 }
             }
         }
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeCollectionView.frame = view.bounds
+        gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
     }
 }
 
