@@ -26,14 +26,14 @@ class ExerciseCell: UICollectionViewCell {
         }
     }
     
-    var exercise: Exercise? {//TODO: Custom the title for this cell
+    var exercise: Exercise? {
         didSet {
              imageURL = exercise?.url
             //Title
             guard let title = exercise?.name else { return }
             let cellTitle = title.uppercased().formattedText(
                 font: "Roboto-Bold",
-                size: 12,
+                size: 14,
                 color: .white,
                 kern: 0.14
             )
@@ -71,7 +71,6 @@ class ExerciseCell: UICollectionViewCell {
                     }
                 }
             }
-            
         }
     }
 
@@ -82,7 +81,8 @@ class ExerciseCell: UICollectionViewCell {
         return placeholder
     }()
     
-    var title = UILabel()
+    private var title = UILabel()
+    
     private var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 7
@@ -90,20 +90,47 @@ class ExerciseCell: UICollectionViewCell {
         return gradientView
     }()
     
-    var dayIndicatorLabel = UILabel()
-    var exersiceStatus = UIImageView()
-
+    private var dayIndicator: UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1)
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
+        
+    }()
     
+    private var dayIndicatorLabel: UILabel = {
+        let title = UILabel()
+        title.attributedText = "Wednesday".formattedText (
+            font: "Roboto-Regular",
+            size: 12,
+            color: .white,
+            kern: 0)
+        return title
+    }()
+    
+    
+    private var exersiceStatus: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
+        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        return imageView
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.backgroundColor = .white
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
-        contentView.addSubview(backgroundImage)
-        contentView.addSubview(placeholder)
-        contentView.addSubview(gradientView)
-    }
+        
+        let views = [backgroundImage, gradientView, placeholder, title, dayIndicator, exersiceStatus]
+        addSubviewsToContentView(views: views)
+        dayIndicator.addSubview(dayIndicatorLabel)
+        
+        setConstrains()
 
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -116,6 +143,20 @@ class ExerciseCell: UICollectionViewCell {
 
     }
     
+    
+    private func addSubviewsToContentView(views: [UIView]) {
+        views.forEach { view in
+            self.contentView.addSubview(view)
+        }
+    }
+    
+    private func setConstrains() {
+        setIndicatorLabelConstrains()
+        setDayIndicatorConstrains()
+        setTitleLabelConstrains()
+        setExerciseSatusConstrains()
+    }
+
     override func prepareForReuse() {
         super.prepareForReuse()
         backgroundImage.image = nil
@@ -123,4 +164,44 @@ class ExerciseCell: UICollectionViewCell {
         gradientView.isHidden = true
         currentImageDownloadTask?.cancel()
     }
+    
+    //MARK: - Constrains
+    
+    private func setTitleLabelConstrains() {
+        title.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            title.bottomAnchor.constraint(equalTo: dayIndicator.topAnchor, constant: -4),
+            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
+        ])
+    }
+    private func setDayIndicatorConstrains() {
+        dayIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            dayIndicator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            dayIndicator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
+            dayIndicator.widthAnchor.constraint(equalToConstant: 80),
+            dayIndicator.heightAnchor.constraint(equalToConstant: 24)
+            
+        ])
+    }
+    private func setIndicatorLabelConstrains() {
+           dayIndicatorLabel.translatesAutoresizingMaskIntoConstraints = false
+           
+           NSLayoutConstraint.activate([
+               dayIndicatorLabel.centerYAnchor.constraint(equalTo: dayIndicator.centerYAnchor),
+               dayIndicatorLabel.centerXAnchor.constraint(equalTo: dayIndicator.centerXAnchor)
+           ])
+    }
+    
+    private func setExerciseSatusConstrains() {
+           exersiceStatus.translatesAutoresizingMaskIntoConstraints = false
+           
+           NSLayoutConstraint.activate([
+               exersiceStatus.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
+               exersiceStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
+           ])
+    }
+    
 }
