@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
         
 
         self.homeCollectionView.alwaysBounceVertical = true
-        self.homeCollectionView.backgroundColor = .none
+        self.homeCollectionView.backgroundColor = .clear
 
         fetchRoutines { result in
             switch result {
@@ -63,7 +63,6 @@ class HomeViewController: UIViewController {
                 }
             }
         }
-        
     }
     
     override func viewDidLayoutSubviews() {

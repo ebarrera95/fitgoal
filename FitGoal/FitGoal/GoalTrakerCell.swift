@@ -11,7 +11,7 @@ import UIKit
 class GoalTrakerCell: UICollectionViewCell {
     static var identifier = "GoalTraker"
     
-    lazy var topView: UIView = {
+    lazy var gradientbackgroudView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
         gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -57,7 +57,6 @@ class GoalTrakerCell: UICollectionViewCell {
         return button
     }()
     
-    
     var goalImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(imageLiteralResourceName: "GoalTraker")
@@ -77,12 +76,10 @@ class GoalTrakerCell: UICollectionViewCell {
         shadow.layer.shadowRadius = 10
         return shadow
     }()
-    
-        
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(topView)
+        contentView.addSubview(gradientbackgroudView)
         
         contentView.addSubview(shadowView)
         contentView.addSubview(monthLabel)
@@ -92,13 +89,11 @@ class GoalTrakerCell: UICollectionViewCell {
         
         shadowView.addSubview(goalImageView)
         
-        
         setShadowConstraints()
         setMonthLabelConstrains()
         setcellTitleConstrains()
         setImageAvatarConstrains()
         setAddButtonConstrains()
-        
         
     }
     required init?(coder: NSCoder) {
@@ -151,6 +146,7 @@ class GoalTrakerCell: UICollectionViewCell {
             monthLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
     }
+    
     private func setcellTitleConstrains() {
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
