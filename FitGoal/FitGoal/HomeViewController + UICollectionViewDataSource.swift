@@ -16,7 +16,9 @@ extension HomeViewController: UICollectionViewDataSource {
         }
 
         switch homeSection {
-        case .goalTracking, .routine:
+        case .goalTracking:
+            return 1
+        case  .routine:
             return 0
         case .suggestions:
             return workoutSuggestions.count
@@ -37,7 +39,14 @@ extension HomeViewController: UICollectionViewDataSource {
 
         // TODO: Improve cell dequeue once other sections are handle
         switch homeSection {
-        case .goalTracking, .routine:
+        case .goalTracking:
+            guard let cell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: "GoalTraker", for: indexPath) as? GoalTrakerCell else {
+                fatalError()
+            }
+            
+            return cell
+        case .routine:
             fatalError("Configuration for cells should be handled here")
         case .suggestions:
             guard let cell = collectionView
@@ -67,7 +76,8 @@ extension HomeViewController: UICollectionViewDataSource {
         
         switch homeSection {
         case .goalTracking:
-            fatalError()
+            header.sectionName = "Progress"
+            return header
         case .routine:
             fatalError()
         case .suggestions:

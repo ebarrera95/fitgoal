@@ -34,14 +34,24 @@ class SuggestedRoutineCell: UICollectionViewCell {
             
             //configure title
             guard let title = routine?.name else { return }
-            let cellTitle = configureCellTitle(with: title)
+            let cellTitle = title.uppercased().formattedText(
+                font: "Roboto-Bold",
+                size: 12,
+                color: .white,
+                kern: 0.14
+            )
             self.title.attributedText = cellTitle
             
             //configure subtitle
             guard let numberOfExercises = routine?.exercises.count else { return }
-            let subtitle = "\(numberOfExercises) new"
-            let cellSubtitle = configureCellSubtitle(with: subtitle)
-            self.subtitle.attributedText = cellSubtitle
+            let subtitle = "\(numberOfExercises) New".formattedText(
+                font: "Roboto-Regular",
+                size: 9,
+                color: .white,
+                kern: 0.11
+            )
+
+            self.subtitle.attributedText = subtitle
         }
     }
 
@@ -85,6 +95,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }()
     
     private var title = UILabel()
+    
     private var subtitle = UILabel()
     
     private var backgroundImage: UIImageView = {
@@ -179,30 +190,6 @@ class SuggestedRoutineCell: UICollectionViewCell {
         contentView.addSubview(title)
         contentView.addSubview(subtitle)
         contentView.addSubview(roundedButton)
-    }
-
-    // MARK: - text configuration
-    
-    func configureCellTitle(with string: String) -> NSAttributedString {
-        let capString = string.localizedUppercase
-        let atributes: [NSAttributedString.Key : Any] = [
-            .font: UIFont(name: "Roboto-Bold", size: 12)!,
-            .foregroundColor: UIColor.white,
-            .kern: 0.14
-        ]
-        let cellTitle = NSAttributedString(string: capString, attributes: atributes)
-        return cellTitle
-    }
-    
-    func configureCellSubtitle(with string: String) -> NSAttributedString {
-        let capString = string.localizedLowercase
-        let atributes: [NSAttributedString.Key : Any] = [
-            .font: UIFont(name: "Roboto-Regular", size: 9)!,
-            .foregroundColor: UIColor.white,
-            .kern: 0.11
-        ]
-        let cellSubtitle = NSAttributedString(string: capString, attributes: atributes)
-        return cellSubtitle
     }
     
     //MARK: - Others

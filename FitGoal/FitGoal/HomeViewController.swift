@@ -11,42 +11,45 @@ import UIKit
 var imageCache: [URL: UIImage] = [:]
 
 class HomeViewController: UIViewController {
-    lazy var topView: UIView = {
-        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
-        gradientView.layer.cornerRadius = 150
-        gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
-        gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
-        let rotation = CGAffineTransform(rotationAngle: -26 / 180 * CGFloat.pi)
-        gradientView.transform = rotation.translatedBy(x: 10, y: -600)
+    
+    private var gradientView: UIView = {
+        let gradientView = GradientView()
+        gradientView.layer.cornerRadius = 7
+        gradientView.colors = [#colorLiteral(red: 0.03921568627, green: 0, blue: 0, alpha: 0.27), #colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0)]
         return gradientView
     }()
 
-    let suggestionsCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var workoutSuggestions = [Routine]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        self.view.addSubview(topView)
-        self.view.addSubview(suggestionsCollectionView)
+        self.view.addSubview(homeCollectionView)
+        self.view.addSubview(gradientView)
+        
+        self.homeCollectionView.dataSource = self
+        self.homeCollectionView.delegate = self
 
-        self.suggestionsCollectionView.dataSource = self
-        self.suggestionsCollectionView.delegate = self
-
-        self.suggestionsCollectionView.register(
+        self.homeCollectionView.register(
             SuggestedRoutineCell.self,
             forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier
         )
         
-        self.suggestionsCollectionView.register(
+        self.homeCollectionView.register(
             RoutineSectionHeader.self,
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
-
-        self.suggestionsCollectionView.alwaysBounceVertical = true
-        self.suggestionsCollectionView.backgroundColor = .none
+        
+        self.homeCollectionView.register(
+            GoalTrakerCell.self,
+            forCellWithReuseIdentifier: GoalTrakerCell.identifier
+        )
+        
+        self.homeCollectionView.alwaysBounceVertical = true
+        self.homeCollectionView.backgroundColor = .clear
 
         fetchRoutines { result in
             switch result {
@@ -55,7 +58,7 @@ class HomeViewController: UIViewController {
             case .success(let routines):
                 DispatchQueue.main.async {
                     self.workoutSuggestions = routines
-                    self.suggestionsCollectionView.reloadData()
+                    self.homeCollectionView.reloadData()
                 }
             }
         }
@@ -63,7 +66,8 @@ class HomeViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        suggestionsCollectionView.frame = view.bounds
+        homeCollectionView.frame = view.bounds
+        gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
     }
 }
 
@@ -105,6 +109,7 @@ extension HomeViewController {
             } catch {
                 completion(.failure(error))
             }
+            
         }.resume()
     }
 }
