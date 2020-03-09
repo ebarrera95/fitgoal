@@ -9,9 +9,10 @@
 import UIKit
 
 class GoalTrakerCell: UICollectionViewCell {
+    
     static var identifier = "GoalTraker"
     
-    lazy var topView: UIView = {
+    lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
         gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -80,7 +81,7 @@ class GoalTrakerCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(topView)
+        contentView.addSubview(gradientBackgroundView)
         
         let subviews = [shadowView, monthLabel, cellTitle, imageAvatar, addButton]
         addSubviewsToContentView(views: subviews)
@@ -161,5 +162,4 @@ class GoalTrakerCell: UICollectionViewCell {
             cellTitle.leadingAnchor.constraint(equalTo: imageAvatar.trailingAnchor, constant: 8)
         ])
     }
-
 }

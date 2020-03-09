@@ -30,7 +30,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             }
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 140)
-            
         }
     }
     

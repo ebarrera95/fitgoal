@@ -100,6 +100,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }()
     
     private var title = UILabel()
+    
     private var subtitle = UILabel()
     
     private var backgroundImage: UIImageView = {
