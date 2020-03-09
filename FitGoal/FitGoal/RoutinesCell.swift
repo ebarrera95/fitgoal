@@ -12,23 +12,20 @@ import UIKit
 
 class RoutinesCell: UICollectionViewCell {
     
-
-    var routine: Routine? {
-        didSet {
-            if let routine = self.routine {
-                    routineExercies = allExersices.filter({ (exersice) -> Bool in
-                    return routine.exercises.contains(exersice.id)
-                })
-                routineCollectionView.reloadData()
-            }
+    var routine: Routine?
+    
+    func reloadCellData(exercises: [Exercise]) {
+        if let routine = self.routine {
+                routineExercies = exercises.filter({ (exersice) -> Bool in
+                return routine.exercises.contains(exersice.id)
+            })
+            routineCollectionView.reloadData()
         }
     }
     
     var routineExercies = [Exercise]()
     
     var exercisesDelegate: RoutineDelegate?
-    
-    var allExersices = [Exercise]()//TODO, try to get from JSON file on demand
     
     var routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -38,12 +35,10 @@ class RoutinesCell: UICollectionViewCell {
         super.init(frame: frame)
         routineCollectionView.delegate = self
         routineCollectionView.dataSource = self
-        
         let layout = routineCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
         routineCollectionView.register(ExerciseCell.self, forCellWithReuseIdentifier: ExerciseCell.identifier)
         self.addSubview(routineCollectionView)
-        fetchExersices()
     }
     
     required init?(coder: NSCoder) {
@@ -53,8 +48,9 @@ class RoutinesCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         routineCollectionView.frame = self.bounds
-        routineCollectionView.backgroundColor = .none
+        routineCollectionView.backgroundColor = .clear
     }
+    
     override func prepareForReuse() {
         super.prepareForReuse()
     }
@@ -75,28 +71,10 @@ extension RoutinesCell: UICollectionViewDataSource {
 extension RoutinesCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 170, height: 200)
+        return CGSize(width: 170, height: 215)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
-    }
-}
-
-extension RoutinesCell {
-    func fetchExersices() {
-        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
-        guard let url = URL(string: jsonUrlString) else { return }
-        url.fetch { (result: Result<[Exercise], Error>) in
-            switch result {
-            case .failure(let error):
-                print("Unable to get routines with error: \(error)")
-            case .success(let exercise):
-                DispatchQueue.main.async {
-                    self.allExersices = exercise
-                    self.routineCollectionView.reloadData()
-                }
-            }
-        }
     }
 }
 

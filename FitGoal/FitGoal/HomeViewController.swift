@@ -12,12 +12,16 @@ var imageCache: [URL: UIImage] = [:]
 
 class HomeViewController: UIViewController, RoutineDelegate {
     
+    var allExersices = [Exercise]()
+
     func displayExercises(routine: Routine) {
-        toDisplay = routine
+        routineToDisplay = routine
+        routineDetails = .vissible
         homeCollectionView.reloadData()
     }
+    var routineDetails = RoutineDetails.hidden
     
-    var toDisplay: Routine?
+    var routineToDisplay: Routine?
     
     var routineCellDelegate: RoutineDelegate?
     
@@ -33,11 +37,11 @@ class HomeViewController: UIViewController, RoutineDelegate {
     var workoutSuggestions = [Routine]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
         self.view.addSubview(gradientView)
-        
         
         self.homeCollectionView.dataSource = self
         self.homeCollectionView.delegate = self
@@ -62,9 +66,10 @@ class HomeViewController: UIViewController, RoutineDelegate {
         )
         
         self.homeCollectionView.alwaysBounceVertical = true
-        self.homeCollectionView.backgroundColor = .none
+        self.homeCollectionView.backgroundColor = .clear
         
         fetchWorkoutRoutines()
+        fetchExersices()
     }
     
     override func viewDidLayoutSubviews() {
@@ -102,6 +107,30 @@ extension HomeViewController {
                 DispatchQueue.main.async {
                     self.workoutSuggestions = routines
                     self.homeCollectionView.reloadData()
+                }
+            }
+        }
+    }
+}
+
+extension HomeViewController {
+    enum RoutineDetails {
+        case vissible
+        case hidden
+    }
+}
+
+extension HomeViewController {
+    func fetchExersices() {
+        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
+        guard let url = URL(string: jsonUrlString) else { return }
+        url.fetch { (result: Result<[Exercise], Error>) in
+            switch result {
+            case .failure(let error):
+                print("Unable to get routines with error: \(error)")
+            case .success(let exercise):
+                DispatchQueue.main.async {
+                    self.allExersices = exercise
                 }
             }
         }

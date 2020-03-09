@@ -20,7 +20,13 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return 1
+            switch routineDetails {
+            case .vissible:
+                return 1
+            case .hidden:
+                return 0
+            }
+    
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -52,24 +58,26 @@ extension HomeViewController: UICollectionViewDataSource {
                 fatalError()
             }
             
-            if let toDisplay = self.toDisplay {
-                cell.routine = toDisplay
+            switch routineDetails {
+            case .hidden:
+                return cell
+            case .vissible:
+                cell.routine = routineToDisplay
+                cell.reloadCellData(exercises: allExersices)
+                return cell
             }
-            
-            return cell
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
-            
             cell.delegate = self
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
         }
     }
 
-    func collectionView(
+     func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
@@ -98,15 +106,7 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        if indexPath.section == 2 {
-//            guard let cell = homeCollectionView.cellForItem(at: indexPath) as? SuggestedRoutineCell else { return }
-//            let routine = cell.routine
-//            exCell.routine = routine
-//            collectionView.reloadData()
-//        }
-//        
-//    }
+    
 }
 
 enum HomeSection: Int {
