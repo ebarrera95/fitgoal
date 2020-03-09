@@ -16,10 +16,12 @@ class ExerciseCell: UICollectionViewCell {
             case .inProgress:
                 gradientView.isHidden = true
                 placeholder.startAnimating()
+                exersiceStatus.isHidden = true
             case .finished(let image):
                 gradientView.isHidden = false
                 placeholder.stopAnimating()
                 backgroundImage.image = image
+                exersiceStatus.isHidden = false
             case .failed(let error):
                 print("Unable to load image with error: \(error)")
             }
@@ -109,7 +111,6 @@ class ExerciseCell: UICollectionViewCell {
         return title
     }()
     
-    
     private var exersiceStatus: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
@@ -123,7 +124,7 @@ class ExerciseCell: UICollectionViewCell {
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
         
-        let views = [backgroundImage, gradientView, placeholder, title, dayIndicator, exersiceStatus]
+        let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator, exersiceStatus]
         addSubviewsToContentView(views: views)
         dayIndicator.addSubview(dayIndicatorLabel)
         
@@ -142,7 +143,6 @@ class ExerciseCell: UICollectionViewCell {
         placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
 
     }
-    
     
     private func addSubviewsToContentView(views: [UIView]) {
         views.forEach { view in
@@ -175,6 +175,7 @@ class ExerciseCell: UICollectionViewCell {
             title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
         ])
     }
+    
     private func setDayIndicatorConstrains() {
         dayIndicator.translatesAutoresizingMaskIntoConstraints = false
         
@@ -186,6 +187,7 @@ class ExerciseCell: UICollectionViewCell {
             
         ])
     }
+    
     private func setIndicatorLabelConstrains() {
            dayIndicatorLabel.translatesAutoresizingMaskIntoConstraints = false
            
@@ -203,5 +205,4 @@ class ExerciseCell: UICollectionViewCell {
                exersiceStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
            ])
     }
-    
 }
