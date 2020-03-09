@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class RoutinesCell: UICollectionViewCell {
+class ExploreRoutineCell: UICollectionViewCell {
     
     var routine: Routine?
     
@@ -56,7 +56,7 @@ class RoutinesCell: UICollectionViewCell {
     }
 }
 
-extension RoutinesCell: UICollectionViewDataSource {
+extension ExploreRoutineCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return routineExercies.count
     }
@@ -68,7 +68,7 @@ extension RoutinesCell: UICollectionViewDataSource {
     }
 }
 
-extension RoutinesCell: UICollectionViewDelegateFlowLayout {
+extension ExploreRoutineCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 170, height: 215)

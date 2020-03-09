@@ -36,6 +36,7 @@ extension URL {
         }
         else {
             let task = downloadImage(completion: completion)
+            //TODO: Catch image
             task?.resume()
             return task
         }

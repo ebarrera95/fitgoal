@@ -39,6 +39,7 @@ class RoutineSectionHeader: UICollectionReusableView {
     }()
     
     private var headerLabel = UILabel()
+    
     private var backgroundView = UIView()
     
     override init(frame: CGRect) {

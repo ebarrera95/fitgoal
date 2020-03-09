@@ -61,8 +61,8 @@ class HomeViewController: UIViewController, RoutineDelegate {
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
         self.homeCollectionView.register(
-            RoutinesCell.self,
-            forCellWithReuseIdentifier: RoutinesCell.identifier
+            ExploreRoutineCell.self,
+            forCellWithReuseIdentifier: ExploreRoutineCell.identifier
         )
         
         self.homeCollectionView.alwaysBounceVertical = true

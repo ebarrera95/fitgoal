@@ -122,7 +122,9 @@ class SuggestedRoutineCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(backgroundImage)
-        addBackgroundImageSubview()
+        
+        let subviews = [gradientView, placeholder, title, subtitle, addButton]
+        addSubviewsToContentView(views: subviews)
         
         addButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
         
@@ -130,7 +132,6 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     @objc private func handleTouch() {
-        //print("Button clicked!")
         guard let routine = routine else { return }
         delegate?.displayExercises(routine: routine)
     }
@@ -154,8 +155,8 @@ class SuggestedRoutineCell: UICollectionViewCell {
         placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
     }
     
-    //MARK: - View Layouts
-    private func layoutTitleLabel() {
+    //MARK: - Set Constrains
+    private func setTitleLabelConstrains() {
         title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -164,7 +165,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func layoutSubtitleLabel() {
+    private func setSubtitleLabelConstrains() {
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -173,7 +174,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func layoutButton() {
+    private func setAddButtonConstrains() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -185,21 +186,17 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     private func layoutBackgroundImageSubviews() {
-        layoutSubtitleLabel()
-        layoutTitleLabel()
-        layoutButton()
+        setSubtitleLabelConstrains()
+        setTitleLabelConstrains()
+        setAddButtonConstrains()
     }
     
-    private func addBackgroundImageSubview() {
-        contentView.addSubview(gradientView)
-        contentView.addSubview(placeholder)
-        contentView.addSubview(title)
-        contentView.addSubview(subtitle)
-        contentView.addSubview(addButton)
+    private func addSubviewsToContentView(views: [UIView]) {
+        views.forEach { view in
+            self.contentView.addSubview(view)
+        }
     }
-
 }
-
 
 enum ImageLoadingState {
     case inProgress

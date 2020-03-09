@@ -54,7 +54,7 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         case .routine:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "Routines Cell", for: indexPath) as? RoutinesCell else {
+                .dequeueReusableCell(withReuseIdentifier: "Routines Cell", for: indexPath) as? ExploreRoutineCell else {
                 fatalError()
             }
             
@@ -105,8 +105,6 @@ extension HomeViewController: UICollectionViewDataSource {
             return header
         }
     }
-    
-    
 }
 
 enum HomeSection: Int {

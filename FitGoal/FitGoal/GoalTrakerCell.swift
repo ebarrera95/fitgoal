@@ -49,6 +49,7 @@ class GoalTrakerCell: UICollectionViewCell {
         avatar.contentMode = .scaleAspectFill
         return avatar
     }()
+    
     var addButton: UIButton = {
        let button = UIButton(type: .system)
         button.bounds = CGRect(x: 0, y: 0, width: 28, height: 28)
@@ -56,7 +57,6 @@ class GoalTrakerCell: UICollectionViewCell {
         button.tintColor = .white
         return button
     }()
-    
     
     var goalImageView: UIImageView = {
         let imageView = UIImageView()
@@ -77,30 +77,33 @@ class GoalTrakerCell: UICollectionViewCell {
         shadow.layer.shadowRadius = 10
         return shadow
     }()
-    
-        
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(topView)
         
-        contentView.addSubview(shadowView)
-        contentView.addSubview(monthLabel)
-        contentView.addSubview(cellTitle)
-        contentView.addSubview(imageAvatar)
-        contentView.addSubview(addButton)
+        let subviews = [shadowView, monthLabel, cellTitle, imageAvatar, addButton]
+        addSubviewsToContentView(views: subviews)
         
         shadowView.addSubview(goalImageView)
         
-        
+        setConstrains()
+    }
+    
+    private func addSubviewsToContentView(views: [UIView]) {
+        views.forEach { view in
+            self.contentView.addSubview(view)
+        }
+    }
+    
+    private func setConstrains() {
         setShadowConstraints()
         setMonthLabelConstrains()
         setcellTitleConstrains()
         setImageAvatarConstrains()
         setAddButtonConstrains()
-        
-        
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -128,7 +131,6 @@ class GoalTrakerCell: UICollectionViewCell {
             imageAvatar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageAvatar.centerYAnchor.constraint(equalTo: cellTitle.centerYAnchor)
         ])
-        
     }
     
     private func setShadowConstraints() {
@@ -139,7 +141,6 @@ class GoalTrakerCell: UICollectionViewCell {
             shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
             shadowView.heightAnchor.constraint(equalToConstant: 200)
-            
         ])
     }
     
@@ -151,6 +152,7 @@ class GoalTrakerCell: UICollectionViewCell {
             monthLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor)
         ])
     }
+    
     private func setcellTitleConstrains() {
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
