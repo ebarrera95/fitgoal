@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension HomeViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let homeSection = HomeSection(rawValue: section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
@@ -50,12 +51,19 @@ extension HomeViewController: UICollectionViewDataSource {
                 .dequeueReusableCell(withReuseIdentifier: "Routines Cell", for: indexPath) as? RoutinesCell else {
                 fatalError()
             }
+            
+            if let toDisplay = self.toDisplay {
+                cell.routine = toDisplay
+            }
+            
             return cell
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
+            
+            cell.delegate = self
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
         }
@@ -81,13 +89,24 @@ extension HomeViewController: UICollectionViewDataSource {
             header.sectionName = "Progress"
             return header
         case .routine:
-            header.sectionName = "Routine"
+            header.sectionName = "Explore Routine"
+            header.link.isHidden = true
             return header
         case .suggestions:
-            header.sectionName = "suggested"
+            header.sectionName = "All Routines"
             return header
         }
     }
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        if indexPath.section == 2 {
+//            guard let cell = homeCollectionView.cellForItem(at: indexPath) as? SuggestedRoutineCell else { return }
+//            let routine = cell.routine
+//            exCell.routine = routine
+//            collectionView.reloadData()
+//        }
+//        
+//    }
 }
 
 enum HomeSection: Int {

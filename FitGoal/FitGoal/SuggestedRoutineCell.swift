@@ -8,9 +8,15 @@
 
 import UIKit
 
-class SuggestedRoutineCell: UICollectionViewCell {
+protocol RoutineDelegate {
+    func displayExercises(routine: Routine)
+}
+
+class SuggestedRoutineCell: UICollectionViewCell {    
     
     static var indentifier: String = "Suggestions"
+    
+    var delegate: RoutineDelegate?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -105,25 +111,28 @@ class SuggestedRoutineCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var roundedButton: UIButton = {
+    private var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
         button.tintColor = .white
         return button
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(backgroundImage)
         addBackgroundImageSubview()
         
-        roundedButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+        addButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
         
         layoutBackgroundImageSubviews()
     }
     
     @objc private func handleTouch() {
-        print("Button clicked!")
+        //print("Button clicked!")
+        guard let routine = routine else { return }
+        delegate?.displayExercises(routine: routine)
     }
     
     required init?(coder: NSCoder) {
@@ -165,13 +174,13 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     private func layoutButton() {
-        roundedButton.translatesAutoresizingMaskIntoConstraints = false
+        addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            roundedButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
-            roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
-            roundedButton.widthAnchor.constraint(equalToConstant: 25),
-            roundedButton.heightAnchor.constraint(equalToConstant: 25)
+            addButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
+            addButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
+            addButton.widthAnchor.constraint(equalToConstant: 25),
+            addButton.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
@@ -186,9 +195,11 @@ class SuggestedRoutineCell: UICollectionViewCell {
         contentView.addSubview(placeholder)
         contentView.addSubview(title)
         contentView.addSubview(subtitle)
-        contentView.addSubview(roundedButton)
+        contentView.addSubview(addButton)
     }
+
 }
+
 
 enum ImageLoadingState {
     case inProgress

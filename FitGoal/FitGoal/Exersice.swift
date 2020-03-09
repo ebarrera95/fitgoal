@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Exercise: Decodable {
+struct Exercise: Decodable, Hashable {
     var id: Int
     var name: String
     var url: URL

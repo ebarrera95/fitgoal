@@ -10,7 +10,16 @@ import UIKit
 
 var imageCache: [URL: UIImage] = [:]
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, RoutineDelegate {
+    
+    func displayExercises(routine: Routine) {
+        toDisplay = routine
+        homeCollectionView.reloadData()
+    }
+    
+    var toDisplay: Routine?
+    
+    var routineCellDelegate: RoutineDelegate?
     
     private var gradientView: UIView = {
         let gradientView = GradientView()
@@ -52,24 +61,10 @@ class HomeViewController: UIViewController {
             forCellWithReuseIdentifier: RoutinesCell.identifier
         )
         
-
         self.homeCollectionView.alwaysBounceVertical = true
         self.homeCollectionView.backgroundColor = .none
         
         fetchWorkoutRoutines()
-
-//        fetchRoutines { result in
-//            switch result {
-//            case .failure(let error):
-//                print("Unable to get routines with error: \(error)")
-//            case .success(let routines):
-//                DispatchQueue.main.async {
-//                    self.workoutSuggestions = routines
-//                    self.homeCollectionView.reloadData()
-//                }
-//            }
-//        }
-        
     }
     
     override func viewDidLayoutSubviews() {
@@ -96,7 +91,6 @@ class GradientView: UIView {
 }
 
 extension HomeViewController {
-    
     func fetchWorkoutRoutines() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
@@ -112,27 +106,4 @@ extension HomeViewController {
             }
         }
     }
-//    func fetchRoutines(completion: @escaping (Result<[Routine], Error>) -> Void) {
-//        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
-//        guard let url = URL(string: jsonUrlString) else { return }
-//
-//        URLSession.shared.dataTask(with: url) { data, _, error in
-//            guard let data = data else {
-//                guard let error = error else {
-//                    assertionFailure("Error shouldn't be nil when there is no data")
-//                    return
-//                }
-//
-//                completion(.failure(error))
-//                return
-//            }
-//
-//            do {
-//                let routines = try JSONDecoder().decode([Routine].self, from: data)
-//                completion(.success(routines))
-//            } catch {
-//                completion(.failure(error))
-//            }
-//        }.resume()
-//    }
 }

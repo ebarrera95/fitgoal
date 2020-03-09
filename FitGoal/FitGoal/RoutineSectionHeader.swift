@@ -27,7 +27,7 @@ class RoutineSectionHeader: UICollectionReusableView {
         }
     }
     
-    private lazy var link: UILabel = {
+    lazy var link: UILabel = {
         let linkLabel = UILabel()
         linkLabel.attributedText = "See All".formattedText(
             font: "Roboto-Regular",
@@ -58,6 +58,7 @@ class RoutineSectionHeader: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         sectionName = nil
+        link.isHidden = false
     }
     
     required init?(coder: NSCoder) {
