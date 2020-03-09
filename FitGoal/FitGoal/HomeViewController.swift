@@ -29,7 +29,6 @@ class HomeViewController: UIViewController {
         self.view.addSubview(homeCollectionView)
         self.view.addSubview(gradientView)
         
-        
         self.homeCollectionView.dataSource = self
         self.homeCollectionView.delegate = self
 
@@ -43,12 +42,12 @@ class HomeViewController: UIViewController {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
+        
         self.homeCollectionView.register(
             GoalTrakerCell.self,
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
         
-
         self.homeCollectionView.alwaysBounceVertical = true
         self.homeCollectionView.backgroundColor = .clear
 
@@ -110,6 +109,7 @@ extension HomeViewController {
             } catch {
                 completion(.failure(error))
             }
+            
         }.resume()
     }
 }

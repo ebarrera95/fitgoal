@@ -27,7 +27,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.bounds.width - 32, height: 140)
             
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

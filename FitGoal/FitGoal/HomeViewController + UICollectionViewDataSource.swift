@@ -44,6 +44,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 .dequeueReusableCell(withReuseIdentifier: "GoalTraker", for: indexPath) as? GoalTrakerCell else {
                 fatalError()
             }
+            
             return cell
         case .routine:
             fatalError("Configuration for cells should be handled here")

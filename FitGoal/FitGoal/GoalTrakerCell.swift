@@ -9,9 +9,10 @@
 import UIKit
 
 class GoalTrakerCell: UICollectionViewCell {
+    
     static var identifier = "GoalTraker"
     
-    lazy var gradientbackgroudView: UIView = {
+    lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
         gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -49,6 +50,7 @@ class GoalTrakerCell: UICollectionViewCell {
         avatar.contentMode = .scaleAspectFill
         return avatar
     }()
+    
     var addButton: UIButton = {
        let button = UIButton(type: .system)
         button.bounds = CGRect(x: 0, y: 0, width: 28, height: 28)
@@ -79,7 +81,7 @@ class GoalTrakerCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(gradientbackgroudView)
+        contentView.addSubview(gradientBackgroundView)
         
         contentView.addSubview(shadowView)
         contentView.addSubview(monthLabel)
@@ -94,8 +96,8 @@ class GoalTrakerCell: UICollectionViewCell {
         setcellTitleConstrains()
         setImageAvatarConstrains()
         setAddButtonConstrains()
-        
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -123,7 +125,6 @@ class GoalTrakerCell: UICollectionViewCell {
             imageAvatar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageAvatar.centerYAnchor.constraint(equalTo: cellTitle.centerYAnchor)
         ])
-        
     }
     
     private func setShadowConstraints() {
@@ -155,5 +156,4 @@ class GoalTrakerCell: UICollectionViewCell {
             cellTitle.leadingAnchor.constraint(equalTo: imageAvatar.trailingAnchor, constant: 8)
         ])
     }
-
 }
