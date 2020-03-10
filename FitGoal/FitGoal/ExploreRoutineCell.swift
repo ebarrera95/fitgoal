@@ -23,11 +23,11 @@ class ExploreRoutineCell: UICollectionViewCell {
         }
     }
     
-    var routineExercies = [Exercise]()
+    private var routineExercies = [Exercise]()
     
-    var exercisesDelegate: RoutineDelegate?
+    private var exercisesDelegate: RoutineDelegate?
     
-    var routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
     static var identifier = "Routines Cell"
     

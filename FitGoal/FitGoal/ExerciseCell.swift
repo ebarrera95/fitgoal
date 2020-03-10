@@ -45,7 +45,7 @@ class ExerciseCell: UICollectionViewCell {
     
     static var identifier = "Cell Exercise"
     
-    var backgroundImage: UIImageView = {
+    private var backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -53,9 +53,9 @@ class ExerciseCell: UICollectionViewCell {
         return imageView
     }()
     
-    var currentImageDownloadTask: URLSessionTask?
+    private var currentImageDownloadTask: URLSessionTask?
 
-    var imageURL: URL? {
+    private var imageURL: URL? {
         didSet {
             guard let imageURL = imageURL else { return }
             

@@ -12,7 +12,7 @@ class GoalTrakerCell: UICollectionViewCell {
     
     static var identifier = "GoalTraker"
     
-    lazy var gradientBackgroundView: UIView = {
+    private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
         gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -22,7 +22,7 @@ class GoalTrakerCell: UICollectionViewCell {
         return gradientView
     }()
     
-    lazy var cellTitle: UILabel = {
+    private lazy var cellTitle: UILabel = {
         let label = UILabel()
         label.attributedText = "MY GOAL".formattedText(
             font: "Oswald-Medium",
@@ -33,7 +33,7 @@ class GoalTrakerCell: UICollectionViewCell {
         return label
     }()
 
-    lazy var monthLabel: UILabel = {
+    private lazy var monthLabel: UILabel = {
         let label = UILabel()
         label.attributedText = "February".formattedText (
             font: "Roboto-Regular",
@@ -44,14 +44,14 @@ class GoalTrakerCell: UICollectionViewCell {
         return label
     }()
     
-    var imageAvatar: UIImageView = {
+    private var imageAvatar: UIImageView = {
         let avatar = UIImageView(image: UIImage(imageLiteralResourceName: "Avatar"))
         avatar.frame = CGRect(x: 0, y: 0, width: 42, height: 42)
         avatar.contentMode = .scaleAspectFill
         return avatar
     }()
     
-    var addButton: UIButton = {
+    private var addButton: UIButton = {
        let button = UIButton(type: .system)
         button.bounds = CGRect(x: 0, y: 0, width: 28, height: 28)
         button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
@@ -59,7 +59,7 @@ class GoalTrakerCell: UICollectionViewCell {
         return button
     }()
     
-    var goalImageView: UIImageView = {
+    private var goalImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(imageLiteralResourceName: "GoalTraker")
         imageView.contentMode = .scaleAspectFit
@@ -69,7 +69,7 @@ class GoalTrakerCell: UICollectionViewCell {
         return imageView
     }()
     
-    var shadowView: UIView = {
+    private var shadowView: UIView = {
         var shadow = UIView()
         shadow.clipsToBounds = false
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)

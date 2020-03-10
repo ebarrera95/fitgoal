@@ -62,7 +62,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         }
     }
 
-    var imageURL: URL? {
+    private var imageURL: URL? {
         didSet {
             guard let imageURL = imageURL else {
                 return
