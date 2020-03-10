@@ -16,9 +16,9 @@ class ExploreRoutineCell: UICollectionViewCell {
     
     private var routineExercies = [Exercise]()
     
-    private var routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
-    static var identifier = "Routines Cell"
+    static let identifier = "Routines Cell"
     
     override init(frame: CGRect) {
         super.init(frame: frame)

@@ -10,7 +10,7 @@ import UIKit
 
 class GoalTrakerCell: UICollectionViewCell {
     
-    static var identifier = "GoalTraker"
+    static let identifier = "GoalTraker"
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))

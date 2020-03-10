@@ -43,7 +43,7 @@ class ExerciseCell: UICollectionViewCell {
         }
     }
     
-    static var identifier = "Cell Exercise"
+    static let identifier = "Cell Exercise"
     
     private var backgroundImage: UIImageView = {
         let imageView = UIImageView()

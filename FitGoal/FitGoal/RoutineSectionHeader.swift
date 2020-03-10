@@ -10,7 +10,7 @@ import UIKit
 
 class RoutineSectionHeader: UICollectionReusableView {
     
-    static var identifier = "RoutineCellHeader"
+    static let identifier = "RoutineCellHeader"
     
     var sectionName: String? {
         didSet {

@@ -14,7 +14,7 @@ protocol RoutineDelegate {
 
 class SuggestedRoutineCell: UICollectionViewCell {    
     
-    static var indentifier: String = "Suggestions"
+    static let indentifier: String = "Suggestions"
     
     var delegate: RoutineDelegate?
     
