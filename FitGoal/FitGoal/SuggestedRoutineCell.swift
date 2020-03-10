@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RoutineDelegate {
+protocol RoutineDelegate: AnyObject {
     func displayExercises(routine: Routine)
 }
 
@@ -16,7 +16,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     static let identifier: String = "Suggestions"
     
-    var delegate: RoutineDelegate?
+    weak var delegate: RoutineDelegate?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {

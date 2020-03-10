@@ -19,7 +19,7 @@
 		05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E1240F28EB009B0443 /* Routine.swift */; };
 		05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */; };
 		05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */; };
-		05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout .swift */; };
+		05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */; };
 		05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */; };
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };

@@ -14,7 +14,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
     
     var allExersices = [Exercise]()
 
-    var routineDetails = RoutineDetails.hidden
+    var routineDetails = SelectedRoutine.unset
     
     var routineToDisplay: Routine?
     
@@ -66,7 +66,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
         self.homeCollectionView.backgroundColor = .clear
         
         fetchWorkoutRoutines()
-        fetchExersices()
+        fetchExercises()
     }
     
     override func viewDidLayoutSubviews() {
@@ -77,7 +77,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
     
     func displayExercises(routine: Routine) {
         routineToDisplay = routine
-        routineDetails = .vissible
+        routineDetails = .set
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
@@ -119,14 +119,23 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-    enum RoutineDetails {
-        case vissible
-        case hidden
+    enum SelectedRoutine {
+        case set
+        case unset
+        
+        var userDidSelectRoutine: Bool {
+            switch self {
+            case .unset:
+                return false
+            case .set:
+                return true
+            }
+        }
     }
 }
 
 extension HomeViewController {
-    func fetchExersices() {
+    func fetchExercises() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
         guard let url = URL(string: jsonUrlString) else { return }
         url.fetch { (result: Result<[Exercise], Error>) in

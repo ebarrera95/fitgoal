@@ -20,7 +20,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return routineDetails == .vissible ? 1 : 0
+            return routineDetails.userDidSelectRoutine ? 1 : 0
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -52,12 +52,8 @@ extension HomeViewController: UICollectionViewDataSource {
                 fatalError()
             }
             
-            if routineDetails == .vissible {
-                cell.routine = routineToDisplay
-                cell.reloadCellData(exercises: allExersices)
-                return cell
-            }
-            
+            cell.routine = routineToDisplay
+            cell.reloadCellData(exercises: allExersices)
             return cell
             
         case .suggestions:
@@ -72,7 +68,7 @@ extension HomeViewController: UICollectionViewDataSource {
         }
     }
 
-     func collectionView(
+    func collectionView(
         _ collectionView: UICollectionView,
         viewForSupplementaryElementOfKind kind: String,
         at indexPath: IndexPath
