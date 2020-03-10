@@ -130,7 +130,6 @@ class ExerciseCell: UICollectionViewCell {
         dayIndicator.addSubview(dayIndicatorLabel)
 
         setConstrains()
-
     }
     
     required init?(coder: NSCoder) {

@@ -14,18 +14,7 @@ class ExploreRoutineCell: UICollectionViewCell {
     
     var routine: Routine?
     
-    func reloadCellData(exercises: [Exercise]) {
-        if let routine = self.routine {
-                routineExercies = exercises.filter({ (exersice) -> Bool in
-                return routine.exercises.contains(exersice.id)
-            })
-            routineCollectionView.reloadData()
-        }
-    }
-    
     private var routineExercies = [Exercise]()
-    
-    private var exercisesDelegate: RoutineDelegate?
     
     private var routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -56,6 +45,15 @@ class ExploreRoutineCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
+    
+    func reloadCellData(exercises: [Exercise]) {
+        if let routine = self.routine {
+                routineExercies = exercises.filter({ (exersice) -> Bool in
+                return routine.exercises.contains(exersice.id)
+            })
+            routineCollectionView.reloadData()
+        }
+    }
 }
 
 extension ExploreRoutineCell: UICollectionViewDataSource {
@@ -80,4 +78,3 @@ extension ExploreRoutineCell: UICollectionViewDelegateFlowLayout {
         return 16
     }
 }
-
