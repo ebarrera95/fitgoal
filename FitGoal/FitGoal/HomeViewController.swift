@@ -43,7 +43,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
 
         self.homeCollectionView.register(
             SuggestedRoutineCell.self,
-            forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier
+            forCellWithReuseIdentifier: SuggestedRoutineCell.identifier
         )
         
         self.homeCollectionView.register(

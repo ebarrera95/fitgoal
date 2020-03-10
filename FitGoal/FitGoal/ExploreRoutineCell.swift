@@ -23,6 +23,7 @@ class ExploreRoutineCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(routineCollectionView)
+        routineCollectionView.backgroundColor = .clear
         
         routineCollectionView.delegate = self
         routineCollectionView.dataSource = self
@@ -39,7 +40,6 @@ class ExploreRoutineCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         routineCollectionView.frame = self.bounds
-        routineCollectionView.backgroundColor = .clear
     }
     
     override func prepareForReuse() {
@@ -62,7 +62,7 @@ extension ExploreRoutineCell: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = routineCollectionView.dequeueReusableCell(withReuseIdentifier: "Cell Exercise", for: indexPath) as! ExerciseCell
+        let cell = routineCollectionView.dequeueReusableCell(withReuseIdentifier: ExerciseCell.identifier, for: indexPath) as! ExerciseCell
         cell.exercise = routineExercies[indexPath.item]
         return cell
     }

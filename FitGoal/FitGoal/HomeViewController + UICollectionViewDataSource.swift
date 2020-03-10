@@ -42,13 +42,13 @@ extension HomeViewController: UICollectionViewDataSource {
         switch homeSection {
         case .goalTracking:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "GoalTraker", for: indexPath) as? GoalTrakerCell else {
+                .dequeueReusableCell(withReuseIdentifier: GoalTrakerCell.identifier, for: indexPath) as? GoalTrakerCell else {
                 fatalError()
             }
             return cell
         case .routine:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "Routines Cell", for: indexPath) as? ExploreRoutineCell else {
+                .dequeueReusableCell(withReuseIdentifier: ExploreRoutineCell.identifier, for: indexPath) as? ExploreRoutineCell else {
                 fatalError()
             }
             
@@ -62,7 +62,7 @@ extension HomeViewController: UICollectionViewDataSource {
             
         case .suggestions:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
+                .dequeueReusableCell(withReuseIdentifier: SuggestedRoutineCell.identifier, for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
             
