@@ -27,15 +27,17 @@ class RoutineSectionHeader: UICollectionReusableView {
         }
     }
     
-    lazy var link: UILabel = {
-        let linkLabel = UILabel()
-        linkLabel.attributedText = "See All".formattedText(
+    lazy var link: UIButton = {
+        let linkButton = UIButton(type: .system)
+        let attributedText = "See All".formattedText(
             font: "Roboto-Regular",
             size: 14,
             color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
             kern: 0.1
         )
-        return linkLabel
+        
+        linkButton.setAttributedTitle(attributedText, for: .normal)
+        return linkButton
     }()
     
     private var headerLabel = UILabel()
@@ -49,6 +51,12 @@ class RoutineSectionHeader: UICollectionReusableView {
         backgroundView.addSubview(link)
         layoutHeaderLabel()
         layoutLink()
+        
+        link.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+    }
+    
+    @objc private func handleTouch() {
+        print("handling touch!")
     }
     
     override func layoutSubviews() {

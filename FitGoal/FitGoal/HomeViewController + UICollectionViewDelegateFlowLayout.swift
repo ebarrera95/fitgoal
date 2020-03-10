@@ -17,17 +17,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         guard let homeSection = HomeSection(rawValue: indexPath.section) else {
             fatalError()
         }
-        
         switch homeSection {
         case .goalTracking:
            return CGSize(width: view.bounds.width - 32, height: 320)
         case .routine:
-            switch routineDetails {
-            case .vissible:
-                return CGSize(width: view.bounds.width - 32, height: 230)
-            case .hidden:
-                return .zero
-            }
+            return routineDetails == .hidden ? .zero : CGSize(width: view.bounds.width - 32, height: 248)
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 140)
         }
@@ -46,15 +40,11 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         case .goalTracking:
             return .zero
         case .routine:
-            switch routineDetails {
-            case .vissible:
-                return CGSize(width: view.bounds.width - 32, height: 72)
-            case .hidden:
-                return .zero
-            }
+             return routineDetails == .hidden ? .zero : CGSize(width: view.bounds.width - 32, height: 72)
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 72)
         }
     }
     
 }
+

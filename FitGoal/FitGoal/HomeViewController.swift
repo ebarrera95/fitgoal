@@ -14,11 +14,6 @@ class HomeViewController: UIViewController, RoutineDelegate {
     
     var allExersices = [Exercise]()
 
-    func displayExercises(routine: Routine) {
-        routineToDisplay = routine
-        routineDetails = .vissible
-        homeCollectionView.reloadData()
-    }
     var routineDetails = RoutineDetails.hidden
     
     var routineToDisplay: Routine?
@@ -56,10 +51,12 @@ class HomeViewController: UIViewController, RoutineDelegate {
             forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
             withReuseIdentifier: RoutineSectionHeader.identifier
         )
+        
         self.homeCollectionView.register(
             GoalTrakerCell.self,
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
+        
         self.homeCollectionView.register(
             ExploreRoutineCell.self,
             forCellWithReuseIdentifier: ExploreRoutineCell.identifier
@@ -76,6 +73,14 @@ class HomeViewController: UIViewController, RoutineDelegate {
         super.viewDidLayoutSubviews()
         homeCollectionView.frame = view.bounds
         gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
+    }
+    
+    func displayExercises(routine: Routine) {
+        routineToDisplay = routine
+        routineDetails = .vissible
+        homeCollectionView.performBatchUpdates({
+            homeCollectionView.reloadSections([1])
+        }, completion: nil)
     }
 }
 

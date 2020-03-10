@@ -33,12 +33,14 @@ class ExploreRoutineCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.addSubview(routineCollectionView)
+        
         routineCollectionView.delegate = self
         routineCollectionView.dataSource = self
+        routineCollectionView.register(ExerciseCell.self, forCellWithReuseIdentifier: ExerciseCell.identifier)
+        
         let layout = routineCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        routineCollectionView.register(ExerciseCell.self, forCellWithReuseIdentifier: ExerciseCell.identifier)
-        self.addSubview(routineCollectionView)
     }
     
     required init?(coder: NSCoder) {

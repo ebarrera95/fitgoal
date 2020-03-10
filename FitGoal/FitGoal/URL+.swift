@@ -15,7 +15,6 @@ extension URL {
                     assertionFailure("Error shouldn't be nil when there is no data")
                     return
                 }
-                
                 completion(.failure(error))
                 return
             }
@@ -26,6 +25,7 @@ extension URL {
             } catch {
                 completion(.failure(error))
             }
+            
         }.resume()
     }
     
@@ -36,7 +36,6 @@ extension URL {
         }
         else {
             let task = downloadImage(completion: completion)
-            //TODO: Catch image
             task?.resume()
             return task
         }
@@ -56,7 +55,10 @@ extension URL {
                 completion(.failure(NetworkError.invalidImage))
                 return
             }
-            
+    
+            DispatchQueue.main.async {
+                imageCache[self] = image
+            }
             completion(.success(image))
         }
     }

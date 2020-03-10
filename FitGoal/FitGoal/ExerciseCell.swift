@@ -120,14 +120,16 @@ class ExerciseCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         self.backgroundColor = .white
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
         
         let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator, exersiceStatus]
         addSubviewsToContentView(views: views)
-        dayIndicator.addSubview(dayIndicatorLabel)
         
+        dayIndicator.addSubview(dayIndicatorLabel)
+
         setConstrains()
 
     }
@@ -141,7 +143,6 @@ class ExerciseCell: UICollectionViewCell {
         backgroundImage.frame = contentView.bounds
         gradientView.frame = contentView.bounds
         placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
-
     }
     
     private func addSubviewsToContentView(views: [UIView]) {
@@ -172,7 +173,7 @@ class ExerciseCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             title.bottomAnchor.constraint(equalTo: dayIndicator.topAnchor, constant: -4),
-            title.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8)
+            title.leadingAnchor.constraint(equalTo: dayIndicatorLabel.leadingAnchor)
         ])
     }
     
