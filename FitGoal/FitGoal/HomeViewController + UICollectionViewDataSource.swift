@@ -20,13 +20,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            switch routineDetails {
-            case .vissible:
-                return 1
-            case .hidden:
-                return 0
-            }
-    
+            return routineDetails == .vissible ? 1 : 0
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -58,19 +52,20 @@ extension HomeViewController: UICollectionViewDataSource {
                 fatalError()
             }
             
-            switch routineDetails {
-            case .hidden:
-                return cell
-            case .vissible:
+            if routineDetails == .vissible {
                 cell.routine = routineToDisplay
                 cell.reloadCellData(exercises: allExersices)
                 return cell
             }
+            
+            return cell
+            
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
+            
             cell.delegate = self
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
@@ -94,7 +89,6 @@ extension HomeViewController: UICollectionViewDataSource {
         
         switch homeSection {
         case .goalTracking:
-            header.sectionName = "Progress"
             return header
         case .routine:
             header.sectionName = "Explore Routine"

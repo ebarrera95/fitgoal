@@ -17,6 +17,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         guard let homeSection = HomeSection(rawValue: indexPath.section) else {
             fatalError()
         }
+        
         switch homeSection {
         case .goalTracking:
            return CGSize(width: view.bounds.width - 32, height: 320)

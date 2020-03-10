@@ -46,6 +46,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
                 color: .white,
                 kern: 0.14
             )
+            
             self.title.attributedText = cellTitle
             
             //configure subtitle

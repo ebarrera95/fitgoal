@@ -98,7 +98,6 @@ class ExerciseCell: UICollectionViewCell {
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
         return view
-        
     }()
     
     private var dayIndicatorLabel: UILabel = {
@@ -185,7 +184,6 @@ class ExerciseCell: UICollectionViewCell {
             dayIndicator.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 8),
             dayIndicator.widthAnchor.constraint(equalToConstant: 80),
             dayIndicator.heightAnchor.constraint(equalToConstant: 24)
-            
         ])
     }
     
