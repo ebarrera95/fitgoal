@@ -10,7 +10,13 @@ import UIKit
 
 var imageCache: [URL: UIImage] = [:]
 
-class HomeViewController: UIViewController {
+class HomeViewController: UIViewController, RoutineDelegate {
+    
+    var allExercises = [Exercise]()
+
+    var inspectorState = RoutineInspectorState.unset
+    
+    var routineCellDelegate: RoutineDelegate?
     
     private var gradientView: UIView = {
         let gradientView = GradientView()
@@ -24,6 +30,7 @@ class HomeViewController: UIViewController {
     var workoutSuggestions = [Routine]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
@@ -34,7 +41,7 @@ class HomeViewController: UIViewController {
 
         self.homeCollectionView.register(
             SuggestedRoutineCell.self,
-            forCellWithReuseIdentifier: SuggestedRoutineCell.indentifier
+            forCellWithReuseIdentifier: SuggestedRoutineCell.identifier
         )
         
         self.homeCollectionView.register(
@@ -48,26 +55,29 @@ class HomeViewController: UIViewController {
             forCellWithReuseIdentifier: GoalTrakerCell.identifier
         )
         
+        self.homeCollectionView.register(
+            RoutineInspectorCell.self,
+            forCellWithReuseIdentifier: RoutineInspectorCell.identifier
+        )
+        
         self.homeCollectionView.alwaysBounceVertical = true
         self.homeCollectionView.backgroundColor = .clear
-
-        fetchRoutines { result in
-            switch result {
-            case .failure(let error):
-                print("Unable to get routines with error: \(error)")
-            case .success(let routines):
-                DispatchQueue.main.async {
-                    self.workoutSuggestions = routines
-                    self.homeCollectionView.reloadData()
-                }
-            }
-        }
+        
+        fetchWorkoutRoutines()
+        fetchExercises()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeCollectionView.frame = view.bounds
         gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
+    }
+    
+    func displayExercises(routine: Routine) {
+        inspectorState = .inspecting(routine)
+        homeCollectionView.performBatchUpdates({
+            homeCollectionView.reloadSections([1])
+        }, completion: nil)
     }
 }
 
@@ -88,28 +98,53 @@ class GradientView: UIView {
 }
 
 extension HomeViewController {
-    func fetchRoutines(completion: @escaping (Result<[Routine], Error>) -> Void) {
+    func fetchWorkoutRoutines() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
-
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            guard let data = data else {
-                guard let error = error else {
-                    assertionFailure("Error shouldn't be nil when there is no data")
-                    return
+        url.fetch { (result: Result<[Routine], Error>) in
+            switch result {
+            case .failure(let error):
+                print("Unable to get routines with error: \(error)")
+            case .success(let routines):
+                DispatchQueue.main.async {
+                    self.workoutSuggestions = routines
+                    self.homeCollectionView.reloadData()
                 }
-                
-                completion(.failure(error))
-                return
             }
-            
-            do {
-                let routines = try JSONDecoder().decode([Routine].self, from: data)
-                completion(.success(routines))
-            } catch {
-                completion(.failure(error))
+        }
+    }
+}
+
+extension HomeViewController {
+
+    enum RoutineInspectorState {
+        case inspecting(Routine)
+        case unset
+
+        var didUserSelectRoutine: Bool {
+            switch self {
+            case .unset:
+                return false
+            case .inspecting:
+                return true
             }
-            
-        }.resume()
+        }
+    }
+}
+
+extension HomeViewController {
+    func fetchExercises() {
+        let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
+        guard let url = URL(string: jsonUrlString) else { return }
+        url.fetch { (result: Result<[Exercise], Error>) in
+            switch result {
+            case .failure(let error):
+                print("Unable to get routines with error: \(error)")
+            case .success(let exercise):
+                DispatchQueue.main.async {
+                    self.allExercises = exercise
+                }
+            }
+        }
     }
 }

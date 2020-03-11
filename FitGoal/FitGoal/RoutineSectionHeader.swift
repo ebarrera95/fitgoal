@@ -10,7 +10,7 @@ import UIKit
 
 class RoutineSectionHeader: UICollectionReusableView {
     
-    static var identifier = "RoutineCellHeader"
+    static let identifier = "RoutineCellHeader"
     
     var sectionName: String? {
         didSet {
@@ -27,15 +27,17 @@ class RoutineSectionHeader: UICollectionReusableView {
         }
     }
     
-    private lazy var link: UILabel = {
-        let linkLabel = UILabel()
-        linkLabel.attributedText = "See All".formattedText(
+    lazy var linkButton: UIButton = {
+        let linkButton = UIButton(type: .system)
+        let attributedText = "See All".formattedText(
             font: "Roboto-Regular",
             size: 14,
             color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
             kern: 0.1
         )
-        return linkLabel
+        
+        linkButton.setAttributedTitle(attributedText, for: .normal)
+        return linkButton
     }()
     
     private var headerLabel = UILabel()
@@ -46,9 +48,15 @@ class RoutineSectionHeader: UICollectionReusableView {
         super.init(frame: frame)
         self.addSubview(backgroundView)
         backgroundView.addSubview(headerLabel)
-        backgroundView.addSubview(link)
-        layoutHeaderLabel()
-        layoutLink()
+        backgroundView.addSubview(linkButton)
+        setHeaderLabelConstraints()
+        setLinkButtonConstraints()
+        
+        linkButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+    }
+    
+    @objc private func handleTouch() {
+        print("handling touch!")
     }
     
     override func layoutSubviews() {
@@ -59,13 +67,14 @@ class RoutineSectionHeader: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         sectionName = nil
+        linkButton.isHidden = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func layoutHeaderLabel() {
+    private func setHeaderLabelConstraints() {
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -74,12 +83,12 @@ class RoutineSectionHeader: UICollectionReusableView {
         ])
     }
     
-    private func layoutLink() {
-        link.translatesAutoresizingMaskIntoConstraints = false
+    private func setLinkButtonConstraints() {
+        linkButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            link.topAnchor.constraint(equalTo: headerLabel.topAnchor),
-            link.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
+            linkButton.topAnchor.constraint(equalTo: headerLabel.topAnchor),
+            linkButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
         ])
     }
 }

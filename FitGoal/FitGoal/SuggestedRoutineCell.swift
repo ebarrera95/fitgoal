@@ -8,9 +8,15 @@
 
 import UIKit
 
-class SuggestedRoutineCell: UICollectionViewCell {
+protocol RoutineDelegate: AnyObject {
+    func displayExercises(routine: Routine)
+}
+
+class SuggestedRoutineCell: UICollectionViewCell {    
     
-    static var indentifier: String = "Suggestions"
+    static let identifier: String = "Suggestions"
+    
+    weak var delegate: RoutineDelegate?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -40,6 +46,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
                 color: .white,
                 kern: 0.14
             )
+            
             self.title.attributedText = cellTitle
             
             //configure subtitle
@@ -55,7 +62,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         }
     }
 
-    var imageURL: URL? {
+    private var imageURL: URL? {
         didSet {
             guard let imageURL = imageURL else {
                 return
@@ -63,14 +70,14 @@ class SuggestedRoutineCell: UICollectionViewCell {
             
             imageLoadingState = .inProgress
             
-            currentImageDownloadTask = fetchImage(from: imageURL) { result in
+            currentImageDownloadTask = imageURL.fetchImage { result in
                 DispatchQueue.main.async {
                     guard self.imageURL == imageURL else { return }
-                    
                     switch result {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
                     case .success(let image):
+                        imageCache[imageURL] = image
                         self.imageLoadingState = .finished(image)
                     }
                 }
@@ -107,7 +114,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var roundedButton: UIButton = {
+    private var addButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(imageLiteralResourceName: "icons - System - Add"), for: .normal)
         button.tintColor = .white
@@ -117,15 +124,18 @@ class SuggestedRoutineCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(backgroundImage)
-        addBackgroundImageSubview()
         
-        roundedButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+        let subviews = [gradientView, placeholder, title, subtitle, addButton]
+        addSubviewsToContentView(views: subviews)
+        
+        addButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
         
         layoutBackgroundImageSubviews()
     }
     
     @objc private func handleTouch() {
-        print("Button clicked!")
+        guard let routine = routine else { return }
+        delegate?.displayExercises(routine: routine)
     }
     
     required init?(coder: NSCoder) {
@@ -142,14 +152,13 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         backgroundImage.frame = contentView.bounds
         gradientView.frame = contentView.bounds
         placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
     }
     
-    //MARK: - View Layouts
-    private func layoutTitleLabel() {
+    //MARK: - Set Constrains
+    private func setTitleLabelConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -158,7 +167,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func layoutSubtitleLabel() {
+    private func setSubtitleLabelConstraints() {
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -167,60 +176,26 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func layoutButton() {
-        roundedButton.translatesAutoresizingMaskIntoConstraints = false
+    private func setAddButtonConstraints() {
+        addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            roundedButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
-            roundedButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
-            roundedButton.widthAnchor.constraint(equalToConstant: 25),
-            roundedButton.heightAnchor.constraint(equalToConstant: 25)
+            addButton.bottomAnchor.constraint(equalTo: backgroundImage.bottomAnchor, constant: -8),
+            addButton.trailingAnchor.constraint(equalTo: backgroundImage.trailingAnchor, constant: -16),
+            addButton.widthAnchor.constraint(equalToConstant: 25),
+            addButton.heightAnchor.constraint(equalToConstant: 25)
         ])
     }
     
     private func layoutBackgroundImageSubviews() {
-        layoutSubtitleLabel()
-        layoutTitleLabel()
-        layoutButton()
+        setSubtitleLabelConstraints()
+        setTitleLabelConstraints()
+        setAddButtonConstraints()
     }
     
-    private func addBackgroundImageSubview() {
-        contentView.addSubview(gradientView)
-        contentView.addSubview(placeholder)
-        contentView.addSubview(title)
-        contentView.addSubview(subtitle)
-        contentView.addSubview(roundedButton)
-    }
-    
-    //MARK: - Others
-    func fetchImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionTask? {
-        if let cachedImage = imageCache[url] {
-            completion(.success(cachedImage))
-            return nil
-        }
-        else {
-            let task = downloadImage(from: url, completion: completion)
-            task?.resume()
-            return task
-        }
-    }
-    
-    private func downloadImage(from url: URL, completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
-        return URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                guard let error = error else {
-                    fatalError("Error shouldn't be nil")
-                }
-                completion(.failure(error))
-                return 
-            }
-            
-            guard let image = UIImage(data: data) else {
-                completion(.failure(NetworkError.invalidImage))
-                return
-            }
-            
-            completion(.success(image))
+    private func addSubviewsToContentView(views: [UIView]) {
+        views.forEach { view in
+            self.contentView.addSubview(view)
         }
     }
 }

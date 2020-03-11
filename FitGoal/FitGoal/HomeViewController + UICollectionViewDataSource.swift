@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 
 extension HomeViewController: UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let homeSection = HomeSection(rawValue: section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
@@ -19,7 +20,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return 0
+            return inspectorState.didUserSelectRoutine ? 1 : 0
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -41,19 +42,28 @@ extension HomeViewController: UICollectionViewDataSource {
         switch homeSection {
         case .goalTracking:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "GoalTraker", for: indexPath) as? GoalTrakerCell else {
+                .dequeueReusableCell(withReuseIdentifier: GoalTrakerCell.identifier, for: indexPath) as? GoalTrakerCell else {
                 fatalError()
             }
-            
             return cell
         case .routine:
-            fatalError("Configuration for cells should be handled here")
-        case .suggestions:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: "Suggestions", for: indexPath) as? SuggestedRoutineCell else {
+                .dequeueReusableCell(withReuseIdentifier: RoutineInspectorCell.identifier, for: indexPath) as? RoutineInspectorCell else {
                 fatalError()
             }
-
+            switch inspectorState {
+            case .inspecting(let routine):
+                cell.display(routine: routine, availableExercises: allExercises)
+                return cell
+            case .unset:
+                return cell
+            }
+        case .suggestions:
+            guard let cell = collectionView
+                .dequeueReusableCell(withReuseIdentifier: SuggestedRoutineCell.identifier, for: indexPath) as? SuggestedRoutineCell else {
+                fatalError()
+            }
+            cell.delegate = self
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
         }
@@ -76,12 +86,13 @@ extension HomeViewController: UICollectionViewDataSource {
         
         switch homeSection {
         case .goalTracking:
-            header.sectionName = "Progress"
             return header
         case .routine:
-            fatalError()
+            header.sectionName = "Explore Routine"
+            header.linkButton.isHidden = true
+            return header
         case .suggestions:
-            header.sectionName = "suggested"
+            header.sectionName = "All Routines"
             return header
         }
     }
