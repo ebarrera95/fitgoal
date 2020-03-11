@@ -27,7 +27,7 @@ class RoutineSectionHeader: UICollectionReusableView {
         }
     }
     
-    lazy var link: UIButton = {
+    lazy var linkButton: UIButton = {
         let linkButton = UIButton(type: .system)
         let attributedText = "See All".formattedText(
             font: "Roboto-Regular",
@@ -48,11 +48,11 @@ class RoutineSectionHeader: UICollectionReusableView {
         super.init(frame: frame)
         self.addSubview(backgroundView)
         backgroundView.addSubview(headerLabel)
-        backgroundView.addSubview(link)
-        layoutHeaderLabel()
-        layoutLink()
+        backgroundView.addSubview(linkButton)
+        setHeaderLabelConstraints()
+        setLinkButtonConstraints()
         
-        link.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
+        linkButton.addTarget(self, action: #selector(handleTouch), for: .touchUpInside)
     }
     
     @objc private func handleTouch() {
@@ -67,14 +67,14 @@ class RoutineSectionHeader: UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         sectionName = nil
-        link.isHidden = false
+        linkButton.isHidden = false
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func layoutHeaderLabel() {
+    private func setHeaderLabelConstraints() {
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -83,12 +83,12 @@ class RoutineSectionHeader: UICollectionReusableView {
         ])
     }
     
-    private func layoutLink() {
-        link.translatesAutoresizingMaskIntoConstraints = false
+    private func setLinkButtonConstraints() {
+        linkButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            link.topAnchor.constraint(equalTo: headerLabel.topAnchor),
-            link.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
+            linkButton.topAnchor.constraint(equalTo: headerLabel.topAnchor),
+            linkButton.trailingAnchor.constraint(equalTo: backgroundView.trailingAnchor)
         ])
     }
 }

@@ -12,11 +12,9 @@ var imageCache: [URL: UIImage] = [:]
 
 class HomeViewController: UIViewController, RoutineDelegate {
     
-    var allExersices = [Exercise]()
+    var allExercises = [Exercise]()
 
     var routineDetails = SelectedRoutine.unset
-    
-    var routineToDisplay: Routine?
     
     var routineCellDelegate: RoutineDelegate?
     
@@ -76,8 +74,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
     }
     
     func displayExercises(routine: Routine) {
-        routineToDisplay = routine
-        routineDetails = .set
+        routineDetails = .set(routine)
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
@@ -120,9 +117,9 @@ extension HomeViewController {
 
 extension HomeViewController {
     enum SelectedRoutine {
-        case set
+        case set(Routine)
         case unset
-        
+
         var userDidSelectRoutine: Bool {
             switch self {
             case .unset:
@@ -144,7 +141,7 @@ extension HomeViewController {
                 print("Unable to get routines with error: \(error)")
             case .success(let exercise):
                 DispatchQueue.main.async {
-                    self.allExersices = exercise
+                    self.allExercises = exercise
                 }
             }
         }

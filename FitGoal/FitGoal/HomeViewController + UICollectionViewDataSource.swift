@@ -51,17 +51,18 @@ extension HomeViewController: UICollectionViewDataSource {
                 .dequeueReusableCell(withReuseIdentifier: ExploreRoutineCell.identifier, for: indexPath) as? ExploreRoutineCell else {
                 fatalError()
             }
-            
-            cell.routine = routineToDisplay
-            cell.reloadCellData(exercises: allExersices)
-            return cell
-            
+            switch routineDetails {
+            case .set(let routine):
+                cell.display(routine: routine, availableExercises: allExercises)
+                return cell
+            case .unset:
+                return cell
+            }
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: SuggestedRoutineCell.identifier, for: indexPath) as? SuggestedRoutineCell else {
                 fatalError()
             }
-            
             cell.delegate = self
             cell.routine = workoutSuggestions[indexPath.item]
             return cell
@@ -88,7 +89,7 @@ extension HomeViewController: UICollectionViewDataSource {
             return header
         case .routine:
             header.sectionName = "Explore Routine"
-            header.link.isHidden = true
+            header.linkButton.isHidden = true
             return header
         case .suggestions:
             header.sectionName = "All Routines"

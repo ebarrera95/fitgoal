@@ -77,6 +77,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
                     case .success(let image):
+                        imageCache[imageURL] = image
                         self.imageLoadingState = .finished(image)
                     }
                 }
@@ -158,7 +159,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     //MARK: - Set Constrains
-    private func setTitleLabelConstrains() {
+    private func setTitleLabelConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -167,7 +168,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func setSubtitleLabelConstrains() {
+    private func setSubtitleLabelConstraints() {
         subtitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -176,7 +177,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         ])
     }
     
-    private func setAddButtonConstrains() {
+    private func setAddButtonConstraints() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -188,9 +189,9 @@ class SuggestedRoutineCell: UICollectionViewCell {
     }
     
     private func layoutBackgroundImageSubviews() {
-        setSubtitleLabelConstrains()
-        setTitleLabelConstrains()
-        setAddButtonConstrains()
+        setSubtitleLabelConstraints()
+        setTitleLabelConstraints()
+        setAddButtonConstraints()
     }
     
     private func addSubviewsToContentView(views: [UIView]) {

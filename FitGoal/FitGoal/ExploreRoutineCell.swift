@@ -11,10 +11,8 @@ import UIKit
 
 
 class ExploreRoutineCell: UICollectionViewCell {
-    
-    var routine: Routine?
-    
-    private var routineExercies = [Exercise]()
+
+    private var routineExercises = [Exercise]()
     
     private let routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -46,24 +44,22 @@ class ExploreRoutineCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    func reloadCellData(exercises: [Exercise]) {
-        if let routine = self.routine {
-                routineExercies = exercises.filter({ (exersice) -> Bool in
-                return routine.exercises.contains(exersice.id)
-            })
-            routineCollectionView.reloadData()
-        }
+    func display(routine: Routine, availableExercises: [Exercise]) {
+        routineExercises = availableExercises.filter({ (exersice) -> Bool in
+            return routine.exercises.contains(exersice.id)
+        })
+        routineCollectionView.reloadData()
     }
 }
 
 extension ExploreRoutineCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return routineExercies.count
+        return routineExercises.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = routineCollectionView.dequeueReusableCell(withReuseIdentifier: ExerciseCell.identifier, for: indexPath) as! ExerciseCell
-        cell.exercise = routineExercies[indexPath.item]
+        cell.exercise = routineExercises[indexPath.item]
         return cell
     }
 }

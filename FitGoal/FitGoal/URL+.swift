@@ -55,10 +55,6 @@ extension URL {
                 completion(.failure(NetworkError.invalidImage))
                 return
             }
-    
-            DispatchQueue.main.async {
-                imageCache[self] = image
-            }
             completion(.success(image))
         }
     }

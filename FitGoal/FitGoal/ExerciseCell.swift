@@ -64,11 +64,11 @@ class ExerciseCell: UICollectionViewCell {
             currentImageDownloadTask = imageURL.fetchImage { result in
                 DispatchQueue.main.async {
                     guard self.imageURL == imageURL else { return }
-    
                     switch result {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
                     case .success(let image):
+                        imageCache[imageURL] = image
                         self.imageLoadingState = .finished(image)
                     }
                 }
@@ -129,7 +129,7 @@ class ExerciseCell: UICollectionViewCell {
         
         dayIndicator.addSubview(dayIndicatorLabel)
 
-        setConstrains()
+        setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -149,11 +149,11 @@ class ExerciseCell: UICollectionViewCell {
         }
     }
     
-    private func setConstrains() {
-        setIndicatorLabelConstrains()
-        setDayIndicatorConstrains()
-        setTitleLabelConstrains()
-        setExerciseSatusConstrains()
+    private func setConstraints() {
+        setIndicatorLabelConstraints()
+        setDayIndicatorConstraints()
+        setTitleLabelConstraints()
+        setExerciseSatusConstraints()
     }
 
     override func prepareForReuse() {
@@ -164,9 +164,9 @@ class ExerciseCell: UICollectionViewCell {
         currentImageDownloadTask?.cancel()
     }
     
-    //MARK: - Constrains
+    //MARK: - Constraints
     
-    private func setTitleLabelConstrains() {
+    private func setTitleLabelConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -175,7 +175,7 @@ class ExerciseCell: UICollectionViewCell {
         ])
     }
     
-    private func setDayIndicatorConstrains() {
+    private func setDayIndicatorConstraints() {
         dayIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -186,7 +186,7 @@ class ExerciseCell: UICollectionViewCell {
         ])
     }
     
-    private func setIndicatorLabelConstrains() {
+    private func setIndicatorLabelConstraints() {
            dayIndicatorLabel.translatesAutoresizingMaskIntoConstraints = false
            
            NSLayoutConstraint.activate([
@@ -195,7 +195,7 @@ class ExerciseCell: UICollectionViewCell {
            ])
     }
     
-    private func setExerciseSatusConstrains() {
+    private func setExerciseSatusConstraints() {
            exersiceStatus.translatesAutoresizingMaskIntoConstraints = false
            
            NSLayoutConstraint.activate([

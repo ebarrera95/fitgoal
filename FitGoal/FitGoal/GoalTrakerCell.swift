@@ -88,7 +88,7 @@ class GoalTrakerCell: UICollectionViewCell {
         
         shadowView.addSubview(goalImageView)
         
-        setConstrains()
+        setConstraints()
     }
     
     private func addSubviewsToContentView(views: [UIView]) {
@@ -97,12 +97,12 @@ class GoalTrakerCell: UICollectionViewCell {
         }
     }
     
-    private func setConstrains() {
+    private func setConstraints() {
         setShadowConstraints()
-        setMonthLabelConstrains()
-        setcellTitleConstrains()
-        setImageAvatarConstrains()
-        setAddButtonConstrains()
+        setMonthLabelConstraints()
+        setcellTitleConstraints()
+        setImageAvatarConstraints()
+        setAddButtonConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -114,9 +114,9 @@ class GoalTrakerCell: UICollectionViewCell {
         goalImageView.frame = shadowView.bounds
     }
     
-    //MARK: - Constrains
+    //MARK: - Constraints
     
-    private func setAddButtonConstrains() {
+    private func setAddButtonConstraints() {
         addButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -125,7 +125,7 @@ class GoalTrakerCell: UICollectionViewCell {
         ])
     }
     
-    private func setImageAvatarConstrains() {
+    private func setImageAvatarConstraints() {
         imageAvatar.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -145,7 +145,7 @@ class GoalTrakerCell: UICollectionViewCell {
         ])
     }
     
-    private func setMonthLabelConstrains() {
+    private func setMonthLabelConstraints() {
         monthLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -154,7 +154,7 @@ class GoalTrakerCell: UICollectionViewCell {
         ])
     }
     
-    private func setcellTitleConstrains() {
+    private func setcellTitleConstraints() {
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
