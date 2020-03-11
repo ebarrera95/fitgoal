@@ -22,7 +22,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         case .goalTracking:
            return CGSize(width: view.bounds.width - 32, height: 320)
         case .routine:
-            return routineDetails.userDidSelectRoutine ? CGSize(width: view.bounds.width - 32, height: 248) : .zero
+            return inspectorState.didUserSelectRoutine ? CGSize(width: view.bounds.width - 32, height: 248) : .zero
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 140)
         }
@@ -41,7 +41,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         case .goalTracking:
             return .zero
         case .routine:
-            return routineDetails.userDidSelectRoutine ? CGSize(width: view.bounds.width - 32, height: 72) : .zero
+            return inspectorState.didUserSelectRoutine ? CGSize(width: view.bounds.width - 32, height: 72) : .zero
         case .suggestions:
             return CGSize(width: view.bounds.width - 32, height: 72)
         }

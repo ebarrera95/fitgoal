@@ -14,7 +14,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
     
     var allExercises = [Exercise]()
 
-    var routineDetails = SelectedRoutine.unset
+    var inspectorState = RoutineInspectorState.unset
     
     var routineCellDelegate: RoutineDelegate?
     
@@ -56,8 +56,8 @@ class HomeViewController: UIViewController, RoutineDelegate {
         )
         
         self.homeCollectionView.register(
-            ExploreRoutineCell.self,
-            forCellWithReuseIdentifier: ExploreRoutineCell.identifier
+            RoutineInspectorCell.self,
+            forCellWithReuseIdentifier: RoutineInspectorCell.identifier
         )
         
         self.homeCollectionView.alwaysBounceVertical = true
@@ -74,7 +74,7 @@ class HomeViewController: UIViewController, RoutineDelegate {
     }
     
     func displayExercises(routine: Routine) {
-        routineDetails = .set(routine)
+        inspectorState = .inspecting(routine)
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
@@ -116,15 +116,16 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-    enum SelectedRoutine {
-        case set(Routine)
+
+    enum RoutineInspectorState {
+        case inspecting(Routine)
         case unset
 
-        var userDidSelectRoutine: Bool {
+        var didUserSelectRoutine: Bool {
             switch self {
             case .unset:
                 return false
-            case .set:
+            case .inspecting:
                 return true
             }
         }

@@ -20,7 +20,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return routineDetails.userDidSelectRoutine ? 1 : 0
+            return inspectorState.didUserSelectRoutine ? 1 : 0
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -48,11 +48,11 @@ extension HomeViewController: UICollectionViewDataSource {
             return cell
         case .routine:
             guard let cell = collectionView
-                .dequeueReusableCell(withReuseIdentifier: ExploreRoutineCell.identifier, for: indexPath) as? ExploreRoutineCell else {
+                .dequeueReusableCell(withReuseIdentifier: RoutineInspectorCell.identifier, for: indexPath) as? RoutineInspectorCell else {
                 fatalError()
             }
-            switch routineDetails {
-            case .set(let routine):
+            switch inspectorState {
+            case .inspecting(let routine):
                 cell.display(routine: routine, availableExercises: allExercises)
                 return cell
             case .unset:
