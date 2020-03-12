@@ -11,8 +11,10 @@ import UIKit
 
 
 class RoutineInspectorCell: UICollectionViewCell {
+    
+    //TODO: remember to put it private
 
-    private var routineExercises = [Exercise]()
+    var routineExercises = [Exercise]()
     
     private let routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     

@@ -7,10 +7,15 @@
 //
 
 import UIKit
+import CoreData
 
 var imageCache: [URL: UIImage] = [:]
 
 class HomeViewController: UIViewController, RoutineDelegate {
+    
+    var container: NSPersistentContainer!
+    
+    var exercisesMO = [ExerciseMO]()
     
     var allExercises = [Exercise]()
 
@@ -30,8 +35,23 @@ class HomeViewController: UIViewController, RoutineDelegate {
     var workoutSuggestions = [Routine]()
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        
+        guard let appDelegate =
+          UIApplication.shared.delegate as? AppDelegate else {
+          return
+        }
+        container = appDelegate.persistentContainer
+        
+        readFromCoreData()
+        if !exercisesMO.isEmpty {
+            var exercises = [Exercise]()
+            exercisesMO.forEach { (exMO) in
+                exercises.append(exMO.exercise())
+            }
+            inspectorState = .lastView(exercises)
+        }
+        
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
         self.view.addSubview(gradientView)
@@ -118,11 +138,14 @@ extension HomeViewController {
 extension HomeViewController {
 
     enum RoutineInspectorState {
+        case lastView([Exercise])
         case inspecting(Routine)
         case unset
 
         var didUserSelectRoutine: Bool {
             switch self {
+            case .lastView:
+                return true
             case .unset:
                 return false
             case .inspecting:
@@ -145,6 +168,49 @@ extension HomeViewController {
                     self.allExercises = exercise
                 }
             }
+        }
+    }
+}
+
+extension HomeViewController {
+    func saveIntoCoreData(exercise: Exercise) {
+        let managedContext = container.viewContext
+        
+        let entity = NSEntityDescription.entity(forEntityName: "Exercise", in: managedContext)!
+        guard let exerciseMO = NSManagedObject(entity: entity, insertInto: managedContext) as? ExerciseMO else { return }
+        exerciseMO.copyValues(from: exercise)
+        
+        do {
+            try managedContext.save()
+            exercisesMO.append(exerciseMO)
+        } catch let error as NSError {
+            print(error)
+        }
+    }
+    
+    func readFromCoreData() {
+        let managedContext = container.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Exercise")
+        
+        do {
+            self.exercisesMO = try managedContext.fetch(fetchRequest) as! [ExerciseMO]
+        } catch let error as NSError {
+            print(error)
+        }
+    }
+    
+    func clearData() {
+        let managedContext = container.viewContext
+        do {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercise")
+            let exercises = try (managedContext.fetch(fetchRequest)) as? [ExerciseMO]
+            
+            for exercise in exercises! {
+                managedContext.delete(exercise)
+            }
+            try managedContext.save()
+        } catch let error as NSError {
+            print(error)
         }
     }
 }
