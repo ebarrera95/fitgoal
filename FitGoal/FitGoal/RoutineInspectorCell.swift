@@ -52,6 +52,11 @@ class RoutineInspectorCell: UICollectionViewCell {
         })
         routineCollectionView.reloadData()
     }
+    
+    func display(excercises: [Exercise]) {
+        routineExercises = excercises
+        routineCollectionView.reloadData()
+    }
 }
 
 extension RoutineInspectorCell: UICollectionViewDataSource {

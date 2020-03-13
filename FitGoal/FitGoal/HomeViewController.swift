@@ -11,15 +11,11 @@ import CoreData
 
 var imageCache: [URL: UIImage] = [:]
 
-class HomeViewController: UIViewController, RoutineDelegate {
+class HomeViewController: UIViewController {
     
-    var container: NSPersistentContainer!
-    
-    var exercisesMO = [ExerciseMO]()
+    let persistenceManager = PersistenceManager()
     
     var allExercises = [Exercise]()
-
-    var inspectorState = RoutineInspectorState.unset
     
     var routineCellDelegate: RoutineDelegate?
     
@@ -36,21 +32,8 @@ class HomeViewController: UIViewController, RoutineDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        guard let appDelegate =
-          UIApplication.shared.delegate as? AppDelegate else {
-          return
-        }
-        container = appDelegate.persistentContainer
-        
-        readFromCoreData()
-        if !exercisesMO.isEmpty {
-            var exercises = [Exercise]()
-            exercisesMO.forEach { (exMO) in
-                exercises.append(exMO.exercise())
-            }
-            inspectorState = .lastView(exercises)
-        }
+
+        persistenceManager.fetchLastRoutine()
         
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
@@ -92,28 +75,23 @@ class HomeViewController: UIViewController, RoutineDelegate {
         homeCollectionView.frame = view.bounds
         gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
     }
+}
+
+extension HomeViewController: RoutineDelegate {
     
-    func displayExercises(routine: Routine) {
-        inspectorState = .inspecting(routine)
+    func filterExercises(from routine: Routine) -> [Exercise] {
+        var routineExercises = [Exercise]()
+        routineExercises = allExercises.filter({ (exersice) -> Bool in
+            return routine.exercises.contains(exersice.id)
+        })
+        return routineExercises
+    }
+    
+    func displayExercises(exercises: [Exercise]) {
+        persistenceManager.routineState = .inspecting(exercises)
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
-    }
-}
-
-class GradientView: UIView {
-    override class var layerClass: AnyClass {
-        return CAGradientLayer.self
-    }
-
-    private var gradientLayer: CAGradientLayer {
-        return layer as! CAGradientLayer
-    }
-
-    var colors: [UIColor] = [] {
-        didSet {
-            gradientLayer.colors = colors.map { $0.cgColor }
-        }
     }
 }
 
@@ -136,26 +114,6 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-
-    enum RoutineInspectorState {
-        case lastView([Exercise])
-        case inspecting(Routine)
-        case unset
-
-        var didUserSelectRoutine: Bool {
-            switch self {
-            case .lastView:
-                return true
-            case .unset:
-                return false
-            case .inspecting:
-                return true
-            }
-        }
-    }
-}
-
-extension HomeViewController {
     func fetchExercises() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
         guard let url = URL(string: jsonUrlString) else { return }
@@ -172,45 +130,4 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController {
-    func saveIntoCoreData(exercise: Exercise) {
-        let managedContext = container.viewContext
-        
-        let entity = NSEntityDescription.entity(forEntityName: "Exercise", in: managedContext)!
-        guard let exerciseMO = NSManagedObject(entity: entity, insertInto: managedContext) as? ExerciseMO else { return }
-        exerciseMO.copyValues(from: exercise)
-        
-        do {
-            try managedContext.save()
-            exercisesMO.append(exerciseMO)
-        } catch let error as NSError {
-            print(error)
-        }
-    }
-    
-    func readFromCoreData() {
-        let managedContext = container.viewContext
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Exercise")
-        
-        do {
-            self.exercisesMO = try managedContext.fetch(fetchRequest) as! [ExerciseMO]
-        } catch let error as NSError {
-            print(error)
-        }
-    }
-    
-    func clearData() {
-        let managedContext = container.viewContext
-        do {
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercise")
-            let exercises = try (managedContext.fetch(fetchRequest)) as? [ExerciseMO]
-            
-            for exercise in exercises! {
-                managedContext.delete(exercise)
-            }
-            try managedContext.save()
-        } catch let error as NSError {
-            print(error)
-        }
-    }
-}
+
