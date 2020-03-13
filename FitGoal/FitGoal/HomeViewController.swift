@@ -79,7 +79,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: RoutineDelegate {
     
-    func filterExercises(from routine: Routine) -> [Exercise] {
+    func filterExercises(in routine: Routine) -> [Exercise] {
         var routineExercises = [Exercise]()
         routineExercises = allExercises.filter({ (exersice) -> Bool in
             return routine.exercises.contains(exersice.id)

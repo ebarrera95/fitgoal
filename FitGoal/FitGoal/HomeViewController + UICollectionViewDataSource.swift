@@ -62,6 +62,7 @@ extension HomeViewController: UICollectionViewDataSource {
                 case .unset:
                     return cell
                 }
+            
         case .suggestions:
             guard let cell = collectionView
                 .dequeueReusableCell(withReuseIdentifier: SuggestedRoutineCell.identifier, for: indexPath) as? SuggestedRoutineCell else {

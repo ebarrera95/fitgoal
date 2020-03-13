@@ -11,7 +11,7 @@ import UIKit
 protocol RoutineDelegate: AnyObject {
     func displayExercises(exercises: [Exercise])
     
-    func filterExercises(from routine: Routine) -> [Exercise]
+    func filterExercises(in routine: Routine) -> [Exercise]
 }
 
 class SuggestedRoutineCell: UICollectionViewCell {    
@@ -137,7 +137,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     @objc private func handleTouch() {
         guard let routine = routine else { return }
-        guard let routineExercies = delegate?.filterExercises(from: routine) else { return }
+        guard let routineExercies = delegate?.filterExercises(in: routine) else { return }
         delegate?.displayExercises(exercises: routineExercies)
     }
     
