@@ -22,6 +22,8 @@
 		05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */; };
 		05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */; };
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
+		05CDEFD8241B564300C1822D /* ExerciseDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD7241B564300C1822D /* ExerciseDetailViewController.swift */; };
+		05CDEFDA241B58B300C1822D /* ExercisePreviewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD9241B58B300C1822D /* ExercisePreviewCell.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
 		F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* HomeViewController.swift */; };
@@ -66,6 +68,8 @@
 		05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionViewDelegateFlowLayout.swift"; sourceTree = "<group>"; };
 		05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTrakerCell.swift; sourceTree = "<group>"; };
 		05BBF750241503F100EF42E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		05CDEFD7241B564300C1822D /* ExerciseDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseDetailViewController.swift; sourceTree = "<group>"; };
+		05CDEFD9241B58B300C1822D /* ExercisePreviewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePreviewCell.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -147,7 +151,6 @@
 				05A370C32415AA33009A654E /* URL+.swift */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
-				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
 				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */,
 				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
 				050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */,
@@ -157,6 +160,9 @@
 				0546E2DD241511CF004A0F65 /* ExerciseCell.swift */,
 				05B2E1E1240F28EB009B0443 /* Routine.swift */,
 				0546E2DF2415134C004A0F65 /* Exersice.swift */,
+				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
+				05CDEFD7241B564300C1822D /* ExerciseDetailViewController.swift */,
+				05CDEFD9241B58B300C1822D /* ExercisePreviewCell.swift */,
 				F14233B0240CF77D000E8873 /* Main.storyboard */,
 				F14233B3240CF77F000E8873 /* Assets.xcassets */,
 				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
@@ -322,6 +328,7 @@
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
+				05CDEFD8241B564300C1822D /* ExerciseDetailViewController.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
@@ -331,6 +338,7 @@
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
+				05CDEFDA241B58B300C1822D /* ExercisePreviewCell.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
