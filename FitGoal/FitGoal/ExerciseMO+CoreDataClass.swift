@@ -13,7 +13,7 @@ import CoreData
 @objc(ExerciseMO)
 public class ExerciseMO: NSManagedObject {
     
-    func exercise() -> Exercise {
+    func getValue() -> Exercise {
         guard let name = self.name else { fatalError() }
         
         guard let textDescription = self.textDescription else { fatalError() }
@@ -26,7 +26,7 @@ public class ExerciseMO: NSManagedObject {
         return Exercise(id: id, name: name, url: url, description: textDescription)
     }
     
-    func copyValues(from exercise: Exercise) {
+    func copyValue(from exercise: Exercise) {
         self.id = Int32(exercise.id)
         self.name = exercise.name
         self.textDescription = exercise.description

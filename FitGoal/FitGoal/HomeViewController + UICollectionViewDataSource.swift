@@ -20,7 +20,7 @@ extension HomeViewController: UICollectionViewDataSource {
         case .goalTracking:
             return 1
         case  .routine:
-            return persistenceManager.routineState.didUserSelectRoutine ? 1 : 0
+            return routineState.didUserSelectRoutine ? 1 : 0
         case .suggestions:
             return workoutSuggestions.count
         }
@@ -51,13 +51,9 @@ extension HomeViewController: UICollectionViewDataSource {
                 .dequeueReusableCell(withReuseIdentifier: RoutineInspectorCell.identifier, for: indexPath) as? RoutineInspectorCell else {
                 fatalError()
             }
-                switch persistenceManager.routineState {
+                switch routineState {
                 case .inspecting(let exercises):
-                    persistenceManager.clearData()
-                    cell.display(excercises: exercises)
-                    cell.routineExercises.forEach { (exercise) in
-                        persistenceManager.save(exercise: exercise)
-                    }
+                    cell.display(exercises: exercises)
                     return cell
                 case .unset:
                     return cell

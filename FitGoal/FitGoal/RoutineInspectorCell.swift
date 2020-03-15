@@ -14,7 +14,7 @@ class RoutineInspectorCell: UICollectionViewCell {
     
     //TODO: remember to put it private
 
-    var routineExercises = [Exercise]()
+    private var routineExercises = [Exercise]()
     
     private let routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     
@@ -53,8 +53,12 @@ class RoutineInspectorCell: UICollectionViewCell {
         routineCollectionView.reloadData()
     }
     
-    func display(excercises: [Exercise]) {
-        routineExercises = excercises
+    func display(exercises: [Exercise]) {
+        var exercises = exercises
+        exercises.sort { (ex1, ex2) -> Bool in
+            ex1.id < ex2.id
+        }
+        routineExercises = exercises
         routineCollectionView.reloadData()
     }
 }

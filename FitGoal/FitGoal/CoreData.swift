@@ -10,12 +10,12 @@ import UIKit
 import CoreData
 
 protocol Persistence {
-    func save(exercise: Exercise)
-    func read()
+    func saveData(exercises: [Exercise]) -> [ExerciseMO]
+    func readData() -> [ExerciseMO]
     func clearData()
 }
 
-class PersistenceManager: Persistence {
+class CoreDataPersistance: Persistence {
     
     lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FitGoal")
@@ -27,54 +27,45 @@ class PersistenceManager: Persistence {
         return container
     }()
     
-    var exercisesMO = [ExerciseMO]()
-    
-    var routineState = RoutineStateInspector.unset
-    
-    func fetchLastRoutine() {
-        read()
-        if !exercisesMO.isEmpty {
-            var exercises = [Exercise]()
-            exercisesMO.forEach { (exMO) in
-                exercises.append(exMO.exercise())
-            }
-            routineState = .inspecting(exercises)
-        }
-    }
-    
-    func save(exercise: Exercise) {
+    func saveData(exercises: [Exercise]) -> [ExerciseMO] {
+        var exercisesMO = [ExerciseMO]()
         let managedContext = persistentContainer.viewContext
-        
         let entity = NSEntityDescription.entity(forEntityName: "Exercise", in: managedContext)!
-        guard let exerciseMO = NSManagedObject(entity: entity, insertInto: managedContext) as? ExerciseMO else { return }
-        exerciseMO.copyValues(from: exercise)
         
+        exercises.forEach { (ex) in
+            guard let exerciseMO = NSManagedObject(entity: entity, insertInto: managedContext) as? ExerciseMO else { fatalError() }
+            exerciseMO.copyValue(from: ex)
+            exercisesMO.append(exerciseMO)
+        }
         do {
             try managedContext.save()
-            exercisesMO.append(exerciseMO)
-        } catch let error as NSError {
+        } catch let error {
             print(error)
         }
+        return exercisesMO
+        
     }
     
-    func read() {
+    func readData() -> [ExerciseMO] {
+        var exercisesMO = [ExerciseMO]()
         let managedContext = persistentContainer.viewContext
         let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Exercise")
         
         do {
-            self.exercisesMO = try managedContext.fetch(fetchRequest) as! [ExerciseMO]
+           exercisesMO = try managedContext.fetch(fetchRequest) as! [ExerciseMO]
         } catch let error as NSError {
             print(error)
         }
+        return exercisesMO
     }
     
     func clearData() {
         let managedContext = persistentContainer.viewContext
         do {
             let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Exercise")
-            let exercises = try (managedContext.fetch(fetchRequest)) as? [ExerciseMO]
+            guard let exercisesMO = try (managedContext.fetch(fetchRequest)) as? [ExerciseMO] else { return }
             
-            for exercise in exercises! {
+            for exercise in exercisesMO {
                 managedContext.delete(exercise)
             }
             try managedContext.save()
