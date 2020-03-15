@@ -51,13 +51,13 @@ extension HomeViewController: UICollectionViewDataSource {
                 .dequeueReusableCell(withReuseIdentifier: RoutineInspectorCell.identifier, for: indexPath) as? RoutineInspectorCell else {
                 fatalError()
             }
-                switch routineState {
-                case .inspecting(let exercises):
-                    cell.display(exercises: exercises)
-                    return cell
-                case .unset:
-                    return cell
-                }
+            switch routineState {
+            case .inspecting(let exercises):
+                cell.display(exercises: exercises)
+                return cell
+            case .unset:
+                return cell
+            }
             
         case .suggestions:
             guard let cell = collectionView

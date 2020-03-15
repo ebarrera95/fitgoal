@@ -24,7 +24,7 @@
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
 		05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */; };
 		05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */; };
-		05CDEFD2241A294500C1822D /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreData.swift */; };
+		05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */; };
 		05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */; };
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
@@ -73,7 +73,7 @@
 		05BBF750241503F100EF42E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseMO+CoreDataClass.swift"; sourceTree = "<group>"; };
-		05CDEFD1241A294500C1822D /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistance.swift; sourceTree = "<group>"; };
 		05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStateInspector.swift; sourceTree = "<group>"; };
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,7 +162,7 @@
 				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
 				05CDEFD5241B3DFF00C1822D /* GradientView.swift */,
 				05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */,
-				05CDEFD1241A294500C1822D /* CoreData.swift */,
+				05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */,
 				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */,
 				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
 				050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */,
@@ -350,7 +350,7 @@
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
-				05CDEFD2241A294500C1822D /* CoreData.swift in Sources */,
+				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,

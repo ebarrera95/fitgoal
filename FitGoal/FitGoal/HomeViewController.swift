@@ -17,8 +17,6 @@ class HomeViewController: UIViewController {
     
     var persitance: Persistence
     
-    var exercisesMO = [ExerciseMO]()
-    
     var allExercises = [Exercise]()
     
     var routineCellDelegate: RoutineDelegate?
@@ -90,12 +88,8 @@ class HomeViewController: UIViewController {
     }
     
     func readLastSeenRoutine() {
-        self.exercisesMO = persitance.readData()
-        if !exercisesMO.isEmpty {
-            var exercises = [Exercise]()
-            exercisesMO.forEach { (exMO) in
-                exercises.append(exMO.getValue())
-            }
+        let exercises = persitance.readExercises()
+        if !exercises.isEmpty {
             routineState = .inspecting(exercises)
         }
     }
@@ -113,7 +107,7 @@ extension HomeViewController: RoutineDelegate {
     
     func displayExercises(exercises: [Exercise]) {
         persitance.clearData()
-        self.exercisesMO = persitance.saveData(exercises: exercises)
+        persitance.save(exercises: exercises)
         routineState = .inspecting(exercises)
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
