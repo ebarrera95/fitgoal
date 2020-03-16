@@ -17,7 +17,7 @@ protocol Persistence {
 
 class CoreDataPersistance: Persistence {
     
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FitGoal")
         container.loadPersistentStores { description, error in
             if let error = error {

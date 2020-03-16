@@ -46,13 +46,6 @@ class RoutineInspectorCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    func display(routine: Routine, availableExercises: [Exercise]) {
-        routineExercises = availableExercises.filter({ (exersice) -> Bool in
-            return routine.exercises.contains(exersice.id)
-        })
-        routineCollectionView.reloadData()
-    }
-    
     func display(exercises: [Exercise]) {
         var exercises = exercises
         exercises.sort { (ex1, ex2) -> Bool in

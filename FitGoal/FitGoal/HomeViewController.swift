@@ -111,7 +111,7 @@ extension HomeViewController: SuggestedRoutineCellDelegate {
 }
 
 extension HomeViewController {
-    func fetchWorkoutRoutines() {
+    private func fetchWorkoutRoutines() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
         url.fetch { (result: Result<[Routine], Error>) in
@@ -129,7 +129,7 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-    func fetchExercises() {
+    private func fetchExercises() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
         guard let url = URL(string: jsonUrlString) else { return }
         url.fetch { (result: Result<[Exercise], Error>) in
