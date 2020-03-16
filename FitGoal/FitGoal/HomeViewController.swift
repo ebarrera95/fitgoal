@@ -85,16 +85,32 @@ class GradientView: UIView {
     override class var layerClass: AnyClass {
         return CAGradientLayer.self
     }
+    
 
     private var gradientLayer: CAGradientLayer {
         return layer as! CAGradientLayer
     }
+    
 
     var colors: [UIColor] = [] {
         didSet {
             gradientLayer.colors = colors.map { $0.cgColor }
         }
     }
+    
+    var startPoint: CGPoint = .zero {
+        didSet {
+            gradientLayer.startPoint = startPoint
+        }
+    }
+    
+    var endPoint: CGPoint = .zero {
+        didSet {
+            gradientLayer.endPoint = endPoint
+        }
+    }
+    
+    
 }
 
 extension HomeViewController {

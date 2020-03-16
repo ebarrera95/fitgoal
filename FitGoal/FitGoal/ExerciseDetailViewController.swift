@@ -30,6 +30,8 @@ class ExerciseDetailViewController: UIViewController {
         self.exerciseCollectionView.backgroundColor = .clear
         
         exerciseCollectionView.register(ExercisePreviewCell.self, forCellWithReuseIdentifier: ExercisePreviewCell.identifier)
+        
+        exerciseCollectionView.register(ExerciseDescriptionCell.self, forCellWithReuseIdentifier: ExerciseDescriptionCell.identifier)
     }
     
     override func viewDidLayoutSubviews() {
@@ -72,7 +74,7 @@ extension ExerciseDetailViewController: UICollectionViewDelegateFlowLayout {
         }
         switch exerciseSection {
         case .preview:
-            return CGSize(width: view.bounds.width - 32, height: 320)
+            return CGSize(width: view.bounds.width - 32, height: 360)
         case .description:
             return .zero
         }

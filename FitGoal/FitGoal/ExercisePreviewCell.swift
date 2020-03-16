@@ -35,7 +35,7 @@ class ExercisePreviewCell: UICollectionViewCell {
         gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
         return gradientView
     }()
-    
+
     private var backgroundImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(imageLiteralResourceName: "GoalTraker")
@@ -68,16 +68,30 @@ class ExercisePreviewCell: UICollectionViewCell {
         return shadow
     }()
     
+    private var secondShadow: UIView = {
+        let gradientView = GradientView(frame: .zero)
+        gradientView.layer.cornerRadius = 9
+        gradientView.colors = [#colorLiteral(red: 0.18, green: 0.74, blue: 0.89, alpha: 1), #colorLiteral(red: 0.51, green: 0.09, blue: 0.86, alpha: 1)]
+        gradientView.startPoint = CGPoint(x: 0, y: 0.70)
+        gradientView.endPoint = CGPoint(x: 1, y: 0.74)
+        gradientView.alpha = 0.15
+        return gradientView
+    }()
+    
+    private var playButton: UIImageView = {
+        let view = UIImageView(image: UIImage(imageLiteralResourceName: "PlayButton"))
+        view.contentMode = .scaleAspectFit
+        return view
+        
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(gradientBackgroundView)
         
-        let views = [shadowView, placeholder, cellTitle]
+        let views = [gradientBackgroundView, secondShadow, shadowView, playButton, placeholder, cellTitle]
         addSubviewsToContentView(views: views)
         
         shadowView.addSubview(backgroundImage)
-        
         setConstraints()
     }
     
@@ -93,6 +107,8 @@ class ExercisePreviewCell: UICollectionViewCell {
     private func setConstraints() {
         setTitleLabelConstraints()
         setShadowConstraints()
+        setSecondShadowConstraints()
+        setPlayButtonConstraints()
     }
     
     private func addSubviewsToContentView(views: [UIView]) {
@@ -115,12 +131,33 @@ class ExercisePreviewCell: UICollectionViewCell {
         shadowView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
             shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            shadowView.heightAnchor.constraint(equalToConstant: 200)
+            shadowView.heightAnchor.constraint(equalToConstant: 228)
         ])
     }
     
+    private func setSecondShadowConstraints() {
+        secondShadow.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            secondShadow.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            secondShadow.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor, constant: 16),
+            secondShadow.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16),
+            secondShadow.heightAnchor.constraint(equalToConstant: 30)
+        ])
+    }
+    
+    private func setPlayButtonConstraints() {
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            playButton.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor),
+            playButton.heightAnchor.constraint(equalToConstant: 72),
+            playButton.widthAnchor.constraint(equalToConstant: 72)
+        ])
+    }
 
 }
