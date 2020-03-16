@@ -8,15 +8,15 @@
 
 import UIKit
 
-protocol RoutineDelegate: AnyObject {
-    func displayExercises(routine: Routine)
+protocol SuggestedRoutineCellDelegate: AnyObject {
+    func userDidSelectRoutine(_ routine: Routine)
 }
 
 class SuggestedRoutineCell: UICollectionViewCell {    
     
     static let identifier: String = "Suggestions"
     
-    weak var delegate: RoutineDelegate?
+    weak var delegate: SuggestedRoutineCellDelegate?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -135,7 +135,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     @objc private func handleTouch() {
         guard let routine = routine else { return }
-        delegate?.displayExercises(routine: routine)
+        delegate?.userDidSelectRoutine(routine)
     }
     
     required init?(coder: NSCoder) {
