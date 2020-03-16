@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreData
 
 var imageCache: [URL: UIImage] = [:]
 
@@ -97,8 +96,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: SuggestedRoutineCellDelegate {
     func userDidSelectRoutine(_ routine: Routine) {
-        var routineExercises = [Exercise]()
-        routineExercises = allExercises.filter { routine.exercises.contains($0.id) }
+        let routineExercises = allExercises.filter { routine.exercises.contains($0.id) }
         
         persitence.clearData()
         persitence.save(exercises: routineExercises)
@@ -144,5 +142,3 @@ extension HomeViewController {
         }
     }
 }
-
-
