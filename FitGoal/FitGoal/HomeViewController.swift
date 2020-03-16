@@ -15,17 +15,17 @@ class HomeViewController: UIViewController {
 
     var routineState  = RoutineStateInspector.unset
     
-    var persitance: Persistence
+    private var persitence: Persistence
     
-    var allExercises = [Exercise]()
+    private var allExercises = [Exercise]()
     
-    var routineCellDelegate: RoutineDelegate?
+    private var routineCellDelegate: SuggestedRoutineCellDelegate?
 
-    let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
     var workoutSuggestions = [Routine]()
     
-    private var barStatusGradient: UIView = {
+    private var statusBarGradient: UIView = {
         let gradientView = GradientView()
         gradientView.layer.cornerRadius = 7
         gradientView.colors = [#colorLiteral(red: 0.03921568627, green: 0, blue: 0, alpha: 0.27), #colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0)]
@@ -33,7 +33,7 @@ class HomeViewController: UIViewController {
     }()
     
     init(persistance: Persistence) {
-        self.persitance = persistance
+        self.persitence = persistance
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -46,7 +46,7 @@ class HomeViewController: UIViewController {
 
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
-        self.view.addSubview(barStatusGradient)
+        self.view.addSubview(statusBarGradient)
         
         self.homeCollectionView.dataSource = self
         self.homeCollectionView.delegate = self
@@ -84,31 +84,26 @@ class HomeViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeCollectionView.frame = view.bounds
-        barStatusGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
+        statusBarGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
     }
     
     func readLastSeenRoutine() {
-        let exercises = persitance.readExercises()
+        let exercises = persitence.readExercises()
         if !exercises.isEmpty {
             routineState = .inspecting(exercises)
         }
     }
 }
 
-extension HomeViewController: RoutineDelegate {
-
-    func filterExercises(in routine: Routine) -> [Exercise] {
+extension HomeViewController: SuggestedRoutineCellDelegate {
+    func userDidSelectRoutine(_ routine: Routine) {
         var routineExercises = [Exercise]()
-        routineExercises = allExercises.filter({ (exersice) -> Bool in
-            return routine.exercises.contains(exersice.id)
-        })
-        return routineExercises
-    }
-    
-    func displayExercises(exercises: [Exercise]) {
-        persitance.clearData()
-        persitance.save(exercises: exercises)
-        routineState = .inspecting(exercises)
+        routineExercises = allExercises.filter { routine.exercises.contains($0.id) }
+        
+        persitence.clearData()
+        persitence.save(exercises: routineExercises)
+        routineState = .inspecting(routineExercises)
+        
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
