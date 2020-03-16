@@ -10,31 +10,42 @@ import UIKit
 
 var imageCache: [URL: UIImage] = [:]
 
-class HomeViewController: UIViewController, RoutineDelegate {
-    
-    var allExercises = [Exercise]()
+class HomeViewController: UIViewController {
 
-    var inspectorState = RoutineInspectorState.unset
+    var routineState  = RoutineStateInspector.unset
     
-    var routineCellDelegate: RoutineDelegate?
+    private var persitence: Persistence
     
-    private var gradientView: UIView = {
+    private var allExercises = [Exercise]()
+    
+    private var routineCellDelegate: SuggestedRoutineCellDelegate?
+
+    private let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+
+    var workoutSuggestions = [Routine]()
+    
+    private var statusBarGradient: UIView = {
         let gradientView = GradientView()
         gradientView.layer.cornerRadius = 7
         gradientView.colors = [#colorLiteral(red: 0.03921568627, green: 0, blue: 0, alpha: 0.27), #colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0)]
         return gradientView
     }()
-
-    let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-
-    var workoutSuggestions = [Routine]()
+    
+    init(persistance: Persistence) {
+        self.persitence = persistance
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
-        self.view.addSubview(gradientView)
+        self.view.addSubview(statusBarGradient)
         
         self.homeCollectionView.dataSource = self
         self.homeCollectionView.delegate = self
@@ -65,56 +76,41 @@ class HomeViewController: UIViewController, RoutineDelegate {
         
         fetchWorkoutRoutines()
         fetchExercises()
+        
+        readLastSeenRoutine()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         homeCollectionView.frame = view.bounds
-        gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
+        statusBarGradient.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
     }
     
-    func displayExercises(routine: Routine) {
-        inspectorState = .inspecting(routine)
+    func readLastSeenRoutine() {
+        let exercises = persitence.readExercises()
+        if !exercises.isEmpty {
+            routineState = .inspecting(exercises)
+        }
+    }
+}
+
+extension HomeViewController: SuggestedRoutineCellDelegate {
+    func userDidSelectRoutine(_ routine: Routine) {
+        let routineExercises = allExercises.filter { routine.exercises.contains($0.id) }
+        
+        persitence.clearData()
+        persitence.save(exercises: routineExercises)
+        routineState = .inspecting(routineExercises)
+        
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
     }
-}
-
-class GradientView: UIView {
-    override class var layerClass: AnyClass {
-        return CAGradientLayer.self
-    }
-    
-
-    private var gradientLayer: CAGradientLayer {
-        return layer as! CAGradientLayer
-    }
-    
-
-    var colors: [UIColor] = [] {
-        didSet {
-            gradientLayer.colors = colors.map { $0.cgColor }
-        }
-    }
-    
-    var startPoint: CGPoint = .zero {
-        didSet {
-            gradientLayer.startPoint = startPoint
-        }
-    }
-    
-    var endPoint: CGPoint = .zero {
-        didSet {
-            gradientLayer.endPoint = endPoint
-        }
-    }
-    
     
 }
 
 extension HomeViewController {
-    func fetchWorkoutRoutines() {
+    private func fetchWorkoutRoutines() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/routines"
         guard let url = URL(string: jsonUrlString) else { return }
         url.fetch { (result: Result<[Routine], Error>) in
@@ -132,24 +128,7 @@ extension HomeViewController {
 }
 
 extension HomeViewController {
-
-    enum RoutineInspectorState {
-        case inspecting(Routine)
-        case unset
-
-        var didUserSelectRoutine: Bool {
-            switch self {
-            case .unset:
-                return false
-            case .inspecting:
-                return true
-            }
-        }
-    }
-}
-
-extension HomeViewController {
-    func fetchExercises() {
+    private func fetchExercises() {
         let jsonUrlString = "https://my-json-server.typicode.com/rlaguilar/fitgoal/exercices"
         guard let url = URL(string: jsonUrlString) else { return }
         url.fetch { (result: Result<[Exercise], Error>) in

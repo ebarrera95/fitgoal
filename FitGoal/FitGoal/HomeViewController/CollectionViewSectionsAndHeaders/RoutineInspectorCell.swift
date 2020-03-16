@@ -11,7 +11,7 @@ import UIKit
 
 
 class RoutineInspectorCell: UICollectionViewCell {
-
+    
     private var routineExercises = [Exercise]()
     
     private let routineCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -44,10 +44,12 @@ class RoutineInspectorCell: UICollectionViewCell {
         super.prepareForReuse()
     }
     
-    func display(routine: Routine, availableExercises: [Exercise]) {
-        routineExercises = availableExercises.filter({ (exersice) -> Bool in
-            return routine.exercises.contains(exersice.id)
-        })
+    func display(exercises: [Exercise]) {
+        var exercises = exercises
+        exercises.sort { (ex1, ex2) -> Bool in
+            ex1.id < ex2.id
+        }
+        routineExercises = exercises
         routineCollectionView.reloadData()
     }
 }
