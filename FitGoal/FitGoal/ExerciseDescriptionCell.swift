@@ -18,6 +18,10 @@ class ExerciseDescriptionCell: UICollectionViewCell {
         return view
     }()
     
+    private let label = UILabel()
+    
+    private let text = UITextView()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
