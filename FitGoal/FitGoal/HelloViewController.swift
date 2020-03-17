@@ -32,7 +32,9 @@ class HelloViewController: UIViewController {
     }()
     
     private var checkIcon: UIImageView = {
-       let logo = 
+        let logo = UIImageView(image: UIImage(imageLiteralResourceName: "icon_logo"))
+        logo.frame = CGRect(x: 0, y: 0, width: 104, height: 104)
+        return logo
     }()
    
     override func viewDidLoad() {
