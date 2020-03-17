@@ -31,10 +31,17 @@ class HelloViewController: UIViewController {
         return gradientView
     }()
     
-    private var checkIcon: UIImageView = {
-        let logo = UIImageView(image: UIImage(imageLiteralResourceName: "icon_logo"))
-        logo.frame = CGRect(x: 0, y: 0, width: 104, height: 104)
-        return logo
+    private let checkIcon = UIImageView(image: UIImage(imageLiteralResourceName: "icon_logo"))
+    
+    private let greetingLabel: UILabel = {
+        let label = UILabel()
+        let text = "HELLO!".formattedText(
+            font: "Oswald-Medium",
+            size: 34,
+            color: #colorLiteral(red: 0.36, green: 0.37, blue: 0.4, alpha: 1),
+            kern: -0.12)
+        label.attributedText = text
+        return label
     }()
    
     override func viewDidLoad() {
@@ -43,7 +50,22 @@ class HelloViewController: UIViewController {
         view.addSubview(gradientBackgroundView)
         view.addSubview(shadowWithGradient)
         view.addSubview(checkIcon)
+        view.addSubview(greetingLabel)
+        
+        setGreetingLabelConstraints()
+    }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        checkIcon.frame = CGRect(x: view.bounds.midX - 52, y: 130, width: 104, height: 104)
     }
     
+    private func setGreetingLabelConstraints(){
+        greetingLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
+        ])
+    }
     
 }
