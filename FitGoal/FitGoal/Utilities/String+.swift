@@ -18,8 +18,9 @@ extension String {
             .font: UIFont(name: font, size: size)!,
             .foregroundColor: color,
             .kern: kern,
-            NSAttributedString.Key.paragraphStyle: paragraphStyle
+            .paragraphStyle: paragraphStyle
         ]
+        
         let attributeText = NSAttributedString(string: text, attributes: atributes)
         return attributeText
     }

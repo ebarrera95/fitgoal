@@ -151,11 +151,11 @@ class ExercisePreviewCell: UICollectionViewCell {
     
     private func setConstraints() {
         setTitleLabelConstraints()
-        setShadowConstraints()
-        setSecondShadowConstraints()
+        setGrayShadowConstraints()
+        setShadowWithGradientConstraints()
         setPlayButtonConstraints()
         setBackgroundImageConstraints()
-        setGradientViewConstraints()
+        setImageGradientConstraints()
     }
     
     private func addSubviewsToContentView(views: [UIView]) {
@@ -163,6 +163,7 @@ class ExercisePreviewCell: UICollectionViewCell {
             self.contentView.addSubview(view)
         }
     }
+    
     //MARK: - Constraints
     
     private func setTitleLabelConstraints() {
@@ -174,7 +175,7 @@ class ExercisePreviewCell: UICollectionViewCell {
         ])
     }
     
-    private func setShadowConstraints() {
+    private func setGrayShadowConstraints() {
         grayShadow.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -184,6 +185,7 @@ class ExercisePreviewCell: UICollectionViewCell {
             grayShadow.heightAnchor.constraint(equalToConstant: 228)
         ])
     }
+    
     private func setBackgroundImageConstraints() {
         exerciseImage.translatesAutoresizingMaskIntoConstraints = false
         
@@ -194,7 +196,8 @@ class ExercisePreviewCell: UICollectionViewCell {
             exerciseImage.widthAnchor.constraint(equalTo: grayShadow.widthAnchor)
         ])
     }
-    private func setGradientViewConstraints() {
+    
+    private func setImageGradientConstraints() {
         imageGradient.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -205,7 +208,7 @@ class ExercisePreviewCell: UICollectionViewCell {
         ])
     }
     
-    private func setSecondShadowConstraints() {
+    private func setShadowWithGradientConstraints() {
         shadowWithGradient.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -226,7 +229,4 @@ class ExercisePreviewCell: UICollectionViewCell {
             playButton.widthAnchor.constraint(equalToConstant: 72)
         ])
     }
-    
-    
-
 }

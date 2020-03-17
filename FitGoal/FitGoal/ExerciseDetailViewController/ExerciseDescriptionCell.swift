@@ -25,6 +25,7 @@ class ExerciseDescriptionCell: UICollectionViewCell {
             desciptionText.attributedText = attributtedText
         }
     }
+    
     private let descriptionView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
@@ -71,12 +72,7 @@ class ExerciseDescriptionCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
-    
+
     //MARK: - Constraints
     
     private func setDescriptionViewConstraints() {
@@ -108,8 +104,4 @@ class ExerciseDescriptionCell: UICollectionViewCell {
             descriptionTitle.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 16)
         ])
     }
-    
-    
-    
-    
 }

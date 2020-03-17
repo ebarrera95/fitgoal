@@ -12,14 +12,15 @@ class ExerciseDetailViewController: UIViewController {
     
     var exercise: Exercise?
     
-    private var starExerciseButton: UIButton = {
+    private var startExerciseButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.56, green: 0.07, blue: 1, alpha: 1)
-        let string = "Start Routine".formattedText(
-        font: "Roboto-Regular",
-        size: 17,
-        color: .white,
-        kern: 0)
+        let string = "Start Exercise".formattedText(
+            font: "Roboto-Regular",
+            size: 17,
+            color: .white,
+            kern: 0
+        )
         button.setAttributedTitle(string, for: .normal)
         
         return button
@@ -30,7 +31,7 @@ class ExerciseDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(exerciseCollectionView)
-        view.addSubview(starExerciseButton)
+        view.addSubview(startExerciseButton)
         
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
@@ -47,8 +48,8 @@ class ExerciseDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         exerciseCollectionView.frame = view.bounds
-        starExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 84, width: view.bounds.width - 32, height: 54)
-        starExerciseButton.layer.cornerRadius = starExerciseButton.bounds.height/2
+        startExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 84, width: view.bounds.width - 32, height: 54)
+        startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
     }
 }
 extension ExerciseDetailViewController: UICollectionViewDataSource {
@@ -98,7 +99,6 @@ extension ExerciseDetailViewController: UICollectionViewDelegateFlowLayout {
             return CGSize(width: view.bounds.width - 32, height: 360)
         }
     }
-    
 }
 
 enum ExerciseDetailSection: Int {
