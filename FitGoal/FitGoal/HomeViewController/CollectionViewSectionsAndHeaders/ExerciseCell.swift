@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class ExerciseCell: UICollectionViewCell {
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
@@ -128,7 +130,7 @@ class ExerciseCell: UICollectionViewCell {
         addSubviewsToContentView(views: views)
         
         dayIndicator.addSubview(dayIndicatorLabel)
-
+        
         setConstraints()
     }
     

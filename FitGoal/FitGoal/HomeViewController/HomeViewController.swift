@@ -19,6 +19,8 @@ class HomeViewController: UIViewController {
     private var allExercises = [Exercise]()
     
     private var routineCellDelegate: SuggestedRoutineCellDelegate?
+    
+    private var routineInspectorCellDelegate: RoutineInspectorCellDelegate?
 
     private let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
@@ -42,7 +44,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         self.view.addSubview(homeCollectionView)
         self.view.addSubview(statusBarGradient)
@@ -141,5 +143,13 @@ extension HomeViewController {
                 }
             }
         }
+    }
+}
+
+extension HomeViewController: RoutineInspectorCellDelegate {
+    func userDidSelectExersice(_ exercise: Exercise) {
+        let vc = ExerciseDetailViewController()
+        vc.exercise = exercise
+        show(vc, sender: self.homeCollectionView)
     }
 }

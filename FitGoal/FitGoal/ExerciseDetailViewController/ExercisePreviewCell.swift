@@ -12,6 +12,60 @@ class ExercisePreviewCell: UICollectionViewCell {
     
     static var identifier = "Exercise Preview"
     
+    private var imageLoadingState: ImageLoadingState = .inProgress {
+        didSet {
+            switch imageLoadingState {
+            case .inProgress:
+                imageGradient.isHidden = true
+                playButton.isHidden = true
+                placeholder.startAnimating()
+            case .finished(let image):
+                imageGradient.isHidden = false
+                playButton.isHidden = false
+                placeholder.stopAnimating()
+                exerciseImage.image = image
+            case .failed(let error):
+                print("Unable to load image with error: \(error)")
+            }
+        }
+    }
+    
+    var exercise: Exercise? {
+        didSet {
+            imageURL = exercise?.url
+            guard let title = exercise?.name else { return }
+            
+            cellTitle.attributedText = title.uppercased().formattedText(
+                font: "Oswald-Medium",
+                size: 34,
+                color: .white,
+                kern: -0.14
+            )
+        }
+    }
+    
+    private var currentImageDownloadTask: URLSessionTask?
+    
+    private var imageURL: URL? {
+        didSet {
+            guard let imageURL = imageURL else {
+                return
+            }
+            currentImageDownloadTask = imageURL.fetchImage { result in
+                DispatchQueue.main.async {
+                    guard self.imageURL == imageURL else { return }
+                    switch result {
+                    case .failure(let error):
+                        self.imageLoadingState = .failed(error)
+                    case .success(let image):
+                        imageCache[imageURL] = image
+                        self.imageLoadingState = .finished(image)
+                    }
+                }
+            }
+        }
+    }
+    
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
@@ -29,37 +83,26 @@ class ExercisePreviewCell: UICollectionViewCell {
         return placeholder
     }()
     
-    private var gradientView: UIView = {
+    private var imageGradient: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 7
         gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
         return gradientView
     }()
 
-    private var backgroundImage: UIImageView = {
+    private var exerciseImage: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(imageLiteralResourceName: "GoalTraker")
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
         imageView.layer.cornerRadius = 7
         imageView.clipsToBounds = true
         return imageView
     }()
     
-    private lazy var cellTitle: UILabel = {
-        let label = UILabel()
-        label.attributedText = "WALKING LUNGES".formattedText(
-            font: "Oswald-Medium",
-            size: 34,
-            color: .white,
-            kern: -0.14
-        )
-        return label
-    }()
+    private lazy var cellTitle = UILabel()
     
-    private var shadowView: UIView = {
+    private var grayShadow: UIView = {
         var shadow = UIView()
-        shadow.backgroundColor = .blue
         shadow.clipsToBounds = false
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
         shadow.layer.shadowColor = UIColor(r: 131, g: 164, b: 133, a: 12).cgColor
@@ -68,7 +111,7 @@ class ExercisePreviewCell: UICollectionViewCell {
         return shadow
     }()
     
-    private var secondShadow: UIView = {
+    private var shadowWithGradient: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 9
         gradientView.colors = [#colorLiteral(red: 0.18, green: 0.74, blue: 0.89, alpha: 1), #colorLiteral(red: 0.51, green: 0.09, blue: 0.86, alpha: 1)]
@@ -88,10 +131,11 @@ class ExercisePreviewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let views = [gradientBackgroundView, secondShadow, shadowView, playButton, placeholder, cellTitle]
+        let views = [gradientBackgroundView, shadowWithGradient, grayShadow, playButton, placeholder, cellTitle]
         addSubviewsToContentView(views: views)
         
-        shadowView.addSubview(backgroundImage)
+        grayShadow.addSubview(exerciseImage)
+        grayShadow.addSubview(imageGradient)
         setConstraints()
     }
     
@@ -101,7 +145,8 @@ class ExercisePreviewCell: UICollectionViewCell {
     }
     override func layoutSubviews() {
         super.layoutSubviews()
-        backgroundImage.frame = shadowView.bounds
+        placeholder.center = CGPoint(x: contentView.bounds.midX, y: contentView.bounds.midY)
+        imageGradient.frame = grayShadow.bounds
     }
     
     private func setConstraints() {
@@ -109,6 +154,8 @@ class ExercisePreviewCell: UICollectionViewCell {
         setShadowConstraints()
         setSecondShadowConstraints()
         setPlayButtonConstraints()
+        setBackgroundImageConstraints()
+        setGradientViewConstraints()
     }
     
     private func addSubviewsToContentView(views: [UIView]) {
@@ -122,30 +169,50 @@ class ExercisePreviewCell: UICollectionViewCell {
         cellTitle.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            cellTitle.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 30),
-            cellTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16)
+            cellTitle.bottomAnchor.constraint(equalTo: grayShadow.topAnchor, constant: -16),
+            cellTitle.leadingAnchor.constraint(equalTo: grayShadow.leadingAnchor)
         ])
     }
     
     private func setShadowConstraints() {
-        shadowView.translatesAutoresizingMaskIntoConstraints = false
+        grayShadow.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            shadowView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-            shadowView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            shadowView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            shadowView.heightAnchor.constraint(equalToConstant: 228)
+            grayShadow.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
+            grayShadow.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            grayShadow.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            grayShadow.heightAnchor.constraint(equalToConstant: 228)
+        ])
+    }
+    private func setBackgroundImageConstraints() {
+        exerciseImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            exerciseImage.leadingAnchor.constraint(equalTo: grayShadow.leadingAnchor),
+            exerciseImage.trailingAnchor.constraint(equalTo:grayShadow.trailingAnchor),
+            exerciseImage.heightAnchor.constraint(equalTo: grayShadow.heightAnchor),
+            exerciseImage.widthAnchor.constraint(equalTo: grayShadow.widthAnchor)
+        ])
+    }
+    private func setGradientViewConstraints() {
+        imageGradient.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            imageGradient.leadingAnchor.constraint(equalTo: grayShadow.leadingAnchor),
+            imageGradient.trailingAnchor.constraint(equalTo:grayShadow.trailingAnchor),
+            imageGradient.heightAnchor.constraint(equalTo: grayShadow.heightAnchor),
+            imageGradient.widthAnchor.constraint(equalTo: grayShadow.widthAnchor)
         ])
     }
     
     private func setSecondShadowConstraints() {
-        secondShadow.translatesAutoresizingMaskIntoConstraints = false
+        shadowWithGradient.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            secondShadow.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            secondShadow.leadingAnchor.constraint(equalTo: shadowView.leadingAnchor, constant: 16),
-            secondShadow.trailingAnchor.constraint(equalTo: shadowView.trailingAnchor, constant: -16),
-            secondShadow.heightAnchor.constraint(equalToConstant: 30)
+            shadowWithGradient.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            shadowWithGradient.leadingAnchor.constraint(equalTo: grayShadow.leadingAnchor, constant: 16),
+            shadowWithGradient.trailingAnchor.constraint(equalTo: grayShadow.trailingAnchor, constant: -16),
+            shadowWithGradient.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     
@@ -153,11 +220,13 @@ class ExercisePreviewCell: UICollectionViewCell {
         playButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            playButton.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor),
-            playButton.centerYAnchor.constraint(equalTo: shadowView.centerYAnchor),
+            playButton.centerXAnchor.constraint(equalTo: grayShadow.centerXAnchor),
+            playButton.centerYAnchor.constraint(equalTo: grayShadow.centerYAnchor),
             playButton.heightAnchor.constraint(equalToConstant: 72),
             playButton.widthAnchor.constraint(equalToConstant: 72)
         ])
     }
+    
+    
 
 }

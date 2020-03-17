@@ -12,15 +12,25 @@ class ExerciseDetailViewController: UIViewController {
     
     var exercise: Exercise?
     
-    let exerciseCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    private var starExerciseButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0.56, green: 0.07, blue: 1, alpha: 1)
+        let string = "Start Routine".formattedText(
+        font: "Roboto-Regular",
+        size: 17,
+        color: .white,
+        kern: 0)
+        button.setAttributedTitle(string, for: .normal)
+        
+        return button
+    }()
     
-    //TODO: Remember to pass this view in the segue
-    private var gradientView = UIView()
-
+    private let exerciseCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(exerciseCollectionView)
-        view.addSubview(gradientView)
+        view.addSubview(starExerciseButton)
         
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
@@ -37,7 +47,8 @@ class ExerciseDetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         exerciseCollectionView.frame = view.bounds
-        gradientView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: 45)
+        starExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 84, width: view.bounds.width - 32, height: 54)
+        starExerciseButton.layer.cornerRadius = starExerciseButton.bounds.height/2
     }
 }
 extension ExerciseDetailViewController: UICollectionViewDataSource {
@@ -49,19 +60,27 @@ extension ExerciseDetailViewController: UICollectionViewDataSource {
         case .preview:
             return 1
         case .description:
-            return 0
+            return 1
         }
     }
     
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 2
+    }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: ExercisePreviewCell.identifier, for: indexPath) as? ExercisePreviewCell else { fatalError() }
+        
         guard let exerciseSection = ExerciseDetailSection(rawValue: indexPath.section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
         }
         switch exerciseSection {
         case .preview:
+            guard let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: ExercisePreviewCell.identifier, for: indexPath) as? ExercisePreviewCell else { fatalError() }
+            cell.exercise = exercise
             return cell
         case .description:
+            guard let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: ExerciseDescriptionCell.identifier, for: indexPath) as? ExerciseDescriptionCell else { fatalError() }
+            cell.exercise = exercise
             return cell
         }
     }
@@ -76,9 +95,10 @@ extension ExerciseDetailViewController: UICollectionViewDelegateFlowLayout {
         case .preview:
             return CGSize(width: view.bounds.width - 32, height: 360)
         case .description:
-            return .zero
+            return CGSize(width: view.bounds.width - 32, height: 360)
         }
     }
+    
 }
 
 enum ExerciseDetailSection: Int {

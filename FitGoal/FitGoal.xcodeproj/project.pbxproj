@@ -159,9 +159,9 @@
 		056A49B9241F28BB00707791 /* HomeViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
 				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */,
 				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
-				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
 				056A49BA241F28F800707791 /* CollectionViewSectionsAndHeaders */,
 			);
 			path = HomeViewController;
@@ -200,8 +200,8 @@
 			isa = PBXGroup;
 			children = (
 				05CDEFD7241B564300C1822D /* ExerciseDetailViewController.swift */,
-				0520BFD7241E2BE7005B1211 /* ExerciseDescriptionCell.swift */,
 				05CDEFD9241B58B300C1822D /* ExercisePreviewCell.swift */,
+				0520BFD7241E2BE7005B1211 /* ExerciseDescriptionCell.swift */,
 			);
 			path = ExerciseDetailViewController;
 			sourceTree = "<group>";
@@ -244,12 +244,12 @@
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
 				05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */,
+				056A49BE241F2A6300707791 /* SupportFiles */,
 				056A49B7241F287A00707791 /* CoreData */,
 				056A49B8241F288A00707791 /* Utilities */,
 				056A49B9241F28BB00707791 /* HomeViewController */,
 				056A49BC241F29F300707791 /* Model */,
 				056A49BD241F2A2B00707791 /* ExerciseDetailViewController */,
-				056A49BE241F2A6300707791 /* SupportFiles */,
 			);
 			path = FitGoal;
 			sourceTree = "<group>";
