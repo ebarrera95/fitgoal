@@ -99,7 +99,7 @@ class ExercisePreviewCell: UICollectionViewCell {
         return imageView
     }()
     
-    private lazy var cellTitle = UILabel()
+    private var cellTitle = UILabel()
     
     private var grayShadow: UIView = {
         var shadow = UIView()

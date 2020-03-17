@@ -22,7 +22,7 @@ class ExerciseDescriptionCell: UICollectionViewCell {
                 kern: 0.3,
                 lineSpacing: 6
             )
-            desciptionText.attributedText = attributtedText
+            text.attributedText = attributtedText
         }
     }
     
@@ -38,7 +38,7 @@ class ExerciseDescriptionCell: UICollectionViewCell {
         return view
     }()
     
-    private let descriptionTitle: UILabel = {
+    private let title: UILabel = {
         let label = UILabel()
         let text = "DESCRIPTION"
         label.attributedText = text.formattedText(
@@ -50,7 +50,7 @@ class ExerciseDescriptionCell: UICollectionViewCell {
         return label
     }()
     
-    var desciptionText: UITextView = {
+    private let text: UITextView = {
         let text = UITextView()
         text.isEditable = false
         text.isScrollEnabled = false
@@ -61,8 +61,8 @@ class ExerciseDescriptionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.addSubview(descriptionView)
-        descriptionView.addSubview(desciptionText)
-        descriptionView.addSubview(descriptionTitle)
+        descriptionView.addSubview(text)
+        descriptionView.addSubview(title)
         
         setDescriptionViewConstraints()
         setTextConstraints()
@@ -86,22 +86,22 @@ class ExerciseDescriptionCell: UICollectionViewCell {
     }
 
     private func setTextConstraints() {
-        desciptionText.translatesAutoresizingMaskIntoConstraints = false
+        text.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            desciptionText.leadingAnchor.constraint(equalTo: descriptionTitle.leadingAnchor),
-            desciptionText.topAnchor.constraint(equalTo: descriptionTitle.bottomAnchor, constant: 8),
-            desciptionText.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16),
-            desciptionText.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: -16)
+            text.leadingAnchor.constraint(equalTo: title.leadingAnchor),
+            text.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 8),
+            text.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16),
+            text.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: -16)
         ])
     }
     
     private func setLabelConstraints() {
-        descriptionTitle.translatesAutoresizingMaskIntoConstraints = false
+        title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            descriptionTitle.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 16),
-            descriptionTitle.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 16)
+            title.leadingAnchor.constraint(equalTo: descriptionView.leadingAnchor, constant: 16),
+            title.topAnchor.constraint(equalTo: descriptionView.topAnchor, constant: 16)
         ])
     }
 }

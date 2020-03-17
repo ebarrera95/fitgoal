@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class ExerciseCell: UICollectionViewCell {
     
     private var imageLoadingState: ImageLoadingState = .inProgress {

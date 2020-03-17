@@ -52,11 +52,13 @@ class ExerciseDetailViewController: UIViewController {
         startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
     }
 }
+
 extension ExerciseDetailViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let exerciseSection = ExerciseDetailSection(rawValue: section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
         }
+        
         switch exerciseSection {
         case .preview:
             return 1
@@ -74,6 +76,7 @@ extension ExerciseDetailViewController: UICollectionViewDataSource {
         guard let exerciseSection = ExerciseDetailSection(rawValue: indexPath.section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
         }
+        
         switch exerciseSection {
         case .preview:
             guard let cell = exerciseCollectionView.dequeueReusableCell(withReuseIdentifier: ExercisePreviewCell.identifier, for: indexPath) as? ExercisePreviewCell else { fatalError() }
@@ -92,6 +95,7 @@ extension ExerciseDetailViewController: UICollectionViewDelegateFlowLayout {
         guard let exerciseSection = ExerciseDetailSection(rawValue: indexPath.section) else {
             fatalError("Section value should have a corresponding case in the HomeSection enum")
         }
+        
         switch exerciseSection {
         case .preview:
             return CGSize(width: view.bounds.width - 32, height: 360)
