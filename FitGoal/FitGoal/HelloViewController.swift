@@ -43,6 +43,37 @@ class HelloViewController: UIViewController {
         label.attributedText = text
         return label
     }()
+    
+    private let googleButton: UIButton = {
+        let button = UIButton()
+        button.bounds.size = CGSize(width: 80, height: 80)
+        button.layer.cornerRadius = 40
+        button.contentMode = .scaleAspectFit
+        button.setImage(#imageLiteral(resourceName: "GoogleButton"), for: .normal)
+        button.layer.shadowOffset = CGSize(width: 0, height: 1)
+        button.layer.shadowColor = UIColor(r: 0, g: 0, b: 0, a: 0.1).cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 5
+        return button
+    }()
+    
+    private var facebookButton: UIButton = {
+        let button = UIButton()
+        button.bounds.size = CGSize(width: 72, height: 72)
+        button.layer.cornerRadius = 40
+        button.contentMode = .scaleAspectFit
+        button.setImage(#imageLiteral(resourceName: "FacebookButton"), for: .normal)
+        return button
+    }()
+    
+    private var twitterButton: UIButton = {
+        let button = UIButton()
+        button.bounds.size = CGSize(width: 72, height: 72)
+        button.layer.cornerRadius = 40
+        button.contentMode = .scaleAspectFit
+        button.setImage(#imageLiteral(resourceName: "TwitterButton"), for: .normal)
+        return button
+    }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,11 +83,20 @@ class HelloViewController: UIViewController {
         view.addSubview(checkIcon)
         view.addSubview(greetingLabel)
         
+        view.addSubview(facebookButton)
+        view.addSubview(googleButton)
+        view.addSubview(twitterButton)
+        
         setGreetingLabelConstraints()
     }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         checkIcon.frame = CGRect(x: view.bounds.midX - 52, y: 130, width: 104, height: 104)
+        
+        googleButton.center = CGPoint(x: view.bounds.midX, y: view.bounds.maxY - 200)
+        facebookButton.center = CGPoint(x: view.bounds.midX/2, y: view.bounds.maxY - 200)
+        twitterButton.center = CGPoint(x: 3/2 * view.bounds.midX, y: view.bounds.maxY - 200)
     }
     
     private func setGreetingLabelConstraints(){
@@ -67,5 +107,6 @@ class HelloViewController: UIViewController {
             greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
         ])
     }
+    
     
 }
