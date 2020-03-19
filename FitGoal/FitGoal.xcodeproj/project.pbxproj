@@ -23,6 +23,7 @@
 		05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */; };
 		05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */; };
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
+		05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE50924235DC2000AF5EE /* UIView+.swift */; };
 		05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */; };
 		05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */; };
 		05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */; };
@@ -73,6 +74,7 @@
 		05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionViewDelegateFlowLayout.swift"; sourceTree = "<group>"; };
 		05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTrakerCell.swift; sourceTree = "<group>"; };
 		05BBF750241503F100EF42E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
+		05CDE50924235DC2000AF5EE /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistance.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
 				F14233F524127500000E8873 /* UIColor+.swift */,
 				05BBF750241503F100EF42E9 /* String+.swift */,
+				05CDE50924235DC2000AF5EE /* UIView+.swift */,
 				05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */,
 				05A370C32415AA33009A654E /* URL+.swift */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
@@ -345,6 +348,7 @@
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
+				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
 				056652BC2420A7F40068A107 /* HelloViewController.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,

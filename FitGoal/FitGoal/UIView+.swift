@@ -7,3 +7,10 @@
 //
 
 import Foundation
+import UIKit
+
+extension UIView {
+    func addMultipleSubviews(_ views: [UIView]) {
+        views.forEach { self.addSubview($0)}
+    }
+}
