@@ -50,8 +50,6 @@ class DetailViewController: UIViewController {
     
     private var cellTitle = UILabel()
     
-    //private var imageURL: URL
-    
     private var exerciseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
