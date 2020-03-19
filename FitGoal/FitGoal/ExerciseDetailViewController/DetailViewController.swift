@@ -50,7 +50,7 @@ class DetailViewController: UIViewController {
     
     private var cellTitle = UILabel()
     
-    private var imageURL: URL
+    //private var imageURL: URL
     
     private var exerciseImage: UIImageView = {
         let imageView = UIImageView()
@@ -149,7 +149,7 @@ class DetailViewController: UIViewController {
     //MARK: -VC life cycle
     
     init(exercise: Exercise) {
-        self.imageURL = exercise.url
+        let imageURL = exercise.url
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
@@ -164,7 +164,7 @@ class DetailViewController: UIViewController {
             lineSpacing: 6
         )
         super.init(nibName: nil, bundle: nil)
-        fetchImage()
+        fetchImage(with: imageURL)
     }
     
     override func viewDidLoad() {
@@ -218,15 +218,14 @@ class DetailViewController: UIViewController {
         }
     }
     
-    private func fetchImage() {
+    private func fetchImage(with imageURL: URL) {
         imageURL.fetchImage { result in
             DispatchQueue.main.async {
-                guard self.imageURL == self.imageURL else { return }
                 switch result {
                 case .failure(let error):
                     self.imageLoadingState = .failed(error)
                 case .success(let image):
-                    imageCache[self.imageURL] = image
+                    imageCache[imageURL] = image
                     self.imageLoadingState = .finished(image)
                 }
             }
