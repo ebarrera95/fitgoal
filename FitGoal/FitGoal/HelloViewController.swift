@@ -74,6 +74,27 @@ class HelloViewController: UIViewController {
         button.setImage(#imageLiteral(resourceName: "TwitterButton"), for: .normal)
         return button
     }()
+    
+    private var playButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
+        let title = "Create Account".formattedText(font: "Roboto-Bold", size: 17, color: .white, kern: 0)
+        button.setAttributedTitle(title, for: .normal)
+        return button
+    }()
+    private var text: UITextView = {
+        let text = UITextView()
+        text.frame = CGRect (x: 0, y: 0, width: 100, height: 100)
+        let string = "Start transforming the way you enjoy you life"
+        let attributedString = string.formattedText(font: "Roboto-Light",
+                                                    size: 15,
+                                                    color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
+                                                    kern: 0
+        )
+        text.attributedText = attributedString
+        text.textAlignment = .center
+        return text
+    }()
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +103,14 @@ class HelloViewController: UIViewController {
         view.addSubview(shadowWithGradient)
         view.addSubview(checkIcon)
         view.addSubview(greetingLabel)
-        
         view.addSubview(facebookButton)
         view.addSubview(googleButton)
         view.addSubview(twitterButton)
+        view.addSubview(playButton)
+        view.addSubview(text)
         
         setGreetingLabelConstraints()
+        setTextConstraints()
     }
     
     override func viewDidLayoutSubviews() {
@@ -97,6 +120,9 @@ class HelloViewController: UIViewController {
         googleButton.center = CGPoint(x: view.bounds.midX, y: view.bounds.maxY - 200)
         facebookButton.center = CGPoint(x: view.bounds.midX/2, y: view.bounds.maxY - 200)
         twitterButton.center = CGPoint(x: 3/2 * view.bounds.midX, y: view.bounds.maxY - 200)
+        
+        playButton.frame = CGRect(x: 16, y: view.bounds.midY, width: view.bounds.width - 32, height: 52)
+        playButton.layer.cornerRadius = playButton.bounds.height/2
     }
     
     private func setGreetingLabelConstraints(){
@@ -104,7 +130,16 @@ class HelloViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             greetingLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -50)
+            greetingLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -200)
+        ])
+    }
+    
+    private func setTextConstraints() {
+        text.translatesAutoresizingMaskIntoConstraints = false
+        print(text)
+        NSLayoutConstraint.activate([
+            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            text.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: -100)
         ])
     }
     
