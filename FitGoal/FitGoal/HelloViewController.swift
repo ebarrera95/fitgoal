@@ -51,7 +51,7 @@ class HelloViewController: UIViewController {
         googleButton.contentMode = .scaleAspectFit
         googleButton.setImage(#imageLiteral(resourceName: "GoogleButton"), for: .normal)
         googleButton.layer.shadowOffset = CGSize(width: 0, height: 1)
-        googleButton.layer.shadowColor = UIColor(r: 0, g: 0, b: 0, a: 0.1).cgColor
+        googleButton.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)
         googleButton.layer.shadowOpacity = 1
         googleButton.layer.shadowRadius = 5
         return googleButton
