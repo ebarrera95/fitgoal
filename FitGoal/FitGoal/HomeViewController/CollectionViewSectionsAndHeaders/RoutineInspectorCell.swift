@@ -30,27 +30,9 @@ class RoutineInspectorCell: UICollectionViewCell {
         routineCollectionView.delegate = self
         routineCollectionView.dataSource = self
         routineCollectionView.register(ExerciseCell.self, forCellWithReuseIdentifier: ExerciseCell.identifier)
-        routineCollectionView.isUserInteractionEnabled = true
         
         let layout = routineCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
         layout.scrollDirection = .horizontal
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        self.addGestureRecognizer(tap)
-    }
-    
-    @objc func handleTap(_ sender: UITapGestureRecognizer) {
-        
-        switch sender.state {
-        case .ended:
-            let tapLocation = sender.location(in: routineCollectionView)
-            guard let indexPath = routineCollectionView.indexPathForItem(at: tapLocation) else { return }
-            guard let cell = routineCollectionView.cellForItem(at: indexPath) as? ExerciseCell else { return }
-            guard let exercise = cell.exercise else { return }
-            routineInspectorCellDelegate?.userDidSelectExersice(exercise)
-        default:
-            return
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -73,6 +55,12 @@ class RoutineInspectorCell: UICollectionViewCell {
         }
         routineExercises = exercises
         routineCollectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = routineCollectionView.cellForItem(at: indexPath) as? ExerciseCell else { return }
+        guard let exercise = cell.exercise else { return }
+        routineInspectorCellDelegate?.userDidSelectExersice(exercise)
     }
 }
 

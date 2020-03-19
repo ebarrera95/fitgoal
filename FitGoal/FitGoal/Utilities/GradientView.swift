@@ -24,13 +24,13 @@ class GradientView: UIView {
         }
     }
     
-    var startPoint: CGPoint = .zero {
+    var startPoint: CGPoint = CGPoint(x: 0.5, y: 0.0) {
         didSet {
             gradientLayer.startPoint = startPoint
         }
     }
     
-    var endPoint: CGPoint = .zero {
+    var endPoint: CGPoint = CGPoint(x: 0.5, y: 1.0) {
         didSet {
             gradientLayer.endPoint = endPoint
         }

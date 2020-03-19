@@ -17,10 +17,6 @@ class HomeViewController: UIViewController {
     private var persitence: Persistence
     
     private var allExercises = [Exercise]()
-    
-    private var routineCellDelegate: SuggestedRoutineCellDelegate?
-    
-    private var routineInspectorCellDelegate: RoutineInspectorCellDelegate?
 
     private let homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
 
@@ -148,8 +144,7 @@ extension HomeViewController {
 
 extension HomeViewController: RoutineInspectorCellDelegate {
     func userDidSelectExersice(_ exercise: Exercise) {
-        let vc = ExerciseDetailViewController()
-        vc.exercise = exercise
+        let vc = DetailViewController(exercise: exercise)
         show(vc, sender: self.homeCollectionView)
     }
 }
