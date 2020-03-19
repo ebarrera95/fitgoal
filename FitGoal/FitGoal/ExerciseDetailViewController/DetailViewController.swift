@@ -74,6 +74,7 @@ class DetailViewController: UIViewController {
         text.isEditable = false
         text.isScrollEnabled = false
         text.isSelectable = false
+        text.textContainerInset = UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0)
         return text
     }()
     
@@ -155,7 +156,6 @@ class DetailViewController: UIViewController {
             color: .white,
             kern: -0.14
         )
-        
         self.text.attributedText = exercise.description.formattedText(
             font: "Roboto-Light",
             size: 15,
@@ -163,7 +163,6 @@ class DetailViewController: UIViewController {
             kern: 0.3,
             lineSpacing: 6
         )
-        
         super.init(nibName: nil, bundle: nil)
         fetchImage()
     }
@@ -193,24 +192,14 @@ class DetailViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        scrollView.frame = CGRect(x: 0,
-                                  y: 0,
-                                  width: view.bounds.width,
-                                  height: view.bounds.height - 100
-        )
-        
+        scrollView.frame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - 100)
         scrollView.layoutIfNeeded()
         
         exerciseImage.frame = grayShadow.bounds
         imageGradient.frame = grayShadow.frame
         playButton.center = grayShadow.center
         
-        startExerciseButton.frame = CGRect (x: 16,
-                                            y: view.bounds.maxY - 100,
-                                            width: view.bounds.width - 32,
-                                            height: 54
-        )
-        
+        startExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 100, width: view.bounds.width - 32, height: 54)
         startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
     }
     
@@ -223,9 +212,9 @@ class DetailViewController: UIViewController {
         setLabelConstraints()
     }
     
-    private func add(subviews: [UIView],  to view: UIView) {
+    private func add(subviews: [UIView],  to parentView: UIView) {
         subviews.forEach { view in
-            view.addSubview(view)
+            parentView.addSubview(view)
         }
     }
     
