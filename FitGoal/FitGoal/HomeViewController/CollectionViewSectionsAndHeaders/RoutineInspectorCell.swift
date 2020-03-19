@@ -9,7 +9,7 @@
 import UIKit
 
 protocol RoutineInspectorCellDelegate: AnyObject {
-    func userDidSelectExersice(_ exercise: Exercise)
+    func userDidSelectExercise(_ exercise: Exercise)
 }
 
 class RoutineInspectorCell: UICollectionViewCell {
@@ -59,7 +59,7 @@ class RoutineInspectorCell: UICollectionViewCell {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let exercise = routineExercises[indexPath.item]
-        routineInspectorCellDelegate?.userDidSelectExersice(exercise)
+        routineInspectorCellDelegate?.userDidSelectExercise(exercise)
     }
 }
 

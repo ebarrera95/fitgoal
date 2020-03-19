@@ -143,7 +143,7 @@ extension HomeViewController {
 }
 
 extension HomeViewController: RoutineInspectorCellDelegate {
-    func userDidSelectExersice(_ exercise: Exercise) {
+    func userDidSelectExercise(_ exercise: Exercise) {
         let vc = DetailViewController(exercise: exercise)
         show(vc, sender: self.homeCollectionView)
     }
