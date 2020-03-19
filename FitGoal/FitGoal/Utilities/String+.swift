@@ -9,13 +9,18 @@
 import UIKit
 
 extension String {
-    func formattedText(font: String, size: CGFloat, color: UIColor, kern: CGFloat) -> NSAttributedString {
+    func formattedText(font: String, size: CGFloat, color: UIColor, kern: CGFloat, lineSpacing: CGFloat = 1.0) -> NSAttributedString {
         let text = self
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineSpacing = lineSpacing
+
         let atributes: [NSAttributedString.Key : Any] = [
             .font: UIFont(name: font, size: size)!,
             .foregroundColor: color,
-            .kern: kern
+            .kern: kern,
+            .paragraphStyle: paragraphStyle
         ]
+        
         let attributeText = NSAttributedString(string: text, attributes: atributes)
         return attributeText
     }

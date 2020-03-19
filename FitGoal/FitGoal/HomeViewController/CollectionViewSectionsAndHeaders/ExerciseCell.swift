@@ -128,7 +128,7 @@ class ExerciseCell: UICollectionViewCell {
         addSubviewsToContentView(views: views)
         
         dayIndicator.addSubview(dayIndicatorLabel)
-
+        
         setConstraints()
     }
     

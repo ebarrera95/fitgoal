@@ -53,6 +53,7 @@ extension HomeViewController: UICollectionViewDataSource {
             }
             switch routineState {
             case .inspecting(let exercises):
+                cell.routineInspectorCellDelegate = self
                 cell.display(exercises: exercises)
                 return cell
             case .unset:
