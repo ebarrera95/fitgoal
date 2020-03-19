@@ -8,9 +8,13 @@
 
 import UIKit
 
-
+protocol RoutineInspectorCellDelegate: AnyObject {
+    func userDidSelectExercise(_ exercise: Exercise)
+}
 
 class RoutineInspectorCell: UICollectionViewCell {
+    
+    weak var routineInspectorCellDelegate: RoutineInspectorCellDelegate?
     
     private var routineExercises = [Exercise]()
     
@@ -51,6 +55,11 @@ class RoutineInspectorCell: UICollectionViewCell {
         }
         routineExercises = exercises
         routineCollectionView.reloadData()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let exercise = routineExercises[indexPath.item]
+        routineInspectorCellDelegate?.userDidSelectExercise(exercise)
     }
 }
 

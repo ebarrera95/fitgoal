@@ -24,6 +24,7 @@
 		05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */; };
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
 		05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE50924235DC2000AF5EE /* UIView+.swift */; };
+		05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE5072421FCE9000AF5EE /* DetailViewController.swift */; };
 		05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */; };
 		05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */; };
 		05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */; };
@@ -75,6 +76,7 @@
 		05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTrakerCell.swift; sourceTree = "<group>"; };
 		05BBF750241503F100EF42E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		05CDE50924235DC2000AF5EE /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
+		05CDE5072421FCE9000AF5EE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistance.swift; sourceTree = "<group>"; };
@@ -133,6 +135,95 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		056A49B7241F287A00707791 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
+				05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */,
+				05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */,
+			);
+			path = CoreData;
+			sourceTree = "<group>";
+		};
+		056A49B8241F288A00707791 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				05CDEFD5241B3DFF00C1822D /* GradientView.swift */,
+				F14233F524127500000E8873 /* UIColor+.swift */,
+				05BBF750241503F100EF42E9 /* String+.swift */,
+				05A370C32415AA33009A654E /* URL+.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		056A49B9241F28BB00707791 /* HomeViewController */ = {
+			isa = PBXGroup;
+			children = (
+				056652BB2420A7F40068A107 /* HelloViewController.swift */,
+				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
+				F14233F524127500000E8873 /* UIColor+.swift */,
+				05BBF750241503F100EF42E9 /* String+.swift */,
+				05CDE50924235DC2000AF5EE /* UIView+.swift */,
+				05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */,
+				05A370C32415AA33009A654E /* URL+.swift */,
+				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
+				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
+				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
+				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */,
+				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
+				056A49BA241F28F800707791 /* CollectionViewSectionsAndHeaders */,
+			);
+			path = HomeViewController;
+			sourceTree = "<group>";
+		};
+		056A49BA241F28F800707791 /* CollectionViewSectionsAndHeaders */ = {
+			isa = PBXGroup;
+			children = (
+				050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */,
+				05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */,
+				05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */,
+				0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */,
+				056A49BB241F29A900707791 /* RoutineInspectorCollectionViewCell */,
+			);
+			path = CollectionViewSectionsAndHeaders;
+			sourceTree = "<group>";
+		};
+		056A49BB241F29A900707791 /* RoutineInspectorCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				0546E2DD241511CF004A0F65 /* ExerciseCell.swift */,
+			);
+			name = RoutineInspectorCollectionViewCell;
+			sourceTree = "<group>";
+		};
+		056A49BC241F29F300707791 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				05B2E1E1240F28EB009B0443 /* Routine.swift */,
+				0546E2DF2415134C004A0F65 /* Exersice.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		056A49BD241F2A2B00707791 /* ExerciseDetailViewController */ = {
+			isa = PBXGroup;
+			children = (
+				05CDE5072421FCE9000AF5EE /* DetailViewController.swift */,
+			);
+			path = ExerciseDetailViewController;
+			sourceTree = "<group>";
+		};
+		056A49BE241F2A6300707791 /* SupportFiles */ = {
+			isa = PBXGroup;
+			children = (
+				F14233B0240CF77D000E8873 /* Main.storyboard */,
+				F14233B3240CF77F000E8873 /* Assets.xcassets */,
+				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
+				05012C89240D1C940065E560 /* fonts */,
+			);
+			path = SupportFiles;
+			sourceTree = "<group>";
+		};
 		F142339E240CF77D000E8873 = {
 			isa = PBXGroup;
 			children = (
@@ -156,33 +247,16 @@
 		F14233A9240CF77D000E8873 /* FitGoal */ = {
 			isa = PBXGroup;
 			children = (
-				056652BB2420A7F40068A107 /* HelloViewController.swift */,
-				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
-				F14233F524127500000E8873 /* UIColor+.swift */,
-				05BBF750241503F100EF42E9 /* String+.swift */,
-				05CDE50924235DC2000AF5EE /* UIView+.swift */,
-				05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */,
-				05A370C32415AA33009A654E /* URL+.swift */,
+				F14233B8240CF77F000E8873 /* Info.plist */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
-				F14233AE240CF77D000E8873 /* HomeViewController.swift */,
-				05CDEFD5241B3DFF00C1822D /* GradientView.swift */,
 				05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */,
-				05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */,
-				05B2E20A240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift */,
-				05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */,
-				050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */,
-				05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */,
-				05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */,
-				0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */,
-				0546E2DD241511CF004A0F65 /* ExerciseCell.swift */,
-				05B2E1E1240F28EB009B0443 /* Routine.swift */,
-				0546E2DF2415134C004A0F65 /* Exersice.swift */,
-				F14233B0240CF77D000E8873 /* Main.storyboard */,
-				F14233B3240CF77F000E8873 /* Assets.xcassets */,
-				F14233B5240CF77F000E8873 /* LaunchScreen.storyboard */,
-				F14233B8240CF77F000E8873 /* Info.plist */,
-				05012C89240D1C940065E560 /* fonts */,
+				056A49BE241F2A6300707791 /* SupportFiles */,
+				056A49B7241F287A00707791 /* CoreData */,
+				056A49B8241F288A00707791 /* Utilities */,
+				056A49B9241F28BB00707791 /* HomeViewController */,
+				056A49BC241F29F300707791 /* Model */,
+				056A49BD241F2A2B00707791 /* ExerciseDetailViewController */,
 			);
 			path = FitGoal;
 			sourceTree = "<group>";
@@ -345,6 +419,7 @@
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */,
+				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,

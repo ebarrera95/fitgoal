@@ -29,6 +29,7 @@ extension URL {
         }.resume()
     }
     
+    @discardableResult
     func fetchImage(completion: @escaping(Result <UIImage, Error>) -> Void) -> URLSessionTask? {
         if let cachedImage = imageCache[self] {
             completion(.success(cachedImage))
