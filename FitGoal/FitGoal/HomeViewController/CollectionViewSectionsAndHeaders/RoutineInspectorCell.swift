@@ -58,8 +58,7 @@ class RoutineInspectorCell: UICollectionViewCell {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = routineCollectionView.cellForItem(at: indexPath) as? ExerciseCell else { return }
-        guard let exercise = cell.exercise else { return }
+        let exercise = routineExercises[indexPath.item]
         routineInspectorCellDelegate?.userDidSelectExersice(exercise)
     }
 }
