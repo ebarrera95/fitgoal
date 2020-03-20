@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpForm: UIStackView {
+class AutenticationForm: UIStackView {
     
     let name = CustomTextField(placeholder: "Name")
     let emailAddress = CustomTextField(placeholder: "Email")
@@ -16,18 +16,27 @@ class SignUpForm: UIStackView {
     let confirmPasword = CustomTextField(placeholder: "Confirm Password")
     
     
+    convenience init(autenticationType: AutenticationType) {
+        self.init(frame: .zero)
+        
+        switch autenticationType {
+        case .login:
+            addArrangedSubview(emailAddress)
+            addArrangedSubview(pasword)
+        case .signUp:
+            addArrangedSubview(name)
+            addArrangedSubview(emailAddress)
+            addArrangedSubview(pasword)
+            addArrangedSubview(confirmPasword)
+        }
+    }
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = .vertical
         alignment = .leading
         spacing = 64
-        backgroundColor = .cyan
-        
-        addArrangedSubview(name)
-        addArrangedSubview(emailAddress)
-        addArrangedSubview(pasword)
-        addArrangedSubview(confirmPasword)
-        
     }
     
     override func layoutSubviews() {
@@ -77,4 +86,10 @@ class CustomTextField: UITextField {
         super.layoutSubviews()
         buttonLine.frame = CGRect(x: 0, y: self.bounds.maxY, width: self.bounds.width, height: 1)
     }
+}
+
+enum AutenticationType {
+    
+    case signUp
+    case login
 }

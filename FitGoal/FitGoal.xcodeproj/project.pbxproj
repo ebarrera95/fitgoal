@@ -34,8 +34,9 @@
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
 		05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3D242473D400E7984B /* SignUpViewController.swift */; };
 		05EB1B402424759400E7984B /* SocialMediaButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */; };
-		05EB1B422424A6C900E7984B /* LoginLinkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* LoginLinkStack.swift */; };
-		05EB1B442424AC4900E7984B /* SignUpForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* SignUpForm.swift */; };
+		05EB1B422424A6C900E7984B /* AutenticationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AutenticationLink.swift */; };
+		05EB1B442424AC4900E7984B /* AutenticationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AutenticationForm.swift */; };
+		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
 		F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* HomeViewController.swift */; };
@@ -92,8 +93,9 @@
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		05EB1B3D242473D400E7984B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaButtonsView.swift; sourceTree = "<group>"; };
-		05EB1B412424A6C900E7984B /* LoginLinkStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginLinkStack.swift; sourceTree = "<group>"; };
-		05EB1B432424AC4900E7984B /* SignUpForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpForm.swift; sourceTree = "<group>"; };
+		05EB1B412424A6C900E7984B /* AutenticationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationLink.swift; sourceTree = "<group>"; };
+		05EB1B432424AC4900E7984B /* AutenticationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutenticationForm.swift; sourceTree = "<group>"; };
+		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -152,10 +154,11 @@
 			children = (
 				0517AD4E242427260049E48B /* HelloViewController.swift */,
 				05EB1B3D242473D400E7984B /* SignUpViewController.swift */,
-				05EB1B432424AC4900E7984B /* SignUpForm.swift */,
+				05EB1B452424D27600E7984B /* LoginViewController.swift */,
+				05EB1B432424AC4900E7984B /* AutenticationForm.swift */,
 				0517AD5524244DD40049E48B /* GreetingViewController.swift */,
 				0517AD532424432E0049E48B /* BackgroundView.swift */,
-				05EB1B412424A6C900E7984B /* LoginLinkStack.swift */,
+				05EB1B412424A6C900E7984B /* AutenticationLink.swift */,
 				05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */,
 			);
 			path = "Singup&Singin";
@@ -443,7 +446,7 @@
 				05EB1B402424759400E7984B /* SocialMediaButtonsView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
-				05EB1B442424AC4900E7984B /* SignUpForm.swift in Sources */,
+				05EB1B442424AC4900E7984B /* AutenticationForm.swift in Sources */,
 				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
@@ -451,6 +454,7 @@
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
 				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
+				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
 				0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */,
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
@@ -458,7 +462,7 @@
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
-				05EB1B422424A6C900E7984B /* LoginLinkStack.swift in Sources */,
+				05EB1B422424A6C900E7984B /* AutenticationLink.swift in Sources */,
 				0517AD4F242427260049E48B /* HelloViewController.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,

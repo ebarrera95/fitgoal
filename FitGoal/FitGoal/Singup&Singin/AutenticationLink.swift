@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginLinkStack: UIStackView {
+class AutenticationLink: UIStackView {
     
     private var question = UILabel()
     

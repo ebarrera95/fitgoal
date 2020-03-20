@@ -40,7 +40,6 @@ class SocialMediaView: UIView {
         
         return stack
     }()
-    private let loginStack = LoginLinkStack(questionText: "Already onboard?", linkText: "Login")
     
     private let socialMediaStack: UIStackView = {
         let stack = UIStackView()
@@ -89,7 +88,7 @@ class SocialMediaView: UIView {
         socialMediaStack.addArrangedSubview(googleButton)
         socialMediaStack.addArrangedSubview(twitterButton)
         
-        let views = [socialMediaStack, dividerStack, loginStack]
+        let views = [socialMediaStack, dividerStack]
         self.addMultipleSubviews(views)
         
         setConstraints()
@@ -103,7 +102,6 @@ class SocialMediaView: UIView {
     func setConstraints() {
         setDividerStackConstraints()
         setSocialMediaStackConstraints()
-        setLoginStackConstraints()
     }
     
     required init(coder: NSCoder) {
@@ -125,15 +123,6 @@ class SocialMediaView: UIView {
         NSLayoutConstraint.activate([
             socialMediaStack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             socialMediaStack.topAnchor.constraint(equalTo: self.dividerStack.bottomAnchor, constant: 50)
-        ])
-    }
-    
-    private func setLoginStackConstraints() {
-        loginStack.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            loginStack.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            loginStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -72)
         ])
     }
 }

@@ -12,17 +12,24 @@ class SignUpViewController: UIViewController {
     
     private var backgroundView = BackgroundView(mainLabelText: "SIGNUP")
     
-    private var loginStack = LoginLinkStack(questionText: "Already onboard?", linkText: "Login")
+    //TODO: Fix name
+    private var loginLink = AutenticationLink(questionText: "Already onboard?", linkText: "Login")
     
     private var createAccount: UIButton = {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
-        let title = "Create Account".formattedText(font: "Roboto-Bold", size: 17, color: .white, kern: 0)
+        let title = "Create Account".formattedText(
+            font: "Roboto-Bold",
+            size: 17,
+            color: .white,
+            kern: 0
+        )
+        
         button.setAttributedTitle(title, for: .normal)
         return button
     }()
     
-    private var signUpStack = SignUpForm()
+    private var signUpStack = AutenticationForm(autenticationType: .signUp)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +40,7 @@ class SignUpViewController: UIViewController {
         createAccount.frame = CGRect(x: 16, y: view.bounds.maxY - 200, width: view.bounds.width - 32, height: 52)
         createAccount.layer.cornerRadius = createAccount.bounds.height/2
         
-        let views = [backgroundView, createAccount, loginStack, signUpStack]
+        let views = [backgroundView, createAccount, loginLink, signUpStack]
         view.addMultipleSubviews(views)
         
         setConstraints()
@@ -45,11 +52,11 @@ class SignUpViewController: UIViewController {
     }
     
     private func setLoginStackConstraints() {
-        loginStack.translatesAutoresizingMaskIntoConstraints = false
+        loginLink.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            loginStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            loginLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
     
