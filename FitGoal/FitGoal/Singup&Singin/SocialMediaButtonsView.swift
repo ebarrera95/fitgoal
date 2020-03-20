@@ -82,33 +82,6 @@ class SocialMediaView: UIView {
         return twitterButton
     }()
     
-    private var question: UILabel = {
-        let label = UILabel()
-        let attributedString = "Already onboard?".formattedText(
-            font: "Roboto-Light",
-            size: 15,
-            color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
-            kern: 0
-        )
-        
-        label.attributedText = attributedString
-        label.tag = 0
-        return label
-    }()
-
-    private var loginLink: UIButton = {
-        let button = UIButton()
-        let attributedText = "Login".formattedText(
-            font: "Roboto-Light",
-            size: 15,
-            color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
-            kern: 0
-        )
-        
-        button.setAttributedTitle(attributedText, for: .normal)
-        return button
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -163,6 +136,4 @@ class SocialMediaView: UIView {
             loginStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -72)
         ])
     }
-    
-   
 }
