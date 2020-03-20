@@ -33,16 +33,17 @@ class BackgroundView: UIView {
     
     var avatarIcon = UIImageView(image: UIImage(imageLiteralResourceName: "icon_logo"))
     
-    var mainLabel: UILabel = {
-        let label = UILabel()
-        let text = "HELLO!".formattedText(
-            font: "Oswald-Medium",
-            size: 34,
-            color: #colorLiteral(red: 0.36, green: 0.37, blue: 0.4, alpha: 1),
-            kern: -0.12)
-        label.attributedText = text
-        return label
-    }()
+    var mainLabel = UILabel()
+    
+    convenience init(mainLabelText: String) {
+        self.init(frame: .zero)
+        let text = mainLabelText.formattedText(
+        font: "Oswald-Medium",
+        size: 34,
+        color: #colorLiteral(red: 0.36, green: 0.37, blue: 0.4, alpha: 1),
+        kern: -0.12)
+        mainLabel.attributedText = text
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,9 +70,7 @@ class BackgroundView: UIView {
         
         NSLayoutConstraint.activate([
             mainLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            mainLabel.topAnchor.constraint(equalTo: avatarIcon.bottomAnchor, constant: 100)
+            mainLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
-    
-
 }
