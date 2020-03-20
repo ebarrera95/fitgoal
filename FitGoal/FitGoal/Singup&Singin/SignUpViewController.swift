@@ -10,7 +10,9 @@ import UIKit
 
 class SignUpViewController: UIViewController {
     
-    private var backgroundView = BackgroundView(mainLabelText: "SINGUP")
+    private var backgroundView = BackgroundView(mainLabelText: "SIGNUP")
+    
+    private var loginStack = LoginLinkStack(questionText: "Already onboard?", linkText: "Login")
     
     private var createAccount: UIButton = {
         let button = UIButton()
@@ -19,6 +21,8 @@ class SignUpViewController: UIViewController {
         button.setAttributedTitle(title, for: .normal)
         return button
     }()
+    
+    private var signUpStack = SignUpForm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +33,32 @@ class SignUpViewController: UIViewController {
         createAccount.frame = CGRect(x: 16, y: view.bounds.maxY - 200, width: view.bounds.width - 32, height: 52)
         createAccount.layer.cornerRadius = createAccount.bounds.height/2
         
-        
-        
-        let views = [backgroundView, createAccount]
+        let views = [backgroundView, createAccount, loginStack, signUpStack]
         view.addMultipleSubviews(views)
+        
+        setConstraints()
     }
     
+    func setConstraints() {
+        setLoginStackConstraints()
+        setSingUpStackConstraints()
+    }
     
+    private func setLoginStackConstraints() {
+        loginStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loginStack.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginStack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+        ])
+    }
     
+    private func setSingUpStackConstraints() {
+        signUpStack.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            signUpStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            signUpStack.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24)
+        ])
+    }
 }
