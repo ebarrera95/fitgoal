@@ -13,7 +13,6 @@
 		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
-		0517AD4F242427260049E48B /* HelloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4E242427260049E48B /* HelloViewController.swift */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
@@ -72,7 +71,6 @@
 		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
-		0517AD4E242427260049E48B /* HelloViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelloViewController.swift; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
@@ -152,7 +150,6 @@
 		0517AD52242442F20049E48B /* Singup&Singin */ = {
 			isa = PBXGroup;
 			children = (
-				0517AD4E242427260049E48B /* HelloViewController.swift */,
 				05EB1B3D242473D400E7984B /* SignUpViewController.swift */,
 				05EB1B452424D27600E7984B /* LoginViewController.swift */,
 				05EB1B432424AC4900E7984B /* AutenticationForm.swift */,
@@ -463,7 +460,6 @@
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AutenticationLink.swift in Sources */,
-				0517AD4F242427260049E48B /* HelloViewController.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
 			);
