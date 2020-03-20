@@ -40,21 +40,14 @@ class SocialMediaView: UIView {
         
         return stack
     }()
-
+    private let loginStack = LoginLinkStack(questionText: "Already onboard?", linkText: "Login")
+    
     private let socialMediaStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.alignment = .center
         stack.spacing = 50
         stack.distribution = .fill
-        return stack
-    }()
-    
-    private let loginStack: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.spacing = 8
         return stack
     }()
     
@@ -122,9 +115,6 @@ class SocialMediaView: UIView {
         socialMediaStack.addArrangedSubview(facebookButton)
         socialMediaStack.addArrangedSubview(googleButton)
         socialMediaStack.addArrangedSubview(twitterButton)
-        
-        loginStack.addArrangedSubview(question)
-        loginStack.addArrangedSubview(loginLink)
         
         let views = [socialMediaStack, dividerStack, loginStack]
         self.addMultipleSubviews(views)

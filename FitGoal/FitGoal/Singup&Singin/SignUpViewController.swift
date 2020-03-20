@@ -26,7 +26,7 @@ class SignUpViewController: UIViewController {
 
         backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
         
-        createAccount.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
+        createAccount.frame = CGRect(x: 16, y: view.bounds.maxY - 200, width: view.bounds.width - 32, height: 52)
         createAccount.layer.cornerRadius = createAccount.bounds.height/2
         
         
