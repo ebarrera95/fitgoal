@@ -21,10 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.windowScene = windowScene
         
         //let homeViewController = HomeViewController(persistance: CoreDataPersistance())
-        //let helloVC = GreetingViewController()
-        let loginVC = LoginViewController() 
+        let helloVC = GreetingViewController()
         self.window = window
-        window.rootViewController = loginVC
+        window.rootViewController = helloVC
         window.makeKeyAndVisible()
     }
 

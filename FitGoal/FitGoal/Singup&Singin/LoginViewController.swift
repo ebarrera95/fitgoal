@@ -8,12 +8,19 @@
 
 import UIKit
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, HandleLinkTap {
+    
+    func userDidSelectLink() {
+        let vc = SignUpViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
+    }
     
     private var backgroundView = BackgroundView(mainLabelText: "LOGIN")
     
     //TODO: Fix name
-    private var signUpLink = AutenticationLink(questionText: "Don't have an account?", linkText: "Signup")
+    private var signUpLink = AutenticationLink(autenticationType: .login)
     
     private var socialMediaView = SocialMediaView()
     
@@ -37,6 +44,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
+        
 
         backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
         
@@ -49,6 +57,8 @@ class LoginViewController: UIViewController {
         view.addMultipleSubviews(views)
         
         setConstraints()
+        
+        signUpLink.linkDelegate = self
     }
     
     func setConstraints() {

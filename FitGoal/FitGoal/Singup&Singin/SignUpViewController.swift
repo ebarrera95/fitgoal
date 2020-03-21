@@ -8,12 +8,19 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, HandleLinkTap {
+    
+    func userDidSelectLink() {
+        let vc = LoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
+    }
     
     private var backgroundView = BackgroundView(mainLabelText: "SIGNUP")
     
     //TODO: Fix name
-    private var loginLink = AutenticationLink(questionText: "Already onboard?", linkText: "Login")
+    private var loginLink = AutenticationLink(autenticationType: .signUp)
     
     private var createAccount: UIButton = {
         let button = UIButton()
@@ -44,6 +51,8 @@ class SignUpViewController: UIViewController {
         view.addMultipleSubviews(views)
         
         setConstraints()
+        
+        loginLink.linkDelegate = self
     }
     
     func setConstraints() {

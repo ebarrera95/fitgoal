@@ -152,11 +152,8 @@
 			children = (
 				05EB1B3D242473D400E7984B /* SignUpViewController.swift */,
 				05EB1B452424D27600E7984B /* LoginViewController.swift */,
-				05EB1B432424AC4900E7984B /* AutenticationForm.swift */,
 				0517AD5524244DD40049E48B /* GreetingViewController.swift */,
-				0517AD532424432E0049E48B /* BackgroundView.swift */,
-				05EB1B412424A6C900E7984B /* AutenticationLink.swift */,
-				05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */,
+				05EB1B472424EA5900E7984B /* CustomUIViews */,
 			);
 			path = "Singup&Singin";
 			sourceTree = "<group>";
@@ -241,6 +238,17 @@
 				05012C89240D1C940065E560 /* fonts */,
 			);
 			path = SupportFiles;
+			sourceTree = "<group>";
+		};
+		05EB1B472424EA5900E7984B /* CustomUIViews */ = {
+			isa = PBXGroup;
+			children = (
+				05EB1B432424AC4900E7984B /* AutenticationForm.swift */,
+				0517AD532424432E0049E48B /* BackgroundView.swift */,
+				05EB1B412424A6C900E7984B /* AutenticationLink.swift */,
+				05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */,
+			);
+			path = CustomUIViews;
 			sourceTree = "<group>";
 		};
 		F142339E240CF77D000E8873 = {

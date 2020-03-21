@@ -8,11 +8,13 @@
 
 import UIKit
 
-class GreetingViewController: UIViewController {
+class GreetingViewController: UIViewController, HandleLinkTap {
     
     private var backgroundView = BackgroundView(mainLabelText: "HELLO")
     
     private var socialMediaView = SocialMediaView()
+    
+    private var loginLink = AutenticationLink(autenticationType: .login)
     
     private var createAccount: UIButton = {
         let button = UIButton()
@@ -51,13 +53,17 @@ class GreetingViewController: UIViewController {
         createAccount.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
         createAccount.layer.cornerRadius = createAccount.bounds.height/2
         
-        let views = [backgroundView, socialMediaView, createAccount, text]
+        let views = [backgroundView, socialMediaView, createAccount, text, loginLink]
         view.addMultipleSubviews(views)
         
         setTextConstraints()
+        setLoginStackConstraints()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
         createAccount.addGestureRecognizer(tap)
+        
+        loginLink.linkDelegate = self
+        
     }
     
     @objc func tapHandler(_ sender: UITapGestureRecognizer) {
@@ -65,10 +71,18 @@ class GreetingViewController: UIViewController {
         case .ended:
             let singupVC = SignUpViewController()
             singupVC.modalPresentationStyle = .fullScreen
+            singupVC.modalTransitionStyle = .crossDissolve
             show(singupVC, sender: self)
         default:
             return
         }
+    }
+    
+    func userDidSelectLink() {
+        let vc = SignUpViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
     
     private func setTextConstraints() {
@@ -77,6 +91,15 @@ class GreetingViewController: UIViewController {
         NSLayoutConstraint.activate([
             text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             text.bottomAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+    }
+    
+    private func setLoginStackConstraints() {
+        loginLink.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            loginLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loginLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
 }

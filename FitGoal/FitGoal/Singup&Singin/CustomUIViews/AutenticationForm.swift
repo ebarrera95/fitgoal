@@ -10,10 +10,10 @@ import UIKit
 
 class AutenticationForm: UIStackView {
     
-    let name = CustomTextField(placeholder: "Name")
-    let emailAddress = CustomTextField(placeholder: "Email")
-    let pasword = CustomTextField(placeholder: "Password")
-    let confirmPasword = CustomTextField(placeholder: "Confirm Password")
+    private let name = CustomTextField(placeholder: "Name")
+    private let emailAddress = CustomTextField(placeholder: "Email")
+    private let pasword = CustomTextField(placeholder: "Password")
+    private let confirmPasword = CustomTextField(placeholder: "Confirm Password")
     
     
     convenience init(autenticationType: AutenticationType) {
@@ -41,7 +41,6 @@ class AutenticationForm: UIStackView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         let fieldSize = CGSize(width: superview!.bounds.width - 64, height: 64)
         name.frame.size = fieldSize
         emailAddress.frame.size = fieldSize
@@ -89,7 +88,6 @@ class CustomTextField: UITextField {
 }
 
 enum AutenticationType {
-    
     case signUp
     case login
 }
