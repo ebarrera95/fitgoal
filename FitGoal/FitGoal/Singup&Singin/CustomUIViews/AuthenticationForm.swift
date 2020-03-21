@@ -54,7 +54,7 @@ class AuthenticationForm: UIStackView {
     
 }
 
-class CustomTextField: UITextField {
+class CustomTextField: UITextField, UITextFieldDelegate {
     
     let buttonLine: UIView = {
         let line = UIView()
@@ -75,6 +75,7 @@ class CustomTextField: UITextField {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(buttonLine)
+        self.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -84,6 +85,12 @@ class CustomTextField: UITextField {
     override func layoutSubviews() {
         super.layoutSubviews()
         buttonLine.frame = CGRect(x: 0, y: self.bounds.maxY, width: self.bounds.width, height: 1)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print("return")
+        self.resignFirstResponder()
+        return true
     }
 }
 
