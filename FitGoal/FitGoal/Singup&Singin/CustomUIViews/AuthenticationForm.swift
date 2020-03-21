@@ -28,6 +28,8 @@ class AuthenticationForm: UIStackView {
             addArrangedSubview(emailAddress)
             addArrangedSubview(pasword)
             addArrangedSubview(confirmPasword)
+        case .none:
+            return
         }
     }
     
@@ -41,7 +43,8 @@ class AuthenticationForm: UIStackView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        let fieldSize = CGSize(width: superview!.bounds.width - 64, height: 64)
+        
+        let fieldSize = CGSize(width: self.bounds.width, height: 54)
         name.frame.size = fieldSize
         emailAddress.frame.size = fieldSize
         pasword.frame.size = fieldSize
@@ -88,7 +91,6 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print("return")
         self.resignFirstResponder()
         return true
     }
@@ -97,4 +99,5 @@ class CustomTextField: UITextField, UITextFieldDelegate {
 enum AuthenticationType {
     case signUp
     case login
+    case none
 }

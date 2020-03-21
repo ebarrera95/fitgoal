@@ -8,16 +8,26 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, HandleLinkTap {
+class SignUpViewController: UIViewController, HandleLinkTap, AvatarDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func userDidSelectLink() {
-        let vc = LoginViewController()
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+    func userWillChangeAvatar() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.sourceType = .camera
+            imagePicker.allowsEditing = false
+            self.present(imagePicker, animated: true, completion: nil)
+        }
     }
     
-    private var backgroundView = BackgroundView(mainLabelText: "SIGNUP")
+    
+    private let scrollView = UIScrollView()
+    
+    private var backgroundView = BackgroundView(
+        mainLabelText: "SIGNUP",
+        avatarImage: UIImage(imageLiteralResourceName: "addAvatar"),
+        authenticationType: .signUp
+    )
     
     //TODO: Fix name
     private var loginLink = AuthenticationLink(authenticationType: .signUp)
@@ -41,18 +51,30 @@ class SignUpViewController: UIViewController, HandleLinkTap {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
+        
+        scrollView.frame = view.bounds
 
         backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
         
         createAccount.frame = CGRect(x: 16, y: view.bounds.maxY - 200, width: view.bounds.width - 32, height: 52)
         createAccount.layer.cornerRadius = createAccount.bounds.height/2
         
+        view.addSubview(scrollView)
+        
         let views = [backgroundView, createAccount, loginLink, signUpStack]
-        view.addMultipleSubviews(views)
+        scrollView.addMultipleSubviews(views)
         
         setConstraints()
         
         loginLink.linkDelegate = self
+        backgroundView.delegate = self
+    }
+
+    func userDidSelectLink() {
+        let vc = LoginViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
     
     func setConstraints() {
@@ -74,7 +96,8 @@ class SignUpViewController: UIViewController, HandleLinkTap {
         
         NSLayoutConstraint.activate([
             signUpStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            signUpStack.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24)
+            signUpStack.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
+            signUpStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
         ])
     }
 }

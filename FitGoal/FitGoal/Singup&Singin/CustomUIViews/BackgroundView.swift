@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol AvatarDelegate: AnyObject {
+    func userWillChangeAvatar()
+}
+
 class BackgroundView: UIView {
+    
+    weak var delegate: AvatarDelegate?
     
     var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
@@ -31,11 +37,11 @@ class BackgroundView: UIView {
         return gradientView
     }()
     
-    var avatarIcon = UIImageView(image: UIImage(imageLiteralResourceName: "icon_logo"))
+    var avatarIcon = UIButton()
     
     var mainLabel = UILabel()
     
-    convenience init(mainLabelText: String) {
+    convenience init(mainLabelText: String, avatarImage: UIImage, authenticationType: AuthenticationType) {
         self.init(frame: .zero)
         let text = mainLabelText.formattedText(
         font: "Oswald-Medium",
@@ -43,6 +49,26 @@ class BackgroundView: UIView {
         color: #colorLiteral(red: 0.36, green: 0.37, blue: 0.4, alpha: 1),
         kern: -0.12)
         mainLabel.attributedText = text
+        
+        switch authenticationType.self {
+        case .signUp:
+            avatarIcon.setImage(avatarImage, for: .normal)
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+            avatarIcon.addGestureRecognizer(tap)
+        default:
+            avatarIcon.isUserInteractionEnabled = false
+            avatarIcon.setImage(avatarImage, for: .normal)
+            return
+        }
+    }
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        switch sender.state {
+        case .ended:
+            delegate?.userWillChangeAvatar()
+        default:
+            return
+        }
     }
     
     override init(frame: CGRect) {

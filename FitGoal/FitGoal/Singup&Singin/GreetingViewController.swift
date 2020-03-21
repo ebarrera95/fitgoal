@@ -10,7 +10,11 @@ import UIKit
 
 class GreetingViewController: UIViewController, HandleLinkTap {
     
-    private var backgroundView = BackgroundView(mainLabelText: "HELLO")
+    private var backgroundView = BackgroundView(
+        mainLabelText: "HELLO",
+        avatarImage:  UIImage(imageLiteralResourceName: "icon_logo"),
+        authenticationType: .none
+    )
     
     private var socialMediaView = SocialMediaView()
     
@@ -63,6 +67,8 @@ class GreetingViewController: UIViewController, HandleLinkTap {
         createAccount.addGestureRecognizer(tap)
         
         loginLink.linkDelegate = self
+        
+        
         
     }
     

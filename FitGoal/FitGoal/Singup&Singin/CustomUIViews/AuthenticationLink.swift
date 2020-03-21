@@ -31,6 +31,8 @@ class AuthenticationLink: UIStackView {
         case .signUp:
             questionText = "Already onboard?"
             linkText = "Login"
+        case .none:
+            return
         }
         
         question.attributedText = questionText.formattedText(
@@ -51,11 +53,9 @@ class AuthenticationLink: UIStackView {
     }
     
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        print("tap!")
         switch sender.state {
         case .ended:
             linkDelegate?.userDidSelectLink()
-            print("tap ended")
         default:
             return
         }
