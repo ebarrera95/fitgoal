@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AutenticationForm: UIStackView {
+class AuthenticationForm: UIStackView {
     
     private let name = CustomTextField(placeholder: "Name")
     private let emailAddress = CustomTextField(placeholder: "Email")
@@ -16,10 +16,10 @@ class AutenticationForm: UIStackView {
     private let confirmPasword = CustomTextField(placeholder: "Confirm Password")
     
     
-    convenience init(autenticationType: AutenticationType) {
+    convenience init(authenticationType: AuthenticationType) {
         self.init(frame: .zero)
         
-        switch autenticationType {
+        switch authenticationType {
         case .login:
             addArrangedSubview(emailAddress)
             addArrangedSubview(pasword)
@@ -87,7 +87,7 @@ class CustomTextField: UITextField {
     }
 }
 
-enum AutenticationType {
+enum AuthenticationType {
     case signUp
     case login
 }

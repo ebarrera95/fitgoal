@@ -12,7 +12,7 @@ protocol HandleLinkTap {
     func userDidSelectLink()
 }
 
-class AutenticationLink: UIStackView {
+class AuthenticationLink: UIStackView {
     
     private var question = UILabel()
     
@@ -20,11 +20,11 @@ class AutenticationLink: UIStackView {
     
    var linkDelegate: HandleLinkTap?
     
-    convenience init(autenticationType: AutenticationType) {
+    convenience init(authenticationType: AuthenticationType) {
         self.init(frame: .zero)
         var questionText = String()
         var linkText = String()
-        switch autenticationType {
+        switch authenticationType {
         case .login:
             questionText =  "Don't have an account?"
             linkText = "Signup"

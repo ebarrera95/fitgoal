@@ -20,7 +20,7 @@ class SignUpViewController: UIViewController, HandleLinkTap {
     private var backgroundView = BackgroundView(mainLabelText: "SIGNUP")
     
     //TODO: Fix name
-    private var loginLink = AutenticationLink(autenticationType: .signUp)
+    private var loginLink = AuthenticationLink(authenticationType: .signUp)
     
     private var createAccount: UIButton = {
         let button = UIButton()
@@ -36,7 +36,7 @@ class SignUpViewController: UIViewController, HandleLinkTap {
         return button
     }()
     
-    private var signUpStack = AutenticationForm(autenticationType: .signUp)
+    private var signUpStack = AuthenticationForm(authenticationType: .signUp)
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, HandleLinkTap {
     private var backgroundView = BackgroundView(mainLabelText: "LOGIN")
     
     //TODO: Fix name
-    private var signUpLink = AutenticationLink(autenticationType: .login)
+    private var signUpLink = AuthenticationLink(authenticationType: .login)
     
     private var socialMediaView = SocialMediaView()
     
@@ -38,7 +38,7 @@ class LoginViewController: UIViewController, HandleLinkTap {
         return button
     }()
     
-    private var loginStack = AutenticationForm(autenticationType: .login)
+    private var loginStack = AuthenticationForm(authenticationType: .login)
     
 
     override func viewDidLoad() {

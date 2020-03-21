@@ -14,7 +14,7 @@ class GreetingViewController: UIViewController, HandleLinkTap {
     
     private var socialMediaView = SocialMediaView()
     
-    private var loginLink = AutenticationLink(autenticationType: .login)
+    private var loginLink = AuthenticationLink(authenticationType: .login)
     
     private var createAccount: UIButton = {
         let button = UIButton()
