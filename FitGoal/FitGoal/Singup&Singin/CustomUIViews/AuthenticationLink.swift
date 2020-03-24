@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol HandleLinkTap {
-    func userDidSelectLink()
+protocol AuthenticationTypeDelegate: AnyObject {
+    func userDidSelectAuthenticationType()
 }
 
 class AuthenticationLink: UIStackView {
@@ -18,17 +18,19 @@ class AuthenticationLink: UIStackView {
     
     private var link = UIButton(type: .system)
     
-   var linkDelegate: HandleLinkTap?
+   weak var delegate: AuthenticationTypeDelegate?
     
     convenience init(authenticationType: AuthenticationType) {
         self.init(frame: .zero)
+        
         var questionText = String()
         var linkText = String()
+        
         switch authenticationType {
-        case .login:
+        case .signUp:
             questionText =  "Don't have an account?"
             linkText = "Signup"
-        case .signUp:
+        case .login:
             questionText = "Already onboard?"
             linkText = "Login"
         case .none:
@@ -55,7 +57,7 @@ class AuthenticationLink: UIStackView {
     @objc private func handleTap(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
-            linkDelegate?.userDidSelectLink()
+            delegate?.userDidSelectAuthenticationType()
         default:
             return
         }

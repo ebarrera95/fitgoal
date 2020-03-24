@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SocialMediaView: UIView {
+class SocialMediaAuthentication: UIView {
     
     private let dividerStack: UIStackView = {
         let stack = UIStackView()
@@ -18,11 +18,11 @@ class SocialMediaView: UIView {
         stack.spacing = 16
         
         let leadingLine = UIView()
-        leadingLine.layer.borderColor = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1).cgColor
+        leadingLine.layer.borderColor = #colorLiteral(red: 0.94, green: 0.94, blue: 0.94, alpha: 1).cgColor
         leadingLine.layer.borderWidth = 1
         
         let trailingLine = UIView()
-        trailingLine.layer.borderColor = UIColor(red: 0.94, green: 0.94, blue: 0.94, alpha: 1).cgColor
+        trailingLine.layer.borderColor = #colorLiteral(red: 0.94, green: 0.94, blue: 0.94, alpha: 1).cgColor
         trailingLine.layer.borderWidth = 1
         
         let label = UILabel()

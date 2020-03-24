@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, HandleLinkTap {
+class LoginViewController: UIViewController, AuthenticationTypeDelegate {
     
     private let scrollView = UIScrollView()
     
@@ -19,11 +19,11 @@ class LoginViewController: UIViewController, HandleLinkTap {
     )
     
     //TODO: Fix name
-    private var signUpLink = AuthenticationLink(authenticationType: .login)
+    private var connectionToSignUpVC = AuthenticationLink(authenticationType: .signUp)
     
-    private var socialMediaView = SocialMediaView()
+    private var socialMediaView = SocialMediaAuthentication()
     
-    private var createAccount: UIButton = {
+    private var loginButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
         let title = "Login".formattedText(
@@ -37,7 +37,7 @@ class LoginViewController: UIViewController, HandleLinkTap {
         return button
     }()
     
-    private var loginStack = AuthenticationForm(authenticationType: .login)
+    private var loginForm = AuthenticationForm(authenticationType: .login)
     
 
     override func viewDidLoad() {
@@ -48,21 +48,36 @@ class LoginViewController: UIViewController, HandleLinkTap {
 
         backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
         
-        createAccount.frame = CGRect(x: 16, y: view.bounds.midY + 72, width: view.bounds.width - 32, height: 52)
-        createAccount.layer.cornerRadius = createAccount.bounds.height/2
+        loginButton.frame = CGRect(x: 16, y: view.bounds.midY + 72, width: view.bounds.width - 32, height: 52)
+        loginButton.layer.cornerRadius = loginButton.bounds.height/2
         
         socialMediaView.frame = CGRect(x: 0, y: 2/3 * view.bounds.maxY, width: view.bounds.width, height: 1/3 * view.bounds.height)
         
         view.addSubview(scrollView)
-        let views = [backgroundView, createAccount, loginStack, socialMediaView, signUpLink]
+        let views = [backgroundView, loginButton, loginForm, socialMediaView, connectionToSignUpVC]
         scrollView.addMultipleSubviews(views)
         
         setConstraints()
         
-        signUpLink.linkDelegate = self
+        connectionToSignUpVC.delegate = self
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+        loginButton.addGestureRecognizer(tap)
     }
     
-    func userDidSelectLink() {
+    @objc func tapHandler(_ sender: UITapGestureRecognizer) {
+        switch sender.state {
+        case .ended:
+            let vc = GreetingViewController()
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            show(vc, sender: self)
+        default:
+            return
+        }
+    }
+    
+    func userDidSelectAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
@@ -75,21 +90,21 @@ class LoginViewController: UIViewController, HandleLinkTap {
     }
     
     private func setSignUpLinkConstraints() {
-        signUpLink.translatesAutoresizingMaskIntoConstraints = false
+        connectionToSignUpVC.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            signUpLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signUpLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            connectionToSignUpVC.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            connectionToSignUpVC.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
     
     private func setLoginStackConstraints() {
-        loginStack.translatesAutoresizingMaskIntoConstraints = false
+        loginForm.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            loginStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
-            loginStack.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
-            loginStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+            loginForm.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32),
+            loginForm.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
+            loginForm.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
         ])
     }
 
