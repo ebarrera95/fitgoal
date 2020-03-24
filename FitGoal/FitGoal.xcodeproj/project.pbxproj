@@ -18,6 +18,7 @@
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
 		0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DD241511CF004A0F65 /* ExerciseCell.swift */; };
 		0546E2E02415134C004A0F65 /* Exersice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DF2415134C004A0F65 /* Exersice.swift */; };
+		055F62CD2429868B0054934F /* AvatarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* AvatarManager.swift */; };
 		05A370C42415AA33009A654E /* URL+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A370C32415AA33009A654E /* URL+.swift */; };
 		05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E1240F28EB009B0443 /* Routine.swift */; };
 		05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */; };
@@ -32,7 +33,7 @@
 		05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */; };
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
 		05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3D242473D400E7984B /* SignUpViewController.swift */; };
-		05EB1B402424759400E7984B /* SocialMediaButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */; };
+		05EB1B402424759400E7984B /* SocialMediaAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */; };
 		05EB1B422424A6C900E7984B /* AuthenticationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationLink.swift */; };
 		05EB1B442424AC4900E7984B /* AuthenticationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationForm.swift */; };
 		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
@@ -76,6 +77,7 @@
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
 		0546E2DD241511CF004A0F65 /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
 		0546E2DF2415134C004A0F65 /* Exersice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exersice.swift; sourceTree = "<group>"; };
+		055F62CC2429868B0054934F /* AvatarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarManager.swift; sourceTree = "<group>"; };
 		05A370C32415AA33009A654E /* URL+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
 		05B2E1E1240F28EB009B0443 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRoutineCell.swift; sourceTree = "<group>"; };
@@ -90,7 +92,7 @@
 		05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStateInspector.swift; sourceTree = "<group>"; };
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		05EB1B3D242473D400E7984B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaButtonsView.swift; sourceTree = "<group>"; };
+		05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaAuthentication.swift; sourceTree = "<group>"; };
 		05EB1B412424A6C900E7984B /* AuthenticationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLink.swift; sourceTree = "<group>"; };
 		05EB1B432424AC4900E7984B /* AuthenticationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationForm.swift; sourceTree = "<group>"; };
 		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -243,10 +245,11 @@
 		05EB1B472424EA5900E7984B /* CustomUIViews */ = {
 			isa = PBXGroup;
 			children = (
+				055F62CC2429868B0054934F /* AvatarManager.swift */,
 				05EB1B432424AC4900E7984B /* AuthenticationForm.swift */,
 				0517AD532424432E0049E48B /* BackgroundView.swift */,
 				05EB1B412424A6C900E7984B /* AuthenticationLink.swift */,
-				05EB1B3F2424759400E7984B /* SocialMediaButtonsView.swift */,
+				05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */,
 			);
 			path = CustomUIViews;
 			sourceTree = "<group>";
@@ -448,7 +451,8 @@
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
-				05EB1B402424759400E7984B /* SocialMediaButtonsView.swift in Sources */,
+				05EB1B402424759400E7984B /* SocialMediaAuthentication.swift in Sources */,
+				055F62CD2429868B0054934F /* AvatarManager.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
 				05EB1B442424AC4900E7984B /* AuthenticationForm.swift in Sources */,

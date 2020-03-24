@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol AvatarDelegate: AnyObject {
-    func userWillChangeAvatar()
-}
-
 class BackgroundView: UIView {
-    
-    weak var delegate: AvatarDelegate?
     
     var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
@@ -65,7 +59,7 @@ class BackgroundView: UIView {
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
-            delegate?.userWillChangeAvatar()
+            return
         default:
             return
         }

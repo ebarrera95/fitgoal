@@ -8,19 +8,35 @@
 
 import UIKit
 
-class GreetingViewController: UIViewController, HandleLinkTap {
+class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     
-    private var backgroundView = BackgroundView(
+    // TODO: BackgroundView is not a good name
+    
+    private var mainLabel: UILabel = {
+        let label = UILabel()
+        let text = "HELLO".formattedText(
+            font: "Oswald-Medium",
+            size: 34,
+            color: #colorLiteral(red: 0.36, green: 0.37, blue: 0.4, alpha: 1),
+            kern: -0.12
+        )
+        label.attributedText = text
+        return label
+    }()
+    
+    private var avatarManager = AvatarManager()
+    
+    private var backgroundView = BackgroundView (
         mainLabelText: "HELLO",
         avatarImage:  UIImage(imageLiteralResourceName: "icon_logo"),
         authenticationType: .none
     )
     
-    private var socialMediaView = SocialMediaView()
+    private var socialMediaView = SocialMediaAuthentication()
     
-    private var loginLink = AuthenticationLink(authenticationType: .login)
+    private var connectionToLoginVC = AuthenticationLink(authenticationType: .signUp)
     
-    private var createAccount: UIButton = {
+    private var createAccountButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
         let title = "Create Account".formattedText(font: "Roboto-Bold", size: 17, color: .white, kern: 0)
@@ -28,14 +44,15 @@ class GreetingViewController: UIViewController, HandleLinkTap {
         return button
     }()
     
-    private var text: UITextView = {
+    private var greetingText: UITextView = {
         let text = UITextView()
         let string = "Start transforming the way \n you enjoy you life"
         let attributedString = string.formattedText(
             font: "Roboto-Light",
             size: 15,
             color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
-            kern: 0
+            kern: 0,
+            lineSpacing: 6
         )
         
         text.isEditable = false
@@ -54,19 +71,19 @@ class GreetingViewController: UIViewController, HandleLinkTap {
         backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height + 50)
         socialMediaView.frame = CGRect(x: 0, y: 2/3 * view.bounds.maxY, width: view.bounds.width, height: 1/3 * view.bounds.height)
         
-        createAccount.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
-        createAccount.layer.cornerRadius = createAccount.bounds.height/2
+        createAccountButton.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
+        createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
         
-        let views = [backgroundView, socialMediaView, createAccount, text, loginLink]
+        let views = [backgroundView, mainLabel, socialMediaView, createAccountButton, greetingText, connectionToLoginVC]
         view.addMultipleSubviews(views)
         
         setTextConstraints()
         setLoginStackConstraints()
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
-        createAccount.addGestureRecognizer(tap)
+        createAccountButton.addGestureRecognizer(tap)
         
-        loginLink.linkDelegate = self
+        connectionToLoginVC.delegate = self
         
         
         
@@ -75,16 +92,16 @@ class GreetingViewController: UIViewController, HandleLinkTap {
     @objc func tapHandler(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
-            let singupVC = SignUpViewController()
-            singupVC.modalPresentationStyle = .fullScreen
-            singupVC.modalTransitionStyle = .crossDissolve
-            show(singupVC, sender: self)
+            let vc = SignUpViewController()
+            vc.modalPresentationStyle = .fullScreen
+            vc.modalTransitionStyle = .crossDissolve
+            show(vc, sender: self)
         default:
             return
         }
     }
     
-    func userDidSelectLink() {
+    func userDidSelectAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
@@ -92,20 +109,20 @@ class GreetingViewController: UIViewController, HandleLinkTap {
     }
     
     private func setTextConstraints() {
-        text.translatesAutoresizingMaskIntoConstraints = false
+        greetingText.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            text.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            text.bottomAnchor.constraint(equalTo: view.centerYAnchor)
+            greetingText.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            greetingText.bottomAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     private func setLoginStackConstraints() {
-        loginLink.translatesAutoresizingMaskIntoConstraints = false
+        connectionToLoginVC.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            loginLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            loginLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            connectionToLoginVC.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            connectionToLoginVC.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
 }
