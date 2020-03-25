@@ -8,13 +8,47 @@
 
 import UIKit
 
-class AuthenticationForm: UIStackView {
+class AuthenticationForm: UIStackView, UITextFieldDelegate {
     
-    private let name = CustomTextField(placeholder: "Name")
-    private let emailAddress = CustomTextField(placeholder: "Email")
-    private let pasword = CustomTextField(placeholder: "Password")
-    private let confirmPasword = CustomTextField(placeholder: "Confirm Password")
+    weak var customTextFieldDelegate: CustomTextFieldDelegate?
+
+    private let name: CustomTextField = {
+        let name = CustomTextField(placeholder: "Name")
+        name.textContentType = .name
+        name.returnKeyType = .next
+        name.tag = 0
+        return name
+    }()
     
+    private let emailAddress: CustomTextField = {
+        let email = CustomTextField(placeholder: "Email")
+        email.textContentType = .emailAddress
+        email.autocapitalizationType = .none
+        email.keyboardType = .emailAddress
+        email.returnKeyType = .next
+        email.tag = 1
+        return email
+    }()
+    
+    private let password: CustomTextField = {
+        let password = CustomTextField(placeholder: "Password")
+        password.textContentType = .password
+        password.autocapitalizationType = .none
+        password.isSecureTextEntry = true
+        password.returnKeyType = .next
+        password.tag = 2
+        return password
+    }()
+    
+    private let confirmPasword: CustomTextField = {
+        let password = CustomTextField(placeholder: "Confirm Password")
+        password.textContentType = .password
+        password.autocapitalizationType = .none
+        password.isSecureTextEntry = true
+        password.returnKeyType  = .done
+        password.tag = 3
+        return password
+    }()
     
     convenience init(authenticationType: AuthenticationType) {
         self.init(frame: .zero)
@@ -22,23 +56,29 @@ class AuthenticationForm: UIStackView {
         switch authenticationType {
         case .login:
             addArrangedSubview(emailAddress)
-            addArrangedSubview(pasword)
+            addArrangedSubview(password)
+            
+            password.returnKeyType = .done
         case .signUp:
             addArrangedSubview(name)
             addArrangedSubview(emailAddress)
-            addArrangedSubview(pasword)
+            addArrangedSubview(password)
             addArrangedSubview(confirmPasword)
         case .none:
             return
         }
     }
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = .vertical
         alignment = .leading
         spacing = 64
+        
+        name.delegate = self
+        emailAddress.delegate = self
+        password.delegate = self
+        confirmPasword.delegate = self
     }
     
     override func layoutSubviews() {
@@ -47,7 +87,7 @@ class AuthenticationForm: UIStackView {
         let fieldSize = CGSize(width: self.bounds.width, height: 54)
         name.frame.size = fieldSize
         emailAddress.frame.size = fieldSize
-        pasword.frame.size = fieldSize
+        password.frame.size = fieldSize
         confirmPasword.frame.size = fieldSize
     }
     
@@ -55,9 +95,34 @@ class AuthenticationForm: UIStackView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func userDidHitReturnKey(in textField: UITextField) {
+        if textField.returnKeyType == .next {
+            guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { return }
+            textField.resignFirstResponder()
+            let nextTextField = self.subviews[textFieldIndex + 1]
+            nextTextField.becomeFirstResponder()
+        } else {
+            textField.resignFirstResponder()
+        }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        userDidHitReturnKey(in: textField)
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if textField == confirmPasword {
+            customTextFieldDelegate?.showTextField()
+        }
+    }
 }
 
-class CustomTextField: UITextField, UITextFieldDelegate {
+protocol CustomTextFieldDelegate: AnyObject {
+    func showTextField()
+}
+
+class CustomTextField: UITextField {
     
     let buttonLine: UIView = {
         let line = UIView()
@@ -78,7 +143,6 @@ class CustomTextField: UITextField, UITextFieldDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(buttonLine)
-        self.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -89,11 +153,6 @@ class CustomTextField: UITextField, UITextFieldDelegate {
         super.layoutSubviews()
         buttonLine.frame = CGRect(x: 0, y: self.bounds.maxY, width: self.bounds.width, height: 1)
     }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.resignFirstResponder()
-        return true
-    }
 }
 
 enum AuthenticationType {
@@ -101,3 +160,10 @@ enum AuthenticationType {
     case login
     case none
 }
+
+//private enum TextFieldTag: Int {
+//    case nameField
+//    case emailField
+//    case PasswordField
+//    case ConfirmPasswordField
+//}

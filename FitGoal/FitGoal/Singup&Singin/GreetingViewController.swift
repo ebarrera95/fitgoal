@@ -10,9 +10,7 @@ import UIKit
 
 class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     
-    // TODO: BackgroundView is not a good name
-    
-    private var mainLabel: UILabel = {
+    private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "HELLO".formattedText(
             font: "Oswald-Medium",
@@ -24,19 +22,15 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         return label
     }()
     
-    private var avatarManager = AvatarManager()
+    private let avatarManager = AvatarManager(authenticationType: .none)
     
-    private var backgroundView = BackgroundView (
-        mainLabelText: "HELLO",
-        avatarImage:  UIImage(imageLiteralResourceName: "icon_logo"),
-        authenticationType: .none
-    )
+    private let backgroundView = BackgroundView ()
     
-    private var socialMediaView = SocialMediaAuthentication()
+    private let socialMediaView = SocialMediaAuthentication()
     
-    private var connectionToLoginVC = AuthenticationLink(authenticationType: .signUp)
+    private let connectionToLoginVC = AuthenticationLink(authenticationType: .signUp)
     
-    private var createAccountButton: UIButton = {
+    private let createAccountButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)
         let title = "Create Account".formattedText(font: "Roboto-Bold", size: 17, color: .white, kern: 0)
@@ -44,7 +38,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         return button
     }()
     
-    private var greetingText: UITextView = {
+    private let greetingText: UITextView = {
         let text = UITextView()
         let string = "Start transforming the way \n you enjoy you life"
         let attributedString = string.formattedText(
@@ -68,28 +62,24 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
-        backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height + 50)
+        backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
         socialMediaView.frame = CGRect(x: 0, y: 2/3 * view.bounds.maxY, width: view.bounds.width, height: 1/3 * view.bounds.height)
         
         createAccountButton.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
         createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
         
-        let views = [backgroundView, mainLabel, socialMediaView, createAccountButton, greetingText, connectionToLoginVC]
+        let views = [backgroundView, avatarManager, mainLabel, socialMediaView, createAccountButton, greetingText, connectionToLoginVC]
         view.addMultipleSubviews(views)
         
-        setTextConstraints()
-        setLoginStackConstraints()
+        setConstraints()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(tapHandler(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(createAccountTap(_:)))
         createAccountButton.addGestureRecognizer(tap)
         
         connectionToLoginVC.delegate = self
-        
-        
-        
     }
-    
-    @objc func tapHandler(_ sender: UITapGestureRecognizer) {
+
+    @objc func createAccountTap(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
             let vc = SignUpViewController()
@@ -108,6 +98,12 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         show(vc, sender: self)
     }
     
+    func setConstraints() {
+        setTextConstraints()
+        setLoginStackConstraints()
+        setMainLabelConstraints()
+    }
+    
     private func setTextConstraints() {
         greetingText.translatesAutoresizingMaskIntoConstraints = false
         
@@ -123,6 +119,15 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         NSLayoutConstraint.activate([
             connectionToLoginVC.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             connectionToLoginVC.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+        ])
+    }
+    
+    func setMainLabelConstraints() {
+        mainLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            mainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            mainLabel.topAnchor.constraint(equalTo: backgroundView.bottomAnchor)
         ])
     }
 }

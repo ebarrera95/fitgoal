@@ -9,28 +9,26 @@
 import Foundation
 import UIKit
 
-protocol UserAvatarDelegate: AnyObject {
+protocol AvatarMangerDelegate: AnyObject {
     func userWillChangeAvatar()
 }
 
 class AvatarManager: UIView {
     
-    weak var delegate: UserAvatarDelegate?
+    weak var delegate: AvatarMangerDelegate?
     
-    var avatarIcon = UIButton()
+    let avatarIcon = UIButton()
     
-    convenience init(avatarImage: UIImage, authenticationType: AuthenticationType) {
+    convenience init(authenticationType: AuthenticationType) {
         self.init(frame: .zero)
-        
         switch authenticationType.self {
         case .signUp:
-            avatarIcon.setImage(avatarImage, for: .normal)
+            avatarIcon.setImage(UIImage(imageLiteralResourceName: "addAvatar"), for: .normal)
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
             avatarIcon.addGestureRecognizer(tap)
         default:
             avatarIcon.isUserInteractionEnabled = false
-            avatarIcon.setImage(avatarImage, for: .normal)
-            return
+            avatarIcon.setImage(UIImage(imageLiteralResourceName: "icon_logo"), for: .normal)
         }
     }
     
@@ -38,7 +36,6 @@ class AvatarManager: UIView {
         super.init(frame: frame)
         let views = [avatarIcon]
         self.addMultipleSubviews(views)
-        //setConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -47,10 +44,11 @@ class AvatarManager: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        avatarIcon.frame = CGRect(x: bounds.midX - 52, y: 130, width: 104, height: 104)
+        avatarIcon.frame = CGRect(x: superview!.bounds.midX - 52, y: 130, width: 104, height: 104)
     }
     
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
+        print("handlingTap")
         switch sender.state {
         case .ended:
             delegate?.userWillChangeAvatar()
