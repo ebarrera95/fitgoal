@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthenticationForm: UIStackView, UITextFieldDelegate {
+class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
     
     convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
@@ -22,7 +22,6 @@ class AuthenticationForm: UIStackView, UITextFieldDelegate {
             setTextFieldHeightConstraints(for: textFields)
             setDelegate(for: textFields)
             configureReturnKeyType(for: textFields)
-            
         case .signUp:
             let name = TextFieldType.userName.getCustomTextField()
             let emailAddress = TextFieldType.emailAdress.getCustomTextField()
@@ -88,7 +87,7 @@ class AuthenticationForm: UIStackView, UITextFieldDelegate {
     }
 }
 
-class CustomTextField: UITextField {
+private class CustomTextField: UITextField {
     
     let buttonLine: UIView = {
         let line = UIView()
@@ -117,7 +116,6 @@ class CustomTextField: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         buttonLine.frame = CGRect(
             x: 0,
             y: self.bounds.maxY,

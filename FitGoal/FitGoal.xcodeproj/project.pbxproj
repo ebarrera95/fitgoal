@@ -34,9 +34,9 @@
 		05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */; };
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
 		05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3D242473D400E7984B /* SignUpViewController.swift */; };
-		05EB1B402424759400E7984B /* SocialMediaAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */; };
-		05EB1B422424A6C900E7984B /* AuthenticationLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationLink.swift */; };
-		05EB1B442424AC4900E7984B /* AuthenticationForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationForm.swift */; };
+		05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */; };
+		05EB1B422424A6C900E7984B /* AuthenticationLinkStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationLinkStack.swift */; };
+		05EB1B442424AC4900E7984B /* AuthenticationFormStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationFormStack.swift */; };
 		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
@@ -94,9 +94,9 @@
 		05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStateInspector.swift; sourceTree = "<group>"; };
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		05EB1B3D242473D400E7984B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaAuthentication.swift; sourceTree = "<group>"; };
-		05EB1B412424A6C900E7984B /* AuthenticationLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLink.swift; sourceTree = "<group>"; };
-		05EB1B432424AC4900E7984B /* AuthenticationForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationForm.swift; sourceTree = "<group>"; };
+		05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaAuthenticationView.swift; sourceTree = "<group>"; };
+		05EB1B412424A6C900E7984B /* AuthenticationLinkStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationLinkStack.swift; sourceTree = "<group>"; };
+		05EB1B432424AC4900E7984B /* AuthenticationFormStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFormStack.swift; sourceTree = "<group>"; };
 		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -248,11 +248,11 @@
 			isa = PBXGroup;
 			children = (
 				055F62CC2429868B0054934F /* AvatarView.swift */,
-				05EB1B432424AC4900E7984B /* AuthenticationForm.swift */,
+				05EB1B432424AC4900E7984B /* AuthenticationFormStack.swift */,
 				058312A8242C291800708195 /* AuthenticationType.swift */,
 				0517AD532424432E0049E48B /* BackgroundView.swift */,
-				05EB1B412424A6C900E7984B /* AuthenticationLink.swift */,
-				05EB1B3F2424759400E7984B /* SocialMediaAuthentication.swift */,
+				05EB1B412424A6C900E7984B /* AuthenticationLinkStack.swift */,
+				05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */,
 			);
 			path = CustomUIViews;
 			sourceTree = "<group>";
@@ -454,11 +454,11 @@
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
-				05EB1B402424759400E7984B /* SocialMediaAuthentication.swift in Sources */,
+				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
 				055F62CD2429868B0054934F /* AvatarView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
-				05EB1B442424AC4900E7984B /* AuthenticationForm.swift in Sources */,
+				05EB1B442424AC4900E7984B /* AuthenticationFormStack.swift in Sources */,
 				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
@@ -475,7 +475,7 @@
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
-				05EB1B422424A6C900E7984B /* AuthenticationLink.swift in Sources */,
+				05EB1B422424A6C900E7984B /* AuthenticationLinkStack.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
 			);

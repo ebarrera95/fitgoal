@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SocialMediaAuthentication: UIView {
+class SocialMediaAuthenticationView: UIView {
     
     private let dividerStack: UIStackView = {
         let stack = UIStackView()

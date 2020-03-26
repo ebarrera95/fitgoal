@@ -14,9 +14,9 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     
     private let avatarView = AvatarView(authenticationType: .none)
     
-    private let socialMediaAuthentication = SocialMediaAuthentication()
+    private let socialMediaAuthentication = SocialMediaAuthenticationView()
     
-    private let linkToSignUp = AuthenticationLink(type: .signUp)
+    private let linkToSignUp = AuthenticationLinkStack(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()

@@ -12,7 +12,7 @@ protocol AuthenticationTypeDelegate: AnyObject {
     func userDidSelectAuthenticationType()
 }
 
-class AuthenticationLink: UIStackView {
+class AuthenticationLinkStack: UIStackView {
     
     private var question = UILabel()
     private var link = UIButton(type: .system)

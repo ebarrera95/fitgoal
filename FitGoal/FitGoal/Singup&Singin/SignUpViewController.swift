@@ -14,9 +14,9 @@ class SignUpViewController: UIViewController, AuthenticationTypeDelegate, Avatar
     
     private let avatarView = AvatarView(authenticationType: .signUp)
     
-    private let linkToLogin = AuthenticationLink(type: .login)
+    private let linkToLogin = AuthenticationLinkStack(type: .login)
     
-    private let signUpForm = AuthenticationForm(type: .signUp)
+    private let signUpForm = AuthenticationFormStack(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()

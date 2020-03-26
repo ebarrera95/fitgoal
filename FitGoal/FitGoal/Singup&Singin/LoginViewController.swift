@@ -14,11 +14,11 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
     
     private let avatarView = AvatarView(authenticationType: .login)
     
-    private let linkToSignUp = AuthenticationLink(type: .signUp)
+    private let linkToSignUp = AuthenticationLinkStack(type: .signUp)
     
-    private let socialMediaView = SocialMediaAuthentication()
+    private let socialMediaView = SocialMediaAuthenticationView()
     
-    private let loginForm = AuthenticationForm(type: .login)
+    private let loginForm = AuthenticationFormStack(type: .login)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
