@@ -15,18 +15,16 @@ protocol AuthenticationTypeDelegate: AnyObject {
 class AuthenticationLink: UIStackView {
     
     private var question = UILabel()
-    
     private var link = UIButton(type: .system)
     
    weak var delegate: AuthenticationTypeDelegate?
     
-    convenience init(authenticationType: AuthenticationType) {
+    convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
-        
         var questionText = String()
         var linkText = String()
         
-        switch authenticationType {
+        switch type {
         case .signUp:
             questionText =  "Don't have an account?"
             linkText = "Signup"
@@ -68,7 +66,6 @@ class AuthenticationLink: UIStackView {
         axis = .horizontal
         alignment = .center
         spacing = 8
-        
         addArrangedSubview(question)
         addArrangedSubview(link)
     }
@@ -76,5 +73,4 @@ class AuthenticationLink: UIStackView {
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-   
 }

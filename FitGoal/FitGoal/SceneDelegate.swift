@@ -20,7 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.windowScene = windowScene
         
-        //let homeViewController = HomeViewController(persistance: CoreDataPersistance())
         let helloVC = GreetingViewController()
         self.window = window
         window.rootViewController = helloVC

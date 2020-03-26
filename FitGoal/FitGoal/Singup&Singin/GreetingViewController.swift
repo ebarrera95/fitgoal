@@ -10,6 +10,14 @@ import UIKit
 
 class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     
+    private let backgroundView = BackgroundView()
+    
+    private let avatarView = AvatarView(authenticationType: .none)
+    
+    private let socialMediaAuthentication = SocialMediaAuthentication()
+    
+    private let linkToSignUp = AuthenticationLink(type: .signUp)
+    
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "HELLO".formattedText(
@@ -21,14 +29,6 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         label.attributedText = text
         return label
     }()
-    
-    private let avatarManager = AvatarManager(authenticationType: .none)
-    
-    private let backgroundView = BackgroundView ()
-    
-    private let socialMediaView = SocialMediaAuthentication()
-    
-    private let connectionToLoginVC = AuthenticationLink(authenticationType: .signUp)
     
     private let createAccountButton: UIButton = {
         let button = UIButton()
@@ -48,7 +48,6 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
             kern: 0,
             lineSpacing: 6
         )
-        
         text.isEditable = false
         text.isScrollEnabled = false
         text.isSelectable = false
@@ -61,25 +60,58 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        
-        backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
-        socialMediaView.frame = CGRect(x: 0, y: 2/3 * view.bounds.maxY, width: view.bounds.width, height: 1/3 * view.bounds.height)
-        
-        createAccountButton.frame = CGRect(x: 16, y: view.bounds.midY + 50, width: view.bounds.width - 32, height: 52)
-        createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
-        
-        let views = [backgroundView, avatarManager, mainLabel, socialMediaView, createAccountButton, greetingText, connectionToLoginVC]
+        let views = [
+            backgroundView,
+            avatarView,
+            mainLabel,
+            socialMediaAuthentication,
+            createAccountButton,
+            greetingText,
+            linkToSignUp
+        ]
         view.addMultipleSubviews(views)
-        
         setConstraints()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(createAccountTap(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(presentViewController(_:)))
         createAccountButton.addGestureRecognizer(tap)
         
-        connectionToLoginVC.delegate = self
+        linkToSignUp.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        backgroundView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: view.bounds.width,
+            height: 1/3 * view.bounds.height
+        )
+        
+        socialMediaAuthentication.frame = CGRect(
+            x: 0,
+            y: 2/3 * view.bounds.maxY,
+            width: view.bounds.width,
+            height: 1/3 * view.bounds.height
+        )
+        
+        createAccountButton.frame = CGRect(
+            x: 16,
+            y: view.bounds.midY + 50,
+            width: view.bounds.width - 32,
+            height: 52
+        )
+        
+        avatarView.frame = CGRect(
+            x: view.bounds.midX - 42,
+            y: 130,
+            width: 104,
+            height: 104
+        )
+        
+        createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
     }
 
-    @objc func createAccountTap(_ sender: UITapGestureRecognizer) {
+    @objc private func presentViewController(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
             let vc = SignUpViewController()
@@ -98,7 +130,9 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         show(vc, sender: self)
     }
     
-    func setConstraints() {
+    //MARK: -Constraints
+    
+    private func setConstraints() {
         setTextConstraints()
         setLoginStackConstraints()
         setMainLabelConstraints()
@@ -114,11 +148,11 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     }
     
     private func setLoginStackConstraints() {
-        connectionToLoginVC.translatesAutoresizingMaskIntoConstraints = false
+        linkToSignUp.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            connectionToLoginVC.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            connectionToLoginVC.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            linkToSignUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            linkToSignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
     

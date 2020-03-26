@@ -26,7 +26,12 @@ class SocialMediaAuthentication: UIView {
         trailingLine.layer.borderWidth = 1
         
         let label = UILabel()
-        label.attributedText = "Or".formattedText(font: "Roboto-Light",size: 15, color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1), kern: 0)
+        label.attributedText = "Or".formattedText(
+            font: "Roboto-Light",
+            size: 15,
+            color: #colorLiteral(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
+            kern: 0
+        )
         
         stack.addArrangedSubview(leadingLine)
         stack.addArrangedSubview(label)
@@ -34,7 +39,6 @@ class SocialMediaAuthentication: UIView {
         
         leadingLine.widthAnchor.constraint(equalToConstant: 130).isActive = true
         leadingLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        
         trailingLine.widthAnchor.constraint(equalToConstant: 130).isActive = true
         trailingLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
         
@@ -58,7 +62,6 @@ class SocialMediaAuthentication: UIView {
         googleButton.setImage(#imageLiteral(resourceName: "GoogleButton"), for: .normal)
         googleButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         googleButton.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)
-        googleButton.layer.shadowOpacity = 1
         googleButton.layer.shadowRadius = 5
         return googleButton
     }()
@@ -83,14 +86,12 @@ class SocialMediaAuthentication: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         socialMediaStack.addArrangedSubview(facebookButton)
         socialMediaStack.addArrangedSubview(googleButton)
         socialMediaStack.addArrangedSubview(twitterButton)
         
         let views = [socialMediaStack, dividerStack]
         self.addMultipleSubviews(views)
-        
         setConstraints()
     }
     

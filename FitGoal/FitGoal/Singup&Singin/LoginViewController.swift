@@ -10,6 +10,16 @@ import UIKit
 
 class LoginViewController: UIViewController, AuthenticationTypeDelegate {
     
+    private let backgroundView = BackgroundView()
+    
+    private let avatarView = AvatarView(authenticationType: .login)
+    
+    private let linkToSignUp = AuthenticationLink(type: .signUp)
+    
+    private let socialMediaView = SocialMediaAuthentication()
+    
+    private let loginForm = AuthenticationForm(type: .login)
+    
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "LOGIN".formattedText(
@@ -21,16 +31,13 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
         label.attributedText = text
         return label
     }()
-    
-    private let avatarManager = AvatarManager(authenticationType: .login)
-    
-    private let scrollView = UIScrollView()
-    
-    private let backgroundView = BackgroundView()
-    
-    private let connectionToSignUpVC = AuthenticationLink(authenticationType: .signUp)
-    
-    private let socialMediaView = SocialMediaAuthentication()
+
+    private let scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.contentInsetAdjustmentBehavior = .never
+        scroll.alwaysBounceVertical = true
+        return scroll
+    }()
     
     private let loginButton: UIButton = {
         let button = UIButton()
@@ -41,55 +48,92 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
             color: .white,
             kern: 0
         )
-        
         button.setAttributedTitle(title, for: .normal)
         return button
     }()
     
-    private let loginForm = AuthenticationForm(authenticationType: .login)
-    
-
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        
         view.addSubview(scrollView)
         let views = [
             backgroundView,
-            avatarManager,
+            avatarView,
             mainLabel,
             loginButton,
             loginForm,
             socialMediaView,
-            connectionToSignUpVC
+            linkToSignUp,
         ]
-        
         scrollView.addMultipleSubviews(views)
-        
         setConstraints()
         
-        connectionToSignUpVC.delegate = self
+        linkToSignUp.delegate = self
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(loginButtonTap(_:)))
+        let tap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(presentViewControler(_:))
+        )
         loginButton.addGestureRecognizer(tap)
         
-        let dismissKeyBoardTap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyBoard(_:)))
-        view.addGestureRecognizer(dismissKeyBoardTap)
+        let dismissKeyBoardTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard(_:))
+        )
+        scrollView.addGestureRecognizer(dismissKeyBoardTap)
+    
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        scrollView.frame = view.bounds
-
-        backgroundView.frame = CGRect(x: 0, y: 0,  width: view.bounds.width, height: 1/3 * view.bounds.height)
+        scrollView.contentSize = view.frame.size
         
-        loginButton.frame = CGRect(x: 16, y: view.bounds.midY + 72, width: view.bounds.width - 32, height: 52)
+        socialMediaView.frame = CGRect(
+            x: 0,
+            y: 2/3 * view.bounds.maxY,
+            width: view.bounds.width,
+            height: 1/3 * view.bounds.height
+        )
+        
+        avatarView.frame = CGRect(
+            x: view.bounds.midX - 42,
+            y: 130,
+            width: 104,
+            height: 104
+        )
+        
+        backgroundView.frame = CGRect(
+            x: 0,
+            y: 0,
+            width: view.bounds.width,
+            height: 1/3 * view.bounds.height
+        )
+        
+        loginButton.frame = CGRect(
+            x: 16,
+            y: view.bounds.midY + 72,
+            width: view.bounds.width - 32,
+            height: 52
+        )
+        
         loginButton.layer.cornerRadius = loginButton.bounds.height/2
-        
-        socialMediaView.frame = CGRect(x: 0, y: 2/3 * view.bounds.maxY, width: view.bounds.width, height: 1/3 * view.bounds.height)
     }
     
-    @objc func dismissKeyBoard(_ sender: UITapGestureRecognizer) {
+    @objc private func dismissKeyboard(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
             loginForm.endEditing(true)
@@ -98,17 +142,35 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
         }
     }
     
-    
-    @objc func loginButtonTap(_ sender: UITapGestureRecognizer) {
+    @objc private func presentViewControler(_ sender: UITapGestureRecognizer) {
         switch sender.state {
         case .ended:
-            let vc = GreetingViewController()
+            let vc = HomeViewController(persistance: CoreDataPersistance())
             vc.modalPresentationStyle = .fullScreen
             vc.modalTransitionStyle = .crossDissolve
             show(vc, sender: self)
         default:
             return
         }
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+
+        let contentInsets = UIEdgeInsets(
+            top: 0.0,
+            left: 0.0,
+            bottom: keyboardSize.height,
+            right: 0.0
+        )
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        let contentInsets = UIEdgeInsets.zero
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
     }
     
     func userDidSelectAuthenticationType() {
@@ -118,18 +180,30 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
         show(vc, sender: self)
     }
     
-    func setConstraints() {
+    //MARK: -Constraints
+    
+    private func setConstraints() {
+        setScrollViewConstraints()
         setLoginStackConstraints()
         setSignUpLinkConstraints()
         setMainLabelConstraints()
     }
     
-    private func setSignUpLinkConstraints() {
-        connectionToSignUpVC.translatesAutoresizingMaskIntoConstraints = false
+    private func setScrollViewConstraints() {
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            connectionToSignUpVC.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            connectionToSignUpVC.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -72)
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            scrollView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
+    }
+    
+    private func setSignUpLinkConstraints() {
+        linkToSignUp.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            linkToSignUp.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            linkToSignUp.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
         ])
     }
     
@@ -139,7 +213,7 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
         NSLayoutConstraint.activate([
             loginForm.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
             loginForm.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
-            loginForm.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
+            loginForm.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -64)
         ])
     }
     

@@ -10,60 +10,30 @@ import UIKit
 
 class AuthenticationForm: UIStackView, UITextFieldDelegate {
     
-    weak var customTextFieldDelegate: CustomTextFieldDelegate?
-
-    private let name: CustomTextField = {
-        let name = CustomTextField(placeholder: "Name")
-        name.textContentType = .name
-        name.returnKeyType = .next
-        name.tag = 0
-        return name
-    }()
-    
-    private let emailAddress: CustomTextField = {
-        let email = CustomTextField(placeholder: "Email")
-        email.textContentType = .emailAddress
-        email.autocapitalizationType = .none
-        email.keyboardType = .emailAddress
-        email.returnKeyType = .next
-        email.tag = 1
-        return email
-    }()
-    
-    private let password: CustomTextField = {
-        let password = CustomTextField(placeholder: "Password")
-        password.textContentType = .password
-        password.autocapitalizationType = .none
-        password.isSecureTextEntry = true
-        password.returnKeyType = .next
-        password.tag = 2
-        return password
-    }()
-    
-    private let confirmPasword: CustomTextField = {
-        let password = CustomTextField(placeholder: "Confirm Password")
-        password.textContentType = .password
-        password.autocapitalizationType = .none
-        password.isSecureTextEntry = true
-        password.returnKeyType  = .done
-        password.tag = 3
-        return password
-    }()
-    
-    convenience init(authenticationType: AuthenticationType) {
+    convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
-        
-        switch authenticationType {
+        switch type {
         case .login:
-            addArrangedSubview(emailAddress)
-            addArrangedSubview(password)
+            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
+            let password = TextFieldType.password.getCustomTextField()
             
-            password.returnKeyType = .done
+            let textFields = [emailAddress, password]
+            addArrengedSubviews(textFields)
+            setTextFieldHeightConstraints(for: textFields)
+            setDelegate(for: textFields)
+            configureReturnKeyType(for: textFields)
+            
         case .signUp:
-            addArrangedSubview(name)
-            addArrangedSubview(emailAddress)
-            addArrangedSubview(password)
-            addArrangedSubview(confirmPasword)
+            let name = TextFieldType.userName.getCustomTextField()
+            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
+            let password = TextFieldType.password.getCustomTextField()
+            let confirmPassword = TextFieldType.confirmPassword.getCustomTextField()
+            
+            let textFields = [name, emailAddress, password, confirmPassword]
+            addArrengedSubviews(textFields)
+            setTextFieldHeightConstraints(for: textFields)
+            setDelegate(for: textFields)
+            configureReturnKeyType(for: textFields)
         case .none:
             return
         }
@@ -72,54 +42,50 @@ class AuthenticationForm: UIStackView, UITextFieldDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         axis = .vertical
-        alignment = .leading
-        spacing = 64
-        
-        name.delegate = self
-        emailAddress.delegate = self
-        password.delegate = self
-        confirmPasword.delegate = self
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
-        let fieldSize = CGSize(width: self.bounds.width, height: 54)
-        name.frame.size = fieldSize
-        emailAddress.frame.size = fieldSize
-        password.frame.size = fieldSize
-        confirmPasword.frame.size = fieldSize
+        alignment = .fill
+        distribution = .equalSpacing
+        spacing = 26
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func userDidHitReturnKey(in textField: UITextField) {
+    private func configureReturnKeyType (for texField: [CustomTextField]) {
+        var index = 0
+        while index < texField.count - 1 {
+            texField[index].returnKeyType = .next
+            index += 1
+        }
+        texField[texField.count - 1].returnKeyType = .done
+    }
+    
+    private func addArrengedSubviews(_ subviews: [CustomTextField]) {
+        subviews.forEach { addArrangedSubview($0) }
+    }
+    
+    private func setTextFieldHeightConstraints(for textFields: [CustomTextField]) {
+        textFields.forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.heightAnchor.constraint(equalToConstant: 54).isActive = true
+        }
+    }
+    
+    private func setDelegate(for textField: [CustomTextField]){
+        textField.forEach{ $0.delegate = self}
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .next {
-            guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { return }
+            guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { fatalError() }
             textField.resignFirstResponder()
             let nextTextField = self.subviews[textFieldIndex + 1]
             nextTextField.becomeFirstResponder()
         } else {
             textField.resignFirstResponder()
         }
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        userDidHitReturnKey(in: textField)
         return true
     }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == confirmPasword {
-            customTextFieldDelegate?.showTextField()
-        }
-    }
-}
-
-protocol CustomTextFieldDelegate: AnyObject {
-    func showTextField()
 }
 
 class CustomTextField: UITextField {
@@ -151,19 +117,63 @@ class CustomTextField: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        buttonLine.frame = CGRect(x: 0, y: self.bounds.maxY, width: self.bounds.width, height: 1)
+        
+        buttonLine.frame = CGRect(
+            x: 0,
+            y: self.bounds.maxY,
+            width: self.bounds.width,
+            height: 1
+        )
     }
 }
 
-enum AuthenticationType {
-    case signUp
-    case login
-    case none
+private enum TextFieldType {
+    case userName
+    case emailAdress
+    case password
+    case confirmPassword
+    
+    private var placeholder: String {
+        switch self {
+        case .userName:
+            return "Name"
+        case .emailAdress:
+            return "Email"
+        case .password:
+            return "Password"
+        case .confirmPassword:
+            return "Confirm Password"
+        }
+    }
+    
+    func getCustomTextField() -> CustomTextField {
+        switch self {
+        case .userName:
+            let name = CustomTextField(placeholder: placeholder)
+            name.textContentType = .name
+            name.returnKeyType = .next
+            return name
+        case .emailAdress:
+            let email = CustomTextField(placeholder: placeholder)
+            email.textContentType = .emailAddress
+            email.autocapitalizationType = .none
+            email.keyboardType = .emailAddress
+            email.returnKeyType = .next
+            return email
+        case .password:
+            let password = CustomTextField(placeholder: placeholder)
+            password.textContentType = .password
+            password.autocapitalizationType = .none
+            password.isSecureTextEntry = true
+            password.returnKeyType = .next
+            return password
+        case .confirmPassword:
+            let confirmPassword = CustomTextField(placeholder: placeholder)
+            confirmPassword.textContentType = .password
+            confirmPassword.autocapitalizationType = .none
+            confirmPassword.isSecureTextEntry = true
+            confirmPassword.returnKeyType  = .done
+            return confirmPassword
+        }
+    }
 }
-
-//private enum TextFieldTag: Int {
-//    case nameField
-//    case emailField
-//    case PasswordField
-//    case ConfirmPasswordField
-//}
