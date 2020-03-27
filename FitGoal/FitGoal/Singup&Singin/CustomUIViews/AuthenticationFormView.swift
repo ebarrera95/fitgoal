@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
+class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
@@ -18,10 +18,7 @@ class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
             let password = TextFieldType.password.getCustomTextField()
             
             let textFields = [emailAddress, password]
-            addArrengedSubviews(textFields)
-            setTextFieldHeightConstraints(for: textFields)
-            setDelegate(for: textFields)
-            configureReturnKeyType(for: textFields)
+            configureSectionSubviews(textFields: textFields)
         case .signUp:
             let name = TextFieldType.userName.getCustomTextField()
             let emailAddress = TextFieldType.emailAdress.getCustomTextField()
@@ -29,12 +26,7 @@ class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
             let confirmPassword = TextFieldType.confirmPassword.getCustomTextField()
             
             let textFields = [name, emailAddress, password, confirmPassword]
-            addArrengedSubviews(textFields)
-            setTextFieldHeightConstraints(for: textFields)
-            setDelegate(for: textFields)
-            configureReturnKeyType(for: textFields)
-        case .none:
-            return
+            configureSectionSubviews(textFields: textFields)
         }
     }
     
@@ -50,30 +42,15 @@ class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureReturnKeyType (for texField: [CustomTextField]) {
-        var index = 0
-        while index < texField.count - 1 {
-            texField[index].returnKeyType = .next
-            index += 1
-        }
-        texField[texField.count - 1].returnKeyType = .done
-    }
-    
-    private func addArrengedSubviews(_ subviews: [CustomTextField]) {
-        subviews.forEach { addArrangedSubview($0) }
-    }
-    
-    private func setTextFieldHeightConstraints(for textFields: [CustomTextField]) {
-        textFields.forEach {
-            $0.translatesAutoresizingMaskIntoConstraints = false
-            $0.heightAnchor.constraint(equalToConstant: 54).isActive = true
+    private func configureSectionSubviews(textFields: [CustomTextField]) {
+        for textField in textFields {
+            addArrangedSubview(textField)
+            textField.delegate = self
+            setTextFieldHeightConstraints(for: textField)
+            textField.returnKeyType = (textField == textFields.last) ? .done : .next
         }
     }
     
-    private func setDelegate(for textField: [CustomTextField]){
-        textField.forEach{ $0.delegate = self}
-    }
-
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField.returnKeyType == .next {
             guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { fatalError() }
@@ -84,6 +61,13 @@ class AuthenticationFormStack: UIStackView, UITextFieldDelegate {
             textField.resignFirstResponder()
         }
         return true
+    }
+    
+    // MARK: -Constraints
+
+    private func setTextFieldHeightConstraints(for textField: CustomTextField) {
+            textField.translatesAutoresizingMaskIntoConstraints = false
+            textField.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
 }
 

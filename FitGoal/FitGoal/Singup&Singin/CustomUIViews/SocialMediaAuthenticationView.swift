@@ -37,11 +37,12 @@ class SocialMediaAuthenticationView: UIView {
         stack.addArrangedSubview(label)
         stack.addArrangedSubview(trailingLine)
         
-        leadingLine.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        leadingLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        trailingLine.widthAnchor.constraint(equalToConstant: 130).isActive = true
-        trailingLine.heightAnchor.constraint(equalToConstant: 2).isActive = true
-        
+        NSLayoutConstraint.activate([
+            leadingLine.widthAnchor.constraint(equalToConstant: 130),
+            leadingLine.heightAnchor.constraint(equalToConstant: 2),
+            trailingLine.widthAnchor.constraint(equalToConstant: 130),
+            trailingLine.heightAnchor.constraint(equalToConstant: 2)
+        ])
         return stack
     }()
     
@@ -54,11 +55,8 @@ class SocialMediaAuthenticationView: UIView {
         return stack
     }()
     
-    private let googleButton: UIButton = {
-        let googleButton = UIButton()
-        googleButton.bounds.size = CGSize(width: 72, height: 72)
-        googleButton.layer.cornerRadius = 40
-        googleButton.contentMode = .scaleAspectFit
+    private lazy var googleButton: UIButton = {
+        let googleButton = socialMediaButton()
         googleButton.setImage(#imageLiteral(resourceName: "GoogleButton"), for: .normal)
         googleButton.layer.shadowOffset = CGSize(width: 0, height: 1)
         googleButton.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.01)
@@ -66,20 +64,14 @@ class SocialMediaAuthenticationView: UIView {
         return googleButton
     }()
 
-    private var facebookButton: UIButton = {
-        let facebookButton = UIButton()
-        facebookButton.bounds.size = CGSize(width: 72, height: 72)
-        facebookButton.layer.cornerRadius = 40
-        facebookButton.contentMode = .scaleAspectFit
+    private lazy var facebookButton: UIButton = {
+        let facebookButton = socialMediaButton()
         facebookButton.setImage(#imageLiteral(resourceName: "FacebookButton"), for: .normal)
         return facebookButton
     }()
 
-    private var twitterButton: UIButton = {
-        let twitterButton = UIButton()
-        twitterButton.bounds.size = CGSize(width: 72, height: 72)
-        twitterButton.layer.cornerRadius = 40
-        twitterButton.contentMode = .scaleAspectFit
+    private lazy var twitterButton: UIButton = {
+        let twitterButton = socialMediaButton()
         twitterButton.setImage(#imageLiteral(resourceName: "TwitterButton"), for: .normal)
         return twitterButton
     }()
@@ -100,13 +92,23 @@ class SocialMediaAuthenticationView: UIView {
         socialMediaStack.layoutIfNeeded()
     }
     
+    required init(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func socialMediaButton() -> UIButton {
+        let button = UIButton()
+        button.bounds.size = CGSize(width: 72, height: 72)
+        button.layer.cornerRadius = 40
+        button.contentMode = .scaleAspectFit
+        return button
+    }
+    
+    // MARK: -Constraints
+    
     func setConstraints() {
         setDividerStackConstraints()
         setSocialMediaStackConstraints()
-    }
-    
-    required init(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func setDividerStackConstraints() {

@@ -8,17 +8,17 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationTypeDelegate {
+class LoginViewController: UIViewController, AuthenticationLinkViewDelegate {
     
     private let backgroundView = BackgroundView()
     
-    private let avatarView = AvatarView(authenticationType: .login)
+    private let appIconView = IconView(iconType: .appIcon)
     
-    private let linkToSignUp = AuthenticationLinkStack(type: .signUp)
+    private let signUpLink = AuthenticationLinkView(type: .signUp)
     
     private let socialMediaView = SocialMediaAuthenticationView()
     
-    private let loginForm = AuthenticationFormStack(type: .login)
+    private let loginForm = AuthenticationFormView(type: .login)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -59,17 +59,17 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
         view.addSubview(scrollView)
         let views = [
             backgroundView,
-            avatarView,
+            appIconView,
             mainLabel,
             loginButton,
             loginForm,
             socialMediaView,
-            linkToSignUp,
+            signUpLink,
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
-        linkToSignUp.delegate = self
+        signUpLink.delegate = self
         
         let tap = UITapGestureRecognizer(
             target: self,
@@ -109,7 +109,7 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
             height: 1/3 * view.bounds.height
         )
         
-        avatarView.frame = CGRect(
+        appIconView.frame = CGRect(
             x: view.bounds.midX - 42,
             y: 130,
             width: 104,
@@ -199,11 +199,11 @@ class LoginViewController: UIViewController, AuthenticationTypeDelegate {
     }
     
     private func setSignUpLinkConstraints() {
-        linkToSignUp.translatesAutoresizingMaskIntoConstraints = false
+        signUpLink.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            linkToSignUp.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            linkToSignUp.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
+            signUpLink.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            signUpLink.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
         ])
     }
     

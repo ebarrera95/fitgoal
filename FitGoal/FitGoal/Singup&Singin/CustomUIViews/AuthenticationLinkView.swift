@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol AuthenticationTypeDelegate: AnyObject {
+protocol AuthenticationLinkViewDelegate: AnyObject {
     func userDidSelectAuthenticationType()
 }
 
-class AuthenticationLinkStack: UIStackView {
+class AuthenticationLinkView: UIStackView {
     
     private var question = UILabel()
     private var link = UIButton(type: .system)
     
-   weak var delegate: AuthenticationTypeDelegate?
+   weak var delegate: AuthenticationLinkViewDelegate?
     
     convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
@@ -31,8 +31,6 @@ class AuthenticationLinkStack: UIStackView {
         case .login:
             questionText = "Already onboard?"
             linkText = "Login"
-        case .none:
-            return
         }
         
         question.attributedText = questionText.formattedText(

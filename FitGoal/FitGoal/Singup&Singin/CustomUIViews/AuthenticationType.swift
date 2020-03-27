@@ -10,5 +10,4 @@ import Foundation
 enum AuthenticationType {
     case signUp
     case login
-    case none
 }

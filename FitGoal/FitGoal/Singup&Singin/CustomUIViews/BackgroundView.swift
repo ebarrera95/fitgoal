@@ -10,7 +10,7 @@ import UIKit
 
 class BackgroundView: UIView {
     
-    var gradientBackgroundView: UIView = {
+    private var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 175
         gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
@@ -20,7 +20,7 @@ class BackgroundView: UIView {
         return gradientView
     }()
     
-    var shadowWithGradient: UIView = {
+    private var shadowWithGradient: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
         gradientView.layer.cornerRadius = 175
         gradientView.layer.maskedCorners = [.layerMaxXMaxYCorner]

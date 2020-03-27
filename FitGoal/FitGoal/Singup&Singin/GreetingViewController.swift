@@ -8,15 +8,15 @@
 
 import UIKit
 
-class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
+class GreetingViewController: UIViewController, AuthenticationLinkViewDelegate {
     
     private let backgroundView = BackgroundView()
     
-    private let avatarView = AvatarView(authenticationType: .none)
+    private let appIconView = IconView(iconType: .appIcon)
     
     private let socialMediaAuthentication = SocialMediaAuthenticationView()
     
-    private let linkToSignUp = AuthenticationLinkStack(type: .signUp)
+    private let signUpLink = AuthenticationLinkView(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -62,12 +62,12 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         let views = [
             backgroundView,
-            avatarView,
+            appIconView,
             mainLabel,
             socialMediaAuthentication,
             createAccountButton,
             greetingText,
-            linkToSignUp
+            signUpLink
         ]
         view.addMultipleSubviews(views)
         setConstraints()
@@ -75,7 +75,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(presentViewController(_:)))
         createAccountButton.addGestureRecognizer(tap)
         
-        linkToSignUp.delegate = self
+        signUpLink.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -101,7 +101,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
             height: 52
         )
         
-        avatarView.frame = CGRect(
+        appIconView.frame = CGRect(
             x: view.bounds.midX - 42,
             y: 130,
             width: 104,
@@ -148,11 +148,11 @@ class GreetingViewController: UIViewController, AuthenticationTypeDelegate {
     }
     
     private func setLoginStackConstraints() {
-        linkToSignUp.translatesAutoresizingMaskIntoConstraints = false
+        signUpLink.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            linkToSignUp.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            linkToSignUp.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            signUpLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            signUpLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
     

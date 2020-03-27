@@ -8,15 +8,15 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, AuthenticationTypeDelegate, AvatarViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, AuthenticationLinkViewDelegate, IconViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private let backgroundView = BackgroundView()
     
-    private let avatarView = AvatarView(authenticationType: .signUp)
+    private let avatarView = IconView(iconType: .avatarChooser)
     
-    private let linkToLogin = AuthenticationLinkStack(type: .login)
+    private let loginLink = AuthenticationLinkView(type: .login)
     
-    private let signUpForm = AuthenticationFormStack(type: .signUp)
+    private let signUpForm = AuthenticationFormView(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -61,13 +61,13 @@ class SignUpViewController: UIViewController, AuthenticationTypeDelegate, Avatar
             avatarView,
             mainLabel,
             createAccountButton,
-            linkToLogin,
+            loginLink,
             signUpForm
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
-        linkToLogin.delegate = self
+        loginLink.delegate = self
         avatarView.delegate = self
         
         let tap = UITapGestureRecognizer(
@@ -195,11 +195,11 @@ class SignUpViewController: UIViewController, AuthenticationTypeDelegate, Avatar
     }
     
     private func setLoginStackConstraints() {
-        linkToLogin.translatesAutoresizingMaskIntoConstraints = false
+        loginLink.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            linkToLogin.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            linkToLogin.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 64)
+            loginLink.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            loginLink.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 64)
         ])
     }
     
