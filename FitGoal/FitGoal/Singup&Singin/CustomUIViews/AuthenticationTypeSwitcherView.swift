@@ -8,16 +8,16 @@
 
 import UIKit
 
-protocol AuthenticationLinkViewDelegate: AnyObject {
-    func userDidSelectAuthenticationType()
+protocol AuthenticationTypeSwitcherViewDelegate: AnyObject {
+    func userDidSwitchAuthenticationType()
 }
 
-class AuthenticationLinkView: UIStackView {
+class AuthenticationTypeSwitcherView: UIStackView {
     
     private var question = UILabel()
     private var link = UIButton(type: .system)
     
-   weak var delegate: AuthenticationLinkViewDelegate?
+   weak var delegate: AuthenticationTypeSwitcherViewDelegate?
     
     convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
@@ -46,17 +46,11 @@ class AuthenticationLinkView: UIStackView {
             kern: 0
         ), for: .normal)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-        link.addGestureRecognizer(tap)
+        link.addTarget(self, action: #selector(handleTap), for: .allTouchEvents)
     }
     
-    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            delegate?.userDidSelectAuthenticationType()
-        default:
-            return
-        }
+    @objc private func handleTap() {
+        delegate?.userDidSwitchAuthenticationType()
     }
     
     override init(frame: CGRect) {

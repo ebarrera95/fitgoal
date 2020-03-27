@@ -24,8 +24,7 @@ class IconView: UIView {
         case .avatarChooser:
             let image = UIImage(imageLiteralResourceName: "addAvatar")
             icon.setImage(image ,for: .normal)
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-            icon.addGestureRecognizer(tap)
+            icon.addTarget(self, action: #selector(handleTap), for: .allTouchEvents)
         case .appIcon:
             icon.isUserInteractionEnabled = false
             let image = UIImage(imageLiteralResourceName: "icon_logo")
@@ -47,13 +46,8 @@ class IconView: UIView {
         icon.frame = self.bounds
     }
     
-    @objc private func handleTap(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            delegate?.userWillChangeAvatar()
-        default:
-            return
-        }
+    @objc private func handleTap() {
+        delegate?.userWillChangeAvatar()
     }
 }
 

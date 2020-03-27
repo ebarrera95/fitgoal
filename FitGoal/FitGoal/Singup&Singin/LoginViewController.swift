@@ -8,13 +8,13 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationLinkViewDelegate {
+class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
     
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
     
-    private let signUpLink = AuthenticationLinkView(type: .signUp)
+    private let signUpLink = AuthenticationTypeSwitcherView(type: .signUp)
     
     private let socialMediaView = SocialMediaAuthenticationView()
     
@@ -71,15 +71,11 @@ class LoginViewController: UIViewController, AuthenticationLinkViewDelegate {
         
         signUpLink.delegate = self
         
-        let tap = UITapGestureRecognizer(
-            target: self,
-            action: #selector(presentViewControler(_:))
-        )
-        loginButton.addGestureRecognizer(tap)
+        loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
         let dismissKeyBoardTap = UITapGestureRecognizer(
             target: self,
-            action: #selector(dismissKeyboard(_:))
+            action: #selector(dismissKeyboard)
         )
         scrollView.addGestureRecognizer(dismissKeyBoardTap)
     
@@ -133,25 +129,15 @@ class LoginViewController: UIViewController, AuthenticationLinkViewDelegate {
         loginButton.layer.cornerRadius = loginButton.bounds.height/2
     }
     
-    @objc private func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
+    @objc private func dismissKeyboard() {
             loginForm.endEditing(true)
-        default:
-            return
-        }
     }
     
-    @objc private func presentViewControler(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            let vc = HomeViewController(persistance: CoreDataPersistance())
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            show(vc, sender: self)
-        default:
-            return
-        }
+    @objc private func presentViewController() {
+        let vc = HomeViewController(persistance: CoreDataPersistance())
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -173,7 +159,7 @@ class LoginViewController: UIViewController, AuthenticationLinkViewDelegate {
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    func userDidSelectAuthenticationType() {
+    func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve

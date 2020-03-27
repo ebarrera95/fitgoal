@@ -8,13 +8,13 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, AuthenticationLinkViewDelegate, IconViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, IconViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     private let backgroundView = BackgroundView()
     
     private let avatarView = IconView(iconType: .avatarChooser)
     
-    private let loginLink = AuthenticationLinkView(type: .login)
+    private let loginLink = AuthenticationTypeSwitcherView(type: .login)
     
     private let signUpForm = AuthenticationFormView(type: .signUp)
     
@@ -70,15 +70,11 @@ class SignUpViewController: UIViewController, AuthenticationLinkViewDelegate, Ic
         loginLink.delegate = self
         avatarView.delegate = self
         
-        let tap = UITapGestureRecognizer(
-            target: self,
-            action: #selector(presentViewController(_:))
-        )
-        createAccountButton.addGestureRecognizer(tap)
+        createAccountButton.addTarget(self, action: #selector(presentViewController), for: .allEvents)
         
         let dismissKeyBoardTap = UITapGestureRecognizer(
             target: self,
-            action: #selector(dismissKeyboard(_:))
+            action: #selector(dismissKeyboard)
         )
         scrollView.addGestureRecognizer(dismissKeyBoardTap)
         
@@ -126,25 +122,15 @@ class SignUpViewController: UIViewController, AuthenticationLinkViewDelegate, Ic
         createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
     }
     
-    @objc private func dismissKeyboard(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            signUpForm.endEditing(true)
-        default:
-            return
-        }
+    @objc private func dismissKeyboard() {
+        signUpForm.endEditing(true)
     }
     
-    @objc private func presentViewController(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            let vc = HomeViewController(persistance: CoreDataPersistance())
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            show(vc, sender: self)
-        default:
-            return
-        }
+    @objc private func presentViewController() {
+        let vc = HomeViewController(persistance: CoreDataPersistance())
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -170,7 +156,7 @@ class SignUpViewController: UIViewController, AuthenticationLinkViewDelegate, Ic
         print("Will mangage choosing avatar form camara or library")
     }
 
-    func userDidSelectAuthenticationType() {
+    func userDidSwitchAuthenticationType() {
         let vc = LoginViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve

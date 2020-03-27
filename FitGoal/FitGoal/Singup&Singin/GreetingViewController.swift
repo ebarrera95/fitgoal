@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GreetingViewController: UIViewController, AuthenticationLinkViewDelegate {
+class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
     
     private let backgroundView = BackgroundView()
     
@@ -16,7 +16,7 @@ class GreetingViewController: UIViewController, AuthenticationLinkViewDelegate {
     
     private let socialMediaAuthentication = SocialMediaAuthenticationView()
     
-    private let signUpLink = AuthenticationLinkView(type: .signUp)
+    private let signUpLink = AuthenticationTypeSwitcherView(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -72,9 +72,7 @@ class GreetingViewController: UIViewController, AuthenticationLinkViewDelegate {
         view.addMultipleSubviews(views)
         setConstraints()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(presentViewController(_:)))
-        createAccountButton.addGestureRecognizer(tap)
-        
+        createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         signUpLink.delegate = self
     }
     
@@ -111,19 +109,14 @@ class GreetingViewController: UIViewController, AuthenticationLinkViewDelegate {
         createAccountButton.layer.cornerRadius = createAccountButton.bounds.height/2
     }
 
-    @objc private func presentViewController(_ sender: UITapGestureRecognizer) {
-        switch sender.state {
-        case .ended:
-            let vc = SignUpViewController()
-            vc.modalPresentationStyle = .fullScreen
-            vc.modalTransitionStyle = .crossDissolve
-            show(vc, sender: self)
-        default:
-            return
-        }
+    @objc private func presentViewController() {
+        let vc = SignUpViewController()
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
     
-    func userDidSelectAuthenticationType() {
+    func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
