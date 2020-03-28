@@ -12,9 +12,14 @@
 		05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012CA0240D1FD70065E560 /* Roboto-Light.ttf */; };
 		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
+		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
+		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
+		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
 		0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DD241511CF004A0F65 /* ExerciseCell.swift */; };
 		0546E2E02415134C004A0F65 /* Exersice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DF2415134C004A0F65 /* Exersice.swift */; };
+		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
+		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
 		05A370C42415AA33009A654E /* URL+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A370C32415AA33009A654E /* URL+.swift */; };
 		05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E1240F28EB009B0443 /* Routine.swift */; };
 		05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */; };
@@ -23,11 +28,16 @@
 		05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */; };
 		05BBF751241503F200EF42E9 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05BBF750241503F100EF42E9 /* String+.swift */; };
 		05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE5072421FCE9000AF5EE /* DetailViewController.swift */; };
-		05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */; };
+		05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDE50924235DC2000AF5EE /* UIView+.swift */; };
 		05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */; };
 		05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */; };
 		05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */; };
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
+		05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3D242473D400E7984B /* SignUpViewController.swift */; };
+		05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */; };
+		05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */; };
+		05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */; };
+		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
 		F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AC240CF77D000E8873 /* SceneDelegate.swift */; };
 		F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AE240CF77D000E8873 /* HomeViewController.swift */; };
@@ -62,9 +72,14 @@
 		05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
+		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
+		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
 		0546E2DD241511CF004A0F65 /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
 		0546E2DF2415134C004A0F65 /* Exersice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exersice.swift; sourceTree = "<group>"; };
+		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
 		05A370C32415AA33009A654E /* URL+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
 		05B2E1E1240F28EB009B0443 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRoutineCell.swift; sourceTree = "<group>"; };
@@ -73,11 +88,16 @@
 		05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoalTrakerCell.swift; sourceTree = "<group>"; };
 		05BBF750241503F100EF42E9 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		05CDE5072421FCE9000AF5EE /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
+		05CDE50924235DC2000AF5EE /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ExerciseMO+CoreDataClass.swift"; sourceTree = "<group>"; };
 		05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistance.swift; sourceTree = "<group>"; };
 		05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStateInspector.swift; sourceTree = "<group>"; };
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		05EB1B3D242473D400E7984B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaAuthenticationView.swift; sourceTree = "<group>"; };
+		05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeSwitcherView.swift; sourceTree = "<group>"; };
+		05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFormView.swift; sourceTree = "<group>"; };
+		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		F14233A7240CF77D000E8873 /* FitGoal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitGoal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F14233AA240CF77D000E8873 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F14233AC240CF77D000E8873 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -131,12 +151,23 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		0517AD52242442F20049E48B /* Singup&Singin */ = {
+			isa = PBXGroup;
+			children = (
+				05EB1B3D242473D400E7984B /* SignUpViewController.swift */,
+				05EB1B452424D27600E7984B /* LoginViewController.swift */,
+				0517AD5524244DD40049E48B /* GreetingViewController.swift */,
+				05EB1B472424EA5900E7984B /* CustomUIViews */,
+			);
+			path = "Singup&Singin";
+			sourceTree = "<group>";
+		};
 		056A49B7241F287A00707791 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
-				05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */,
+				0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */,
 				05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */,
+				05CDEFAA2418D28100C1822D /* ExerciseMO+CoreDataClass.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -148,6 +179,7 @@
 				F14233F524127500000E8873 /* UIColor+.swift */,
 				05BBF750241503F100EF42E9 /* String+.swift */,
 				05A370C32415AA33009A654E /* URL+.swift */,
+				05CDE50924235DC2000AF5EE /* UIView+.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -170,6 +202,7 @@
 				05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */,
 				05BBF74E2414B5B700EF42E9 /* GoalTrakerCell.swift */,
 				0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */,
+				05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */,
 				056A49BB241F29A900707791 /* RoutineInspectorCollectionViewCell */,
 			);
 			path = CollectionViewSectionsAndHeaders;
@@ -211,6 +244,19 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
+		05EB1B472424EA5900E7984B /* CustomUIViews */ = {
+			isa = PBXGroup;
+			children = (
+				055F62CC2429868B0054934F /* IconView.swift */,
+				05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */,
+				058312A8242C291800708195 /* AuthenticationType.swift */,
+				0517AD532424432E0049E48B /* BackgroundView.swift */,
+				05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */,
+				05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */,
+			);
+			path = CustomUIViews;
+			sourceTree = "<group>";
+		};
 		F142339E240CF77D000E8873 = {
 			isa = PBXGroup;
 			children = (
@@ -237,8 +283,8 @@
 				F14233B8240CF77F000E8873 /* Info.plist */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
-				05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */,
 				056A49BE241F2A6300707791 /* SupportFiles */,
+				0517AD52242442F20049E48B /* Singup&Singin */,
 				056A49B7241F287A00707791 /* CoreData */,
 				056A49B8241F288A00707791 /* Utilities */,
 				056A49B9241F28BB00707791 /* HomeViewController */,
@@ -401,26 +447,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */,
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
-				05CDEFA52418CFE600C1822D /* FitGoal.xcdatamodeld in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
+				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
+				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
+				05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */,
+				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
 				05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */,
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
+				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
+				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
+				058312A9242C291900708195 /* AuthenticationType.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
+				0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */,
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
+				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
+				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -748,12 +804,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		05CDEFA32418CFE600C1822D /* FitGoal.xcdatamodeld */ = {
+		0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */,
+				0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */,
 			);
-			currentVersion = 05CDEFA42418CFE600C1822D /* FitGoal.xcdatamodel */;
+			currentVersion = 0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */;
 			path = FitGoal.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
