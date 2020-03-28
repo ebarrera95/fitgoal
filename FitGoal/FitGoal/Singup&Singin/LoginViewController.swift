@@ -14,7 +14,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     
     private let appIconView = IconView(iconType: .appIcon)
     
-    private let signUpLink = AuthenticationTypeSwitcherView(type: .signUp)
+    private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
     private let socialMediaView = SocialMediaAuthenticationView()
     
@@ -64,12 +64,12 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
             loginButton,
             loginForm,
             socialMediaView,
-            signUpLink,
+            authenticationSwitcherView,
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
-        signUpLink.delegate = self
+        authenticationSwitcherView.delegate = self
         
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -185,11 +185,11 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     private func setSignUpLinkConstraints() {
-        signUpLink.translatesAutoresizingMaskIntoConstraints = false
+        authenticationSwitcherView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            signUpLink.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            signUpLink.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
+            authenticationSwitcherView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            authenticationSwitcherView.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
         ])
     }
     

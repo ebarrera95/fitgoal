@@ -16,7 +16,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     
     private let socialMediaAuthentication = SocialMediaAuthenticationView()
     
-    private let signUpLink = AuthenticationTypeSwitcherView(type: .signUp)
+    private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -67,13 +67,13 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             socialMediaAuthentication,
             createAccountButton,
             greetingText,
-            signUpLink
+            authenticationSwitcherView
         ]
         view.addMultipleSubviews(views)
         setConstraints()
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
-        signUpLink.delegate = self
+        authenticationSwitcherView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -141,11 +141,11 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     private func setLoginStackConstraints() {
-        signUpLink.translatesAutoresizingMaskIntoConstraints = false
+        authenticationSwitcherView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            signUpLink.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            signUpLink.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
+            authenticationSwitcherView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            authenticationSwitcherView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -72)
         ])
     }
     

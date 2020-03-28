@@ -16,7 +16,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let loginLink = AuthenticationTypeSwitcherView(type: .login)
     
-    private let signUpForm = AuthenticationFormView(type: .signUp)
+    private let authenticationSwitcherView = AuthenticationFormView(type: .signUp)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -62,7 +62,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
             mainLabel,
             createAccountButton,
             loginLink,
-            signUpForm
+            authenticationSwitcherView
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
@@ -70,7 +70,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         loginLink.delegate = self
         avatarView.delegate = self
         
-        createAccountButton.addTarget(self, action: #selector(presentViewController), for: .allEvents)
+        createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
         let dismissKeyBoardTap = UITapGestureRecognizer(
             target: self,
@@ -123,7 +123,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func dismissKeyboard() {
-        signUpForm.endEditing(true)
+        authenticationSwitcherView.endEditing(true)
     }
     
     @objc private func presentViewController() {
@@ -190,12 +190,12 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     private func setSingUpStackConstraints() {
-        signUpForm.translatesAutoresizingMaskIntoConstraints = false
+        authenticationSwitcherView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            signUpForm.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
-            signUpForm.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
-            signUpForm.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -64)
+            authenticationSwitcherView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
+            authenticationSwitcherView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
+            authenticationSwitcherView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -64)
         ])
     }
     

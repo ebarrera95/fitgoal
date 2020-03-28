@@ -46,7 +46,7 @@ class AuthenticationTypeSwitcherView: UIStackView {
             kern: 0
         ), for: .normal)
         
-        link.addTarget(self, action: #selector(handleTap), for: .allTouchEvents)
+        link.addTarget(self, action: #selector(handleTap), for: .touchUpInside)
     }
     
     @objc private func handleTap() {
