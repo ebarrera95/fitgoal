@@ -6,6 +6,7 @@ target 'FitGoal' do
   use_frameworks!
 
   # Pods for FitGoal
+  pod 'Kingfisher', '~> 5.0'
 
   target 'FitGoalTests' do
     inherit! :search_paths
