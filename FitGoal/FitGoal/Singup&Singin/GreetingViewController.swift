@@ -12,6 +12,8 @@ import GoogleSignIn
 
 class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
+    private let authenticator = SocialMediaAuthenticator()
+    
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
@@ -122,7 +124,19 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     func userWillLoginWithGoogle() {
-        GIDSignIn.sharedInstance().signIn()
+        authenticator.googleSignIn { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let vc = HomeViewController(persistance: CoreDataPersistance())
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.modalTransitionStyle = .crossDissolve
+                    self.present(vc, animated: true)
+                }
+            case .failure(let error):
+                print("Unable to login \(error)")
+            }
+        }
     }
     
     func userDidSwitchAuthenticationType() {
