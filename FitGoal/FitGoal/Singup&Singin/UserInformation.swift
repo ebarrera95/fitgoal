@@ -12,5 +12,3 @@ struct UserInformation {
     let name: String
     let email: String
 }
-
-
