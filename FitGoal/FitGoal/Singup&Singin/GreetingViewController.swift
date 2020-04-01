@@ -7,8 +7,10 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
 
-class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
+class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
     private let backgroundView = BackgroundView()
     
@@ -74,6 +76,9 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         authenticationSwitcherView.delegate = self
+        socialMediaAuthentication.delegate = self
+        
+        GIDSignIn.sharedInstance()?.presentingViewController = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -114,6 +119,10 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         show(vc, sender: self)
+    }
+    
+    func userWillLoginWithGoogle() {
+        GIDSignIn.sharedInstance().signIn()
     }
     
     func userDidSwitchAuthenticationType() {

@@ -7,8 +7,16 @@
 //
 
 import UIKit
+import Firebase
+import GoogleSignIn
+
+protocol SocialMediaAuthenticationViewDelegate: AnyObject {
+    func userWillLoginWithGoogle()
+}
 
 class SocialMediaAuthenticationView: UIView {
+    
+    weak var delegate: SocialMediaAuthenticationViewDelegate?
     
     private let dividerStack: UIStackView = {
         let stack = UIStackView()
@@ -85,6 +93,12 @@ class SocialMediaAuthenticationView: UIView {
         let views = [socialMediaStack, dividerStack]
         self.addMultipleSubviews(views)
         setConstraints()
+        
+        googleButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
+    }
+    
+    @objc private func handleGoogleSignIn() {
+        delegate?.userWillLoginWithGoogle()
     }
     
     override func layoutSubviews() {
