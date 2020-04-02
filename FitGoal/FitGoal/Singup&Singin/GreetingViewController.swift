@@ -8,13 +8,15 @@
 
 import UIKit
 
-class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
+class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
+    
+    private let authenticator = SocialMediaAuthenticator()
     
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
     
-    private let socialMediaAuthentication = SocialMediaAuthenticationView()
+    private let socialMediaAuthenticationView = SocialMediaAuthenticationView()
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
@@ -64,7 +66,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             backgroundView,
             appIconView,
             mainLabel,
-            socialMediaAuthentication,
+            socialMediaAuthenticationView,
             createAccountButton,
             greetingText,
             authenticationSwitcherView
@@ -74,6 +76,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         authenticationSwitcherView.delegate = self
+        socialMediaAuthenticationView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -85,7 +88,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             height: 1/3 * view.bounds.height
         )
         
-        socialMediaAuthentication.frame = CGRect(
+        socialMediaAuthenticationView.frame = CGRect(
             x: 0,
             y: 2/3 * view.bounds.maxY,
             width: view.bounds.width,
@@ -114,6 +117,22 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
         show(vc, sender: self)
+    }
+    
+    func userWillLoginWithGoogle() {
+        authenticator.googleSignIn(sender: self) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let vc = HomeViewController(persistance: CoreDataPersistance())
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.modalTransitionStyle = .crossDissolve
+                    self.present(vc, animated: true)
+                }
+            case .failure(let error):
+                print("Unable to login \(error)")
+            }
+        }
     }
     
     func userDidSwitchAuthenticationType() {

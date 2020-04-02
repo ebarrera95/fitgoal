@@ -19,11 +19,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         let window = UIWindow(frame: UIScreen.main.bounds)
         window.windowScene = windowScene
-        
-        let helloVC = GreetingViewController()
         self.window = window
-        window.rootViewController = helloVC
         window.makeKeyAndVisible()
+        let appPreferences = AppPreferences()
+        if appPreferences.loggedInUser != nil {
+            let homeVC = HomeViewController(persistance: CoreDataPersistance())
+            window.rootViewController = homeVC
+        } else {
+            let helloVC = GreetingViewController()
+            window.rootViewController = helloVC
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -53,7 +58,4 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
-
 }
-

@@ -8,7 +8,9 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
+class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
+    
+    private let authenticator = SocialMediaAuthenticator()
     
     private let backgroundView = BackgroundView()
     
@@ -16,7 +18,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
-    private let socialMediaView = SocialMediaAuthenticationView()
+    private let socialMediaAuthenticationView = SocialMediaAuthenticationView()
     
     private let loginForm = AuthenticationFormView(type: .login)
     
@@ -63,14 +65,15 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
             mainLabel,
             loginButton,
             loginForm,
-            socialMediaView,
+            socialMediaAuthenticationView,
             authenticationSwitcherView,
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
         authenticationSwitcherView.delegate = self
-        
+        socialMediaAuthenticationView.delegate = self
+
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
         let dismissKeyBoardTap = UITapGestureRecognizer(
@@ -98,7 +101,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         super.viewDidLayoutSubviews()
         scrollView.contentSize = view.frame.size
         
-        socialMediaView.frame = CGRect(
+        socialMediaAuthenticationView.frame = CGRect(
             x: 0,
             y: 2/3 * view.bounds.maxY,
             width: view.bounds.width,
@@ -159,6 +162,22 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
+    func userWillLoginWithGoogle() {
+        authenticator.googleSignIn(sender: self) { result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async {
+                    let vc = HomeViewController(persistance: CoreDataPersistance())
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.modalTransitionStyle = .crossDissolve
+                    self.present(vc, animated: true)
+                }
+            case .failure(let error):
+                print("Unable to login \(error)")
+            }
+        }
+    }
+    
     func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
@@ -189,7 +208,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         
         NSLayoutConstraint.activate([
             authenticationSwitcherView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            authenticationSwitcherView.bottomAnchor.constraint(equalTo:socialMediaView.bottomAnchor, constant: -72)
+            authenticationSwitcherView.bottomAnchor.constraint(equalTo:socialMediaAuthenticationView.bottomAnchor, constant: -72)
         ])
     }
     
