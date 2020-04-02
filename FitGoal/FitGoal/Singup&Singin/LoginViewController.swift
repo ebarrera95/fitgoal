@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import GoogleSignIn
 
 class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
@@ -20,7 +18,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
-    private let socialMediaAuthentication = SocialMediaAuthenticationView()
+    private let socialMediaAuthenticationView = SocialMediaAuthenticationView()
     
     private let loginForm = AuthenticationFormView(type: .login)
     
@@ -67,16 +65,14 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
             mainLabel,
             loginButton,
             loginForm,
-            socialMediaAuthentication,
+            socialMediaAuthenticationView,
             authenticationSwitcherView,
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
         authenticationSwitcherView.delegate = self
-        socialMediaAuthentication.delegate = self
-        
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        socialMediaAuthenticationView.delegate = self
 
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -105,7 +101,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         super.viewDidLayoutSubviews()
         scrollView.contentSize = view.frame.size
         
-        socialMediaAuthentication.frame = CGRect(
+        socialMediaAuthenticationView.frame = CGRect(
             x: 0,
             y: 2/3 * view.bounds.maxY,
             width: view.bounds.width,
@@ -167,8 +163,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     func userWillLoginWithGoogle() {
-        print("here")
-        authenticator.googleSignIn { result in
+        authenticator.googleSignIn(sender: self) { result in
             switch result {
             case .success:
                 DispatchQueue.main.async {
@@ -213,7 +208,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         
         NSLayoutConstraint.activate([
             authenticationSwitcherView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            authenticationSwitcherView.bottomAnchor.constraint(equalTo:socialMediaAuthentication.bottomAnchor, constant: -72)
+            authenticationSwitcherView.bottomAnchor.constraint(equalTo:socialMediaAuthenticationView.bottomAnchor, constant: -72)
         ])
     }
     

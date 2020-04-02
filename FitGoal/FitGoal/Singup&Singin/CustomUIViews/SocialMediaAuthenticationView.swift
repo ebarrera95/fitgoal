@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import GoogleSignIn
 
 protocol SocialMediaAuthenticationViewDelegate: AnyObject {
     func userWillLoginWithGoogle()

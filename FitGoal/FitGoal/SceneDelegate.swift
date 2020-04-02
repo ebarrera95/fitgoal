@@ -21,7 +21,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.windowScene = windowScene
         self.window = window
         window.makeKeyAndVisible()
-        if UserInformationPersistenceManager.isUserLogedIn() {
+        let appPreferences = AppPreferences()
+        if appPreferences.loggedInUser != nil {
             let homeVC = HomeViewController(persistance: CoreDataPersistance())
             window.rootViewController = homeVC
         } else {

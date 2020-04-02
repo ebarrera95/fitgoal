@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import GoogleSignIn
 
 class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
@@ -18,7 +16,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     
     private let appIconView = IconView(iconType: .appIcon)
     
-    private let socialMediaAuthentication = SocialMediaAuthenticationView()
+    private let socialMediaAuthenticationView = SocialMediaAuthenticationView()
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
@@ -68,7 +66,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             backgroundView,
             appIconView,
             mainLabel,
-            socialMediaAuthentication,
+            socialMediaAuthenticationView,
             createAccountButton,
             greetingText,
             authenticationSwitcherView
@@ -78,9 +76,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         authenticationSwitcherView.delegate = self
-        socialMediaAuthentication.delegate = self
-        
-        GIDSignIn.sharedInstance()?.presentingViewController = self
+        socialMediaAuthenticationView.delegate = self
     }
     
     override func viewDidLayoutSubviews() {
@@ -92,7 +88,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             height: 1/3 * view.bounds.height
         )
         
-        socialMediaAuthentication.frame = CGRect(
+        socialMediaAuthenticationView.frame = CGRect(
             x: 0,
             y: 2/3 * view.bounds.maxY,
             width: view.bounds.width,
@@ -124,7 +120,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     func userWillLoginWithGoogle() {
-        authenticator.googleSignIn { result in
+        authenticator.googleSignIn(sender: self) { result in
             switch result {
             case .success:
                 DispatchQueue.main.async {

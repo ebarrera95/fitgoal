@@ -14,6 +14,8 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     
+    private let appPreference = AppPreferences()
+    
     private var completion: SignInCallback?
     
     override init() {
@@ -21,8 +23,9 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         GIDSignIn.sharedInstance()?.delegate = self
     }
     
-    func googleSignIn(completion: @escaping SignInCallback) {
+    func googleSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
         self.completion = completion
+        GIDSignIn.sharedInstance()?.presentingViewController = sender
         GIDSignIn.sharedInstance()?.signIn()
     }
     
@@ -43,8 +46,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                     guard let name = user.profile.name else { return }
                     guard let email = user.profile.email else { return }
                     let userInfo = UserInformation(name: name, email: email)
-                    let userInfoMangager = UserInformationPersistenceManager(userInfo: userInfo)
-                    userInfoMangager.saveUserInformation()
+                    self.appPreference.loggedInUser = userInfo
                     print("Log as: \(authResults!)")
                 }
             }
