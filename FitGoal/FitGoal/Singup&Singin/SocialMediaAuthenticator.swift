@@ -14,7 +14,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     
-    private let appPreference = AppPreferences()
+    private let appPreferences = AppPreferences()
     
     private var completion: SignInCallback?
     
@@ -46,7 +46,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                     guard let name = user.profile.name else { return }
                     guard let email = user.profile.email else { return }
                     let userInfo = UserInformation(name: name, email: email)
-                    self.appPreference.loggedInUser = userInfo
+                    self.appPreferences.loggedInUser = userInfo
                     print("Log as: \(authResults!)")
                 }
             }
