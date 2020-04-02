@@ -9,6 +9,7 @@ target 'FitGoal' do
   pod 'Kingfisher', '~> 5.0'
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
+  pod 'FBSDKLoginKit', '6.0.0', :modular_headers => true
 
   target 'FitGoalTests' do
     inherit! :search_paths

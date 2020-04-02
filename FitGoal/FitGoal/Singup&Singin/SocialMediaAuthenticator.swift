@@ -10,7 +10,7 @@ import UIKit
 import Firebase
 import GoogleSignIn
 
-class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
+class SocialMediaAuthenticator: NSObject, GIDSignInDelegate{
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     

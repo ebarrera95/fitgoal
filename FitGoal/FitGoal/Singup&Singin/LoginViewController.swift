@@ -9,6 +9,10 @@
 import UIKit
 
 class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
+    func userWillLoginWithFacebook() {
+        print("hold down")
+    }
+    
     
     private let authenticator = SocialMediaAuthenticator()
     

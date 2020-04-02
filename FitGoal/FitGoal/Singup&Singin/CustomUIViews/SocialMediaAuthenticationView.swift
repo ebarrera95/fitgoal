@@ -7,9 +7,12 @@
 //
 
 import UIKit
+import Firebase
+import FBSDKLoginKit
 
 protocol SocialMediaAuthenticationViewDelegate: AnyObject {
     func userWillLoginWithGoogle()
+    func userWillLoginWithFacebook()
 }
 
 class SocialMediaAuthenticationView: UIView {
@@ -93,10 +96,15 @@ class SocialMediaAuthenticationView: UIView {
         setConstraints()
         
         googleButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(handleFacebookSignIn), for: .touchUpInside)
+        
     }
     
     @objc private func handleGoogleSignIn() {
         delegate?.userWillLoginWithGoogle()
+    }
+    @objc private func handleFacebookSignIn() {
+        delegate?.userWillLoginWithFacebook()
     }
     
     override func layoutSubviews() {

@@ -134,6 +134,9 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             }
         }
     }
+    func userWillLoginWithFacebook() {
+        
+    }
     
     func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()

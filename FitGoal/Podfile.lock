@@ -4,6 +4,16 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.3.0)
   - AppAuth/Core (1.3.0)
   - AppAuth/ExternalUserAgent (1.3.0)
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.0.0):
+    - FBSDKLoginKit/Login (= 6.0.0)
+  - FBSDKLoginKit/Login (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
   - Firebase/Auth (6.21.0):
     - Firebase/CoreOnly
     - FirebaseAuth (~> 6.5.1)
@@ -68,6 +78,7 @@ PODS:
   - nanopb/encode (0.3.9011)
 
 DEPENDENCIES:
+  - FBSDKLoginKit (= 6.0.0)
   - Firebase/Auth
   - GoogleSignIn
   - Kingfisher (~> 5.0)
@@ -75,6 +86,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - AppAuth
+    - FBSDKCoreKit
+    - FBSDKLoginKit
     - Firebase
     - FirebaseAuth
     - FirebaseAuthInterop
@@ -92,6 +105,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppAuth: 73574f3013a1e65b9601a3ddc8b3158cce68c09d
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   Firebase: f378c80340dd41c0ad0914af740c021eb282a04b
   FirebaseAuth: a6da11d78dfd956b7f7af3222a0f0b1c93ef8fc9
   FirebaseAuthInterop: a0f37ae05833af156e72028f648d313f7e7592e9
@@ -107,6 +122,6 @@ SPEC CHECKSUMS:
   Kingfisher: d342c8354c10c3d85a27d6d4c42c41285924b898
   nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
 
-PODFILE CHECKSUM: f8a2a2d6d679b10437501a55846d9dedcf2d3e12
+PODFILE CHECKSUM: 4b4c623243ed7bc9c903abe90eec30b546a7ffaa
 
 COCOAPODS: 1.9.1
