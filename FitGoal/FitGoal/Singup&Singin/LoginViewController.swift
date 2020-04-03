@@ -8,13 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
-    func userWillLoginWithFacebook() {
-        print("hold down")
-    }
-    
-    
-    private let authenticator = SocialMediaAuthenticator()
+class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
     
     private let backgroundView = BackgroundView()
     
@@ -76,7 +70,6 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         setConstraints()
         
         authenticationSwitcherView.delegate = self
-        socialMediaAuthenticationView.delegate = self
 
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -164,22 +157,6 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         let contentInsets = UIEdgeInsets.zero
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
-    }
-    
-    func userWillLoginWithGoogle() {
-        authenticator.googleSignIn(sender: self) { result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    let vc = HomeViewController(persistance: CoreDataPersistance())
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
-                }
-            case .failure(let error):
-                print("Unable to login \(error)")
-            }
-        }
     }
     
     func userDidSwitchAuthenticationType() {
