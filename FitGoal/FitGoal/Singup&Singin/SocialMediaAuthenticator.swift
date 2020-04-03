@@ -83,7 +83,8 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             if let error = error {
                 completion(.failure(error))
             } else {
-                if (result?.isCancelled) != nil {
+                guard let result = result else { return }
+                if result.isCancelled {
                     let error = LoginError.userCanceledLogIn
                     completion(.failure(error))
                 }
