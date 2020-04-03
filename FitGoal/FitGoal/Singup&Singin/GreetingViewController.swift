@@ -127,14 +127,14 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
         let vc = AuthenticationViewController(socialMedia: socialMedia)
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
     }
 
     func userDidSwitchAuthenticationType() {

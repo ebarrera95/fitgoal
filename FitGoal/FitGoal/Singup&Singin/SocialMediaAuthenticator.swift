@@ -32,7 +32,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
-        print(socialMediaType)
         switch socialMediaType {
         case .facebook:
             facebookSignIn(sender: sender, completion: completion)
