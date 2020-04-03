@@ -10,8 +10,6 @@ import UIKit
 
 class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
-    private let authenticator = SocialMediaAuthenticator()
-    
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
@@ -72,32 +70,6 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         return text
     }()
     
-    private var loginStatus = LoginStatus.loggedOut {
-        didSet {
-            DispatchQueue.main.async {
-                switch self.loginStatus {
-                    case .loggedIn:
-                        let vc = HomeViewController(persistance: CoreDataPersistance())
-                        vc.modalPresentationStyle = .fullScreen
-                        vc.modalTransitionStyle = .crossDissolve
-                        self.present(vc, animated: true)
-                    case .attempting:
-                        self.view.addSubview(self.placeholderView)
-                        self.placeholderView.addSubview(self.placeholder)
-                        self.placeholder.center = self.view.center
-                        self.setPlaceholderViewConstraints()
-                        self.placeholder.startAnimating()
-                    case.failed(let error):
-                        self.placeholder.stopAnimating()
-                        self.placeholderView.removeFromSuperview()
-                        print("Unable to login, reason: \(error)")
-                    case.loggedOut:
-                        return
-                    }
-                }
-            }
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -158,30 +130,13 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         show(vc, sender: self)
     }
     
-    func userWillLoginWithGoogle() {
-        loginStatus = .attempting
-        authenticator.googleSignIn(sender: self) { result in
-            switch result {
-            case .success:
-                self.loginStatus = .loggedIn
-            case .failure(let error):
-                self.loginStatus = .failed(error)
-            }
-        }
+    func userWillLogin(with socialMedia: SocialMedia) {
+        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        vc.modalPresentationStyle = .fullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        show(vc, sender: self)
     }
-    
-    func userWillLoginWithFacebook() {
-        loginStatus = .attempting
-        authenticator.facebookSignIn(sender: self) { (result) in
-            switch result {
-            case .success:
-                self.loginStatus = .loggedIn
-            case .failure(let error):
-                self.loginStatus = .failed(error)
-            }
-        }
-    }
-    
+
     func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
@@ -233,11 +188,4 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             placeholderView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
     }
-}
-
-enum LoginStatus {
-    case loggedOut
-    case attempting
-    case loggedIn
-    case failed(Error)
 }
