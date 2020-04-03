@@ -9,8 +9,9 @@
 import UIKit
 import Firebase
 import GoogleSignIn
+import FBSDKLoginKit
 
-class SocialMediaAuthenticator: NSObject, GIDSignInDelegate{
+class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     
@@ -53,4 +54,48 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate{
             completion?(.success(()))
         }
     }
+    //MARK: - Facebook
+    
+    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
+        print("logout")
+    }
+    
+    func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
+        let manager = LoginManager()
+        manager.logIn(permissions: ["public_profile", "email"], from: sender) { (result, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                if (result?.isCancelled) != nil {
+                    let error = LoginError.userCanceledLogIn
+                    completion(.failure(error))
+                }
+                guard let accessToken = AccessToken.current else { return }
+                let credentials = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+                Auth.auth().signIn(with: credentials) { (user, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        guard let user = Auth.auth().currentUser else { return }
+                        guard let name = user.displayName else { return }
+                        guard let email = user.email else { return }
+                        let userInfo = UserInformation(name: name, email: email)
+                        self.appPreferences.loggedInUser = userInfo
+                        completion(.success(()))
+                    }
+                }
+            }
+        }
+        self.completion = completion
+    }
+    
+    func facebookLogOut() {
+        let manager = LoginManager()
+        manager.logOut()
+        appPreferences.loggedInUser = nil
+    }
+}
+
+private enum LoginError: Error {
+    case userCanceledLogIn
 }
