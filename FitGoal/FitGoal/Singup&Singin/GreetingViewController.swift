@@ -20,6 +20,19 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
+    private let placeholderView: UIView = {
+        let view = UIView()
+        view.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 0.5)
+        return view
+    }()
+    
+    let placeholder: UIActivityIndicatorView = {
+        let placeholder = UIActivityIndicatorView()
+        placeholder.color = .white
+        placeholder.style = .large
+        return placeholder
+    }()
+    
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "HELLO".formattedText(
@@ -58,6 +71,32 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         text.textAlignment = .center
         return text
     }()
+    
+    private var loginStatus = LoginStatus.loggedOut {
+        didSet {
+            DispatchQueue.main.async {
+                switch self.loginStatus {
+                    case .loggedIn:
+                        let vc = HomeViewController(persistance: CoreDataPersistance())
+                        vc.modalPresentationStyle = .fullScreen
+                        vc.modalTransitionStyle = .crossDissolve
+                        self.present(vc, animated: true)
+                    case .attempting:
+                        self.view.addSubview(self.placeholderView)
+                        self.placeholderView.addSubview(self.placeholder)
+                        self.placeholder.center = self.view.center
+                        self.setPlaceholderViewConstraints()
+                        self.placeholder.startAnimating()
+                    case.failed(let error):
+                        self.placeholder.stopAnimating()
+                        self.placeholderView.removeFromSuperview()
+                        print("Unable to login, reason: \(error)")
+                    case.loggedOut:
+                        return
+                    }
+                }
+            }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -120,22 +159,27 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     func userWillLoginWithGoogle() {
+        loginStatus = .attempting
         authenticator.googleSignIn(sender: self) { result in
             switch result {
             case .success:
-                DispatchQueue.main.async {
-                    let vc = HomeViewController(persistance: CoreDataPersistance())
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
-                }
+                self.loginStatus = .loggedIn
             case .failure(let error):
-                print("Unable to login \(error)")
+                self.loginStatus = .failed(error)
             }
         }
     }
+    
     func userWillLoginWithFacebook() {
-        
+        loginStatus = .attempting
+        authenticator.facebookSignIn(sender: self) { (result) in
+            switch result {
+            case .success:
+                self.loginStatus = .loggedIn
+            case .failure(let error):
+                self.loginStatus = .failed(error)
+            }
+        }
     }
     
     func userDidSwitchAuthenticationType() {
@@ -179,4 +223,21 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
             mainLabel.topAnchor.constraint(equalTo: backgroundView.bottomAnchor)
         ])
     }
+    
+    func setPlaceholderViewConstraints() {
+        placeholderView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            placeholderView.topAnchor.constraint(equalTo: view.topAnchor),
+            placeholderView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            placeholderView.heightAnchor.constraint(equalTo: view.heightAnchor)
+        ])
+    }
+}
+
+enum LoginStatus {
+    case loggedOut
+    case attempting
+    case loggedIn
+    case failed(Error)
 }
