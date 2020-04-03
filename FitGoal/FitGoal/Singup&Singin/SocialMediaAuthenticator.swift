@@ -19,12 +19,34 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     private var completion: SignInCallback?
     
-    override init() {
-        super.init()
-        GIDSignIn.sharedInstance()?.delegate = self
+    private var socialMediaType: SocialMedia?
+    
+    convenience init(socialMediaType: SocialMedia) {
+        self.init()
+        self.socialMediaType = socialMediaType
     }
     
-    func googleSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
+    override init() {
+        super.init()
+    }
+    
+    
+    func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
+        print(socialMediaType)
+        switch socialMediaType {
+        case .facebook:
+            facebookSignIn(sender: sender, completion: completion)
+        case .google:
+            GIDSignIn.sharedInstance()?.delegate = self
+            googleSignIn(sender: sender, completion: completion)
+        case .twitter:
+            return
+        case .none:
+            return
+        }
+    }
+    //MARK: -Google
+    private func googleSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
         self.completion = completion
         GIDSignIn.sharedInstance()?.presentingViewController = sender
         GIDSignIn.sharedInstance()?.signIn()
@@ -56,11 +78,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     }
     //MARK: - Facebook
     
-    func loginButtonDidLogOut(_ loginButton: FBLoginButton) {
-        print("logout")
-    }
-    
-    func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
+    private func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
         let manager = LoginManager()
         manager.logIn(permissions: ["public_profile", "email"], from: sender) { (result, error) in
             if let error = error {
@@ -82,20 +100,21 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                         let userInfo = UserInformation(name: name, email: email)
                         self.appPreferences.loggedInUser = userInfo
                         completion(.success(()))
+                        print("Also here")
                     }
                 }
             }
         }
         self.completion = completion
     }
-    
-    func facebookLogOut() {
-        let manager = LoginManager()
-        manager.logOut()
-        appPreferences.loggedInUser = nil
-    }
 }
 
 private enum LoginError: Error {
     case userCanceledLogIn
+}
+
+enum SocialMedia {
+    case facebook
+    case google
+    case twitter
 }
