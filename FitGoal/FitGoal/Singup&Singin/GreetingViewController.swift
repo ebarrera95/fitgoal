@@ -18,19 +18,6 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     
     private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .signUp)
     
-    private let placeholderView: UIView = {
-        let view = UIView()
-        view.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 0.5)
-        return view
-    }()
-    
-    let placeholder: UIActivityIndicatorView = {
-        let placeholder = UIActivityIndicatorView()
-        placeholder.color = .white
-        placeholder.style = .large
-        return placeholder
-    }()
-    
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "HELLO".formattedText(
@@ -176,16 +163,6 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         NSLayoutConstraint.activate([
             mainLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             mainLabel.topAnchor.constraint(equalTo: backgroundView.bottomAnchor)
-        ])
-    }
-    
-    func setPlaceholderViewConstraints() {
-        placeholderView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            placeholderView.topAnchor.constraint(equalTo: view.topAnchor),
-            placeholderView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            placeholderView.heightAnchor.constraint(equalTo: view.heightAnchor)
         ])
     }
 }
