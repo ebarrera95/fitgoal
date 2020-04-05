@@ -12,6 +12,13 @@ class AuthenticationViewController: UIViewController {
     
     private var authenticator: SocialMediaAuthenticator
     
+    private var blurEffectView: UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView()
+        let blurEffect = UIBlurEffect(style: .extraLight)
+        blurEffectView.effect = blurEffect
+        return blurEffectView
+    }()
+    
     init(socialMedia: SocialMedia) {
         self.authenticator = SocialMediaAuthenticator(socialMediaType: socialMedia)
         super.init(nibName: nil, bundle: nil)
@@ -35,7 +42,7 @@ class AuthenticationViewController: UIViewController {
     
     private let placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
-        placeholder.color = .white
+        placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         placeholder.style = .large
         return placeholder
     }()
@@ -66,17 +73,24 @@ class AuthenticationViewController: UIViewController {
         }
     }
     
+    private var viewDidAppearOnce = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 0.5)
-        view.isOpaque = false
-        view.alpha = 0.5
-        login()
-        print("viewDidLoad end")
+        view.addSubview(blurEffectView)
+        view.backgroundColor = .clear
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if viewDidAppearOnce {
+            login()
+        }
+        viewDidAppearOnce = false
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        blurEffectView.frame = view.bounds
         placeholder.center = view.center
     }
 }
