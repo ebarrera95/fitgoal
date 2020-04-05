@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Firebase
-import FBSDKLoginKit
 
 protocol SocialMediaAuthenticationViewDelegate: AnyObject {
     func userWillLogin(with socialMedia: SocialMedia)
