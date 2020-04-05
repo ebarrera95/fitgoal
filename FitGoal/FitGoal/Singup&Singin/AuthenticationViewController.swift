@@ -92,7 +92,7 @@ class AuthenticationViewController: UIViewController {
     }
 }
 
-enum LoginStatus {
+private enum LoginStatus {
     case attempting
     case loggedIn
     case failed(Error)
