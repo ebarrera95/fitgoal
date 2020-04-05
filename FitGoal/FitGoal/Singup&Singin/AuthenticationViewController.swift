@@ -20,7 +20,7 @@ class AuthenticationViewController: UIViewController {
     }()
     
     init(socialMedia: SocialMedia) {
-        self.authenticator = SocialMediaAuthenticator(socialMediaType: socialMedia)
+        self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -47,7 +47,7 @@ class AuthenticationViewController: UIViewController {
         return placeholder
     }()
     
-    private var loginStatus = LoginStatus.loggedOut {
+    private var loginStatus: LoginStatus? {
         didSet {
             DispatchQueue.main.async {
                 switch self.loginStatus {
@@ -61,12 +61,9 @@ class AuthenticationViewController: UIViewController {
                     self.placeholder.center = self.view.center
                     self.placeholder.startAnimating()
                 case.failed(let error):
-                    let vc = GreetingViewController()
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true, completion: nil)
                     print("Unable to login, reason: \(error)")
-                case.loggedOut:
+                    self.dismiss(animated: true, completion: nil)
+                case.none:
                     return
                 }
             }
@@ -96,7 +93,6 @@ class AuthenticationViewController: UIViewController {
 }
 
 enum LoginStatus {
-    case loggedOut
     case attempting
     case loggedIn
     case failed(Error)
