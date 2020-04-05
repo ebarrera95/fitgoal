@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate {
+class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
     private let backgroundView = BackgroundView()
     
@@ -70,6 +70,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         setConstraints()
         
         authenticationSwitcherView.delegate = self
+        socialMediaAuthenticationView.delegate = self
 
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -163,7 +164,14 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
+    }
+    
+    func userWillLogin(with socialMedia: SocialMedia) {
+        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true)
     }
     
     //MARK: -Constraints
