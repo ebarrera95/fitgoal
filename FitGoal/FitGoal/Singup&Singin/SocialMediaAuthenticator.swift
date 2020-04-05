@@ -24,7 +24,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     init(socialMedia: SocialMedia) {
         self.socialMediaType = socialMedia
         super.init()
-        
     }
 
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
@@ -70,6 +69,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             completion?(.success(()))
         }
     }
+    
     //MARK: - Facebook
     
     private func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
