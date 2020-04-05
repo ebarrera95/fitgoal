@@ -19,17 +19,14 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     private var completion: SignInCallback?
     
-    private var socialMediaType: SocialMedia?
+    private var socialMediaType: SocialMedia
     
-    convenience init(socialMediaType: SocialMedia) {
-        self.init()
-        self.socialMediaType = socialMediaType
-    }
-    
-    override init() {
+    init(socialMedia: SocialMedia) {
+        self.socialMediaType = socialMedia
         super.init()
+        
     }
-    
+
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
         switch socialMediaType {
         case .facebook:
@@ -38,8 +35,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             GIDSignIn.sharedInstance()?.delegate = self
             googleSignIn(sender: sender, completion: completion)
         case .twitter:
-            return
-        case .none:
             return
         }
     }
@@ -90,16 +85,30 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                 }
                 guard let accessToken = AccessToken.current else { return }
                 let credentials = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-                Auth.auth().signIn(with: credentials) { (user, error) in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        guard let user = Auth.auth().currentUser else { return }
-                        guard let name = user.displayName else { return }
-                        guard let email = user.email else { return }
-                        let userInfo = UserInformation(name: name, email: email)
-                        self.appPreferences.loggedInUser = userInfo
-                        completion(.success(()))
+                
+                /*This part of the function looks for a previous user logged in with these credentials but with a different providers.
+                 Because of the behavior of the GoogleSignIn, it looks as if this functionality is implicit at some point
+                */
+                if let user = Auth.auth().currentUser {
+                    guard let name = user.displayName else { return }
+                    guard let email = user.email else { return }
+                    let userInfo = UserInformation(name: name, email: email)
+                    self.appPreferences.loggedInUser = userInfo
+                    Auth.auth().fetchSignInMethods(forEmail: email, completion: nil)
+                    user.link(with: credentials, completion: nil)
+                    completion(.success(()))
+                } else {
+                    Auth.auth().signIn(with: credentials) { (user, error) in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            guard let user = Auth.auth().currentUser else { return }
+                            guard let name = user.displayName else { return }
+                            guard let email = user.email else { return }
+                            let userInfo = UserInformation(name: name, email: email)
+                            self.appPreferences.loggedInUser = userInfo
+                            completion(.success(()))
+                        }
                     }
                 }
             }
