@@ -12,39 +12,18 @@ class AuthenticationViewController: UIViewController {
     
     private var authenticator: SocialMediaAuthenticator
     
-    private var blurEffectView: UIVisualEffectView = {
-        let blurEffectView = UIVisualEffectView()
-        let blurEffect = UIBlurEffect(style: .extraLight)
-        blurEffectView.effect = blurEffect
-        return blurEffectView
-    }()
-    
-    init(socialMedia: SocialMedia) {
-        self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func login() {
-        loginStatus = .attempting
-        authenticator.authenticate(sender: self) { result in
-            switch result {
-            case .success:
-                self.loginStatus = .loggedIn
-            case .failure(let error):
-                self.loginStatus = .failed(error)
-            }
-        }
-    }
-    
     private let placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
         placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         placeholder.style = .large
         return placeholder
+    }()
+    
+    private var blurEffectView: UIVisualEffectView = {
+        let blurEffectView = UIVisualEffectView()
+        let blurEffect = UIBlurEffect(style: .extraLight)
+        blurEffectView.effect = blurEffect
+        return blurEffectView
     }()
     
     private var loginStatus: LoginStatus? {
@@ -72,11 +51,33 @@ class AuthenticationViewController: UIViewController {
     
     private var viewDidAppearOnce = true
     
+    init(socialMedia: SocialMedia) {
+        self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func login() {
+        loginStatus = .attempting
+        authenticator.authenticate(sender: self) { result in
+            switch result {
+            case .success:
+                self.loginStatus = .loggedIn
+            case .failure(let error):
+                self.loginStatus = .failed(error)
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(blurEffectView)
         view.backgroundColor = .clear
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if viewDidAppearOnce {
