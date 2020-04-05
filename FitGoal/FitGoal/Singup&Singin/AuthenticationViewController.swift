@@ -49,7 +49,7 @@ class AuthenticationViewController: UIViewController {
         }
     }
     
-    private var viewDidAppearOnce = true
+    private var viewDidAppearOnce = false
     
     init(socialMedia: SocialMedia) {
         self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
@@ -80,10 +80,10 @@ class AuthenticationViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if viewDidAppearOnce {
+        if !viewDidAppearOnce {
             login()
+            viewDidAppearOnce = true
         }
-        viewDidAppearOnce = false
     }
     
     override func viewDidLayoutSubviews() {
