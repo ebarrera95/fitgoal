@@ -30,7 +30,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         super.init()
     }
     
-    
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
         switch socialMediaType {
         case .facebook:
@@ -44,6 +43,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             return
         }
     }
+    
     //MARK: -Google
     private func googleSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
         self.completion = completion
@@ -100,7 +100,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                         let userInfo = UserInformation(name: name, email: email)
                         self.appPreferences.loggedInUser = userInfo
                         completion(.success(()))
-                        print("Also here")
                     }
                 }
             }
