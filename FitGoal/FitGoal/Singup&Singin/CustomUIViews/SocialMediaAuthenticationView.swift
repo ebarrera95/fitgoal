@@ -102,6 +102,7 @@ class SocialMediaAuthenticationView: UIView {
     @objc private func handleGoogleSignIn() {
         delegate?.userWillLogin(with: .google)
     }
+    
     @objc private func handleFacebookSignIn() {
         delegate?.userWillLogin(with: .facebook)
     }
