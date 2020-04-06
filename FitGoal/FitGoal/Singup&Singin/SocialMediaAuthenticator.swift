@@ -142,7 +142,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     /*
      I've moved this part of the logic to an independent func to avoid repeating code. Not sure if it's the best way
      to manage this because when you read the funcs `createNewUser` and `mergeNewUserWith` it's not clear when the
-     `completion(.success)` casewill happen
+     `completion(.success(()))` case will happen
      */
     private func manageResutls(dataResults: AuthDataResult?, error: Error?, completion: @escaping SignInCallback) {
         if let error = error {
