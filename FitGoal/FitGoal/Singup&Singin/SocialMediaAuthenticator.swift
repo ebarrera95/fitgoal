@@ -72,53 +72,73 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     //MARK: - Facebook
     
+    
     private func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
-        let manager = LoginManager()
-        manager.logIn(permissions: ["public_profile", "email"], from: sender) { (result, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                guard let result = result else { return }
-                if result.isCancelled {
+        let permissions = ["public_profile", "email"]
+        LoginManager().logIn(permissions: permissions, from: sender) { (logInResuts, error) in
+            if let error = error { completion(.failure(error)) }
+            else {
+                guard let logInResuts = logInResuts else { return }
+                if logInResuts.isCancelled {
                     let error = LoginError.userCanceledLogIn
                     completion(.failure(error))
                 }
-                guard let accessToken = AccessToken.current else { return }
-                let credentials = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-                
-                /*This part of the function looks for a previous user logged in with these credentials but with a different providers.
-                 Because of the behavior of the GoogleSignIn, it looks as if this functionality is implicit at some point
-                */
-                if let user = Auth.auth().currentUser {
-                    guard let name = user.displayName else { return }
+                else {
+                    guard let user = Auth.auth().currentUser else { return }
                     guard let email = user.email else { return }
-                    let userInfo = UserInformation(name: name, email: email)
-                    self.appPreferences.loggedInUser = userInfo
-                    Auth.auth().fetchSignInMethods(forEmail: email, completion: nil)
-                    user.link(with: credentials, completion: nil)
-                    completion(.success(()))
-                } else {
-                    Auth.auth().signIn(with: credentials) { (user, error) in
-                        if let error = error {
-                            completion(.failure(error))
+                    Auth.auth().fetchSignInMethods(forEmail: email) { (signInmethods, error) in
+                        if let error = error { completion(.failure(error)) }
+                        else if signInmethods != nil {
+                            self.mergeNewUserWith(currentUser: user, completion: completion)
                         } else {
-                            guard let user = Auth.auth().currentUser else { return }
-                            guard let name = user.displayName else { return }
-                            guard let email = user.email else { return }
-                            let userInfo = UserInformation(name: name, email: email)
-                            self.appPreferences.loggedInUser = userInfo
-                            completion(.success(()))
+                            self.createNewUser(completion: completion)
                         }
                     }
                 }
             }
         }
-        self.completion = completion
+    }
+    private func mergeNewUserWith(currentUser: User, completion: @escaping SignInCallback) {
+        guard let credentials = getFacebookCredentials() else { return }
+        currentUser.link(with: credentials) { (dataResults, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            self.createUser(with: dataResults, completion: completion)
+        }
+    }
+    
+    private func createNewUser(completion: @escaping SignInCallback) {
+        guard let credentials = getFacebookCredentials() else { return }
+        Auth.auth().signIn(with: credentials) { ( dataResults, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            self.createUser(with: dataResults, completion: completion)
+        }
+    }
+    
+    private func getFacebookCredentials() -> AuthCredential? {
+        guard let accessToken = AccessToken.current else { return nil }
+        return FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+    }
+    
+    private func createUser(with dataResults: AuthDataResult?, completion: @escaping SignInCallback) {
+        guard let user = dataResults?.user else { return }
+        guard let name = user.displayName else { return }
+        guard let email = user.email else { return }
+        let userInfo = UserInformation(name: name, email: email)
+        self.appPreferences.loggedInUser = userInfo
+        completion(.success(()))
     }
 }
 
+
 private enum LoginError: Error {
     case userCanceledLogIn
+    case noUserFound
+    case noNameFound
+    case noEmailFound
 }
 
 enum SocialMedia {
