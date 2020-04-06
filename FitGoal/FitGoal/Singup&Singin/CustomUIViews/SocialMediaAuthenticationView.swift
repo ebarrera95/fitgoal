@@ -94,7 +94,6 @@ class SocialMediaAuthenticationView: UIView {
         
         googleButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
         facebookButton.addTarget(self, action: #selector(handleFacebookSignIn), for: .touchUpInside)
-        
     }
     
     @objc private func handleGoogleSignIn() {
