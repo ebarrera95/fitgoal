@@ -14,172 +14,190 @@ import FBSDKLoginKit
 class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
+    typealias UserInfoCallback = (Result<UserInformation, Error>) -> Void
     
     private let appPreferences = AppPreferences()
     
-    private var completion: SignInCallback?
+    private var userInfoCallback: UserInfoCallback?
     
-    private var socialMediaType: SocialMedia
+    private var socialMedia: SocialMedia
     
     init(socialMedia: SocialMedia) {
-        self.socialMediaType = socialMedia
+        self.socialMedia = socialMedia
         super.init()
+        GIDSignIn.sharedInstance()?.delegate = self
     }
-
+    
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
-        switch socialMediaType {
+        func persistIfPossible(userInfoResult: Result<UserInformation, Error>) {
+            switch userInfoResult {
+            case .success(let userInfo):
+                appPreferences.loggedInUser = userInfo
+                completion(.success(()))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+        
+        switch self.socialMedia {
         case .facebook:
-            facebookSignIn(sender: sender, completion: completion)
+            facebookSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         case .google:
-            GIDSignIn.sharedInstance()?.delegate = self
-            googleSignIn(sender: sender, completion: completion)
+            googleSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         case .twitter:
             return
         }
     }
     
-    //MARK: -Google
-    private func googleSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
-        self.completion = completion
+    private func googleSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+        self.userInfoCallback = completion
         GIDSignIn.sharedInstance()?.presentingViewController = sender
         GIDSignIn.sharedInstance()?.signIn()
     }
     
+    private func facebookSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+        let permissions = ["public_profile", "email"]
+        
+        LoginManager().logIn(permissions: permissions, from: sender) { (loginResuts, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                guard let loginResults = loginResuts else {
+                    completion(.failure(LoginError.noLoginResultsFound))
+                    return
+                }
+                if loginResults.isCancelled {
+                    completion(.failure(LoginError.userCanceledLogin))
+                } else {
+                    guard let accessToken = loginResults.token else {
+                        completion(.failure(LoginError.noAuthCredentialsFound))
+                        return
+                    }
+                    
+                    self.requestFacebookEmail(using: accessToken) { (results) in
+                        switch results {
+                        case .failure(let error):
+                            completion(.failure(error))
+                        case .success(let email):
+                            let credentials = FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
+                            self.authenticateUser(using: .facebook, with: credentials, userEmail: email, completion: completion)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func requestFacebookEmail(using accessToken: AccessToken, emailCallback: @escaping (Result<String, Error>) -> Void) {
+        let graphRequest = GraphRequest(
+            graphPath: "me",
+            parameters: ["fields":"email"],
+            tokenString: accessToken.tokenString,
+            version: nil,
+            httpMethod: HTTPMethod(rawValue: "GET")
+        )
+        
+        graphRequest.start { (test, result, error) in
+            if let error = error {
+                emailCallback(.failure(error))
+            } else {
+                guard let result = result else {
+                    emailCallback(.failure(LoginError.noLoginResultsFound))
+                    return
+                }
+                
+                guard let userInformation = result as? [String:String] else {
+                    emailCallback(.failure(MissingUserInfoError.noUserFound))
+                    return
+                }
+
+                guard let email = userInformation["email"] else {
+                    emailCallback(.failure(MissingUserInfoError.noEmailFound))
+                    return
+                }
+                
+                emailCallback(.success(email))
+            }
+        }
+    }
+    
+    private func authenticateUser(using socialMedia: SocialMedia, with credential: AuthCredential, userEmail email: String, completion: @escaping UserInfoCallback) {
+        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            else if let methods = signInMethods, !methods.contains(socialMedia.rawValue) {
+                let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
+                if previousMethod != nil {
+                    completion(.failure(LoginError.userPreviouslyLoggedInWith(previousMethod!)))
+                } else {
+                    assertionFailure("")
+                    completion(.failure(LoginError.unrecognisedLoginMethod))
+                }
+            } else {
+                self.signIn(using: credential, completion: completion)
+            }
+        }
+    }
+    
+    private func signIn(using credentials: AuthCredential, completion: @escaping UserInfoCallback) {
+        Auth.auth().signIn(with: credentials) { (dataResults, error) in
+            self.parseUserInformation(from: dataResults, error: error, completion: completion)
+        }
+    }
+    
+    private func parseUserInformation(from dataResults: AuthDataResult?, error: Error?, completion: UserInfoCallback) {
+        if let error = error {
+            completion(.failure(error))
+        } else {
+            guard let user = dataResults?.user else {
+                completion(.failure(MissingUserInfoError.noUserFound))
+                return
+            }
+            
+            guard let name = user.displayName else {
+                completion(.failure(MissingUserInfoError.noNameFound))
+                return
+            }
+            
+            guard let email = user.email else {
+                completion(.failure(MissingUserInfoError.noEmailFound))
+                return
+            }
+            
+            completion(.success(UserInformation(name: name, email: email)))
+        }
+    }
+    
+    // MARK: -Google Delegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            completion?(.failure(error))
-        }
-        else {
+            userInfoCallback?(.failure(error))
+        } else {
             guard let authentication = user.authentication else { return }
+
             let credential = GoogleAuthProvider.credential(
                 withIDToken: authentication.idToken,
                 accessToken: authentication.accessToken
             )
-            Auth.auth().signIn(with: credential) { (authResults, error) in
-                if let error = error {
-                    self.completion?(.failure(error))
-                } else {
-                    guard let name = user.profile.name else { return }
-                    guard let email = user.profile.email else { return }
-                    let userInfo = UserInformation(name: name, email: email)
-                    self.appPreferences.loggedInUser = userInfo
-                    print("Log as: \(authResults!)")
-                }
+            
+            guard let email = user.profile.email else {
+                userInfoCallback?(.failure(MissingUserInfoError.noEmailFound))
+                return
             }
-            completion?(.success(()))
+            
+            guard let callback = userInfoCallback else { return }
+            self.authenticateUser(using: .google, with: credential, userEmail: email, completion: callback)
         }
-    }
-    
-    //MARK: - Facebook
-    
-    private func facebookSignIn(sender: UIViewController, completion: @escaping SignInCallback) {
-        let permissions = ["public_profile", "email"]
-        LoginManager().logIn(permissions: permissions, from: sender) { (logInResuts, error) in
-            if let error = error {
-                completion(.failure(error))
-            }
-            else {
-                guard let logInResuts = logInResuts else {
-                    let error = LoginError.noLogInResultsFound
-                    completion(.failure(error))
-                    return
-                }
-                
-                if logInResuts.isCancelled {
-                    let error = LoginError.userCanceledLogIn
-                    completion(.failure(error))
-                }
-                else {
-                    guard let user = Auth.auth().currentUser else {
-                        let error = MissingUserInfoError.noUserFound
-                        completion(.failure(error))
-                        return
-                    }
-                    
-                    guard let email = user.email else {
-                        let error = MissingUserInfoError.noEmailFound
-                        completion(.failure(error))
-                        return
-                    }
-                    
-                    Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
-                        if let error = error {
-                            completion(.failure(error))
-                        }
-                        else if signInMethods != nil && !signInMethods!.contains("facebook.com") {
-                            self.mergeNewUserWith(currentUser: user, completion: completion)
-                        } else {
-                            self.createNewUser(completion: completion)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    private func mergeNewUserWith(currentUser: User, completion: @escaping SignInCallback) {
-        do {
-            let credentials = try getFacebookCredentials()
-            currentUser.link(with: credentials) { (dataResults, error) in
-                self.manageResutls(dataResults: dataResults, error: error, completion: completion)
-            }
-        }
-        catch {
-            completion(.failure(error))
-        }
-    }
-    
-    private func createNewUser(completion: @escaping SignInCallback) {
-        do {
-            let credentials = try getFacebookCredentials()
-            Auth.auth().signIn(with: credentials) { ( dataResults, error) in
-                self.manageResutls(dataResults: dataResults, error: error, completion: completion)
-            }
-        } catch {
-            completion(.failure(error))
-        }
-    }
-    /*
-     I've moved this part of the logic to an independent func to avoid repeating code. Not sure if it's the best way
-     to manage this because when you read the funcs `createNewUser` and `mergeNewUserWith` it's not clear when the
-     `completion(.success(()))` case will happen
-     */
-    private func manageResutls(dataResults: AuthDataResult?, error: Error?, completion: @escaping SignInCallback) {
-        if let error = error {
-            completion(.failure(error))
-        } else {
-            do {
-                guard let user = dataResults?.user else {
-                    let error = MissingUserInfoError.noUserFound
-                    completion(.failure(error))
-                    return
-                }
-                let userInfo = try self.create(user: user)
-                self.appPreferences.loggedInUser = userInfo
-                completion(.success(()))
-            } catch {
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    private func getFacebookCredentials() throws -> AuthCredential {
-        guard let accessToken = AccessToken.current else { throw LoginError.noAuthCredentialsFound }
-        return FacebookAuthProvider.credential(withAccessToken: accessToken.tokenString)
-    }
-    
-    private func create(user: User) throws  -> UserInformation {
-        guard let name = user.displayName else { throw MissingUserInfoError.noNameFound }
-        guard let email = user.email else { throw MissingUserInfoError.noEmailFound }
-        return UserInformation(name: name, email: email)
     }
 }
 
-
-private enum LoginError: Error {
-    case userCanceledLogIn
+enum LoginError: Error {
+    case userCanceledLogin
     case noAuthCredentialsFound
-    case noLogInResultsFound
+    case noLoginResultsFound
+    case userPreviouslyLoggedInWith(SocialMedia)
+    case unrecognisedLoginMethod
 }
 
 private enum MissingUserInfoError: Error {
@@ -188,8 +206,8 @@ private enum MissingUserInfoError: Error {
     case noEmailFound
 }
 
-enum SocialMedia {
-    case facebook
-    case google
-    case twitter
+enum SocialMedia: String, CaseIterable {
+    case facebook = "facebook.com"
+    case google = "google.com"
+    case twitter = "twitter.com"
 }
