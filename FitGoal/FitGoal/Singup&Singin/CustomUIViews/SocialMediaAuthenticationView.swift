@@ -94,6 +94,7 @@ class SocialMediaAuthenticationView: UIView {
         
         googleButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
         facebookButton.addTarget(self, action: #selector(handleFacebookSignIn), for: .touchUpInside)
+        twitterButton.addTarget(self, action: #selector(handleTwitterSignIn), for: .touchUpInside)
     }
     
     @objc private func handleGoogleSignIn() {
@@ -102,6 +103,10 @@ class SocialMediaAuthenticationView: UIView {
     
     @objc private func handleFacebookSignIn() {
         delegate?.userWillLogin(with: .facebook)
+    }
+    
+    @objc private func handleTwitterSignIn() {
+        delegate?.userWillLogin(with: .twitter)
     }
     
     override func layoutSubviews() {
