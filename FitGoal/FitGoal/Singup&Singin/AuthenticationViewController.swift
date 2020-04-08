@@ -54,7 +54,7 @@ class AuthenticationViewController: UIViewController {
     
     private func presentAlert(for loginError: LoginError) {
         switch loginError {
-        case .noAuthCredentialsFound, .noLogInResultsFound, .userCanceledLogIn:
+        case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
             return
         case .userPreviouslyLoggedInWith(let socialMedia):
             let alert = UIAlertController(
