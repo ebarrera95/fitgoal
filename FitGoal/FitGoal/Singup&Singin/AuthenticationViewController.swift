@@ -42,8 +42,7 @@ class AuthenticationViewController: UIViewController {
                     if let loginError = error as? LoginError {
                         self.presentAlert(for: loginError)
                     } else {
-                        print("Unable to login, reason: \(error)")
-                        self.dismiss(animated: true, completion: nil)
+                        self.dismiss(animated: true) { print("Unable to login, reason: \(error)") }
                     }
                 case.none:
                     return
@@ -52,30 +51,8 @@ class AuthenticationViewController: UIViewController {
         }
     }
     
-    private func presentAlert(for loginError: LoginError) {
-        switch loginError {
-        case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
-            return
-        case .userPreviouslyLoggedInWith(let socialMedia):
-            let alert = UIAlertController(
-                title: "You've previously logged in with another method",
-                message: "Please, log in with \(socialMedia)",
-                preferredStyle: .alert
-            )
-            
-            let accion = UIAlertAction(
-                title: "Got it!",
-                style: .cancel) { (_) in
-                    self.dismiss(animated: true, completion: nil)
-            }
-            
-            alert.addAction(accion)
-            self.present(alert, animated: true)
-        }
-    }
-    
     private var viewDidAppearOnce = false
-    
+
     init(socialMedia: SocialMedia) {
         self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
         super.init(nibName: nil, bundle: nil)
@@ -83,18 +60,6 @@ class AuthenticationViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func login() {
-        loginStatus = .attempting
-        authenticator.authenticate(sender: self) { result in
-            switch result {
-            case .success:
-                self.loginStatus = .loggedIn
-            case .failure(let error):
-                self.loginStatus = .failed(error)
-            }
-        }
     }
     
     override func viewDidLoad() {
@@ -115,6 +80,38 @@ class AuthenticationViewController: UIViewController {
         super.viewDidLayoutSubviews()
         blurEffectView.frame = view.bounds
         placeholder.center = view.center
+    }
+    
+    private func presentAlert(for loginError: LoginError) {
+        switch loginError {
+        case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
+            self.dismiss(animated: true) { print("Unable to login, reason: \(loginError)") }
+        case .userPreviouslyLoggedInWith(let socialMedia):
+            let alert = UIAlertController(
+                title: "You've previously logged in with another social media",
+                message: "Please, log in with \(socialMedia)",
+                preferredStyle: .alert
+            )
+            
+            let accion = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(accion)
+            self.present(alert, animated: true)
+        }
+    }
+    
+    private func login() {
+        loginStatus = .attempting
+        authenticator.authenticate(sender: self) { result in
+            switch result {
+            case .success:
+                self.loginStatus = .loggedIn
+            case .failure(let error):
+                self.loginStatus = .failed(error)
+            }
+        }
     }
 }
 
