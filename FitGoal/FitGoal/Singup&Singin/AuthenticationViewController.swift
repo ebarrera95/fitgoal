@@ -40,7 +40,7 @@ class AuthenticationViewController: UIViewController {
                     self.placeholder.startAnimating()
                 case.failed(let error):
                     if let loginError = error as? LoginError {
-                        self.presentAlert(for: loginError)
+                        self.handle(error: loginError)
                     } else {
                         self.dismiss(animated: true) { print("Unable to login, reason: \(error)") }
                     }
@@ -82,7 +82,7 @@ class AuthenticationViewController: UIViewController {
         placeholder.center = view.center
     }
     
-    private func presentAlert(for loginError: LoginError) {
+    private func handle(error loginError: LoginError) {
         switch loginError {
         case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
             self.dismiss(animated: true) { print("Unable to login, reason: \(loginError)") }
@@ -93,15 +93,15 @@ class AuthenticationViewController: UIViewController {
                 preferredStyle: .alert
             )
             
-            let accion = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
+            let acion = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
                 self.dismiss(animated: true, completion: nil)
             }
             
-            alert.addAction(accion)
+            alert.addAction(acion)
             self.present(alert, animated: true)
         }
     }
-    
+
     private func login() {
         loginStatus = .attempting
         authenticator.authenticate(sender: self) { result in
