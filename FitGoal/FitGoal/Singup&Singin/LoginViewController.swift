@@ -10,8 +10,6 @@ import UIKit
 
 class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
-    private let authenticator = SocialMediaAuthenticator()
-    
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
@@ -162,27 +160,18 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         scrollView.scrollIndicatorInsets = contentInsets
     }
     
-    func userWillLoginWithGoogle() {
-        authenticator.googleSignIn(sender: self) { result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    let vc = HomeViewController(persistance: CoreDataPersistance())
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
-                }
-            case .failure(let error):
-                print("Unable to login \(error)")
-            }
-        }
-    }
-    
     func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
+    }
+    
+    func userWillLogin(with socialMedia: SocialMedia) {
+        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true)
     }
     
     //MARK: -Constraints

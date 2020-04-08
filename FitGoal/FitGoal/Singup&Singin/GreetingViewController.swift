@@ -10,8 +10,6 @@ import UIKit
 
 class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
-    private let authenticator = SocialMediaAuthenticator()
-    
     private let backgroundView = BackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
@@ -58,7 +56,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         text.textAlignment = .center
         return text
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -116,30 +114,21 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
     }
     
-    func userWillLoginWithGoogle() {
-        authenticator.googleSignIn(sender: self) { result in
-            switch result {
-            case .success:
-                DispatchQueue.main.async {
-                    let vc = HomeViewController(persistance: CoreDataPersistance())
-                    vc.modalPresentationStyle = .fullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
-                }
-            case .failure(let error):
-                print("Unable to login \(error)")
-            }
-        }
+    func userWillLogin(with socialMedia: SocialMedia) {
+        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        self.present(vc, animated: true)
     }
-    
+
     func userDidSwitchAuthenticationType() {
         let vc = SignUpViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
     }
     
     //MARK: -Constraints

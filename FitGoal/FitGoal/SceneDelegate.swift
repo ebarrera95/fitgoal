@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -28,6 +29,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             let helloVC = GreetingViewController()
             window.rootViewController = helloVC
+        }
+    }
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+        if let openURLContext = URLContexts.first {
+            ApplicationDelegate.shared.application(
+                UIApplication.shared,
+                open: openURLContext.url,
+                sourceApplication: openURLContext.options.sourceApplication,
+                annotation: openURLContext.options.annotation)
         }
     }
 

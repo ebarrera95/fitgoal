@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SocialMediaAuthenticationViewDelegate: AnyObject {
-    func userWillLoginWithGoogle()
+    func userWillLogin(with socialMedia: SocialMedia)
 }
 
 class SocialMediaAuthenticationView: UIView {
@@ -93,10 +93,15 @@ class SocialMediaAuthenticationView: UIView {
         setConstraints()
         
         googleButton.addTarget(self, action: #selector(handleGoogleSignIn), for: .touchUpInside)
+        facebookButton.addTarget(self, action: #selector(handleFacebookSignIn), for: .touchUpInside)
     }
     
     @objc private func handleGoogleSignIn() {
-        delegate?.userWillLoginWithGoogle()
+        delegate?.userWillLogin(with: .google)
+    }
+    
+    @objc private func handleFacebookSignIn() {
+        delegate?.userWillLogin(with: .facebook)
     }
     
     override func layoutSubviews() {
