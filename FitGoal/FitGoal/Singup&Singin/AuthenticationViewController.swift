@@ -34,18 +34,43 @@ class AuthenticationViewController: UIViewController {
                     let vc = HomeViewController(persistance: CoreDataPersistance())
                     vc.modalPresentationStyle = .fullScreen
                     vc.modalTransitionStyle = .crossDissolve
-                    self.present(vc, animated: true)
+                    self.view.window?.rootViewController = vc
                 case .attempting:
                     self.view.addSubview(self.placeholder)
-                    self.placeholder.center = self.view.center
                     self.placeholder.startAnimating()
                 case.failed(let error):
-                    print("Unable to login, reason: \(error)")
-                    self.dismiss(animated: true, completion: nil)
+                    if let loginError = error as? LoginError {
+                        self.presentAlert(for: loginError)
+                    } else {
+                        print("Unable to login, reason: \(error)")
+                        self.dismiss(animated: true, completion: nil)
+                    }
                 case.none:
                     return
                 }
             }
+        }
+    }
+    
+    private func presentAlert(for loginError: LoginError) {
+        switch loginError {
+        case .noAuthCredentialsFound, .noLogInResultsFound, .userCanceledLogIn:
+            return
+        case .userPreviouslyLoggedInWith(let socialMedia):
+            let alert = UIAlertController(
+                title: "You've previously logged in with another method",
+                message: "Please, log in with \(socialMedia)",
+                preferredStyle: .alert
+            )
+            
+            let accion = UIAlertAction(
+                title: "Got it!",
+                style: .cancel) { (_) in
+                    self.dismiss(animated: true, completion: nil)
+            }
+            
+            alert.addAction(accion)
+            self.present(alert, animated: true)
         }
     }
     
