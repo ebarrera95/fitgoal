@@ -75,14 +75,13 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                         completion(.failure(LoginError.noAuthCredentialsFound))
                         return
                     }
-                    
                     self.requestFacebookEmail(using: accessToken) { (results) in
                         switch results {
                         case .failure(let error):
                             completion(.failure(error))
                         case .success(let email):
                             self.authenticateUser(withMethod: .facebook(accessToke: accessToken.tokenString), userEmail: email, completion: completion)
-                            
+
                         }
                     }
                 }
@@ -176,13 +175,14 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         if let error = error {
             userInfoCallback?(.failure(error))
         } else {
-            guard let authentication = user.authentication else { return }
-            
+            guard let authentication = user.authentication else {
+                userInfoCallback?(.failure(MissingUserInfoError.noAuthenticationObjectFound))
+                return
+            }
             guard let email = user.profile.email else {
                 userInfoCallback?(.failure(MissingUserInfoError.noEmailFound))
                 return
             }
-            
             guard let callback = userInfoCallback else { return }
             
             self.authenticateUser(
@@ -203,13 +203,17 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                     completion(.failure(LoginError.noAuthCredentialsFound))
                     return
                 }
-                Auth.auth().signIn(with: credentials) { (dataResults, error) in
-                    if let error = error {
-                        self.handleLoginError(error: error, completion: completion)
-                    } else {
-                        self.parseUserInformation(from: dataResults, error: error, completion: completion)
-                    }
-                }
+                self.authenticateUser(with: credentials, completion: completion)
+            }
+        }
+    }
+    
+    private func authenticateUser(with credentials: AuthCredential, completion: @escaping UserInfoCallback) {
+        Auth.auth().signIn(with: credentials) { (dataResults, error) in
+            if let error = error {
+                self.handleLoginError(error: error, completion: completion)
+            } else {
+                self.parseUserInformation(from: dataResults, error: error, completion: completion)
             }
         }
     }
@@ -217,19 +221,19 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     private func handleLoginError(error: Error, completion: @escaping UserInfoCallback) {
         let nsError = error as NSError
         if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
-            handleAccountExistsWithDifferentCredentials(nsError: nsError, completion: completion)
+            self.handleAccountExistsWithDifferentCredentials(nsError: nsError, authenticationMethod: .twitter, completion: completion)
         } else {
             completion(.failure(error))
         }
     }
     
-    private func handleAccountExistsWithDifferentCredentials(nsError: NSError, completion: @escaping UserInfoCallback) {
+    private func handleAccountExistsWithDifferentCredentials(nsError: NSError, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
         let email = nsError.userInfo[AuthErrorUserInfoEmailKey] as! String
         Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethod, error) in
             if let error = error {
                 completion(.failure(error))
             }
-            else if let methods = signInMethod, !methods.contains(AuthenticationMethod.twitter.name) {
+            else if let methods = signInMethod, !methods.contains(authenticationMethod.name) {
                 let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
                 guard let existingMethod = previousMethod else {
                     assertionFailure("This case will only happen: 1- if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com), 2- if the method that throws the error is found in the sign-in method list")
@@ -254,6 +258,7 @@ private enum MissingUserInfoError: Error {
     case noUserFound
     case noNameFound
     case noEmailFound
+    case noAuthenticationObjectFound
 }
 
 enum SocialMedia: String, CaseIterable {
