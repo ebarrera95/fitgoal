@@ -75,16 +75,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                         completion(.failure(LoginError.noAuthCredentialsFound))
                         return
                     }
-//                    self.requestFacebookEmail(using: accessToken) { (results) in
-//                        switch results {
-//                        case .failure(let error):
-//                            completion(.failure(error))
-//                        case .success(let email):
-//                            self.authenticateUser(withMethod: .facebook(accessToke: accessToken.tokenString), userEmail: email, completion: completion)
-//
-//                        }
-//                    }
-
                     self.authenticateUser(with: .facebook(accessToke: accessToken.tokenString), completion: completion)
                 }
             }
@@ -105,66 +95,29 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    //MARK: - Helper facebook and google functions
-    
-    private func requestFacebookEmail(using accessToken: AccessToken, emailCallback: @escaping (Result<String, Error>) -> Void) {
-        let graphRequest = GraphRequest(
-            graphPath: "me",
-            parameters: ["fields":"email"],
-            tokenString: accessToken.tokenString,
-            version: nil,
-            httpMethod: HTTPMethod(rawValue: "GET")
-        )
-        
-        graphRequest.start { (test, result, error) in
-            if let error = error {
-                emailCallback(.failure(error))
-            } else {
-                guard let result = result else {
-                    emailCallback(.failure(LoginError.noLoginResultsFound))
-                    return
-                }
-                
-                guard let userInformation = result as? [String:String] else {
-                    emailCallback(.failure(MissingUserInfoError.noUserFound))
-                    return
-                }
-
-                guard let email = userInformation["email"] else {
-                    emailCallback(.failure(MissingUserInfoError.noEmailFound))
-                    return
-                }
-                
-                emailCallback(.success(email))
+    // MARK: -Google Delegate
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        if let error = error {
+            userInfoCallback?(.failure(error))
+        } else {
+            guard let authentication = user.authentication else {
+                userInfoCallback?(.failure(MissingUserInfoError.noAuthenticationObjectFound))
+                return
+            }
+            
+            guard let callback = userInfoCallback else {
+                assertionFailure("nil userInfoCallback")
+                return
+            }
+            
+            let credentials = AuthenticationMethod.google(accessToken: authentication.accessToken, tokenID: authentication.idToken).credentials
+            Auth.auth().signIn(with: credentials) { (dataResults, error) in
+                self.parseUserInformation(from: dataResults, error: error, completion: callback)
             }
         }
     }
     
-    private func authenticateUser(withMethod method: AuthenticationMethod, userEmail email: String, completion: @escaping UserInfoCallback) {
-        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethods, error) in
-            if let error = error {
-                completion(.failure(error))
-            }
-            else if let methods = signInMethods, !methods.contains(method.name) {
-                let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
-                if previousMethod != nil {
-                    completion(.failure(LoginError.userPreviouslyLoggedInWith(previousMethod!)))
-                } else {
-                    assertionFailure("This case will only happen if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com)")
-                    completion(.failure(LoginError.unrecognisedLoginMethod))
-                }
-            } else {
-                self.signIn(using: method.credentials, completion: completion)
-            }
-        }
-    }
-    
-    private func signIn(using credentials: AuthCredential, completion: @escaping UserInfoCallback) {
-        Auth.auth().signIn(with: credentials) { (dataResults, error) in
-            self.parseUserInformation(from: dataResults, error: error, completion: completion)
-        }
-    }
-
+    //MARK: - Helper functions
     private func parseUserInformation(from dataResults: AuthDataResult?, error: Error?, completion: UserInfoCallback) {
         if let error = error {
             completion(.failure(error))
@@ -188,31 +141,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    // MARK: -Google Delegate
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        if let error = error {
-            userInfoCallback?(.failure(error))
-        } else {
-            guard let authentication = user.authentication else {
-                userInfoCallback?(.failure(MissingUserInfoError.noAuthenticationObjectFound))
-                return
-            }
-            guard let email = user.profile.email else {
-                userInfoCallback?(.failure(MissingUserInfoError.noEmailFound))
-                return
-            }
-            guard let callback = userInfoCallback else { return }
-            
-            self.authenticateUser(
-                withMethod: .google(accessToken: authentication.accessToken, tokenID: authentication.idToken),
-                userEmail: email,
-                completion: callback
-            )
-        }
-    }
-
-    //MARK: -Helper twitter functions
-
     private func authenticateUser(with authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
         let credentials = authenticationMethod.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
@@ -227,14 +155,14 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     private func handleLoginError(error: Error, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
         let nsError = error as NSError
         if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
-            self.handleAccountExistsWithDifferentCredentials(nsError: nsError, authenticationMethod: authenticationMethod, completion: completion)
+            self.handleAccountExistsWithDifferentCredentials(error: nsError, authenticationMethod: authenticationMethod, completion: completion)
         } else {
             completion(.failure(error))
         }
     }
     
-    private func handleAccountExistsWithDifferentCredentials(nsError: NSError, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
-        let email = nsError.userInfo[AuthErrorUserInfoEmailKey] as! String
+    private func handleAccountExistsWithDifferentCredentials(error: NSError, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
+        let email = error.userInfo[AuthErrorUserInfoEmailKey] as! String
         Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethod, error) in
             if let error = error {
                 completion(.failure(error))
@@ -242,7 +170,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             else if let methods = signInMethod, !methods.contains(authenticationMethod.name) {
                 let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
                 guard let existingMethod = previousMethod else {
-                    assertionFailure("This case will only happen: 1- if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com), 2- if the method that throws the error is found in the sign-in method list")
+                    assertionFailure("This case will only happen: if the Firebase API changes the authentication method names or if the method that throws the error is found in the sign-in method list")
                     completion(.failure(LoginError.unrecognisedLoginMethod))
                     return
                 }
