@@ -22,6 +22,8 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     private var socialMedia: SocialMedia
     
+    private let twitterProvider = OAuthProvider(providerID: "twitter.com")
+    
     init(socialMedia: SocialMedia) {
         self.socialMedia = socialMedia
         super.init()
@@ -45,7 +47,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         case .google:
             googleSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         case .twitter:
-            return
+            twitterSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         }
     }
     
@@ -58,11 +60,11 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     private func facebookSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
         let permissions = ["public_profile", "email"]
         
-        LoginManager().logIn(permissions: permissions, from: sender) { (loginResuts, error) in
+        LoginManager().logIn(permissions: permissions, from: sender) { (loginResults, error) in
             if let error = error {
                 completion(.failure(error))
             } else {
-                guard let loginResults = loginResuts else {
+                guard let loginResults = loginResults else {
                     completion(.failure(LoginError.noLoginResultsFound))
                     return
                 }
@@ -131,7 +133,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                 if previousMethod != nil {
                     completion(.failure(LoginError.userPreviouslyLoggedInWith(previousMethod!)))
                 } else {
-                    assertionFailure("This case will only happend if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com)")
+                    assertionFailure("This case will only happen if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com)")
                     completion(.failure(LoginError.unrecognisedLoginMethod))
                 }
             } else {
@@ -145,7 +147,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             self.parseUserInformation(from: dataResults, error: error, completion: completion)
         }
     }
-    
+
     private func parseUserInformation(from dataResults: AuthDataResult?, error: Error?, completion: UserInfoCallback) {
         if let error = error {
             completion(.failure(error))
@@ -188,6 +190,54 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                 userEmail: email,
                 completion: callback
             )
+        }
+    }
+
+    //MARK: -Twitter
+    func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+        twitterProvider.getCredentialWith(nil) { (credentials, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                guard let credentials = credentials else {
+                    completion(.failure(LoginError.noAuthCredentialsFound))
+                    return
+                }
+                Auth.auth().signIn(with: credentials) { (dataResults, error) in
+                    if let error = error {
+                        self.handleLoginError(error: error, completion: completion)
+                    } else {
+                        self.parseUserInformation(from: dataResults, error: error, completion: completion)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func handleLoginError(error: Error, completion: @escaping UserInfoCallback) {
+        let nsError = error as NSError
+        if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
+            handleAccountExistsWithDifferentCredentials(nsError: nsError, completion: completion)
+        } else {
+            completion(.failure(error))
+        }
+    }
+    
+    private func handleAccountExistsWithDifferentCredentials(nsError: NSError, completion: @escaping UserInfoCallback) {
+        let email = nsError.userInfo[AuthErrorUserInfoEmailKey] as! String
+        Auth.auth().fetchSignInMethods(forEmail: email) { (signInMethod, error) in
+            if let error = error {
+                completion(.failure(error))
+            }
+            else if let methods = signInMethod, !methods.contains(AuthenticationMethod.twitter.name) {
+                let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
+                guard let existingMethod = previousMethod else {
+                    assertionFailure("This case will only happen: 1- if the Firebase API changes the name of the Authentication Methods (e.g facebook.com by Facebook.com), 2- if the method that throws the error is found in the sign-in method list")
+                    completion(.failure(LoginError.unrecognisedLoginMethod))
+                    return
+                }
+                completion(.failure(LoginError.userPreviouslyLoggedInWith(existingMethod)))
+            }
         }
     }
 }
