@@ -159,7 +159,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
     
     private func handleAccountExistsWithDifferentCredentials(error: NSError, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
         guard let email = error.userInfo[AuthErrorUserInfoEmailKey] as? String else {
-            assertionFailure("no key found under the name of: AuthErrorUserInfoEmailKey")
+            completion(.failure(error))
             return
         }
         
