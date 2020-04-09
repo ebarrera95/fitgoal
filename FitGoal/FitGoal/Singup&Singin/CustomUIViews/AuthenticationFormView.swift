@@ -14,14 +14,14 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
+            let emailAddress = TextFieldType.emailAddress.getCustomTextField()
             let password = TextFieldType.password.getCustomTextField()
             
             let textFields = [emailAddress, password]
             configureSectionSubviews(textFields: textFields)
         case .signUp:
             let name = TextFieldType.userName.getCustomTextField()
-            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
+            let emailAddress = TextFieldType.emailAddress.getCustomTextField()
             let password = TextFieldType.password.getCustomTextField()
             let confirmPassword = TextFieldType.confirmPassword.getCustomTextField()
             
@@ -111,7 +111,7 @@ private class CustomTextField: UITextField {
 
 private enum TextFieldType {
     case userName
-    case emailAdress
+    case emailAddress
     case password
     case confirmPassword
     
@@ -119,7 +119,7 @@ private enum TextFieldType {
         switch self {
         case .userName:
             return "Name"
-        case .emailAdress:
+        case .emailAddress:
             return "Email"
         case .password:
             return "Password"
@@ -135,7 +135,7 @@ private enum TextFieldType {
             name.textContentType = .name
             name.returnKeyType = .next
             return name
-        case .emailAdress:
+        case .emailAddress:
             let email = CustomTextField(placeholder: placeholder)
             email.textContentType = .emailAddress
             email.autocapitalizationType = .none
