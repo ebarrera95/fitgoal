@@ -109,11 +109,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                 assertionFailure("nil userInfoCallback")
                 return
             }
-            
-            let credentials = AuthenticationMethod.google(accessToken: authentication.accessToken, tokenID: authentication.idToken).credentials
-            Auth.auth().signIn(with: credentials) { (dataResults, error) in
-                self.parseUserInformation(from: dataResults, error: error, completion: callback)
-            }
+            self.authenticateUser(with: .google(accessToken: authentication.accessToken, tokenID: authentication.idToken), completion: callback)
         }
     }
     
