@@ -75,19 +75,37 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
                         completion(.failure(LoginError.noAuthCredentialsFound))
                         return
                     }
-                    self.requestFacebookEmail(using: accessToken) { (results) in
-                        switch results {
-                        case .failure(let error):
-                            completion(.failure(error))
-                        case .success(let email):
-                            self.authenticateUser(withMethod: .facebook(accessToke: accessToken.tokenString), userEmail: email, completion: completion)
+//                    self.requestFacebookEmail(using: accessToken) { (results) in
+//                        switch results {
+//                        case .failure(let error):
+//                            completion(.failure(error))
+//                        case .success(let email):
+//                            self.authenticateUser(withMethod: .facebook(accessToke: accessToken.tokenString), userEmail: email, completion: completion)
+//
+//                        }
+//                    }
 
-                        }
-                    }
+                    self.authenticateUser(with: .facebook(accessToke: accessToken.tokenString), completion: completion)
                 }
             }
         }
     }
+    
+    func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+        twitterProvider.getCredentialWith(nil) { (credentials, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                guard let credentials = credentials else {
+                    completion(.failure(LoginError.noAuthCredentialsFound))
+                    return
+                }
+                self.authenticateUser(with: .twitter(credentials: credentials), completion: completion)
+            }
+        }
+    }
+    
+    //MARK: - Helper facebook and google functions
     
     private func requestFacebookEmail(using accessToken: AccessToken, emailCallback: @escaping (Result<String, Error>) -> Void) {
         let graphRequest = GraphRequest(
@@ -193,35 +211,23 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
 
-    //MARK: -Twitter
-    func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
-        twitterProvider.getCredentialWith(nil) { (credentials, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                guard let credentials = credentials else {
-                    completion(.failure(LoginError.noAuthCredentialsFound))
-                    return
-                }
-                self.authenticateUser(with: credentials, completion: completion)
-            }
-        }
-    }
-    
-    private func authenticateUser(with credentials: AuthCredential, completion: @escaping UserInfoCallback) {
+    //MARK: -Helper twitter functions
+
+    private func authenticateUser(with authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
+        let credentials = authenticationMethod.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
             if let error = error {
-                self.handleLoginError(error: error, completion: completion)
+                self.handleLoginError(error: error, authenticationMethod: authenticationMethod, completion: completion)
             } else {
                 self.parseUserInformation(from: dataResults, error: error, completion: completion)
             }
         }
     }
     
-    private func handleLoginError(error: Error, completion: @escaping UserInfoCallback) {
+    private func handleLoginError(error: Error, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
         let nsError = error as NSError
         if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
-            self.handleAccountExistsWithDifferentCredentials(nsError: nsError, authenticationMethod: .twitter, completion: completion)
+            self.handleAccountExistsWithDifferentCredentials(nsError: nsError, authenticationMethod: authenticationMethod, completion: completion)
         } else {
             completion(.failure(error))
         }
@@ -270,7 +276,7 @@ enum SocialMedia: String, CaseIterable {
 private enum AuthenticationMethod {
     case facebook(accessToke: String)
     case google(accessToken: String, tokenID: String)
-    case twitter
+    case twitter(credentials: AuthCredential)
     case custom(email: String, password: String)
     
     var name: String {
@@ -292,8 +298,8 @@ private enum AuthenticationMethod {
             return FacebookAuthProvider.credential(withAccessToken: accessToken)
         case let .google(accessToken, tokenID):
             return GoogleAuthProvider.credential(withIDToken: tokenID, accessToken: accessToken)
-        case .twitter:
-            fatalError()
+        case .twitter(let credentials):
+            return credentials
         case .custom:
             fatalError()
         }
