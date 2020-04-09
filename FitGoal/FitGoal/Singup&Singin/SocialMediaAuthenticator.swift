@@ -81,7 +81,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
         twitterProvider.getCredentialWith(nil) { (credentials, error) in
             if let error = error {
                 completion(.failure(error))
@@ -94,6 +94,8 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             }
         }
     }
+    
+    
     
     // MARK: -Google Delegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
