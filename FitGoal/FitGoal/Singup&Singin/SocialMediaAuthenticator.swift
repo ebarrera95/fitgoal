@@ -95,6 +95,21 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
     
+    private func customSignIn(withEmail email: String, password: String, completion: @escaping UserInfoCallback) {
+        Auth.auth().createUser(withEmail: email, password: password) { (dataResults, error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                Auth.auth().signIn(withEmail: email, password: password) { (dataResults, error) in
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        self.parseUserInformation(from: dataResults, error: error, completion: completion)
+                    }
+                }
+            }
+        }
+    }
     
     
     // MARK: -Google Delegate
