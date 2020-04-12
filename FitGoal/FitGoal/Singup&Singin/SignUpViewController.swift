@@ -9,9 +9,7 @@
 import UIKit
 
 class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, IconViewDelegate, AuthenticationFormViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    
-    
+
     private let backgroundView = BackgroundView()
     
     private let avatarView = IconView(iconType: .avatarChooser)
@@ -20,7 +18,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
-    private let customAuthenticator = CustomAuthenticator(authenticationType: .signUp)
+    private let customAuthenticator = CustomAuthenticator()
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -73,6 +71,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         
         authenticationSwitcherView.delegate = self
         avatarView.delegate = self
+        authenticationFormView.delegate = self
         
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
@@ -132,10 +131,10 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        let vc = HomeViewController(persistance: CoreDataPersistance())
-        vc.modalPresentationStyle = .fullScreen
+        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        self.present(vc, animated: true)
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -171,14 +170,57 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditing(textFieldType: TextFieldType, with text: String) {
         switch textFieldType {
         case .userName:
-            customAuthenticator.userName = text
+            if !text.isEmpty {
+                customAuthenticator.userName = text
+            }
         case .emailAddress:
-            customAuthenticator.userEmail = text
+            if !text.isEmpty {
+                customAuthenticator.userEmail = text
+            }
         case .password:
-            customAuthenticator.password = text
+            if !text.isEmpty {
+                customAuthenticator.password = text
+            }
         case .confirmPassword:
-            customAuthenticator.passwordConfirmation = text
+            if !text.isEmpty {
+                customAuthenticator.passwordConfirmation = text
+            }
         }
+    }
+    // MARK: -VC functions
+    
+    private func isUserInfoCorrect(customAuthenticator: CustomAuthenticator) -> Bool {
+        guard let _ = customAuthenticator.userName else {
+            authenticationFormView.placeholderError = "Enter you name"
+            return false
+        }
+        
+        guard let email = customAuthenticator.userEmail else {
+            authenticationFormView.placeholderError = "Enter you email"
+            return false
+        }
+        
+        if !customAuthenticator.isEmailAddressValid(emailAddress: email) {
+            authenticationFormView.placeholderError = "Enter valid email address"
+            return false
+        }
+        
+        guard let password = customAuthenticator.password else {
+            authenticationFormView.placeholderError = "Enter a password"
+            return false
+        }
+        
+        guard let passwordConfirmation = customAuthenticator.passwordConfirmation else {
+            authenticationFormView.placeholderError = "Confirm your password"
+            return false
+        }
+        
+        if !customAuthenticator.compare(password: password, with: passwordConfirmation) {
+            authenticationFormView.placeholderError = "Passwords don't match"
+            return false
+        }
+        
+        return true
     }
     
      //MARK: -Constraints
