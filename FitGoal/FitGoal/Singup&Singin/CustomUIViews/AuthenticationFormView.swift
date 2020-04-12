@@ -14,16 +14,16 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = TextFieldType.emailAddress.getCustomTextField()
-            let password = TextFieldType.password.getCustomTextField()
+            let emailAddress = CustomTextField(textFieldType: .emailAddress)
+            let password = CustomTextField(textFieldType: .password)
             
             let textFields = [emailAddress, password]
             configureSectionSubviews(textFields: textFields)
         case .signUp:
-            let name = TextFieldType.userName.getCustomTextField()
-            let emailAddress = TextFieldType.emailAddress.getCustomTextField()
-            let password = TextFieldType.password.getCustomTextField()
-            let confirmPassword = TextFieldType.confirmPassword.getCustomTextField()
+            let name = CustomTextField(textFieldType: .userName)
+            let emailAddress = CustomTextField(textFieldType: .emailAddress)
+            let password = CustomTextField(textFieldType: .password)
+            let confirmPassword = CustomTextField(textFieldType: .confirmPassword)
             
             let textFields = [name, emailAddress, password, confirmPassword]
             configureSectionSubviews(textFields: textFields)
@@ -62,7 +62,7 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         }
         return true
     }
-    
+
     // MARK: -Constraints
 
     private func setTextFieldHeightConstraints(for textField: CustomTextField) {
@@ -72,25 +72,27 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
 }
 
 private class CustomTextField: UITextField {
+    let textFieldType: TextFieldType
     
-    let buttonLine: UIView = {
+    private let buttonLine: UIView = {
         let line = UIView()
         line.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
         return line
     }()
     
-    convenience init(placeholder: String) {
-        self.init(frame: .zero)
-        self.attributedPlaceholder = placeholder.formattedText(
+    init(textFieldType: TextFieldType) {
+        self.textFieldType = textFieldType
+        super.init(frame: .zero)
+        self.attributedPlaceholder = textFieldType.placeholder.formattedText(
             font: "Roboto-Light",
             size: 15,
             color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
             kern: 0
         )
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+        self.textContentType = textFieldType.textContentType
+        self.autocapitalizationType = textFieldType.autocapitalizationType
+        self.isSecureTextEntry = textFieldType.isSecureTextEntry
+        self.keyboardType = textFieldType.keyboardType
         self.addSubview(buttonLine)
     }
     
@@ -115,7 +117,7 @@ private enum TextFieldType {
     case password
     case confirmPassword
     
-    private var placeholder: String {
+   var placeholder: String {
         switch self {
         case .userName:
             return "Name"
@@ -128,34 +130,43 @@ private enum TextFieldType {
         }
     }
     
-    func getCustomTextField() -> CustomTextField {
+    var textContentType: UITextContentType {
         switch self {
         case .userName:
-            let name = CustomTextField(placeholder: placeholder)
-            name.textContentType = .name
-            name.returnKeyType = .next
-            return name
+            return .name
         case .emailAddress:
-            let email = CustomTextField(placeholder: placeholder)
-            email.textContentType = .emailAddress
-            email.autocapitalizationType = .none
-            email.keyboardType = .emailAddress
-            email.returnKeyType = .next
-            return email
+            return .emailAddress
         case .password:
-            let password = CustomTextField(placeholder: placeholder)
-            password.textContentType = .password
-            password.autocapitalizationType = .none
-            password.isSecureTextEntry = true
-            password.returnKeyType = .next
-            return password
+            return .password
         case .confirmPassword:
-            let confirmPassword = CustomTextField(placeholder: placeholder)
-            confirmPassword.textContentType = .password
-            confirmPassword.autocapitalizationType = .none
-            confirmPassword.isSecureTextEntry = true
-            confirmPassword.returnKeyType  = .done
-            return confirmPassword
+            return .password
+        }
+    }
+    
+    var autocapitalizationType: UITextAutocapitalizationType {
+        switch self {
+        case .userName:
+            return .sentences
+        case .emailAddress, .password, .confirmPassword:
+            return .none
+        }
+    }
+    
+    var isSecureTextEntry: Bool {
+        switch self {
+        case .userName, .emailAddress:
+            return false
+        case .password, .confirmPassword:
+            return true
+        }
+    }
+    
+    var keyboardType: UIKeyboardType {
+        switch self {
+        case .userName, .password, .confirmPassword:
+            return .default
+        case .emailAddress:
+            return .emailAddress
         }
     }
 }
