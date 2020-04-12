@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol AuthenticationFormViewDelegate: AnyObject {
+    func userDidEndEditing(textFieldType: TextFieldType, with text: String)
+}
+
 class AuthenticationFormView: UIStackView, UITextFieldDelegate {
+    
+    var placeholderError: String?
+    
+    weak var delegate: AuthenticationFormViewDelegate?
     
     convenience init(type: AuthenticationType) {
         self.init(frame: .zero)
@@ -62,7 +70,14 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         }
         return true
     }
-
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let textField = textField as? CustomTextField {
+            guard let text = textField.text else { fatalError() }
+            delegate?.userDidEndEditing(textFieldType: textField.textFieldType, with: text)
+        }
+    }
+    
     // MARK: -Constraints
 
     private func setTextFieldHeightConstraints(for textField: CustomTextField) {
@@ -111,7 +126,7 @@ private class CustomTextField: UITextField {
     }
 }
 
-private enum TextFieldType {
+enum TextFieldType {
     case userName
     case emailAddress
     case password
