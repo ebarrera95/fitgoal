@@ -8,14 +8,22 @@
 
 import Foundation
 
-struct CustomAuthenticator {
-    let userName: String
-    let userEmail: String
-    let password: String
-    let passwordConfirmation: String
+class CustomAuthenticator {
+    var userName: String?
+    var userEmail: String?
+    var password: String?
+    var passwordConfirmation: String?
     
     func compare(password: String, with passwordConfirmation: String) -> Bool {
-        return password == passwordConfirmation
+        if !password.isEmpty {
+            return password == passwordConfirmation
+        } else {
+            return false
+        }
+    }
+    
+    func isEmailAddressValid(emailAddress: String) -> Bool {
+        return true
     }
 }
     
