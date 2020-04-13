@@ -14,8 +14,6 @@ protocol AuthenticationFormViewDelegate: AnyObject {
 
 class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
-    var placeholderError: String?
-    
     weak var delegate: AuthenticationFormViewDelegate?
     
     convenience init(type: AuthenticationType) {
@@ -71,10 +69,28 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if let textField = textField as? CustomTextField {
+            if !textField.textFieldMessageLabel.isHidden {
+                textField.textFieldMessageLabel.isHidden = true
+            }
+        }
+    }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         if let textField = textField as? CustomTextField {
             guard let text = textField.text else { fatalError() }
             delegate?.userDidEndEditing(textFieldType: textField.textFieldType, with: text)
+        }
+    }
+    
+    func showAuthenticationMessage(message: String, in textField: TextFieldType) {
+        for customTextField in self.subviews {
+            if let field = customTextField as? CustomTextField, textField == field.textFieldType {
+                field.textFieldMessageLabel.isHidden = false
+                field.formatPlaceholderLabel(with: message)
+                return
+            }
         }
     }
     
@@ -95,6 +111,13 @@ private class CustomTextField: UITextField {
         return line
     }()
     
+    let textFieldMessageLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        label.isHidden = true
+        return label
+    }()
+    
     init(textFieldType: TextFieldType) {
         self.textFieldType = textFieldType
         super.init(frame: .zero)
@@ -109,6 +132,8 @@ private class CustomTextField: UITextField {
         self.isSecureTextEntry = textFieldType.isSecureTextEntry
         self.keyboardType = textFieldType.keyboardType
         self.addSubview(buttonLine)
+        self.addSubview(textFieldMessageLabel)
+        setErrorLabelConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -123,6 +148,24 @@ private class CustomTextField: UITextField {
             width: self.bounds.width,
             height: 1
         )
+    }
+    
+    func formatPlaceholderLabel(with title: String) {
+        textFieldMessageLabel.attributedText = title.formattedText(
+            font: "Roboto-Light",
+            size: 15,
+            color: .red,
+            kern: 0.12
+        )
+    }
+    
+    private func setErrorLabelConstraints() {
+        textFieldMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            textFieldMessageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
+            textFieldMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
     }
 }
 
