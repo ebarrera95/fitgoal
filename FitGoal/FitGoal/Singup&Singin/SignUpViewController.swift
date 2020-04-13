@@ -19,7 +19,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
     private let customAuthenticator = CustomAuthenticator()
-    
+
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "SIGNUP".formattedText(
@@ -131,10 +131,12 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        let vc = AuthenticationViewController(socialMedia: socialMedia)
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true)
+        if customAuthenticator.isUserInformationCorrect {
+            print("call AuthenticationVC")
+        } else {
+            print("not correct")
+            return
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -170,57 +172,31 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditing(textFieldType: TextFieldType, with text: String) {
         switch textFieldType {
         case .userName:
-            if !text.isEmpty {
-                customAuthenticator.userName = text
-            }
+            let name = UserInfoField.userName(name: text)
+            customAuthenticator.userName = name
+            showAuthenticationMessage(retrievedFrom: name, inTextFieldType: textFieldType)
         case .emailAddress:
-            if !text.isEmpty {
-                customAuthenticator.userEmail = text
-            }
+            let email = UserInfoField.userEmail(email: text)
+            customAuthenticator.userEmail = email
+            showAuthenticationMessage(retrievedFrom: email, inTextFieldType: textFieldType)
         case .password:
-            if !text.isEmpty {
-                customAuthenticator.password = text
-            }
+            let password = UserInfoField.password(password: text)
+            customAuthenticator.password = password
+            showAuthenticationMessage(retrievedFrom: password, inTextFieldType: textFieldType)
         case .confirmPassword:
-            if !text.isEmpty {
-                customAuthenticator.passwordConfirmation = text
-            }
+            let confirmPassword = UserInfoField.passwordConfirmation(passwordConfirmation: text)
+            customAuthenticator.passwordConfirmation = confirmPassword
+            showAuthenticationMessage(retrievedFrom: confirmPassword, inTextFieldType: textFieldType)
         }
     }
-    // MARK: -VC functions
     
-    private func isUserInfoCorrect(customAuthenticator: CustomAuthenticator) -> Bool {
-        guard let _ = customAuthenticator.userName else {
-            authenticationFormView.placeholderError = "Enter you name"
-            return false
+    private func showAuthenticationMessage(retrievedFrom userInfoField: UserInfoField, inTextFieldType textField: TextFieldType) {
+        switch userInfoField.state {
+        case .valid:
+            return
+        case .invalid(reason: let reason):
+            authenticationFormView.showAuthenticationMessage(message: reason.retrieveMessage, in: textField)
         }
-        
-        guard let email = customAuthenticator.userEmail else {
-            authenticationFormView.placeholderError = "Enter you email"
-            return false
-        }
-        
-        if !customAuthenticator.isEmailAddressValid(emailAddress: email) {
-            authenticationFormView.placeholderError = "Enter valid email address"
-            return false
-        }
-        
-        guard let password = customAuthenticator.password else {
-            authenticationFormView.placeholderError = "Enter a password"
-            return false
-        }
-        
-        guard let passwordConfirmation = customAuthenticator.passwordConfirmation else {
-            authenticationFormView.placeholderError = "Confirm your password"
-            return false
-        }
-        
-        if !customAuthenticator.compare(password: password, with: passwordConfirmation) {
-            authenticationFormView.placeholderError = "Passwords don't match"
-            return false
-        }
-        
-        return true
     }
     
      //MARK: -Constraints
