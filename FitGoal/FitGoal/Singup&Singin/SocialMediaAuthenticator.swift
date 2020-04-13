@@ -11,7 +11,7 @@ import Firebase
 import GoogleSignIn
 import FBSDKLoginKit
 
-class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
+class Authenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     typealias UserInfoCallback = (Result<UserInformation, Error>) -> Void
@@ -48,8 +48,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             googleSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         case .twitter:
             twitterSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
-        case .custom:
-            return
         }
     }
     
@@ -96,23 +94,6 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             }
         }
     }
-    
-    private func customSignIn(withEmail email: String, password: String, completion: @escaping UserInfoCallback) {
-        Auth.auth().createUser(withEmail: email, password: password) { (dataResults, error) in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                Auth.auth().signIn(withEmail: email, password: password) { (dataResults, error) in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        self.parseUserInformation(from: dataResults, error: error, completion: completion)
-                    }
-                }
-            }
-        }
-    }
-    
     
     // MARK: -Google Delegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
@@ -218,7 +199,6 @@ enum SocialMedia: String, CaseIterable {
     case facebook = "facebook.com"
     case google = "google.com"
     case twitter = "twitter.com"
-    case custom
 }
 
 private enum AuthenticationMethod {

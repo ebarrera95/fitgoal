@@ -10,7 +10,7 @@ import UIKit
 
 class AuthenticationViewController: UIViewController {
     
-    private var authenticator: SocialMediaAuthenticator
+    private var authenticator: Authenticator
     
     private let placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
@@ -54,7 +54,7 @@ class AuthenticationViewController: UIViewController {
     private var viewDidAppearOnce = false
 
     init(socialMedia: SocialMedia) {
-        self.authenticator = SocialMediaAuthenticator(socialMedia: socialMedia)
+        self.authenticator = Authenticator(socialMedia: socialMedia)
         super.init(nibName: nil, bundle: nil)
     }
     
