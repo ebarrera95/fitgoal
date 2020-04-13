@@ -48,6 +48,8 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
             googleSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
         case .twitter:
             twitterSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
+        case .custom:
+            return
         }
     }
     
@@ -216,6 +218,7 @@ enum SocialMedia: String, CaseIterable {
     case facebook = "facebook.com"
     case google = "google.com"
     case twitter = "twitter.com"
+    case custom
 }
 
 private enum AuthenticationMethod {
