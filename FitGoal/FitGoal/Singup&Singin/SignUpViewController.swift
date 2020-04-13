@@ -73,7 +73,6 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         avatarView.delegate = self
         authenticationFormView.delegate = self
         
-        
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
         let dismissKeyBoardTap = UITapGestureRecognizer(
