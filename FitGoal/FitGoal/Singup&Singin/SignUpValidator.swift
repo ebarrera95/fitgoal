@@ -8,7 +8,7 @@
 
 import Foundation
 
-class CustomAuthenticator {
+class SignUpValidator {
     var userName: UserInfoField?
     var userEmail: UserInfoField?
     var password: UserInfoField?
@@ -107,4 +107,11 @@ enum InvalidStateReason {
     }
 }
 
-    
+struct InvalidState {
+    let message: String
+    let reason: Reason
+}
+
+enum Reason {
+    case emptyField, incorrectInfo, nonMatchingValues
+}

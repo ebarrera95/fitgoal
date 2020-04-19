@@ -18,7 +18,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
-    private let customAuthenticator = CustomAuthenticator()
+    private let customAuthenticator = SignUpValidator()
 
     private let mainLabel: UILabel = {
         let label = UILabel()
