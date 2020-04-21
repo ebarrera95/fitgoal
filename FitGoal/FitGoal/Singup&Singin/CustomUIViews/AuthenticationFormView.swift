@@ -16,23 +16,27 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     weak var delegate: AuthenticationFormViewDelegate?
     
+    private var containerViews = [TextFieldContainerView]()
+    
     convenience init(type: AuthenticationType) {
+        
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = CustomTextField(textFieldType: .emailAddress)
-            let password = CustomTextField(textFieldType: .password)
+            let emailAddress = TextFieldContainerView(textFieldType: .emailAddress)
+            let password = TextFieldContainerView(textFieldType: .password)
             
-            let textFields = [emailAddress, password]
-            configureSectionSubviews(textFields: textFields)
+            containerViews = [emailAddress, password]
+            
+            configureSectionSubviews(textFields: containerViews)
         case .signUp:
-            let name = CustomTextField(textFieldType: .userName)
-            let emailAddress = CustomTextField(textFieldType: .emailAddress)
-            let password = CustomTextField(textFieldType: .password)
-            let confirmPassword = CustomTextField(textFieldType: .confirmPassword)
+            let name = TextFieldContainerView(textFieldType: .userName)
+            let emailAddress = TextFieldContainerView(textFieldType: .emailAddress)
+            let password = TextFieldContainerView(textFieldType: .password)
+            let confirmPassword = TextFieldContainerView(textFieldType: .confirmPassword)
             
-            let textFields = [name, emailAddress, password, confirmPassword]
-            configureSectionSubviews(textFields: textFields)
+            containerViews = [name, emailAddress, password, confirmPassword]
+            configureSectionSubviews(textFields: containerViews)
         }
     }
     
@@ -48,47 +52,52 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureSectionSubviews(textFields: [CustomTextField]) {
+    private func configureSectionSubviews(textFields: [TextFieldContainerView]) {
         for textField in textFields {
             addArrangedSubview(textField)
-            textField.delegate = self
+            textField.textField.delegate = self
             setTextFieldHeightConstraints(for: textField)
-            textField.returnKeyType = (textField == textFields.last) ? .done : .next
+            textField.textField.returnKeyType = (textField == textFields.last) ? .done : .next
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.returnKeyType == .next {
-            guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { fatalError() }
-            textField.resignFirstResponder()
-            let nextTextField = self.subviews[textFieldIndex + 1]
-            nextTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
+        for index in containerViews.indices  {
+            if containerViews[index].textField == textField {
+                if textField.returnKeyType == .next {
+                    textField.resignFirstResponder()
+                    containerViews[index + 1].textField.becomeFirstResponder()
+                } else {
+                    textField.resignFirstResponder()
+                }
+                return true
+            }
         }
         return true
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if let textField = textField as? CustomTextField {
-            if !textField.textFieldMessageLabel.isHidden {
-                textField.textFieldMessageLabel.isHidden = true
+        print("TextFieldDidBeginEditing")
+        for index in containerViews.indices {
+            if containerViews[index].textField == textField {
+                containerViews[index].errorMessage = ""
             }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        if let textField = textField as? CustomTextField {
-            guard let text = textField.text else { fatalError() }
-            delegate?.userDidEndEditing(textFieldType: textField.textFieldType, with: text)
+        for index in containerViews.indices {
+            if containerViews[index].textField == textField {
+                let text = textField.text ?? ""
+                delegate?.userDidEndEditing(textFieldType: containerViews[index].textFieldType, with: text)
+            }
         }
     }
     
-    func showAuthenticationMessage(message: String, in textField: TextFieldType) {
-        for customTextField in self.subviews {
-            if let field = customTextField as? CustomTextField, textField == field.textFieldType {
-                field.textFieldMessageLabel.isHidden = false
-                field.formatPlaceholderLabel(with: message)
+    func showAuthenticationMessage(message: String, in textFieldType: TextFieldType) {
+        for view in containerViews {
+            if view.textFieldType == textFieldType {
+                view.errorMessage = message
                 return
             }
         }
@@ -96,14 +105,25 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     // MARK: -Constraints
 
-    private func setTextFieldHeightConstraints(for textField: CustomTextField) {
+    private func setTextFieldHeightConstraints(for textField: TextFieldContainerView) {
             textField.translatesAutoresizingMaskIntoConstraints = false
             textField.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
 }
 
-private class CustomTextField: UITextField {
+private class TextFieldContainerView: UIView, UITextFieldDelegate {
+    
     let textFieldType: TextFieldType
+    let textField: UITextField
+    
+    var errorMessage: String? {
+        didSet {
+            if let error = errorMessage {
+                errorMessageLabel.isHidden = !errorMessageLabel.isHidden
+                formatErrorMessageLabel(label: errorMessageLabel, with: error)
+            }
+        }
+    }
     
     private let buttonLine: UIView = {
         let line = UIView()
@@ -111,7 +131,7 @@ private class CustomTextField: UITextField {
         return line
     }()
     
-    let textFieldMessageLabel: UILabel = {
+    private let errorMessageLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
         label.isHidden = true
@@ -120,20 +140,14 @@ private class CustomTextField: UITextField {
     
     init(textFieldType: TextFieldType) {
         self.textFieldType = textFieldType
+        self.textField = UITextField(textField: textFieldType)
         super.init(frame: .zero)
-        self.attributedPlaceholder = textFieldType.placeholder.formattedText(
-            font: "Roboto-Light",
-            size: 15,
-            color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
-            kern: 0
-        )
-        self.textContentType = textFieldType.textContentType
-        self.autocapitalizationType = textFieldType.autocapitalizationType
-        self.isSecureTextEntry = textFieldType.isSecureTextEntry
-        self.keyboardType = textFieldType.keyboardType
+        self.addSubview(textField)
         self.addSubview(buttonLine)
-        self.addSubview(textFieldMessageLabel)
+        self.addSubview(errorMessageLabel)
         setErrorLabelConstraints()
+        
+        textField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -148,23 +162,25 @@ private class CustomTextField: UITextField {
             width: self.bounds.width,
             height: 1
         )
+        textField.frame = self.bounds
     }
     
-    func formatPlaceholderLabel(with title: String) {
-        textFieldMessageLabel.attributedText = title.formattedText(
+    private func formatErrorMessageLabel(label: UILabel, with title: String)  {
+        label.attributedText = title.formattedText(
             font: "Roboto-Light",
             size: 15,
             color: .red,
             kern: 0.12
         )
+        label.isHidden = false
     }
     
     private func setErrorLabelConstraints() {
-        textFieldMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            textFieldMessageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
-            textFieldMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            errorMessageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
+            errorMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
 }
