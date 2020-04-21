@@ -9,68 +9,49 @@
 import Foundation
 
 class SignUpValidator {
-    var userName: UserInfoField?
-    var userEmail: UserInfoField?
-    var password: UserInfoField?
-    var passwordConfirmation: UserInfoField?
     
-    var isUserInformationCorrect: Bool {
-        return isUserInfoStateValid(userInfoField: userName) &&
-            isUserInfoStateValid(userInfoField: userEmail) &&
-            isUserInfoStateValid(userInfoField: password) &&
-            isUserInfoStateValid(userInfoField: passwordConfirmation)
-    }
-    
-    private func isUserInfoStateValid(userInfoField: UserInfoField?) -> Bool {
-        if let field = userInfoField {
-            switch field.state {
-            case .valid:
-                return true
-            case .invalid:
-                return false
-            }
-        } else {
-            return false
+    var name: String = "" {
+        didSet {
+            userInfoState = validateUserName(name: name)
         }
     }
-}
-
-enum UserInfoField {
-    case userName(name: String)
-    case userEmail(email: String)
-    case password(password: String)
-    case passwordConfirmation (passwordConfirmation: String)
     
-    var state: UserInfoState {
-        switch self {
-        case .userName(let name):
-            if name.isEmpty {
-                return .invalid(reason: .emptyField(message: "Enter your name"))
-            } else {
-                return .valid
-            }
-        case .userEmail(let email):
-            if email.isEmpty {
-                return .invalid(reason: .emptyField(message: "Enter your email"))
-            } else if !isEmailAddressValid(emailAddress: email) {
-                return .invalid(reason: .incorrectInfo(message: "Invalid email address"))
-            } else {
-                return .valid
-            }
-        case .password(let password):
-            if password.isEmpty {
-                return .invalid(reason: .emptyField(message: "Enter password"))
-            } else if !isPasswordValid(password: password) {
-                return .invalid(reason: .incorrectInfo(message: "Invalid password"))
-            } else {
-                return .valid
-            }
-        case .passwordConfirmation(let confirmPassword):
-            if confirmPassword.isEmpty {
-                return .invalid(reason: .emptyField(message: "Confirm your password"))
-            } else {
-                return .valid
-            }
+    var email: String = "" {
+        didSet {
+            userInfoState = validateUserEmailAddress(emailAddress: email)
+        }
+    }
+    
+    var password: String = "" {
+        didSet {
+            userInfoState = validatePassword(password: password)
+        }
+    }
+    
+    var passwordConfirmation: String = "" {
+        didSet {
+            userInfoState = validatePasswordConfirmation(passwordConfirmation: passwordConfirmation)
+        }
+    }
+    
+    
+    var userInfoState = UserInfoState.valid
+    
+    private func validateUserName(name: String) -> UserInfoState {
+        if name.isEmpty {
+            return .invalid(invalidStateInfo: InvalidState(message: "Enter your name", reason: .emptyField))
+        } else {
+            return .valid
+        }
+    }
+    
+    private func validateUserEmailAddress(emailAddress: String) -> UserInfoState {
+        if emailAddress.isEmpty {
+            return .invalid(invalidStateInfo: InvalidState(message: "Enter your email address", reason: .emptyField))
+        } else if !isEmailAddressValid(emailAddress: emailAddress) {
+            return .invalid(invalidStateInfo: InvalidState(message: "Invalid email address", reason: .incorrectInfo))
+        } else {
+            return .valid
         }
     }
     
@@ -79,32 +60,37 @@ enum UserInfoField {
         return true
     }
     
+    private func validatePassword(password: String) -> UserInfoState {
+        if password.isEmpty {
+            return .invalid(invalidStateInfo: InvalidState(message: "Enter your password", reason: .emptyField))
+        } else if !isPasswordValid(password: password) {
+            return .invalid(invalidStateInfo: InvalidState(message: "Invalid password", reason: .incorrectInfo))
+        } else {
+            return .valid
+        }
+    }
+    
     private func isPasswordValid(password: String) -> Bool {
         //validate password
+        return true
+    }
+    
+    private func validatePasswordConfirmation(passwordConfirmation: String) -> UserInfoState {
+        if passwordConfirmation.isEmpty {
+            return .invalid(invalidStateInfo: InvalidState(message: "Confirm your password", reason: .emptyField))
+        } else {
+            return .valid
+        }
+    }
+    
+    private func doPasswordsMatch(password: String, passwordConfirmation: String) -> Bool {
         return true
     }
 }
 
 enum UserInfoState {
     case valid
-    case invalid(reason: InvalidStateReason)
-}
-
-enum InvalidStateReason {
-    case emptyField(message: String)
-    case nonMatchingValues(message: String)
-    case incorrectInfo(message: String)
-    
-    var retrieveMessage: String {
-        switch self {
-        case .emptyField(let message):
-            return message
-        case .incorrectInfo(let message):
-            return message
-        case .nonMatchingValues(let message):
-            return message
-        }
-    }
+    case invalid(invalidStateInfo: InvalidState)
 }
 
 struct InvalidState {
