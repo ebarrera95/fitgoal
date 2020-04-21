@@ -23,6 +23,7 @@
 		0546E2E02415134C004A0F65 /* Exersice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DF2415134C004A0F65 /* Exersice.swift */; };
 		054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8A824344CDA008B2B4F /* Authenticator.swift */; };
 		054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8AA2434602C008B2B4F /* AppPreferences.swift */; };
+		055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CD244EC00700ACBF5F /* UITextField+.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
 		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
@@ -92,6 +93,7 @@
 		0546E2DF2415134C004A0F65 /* Exersice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exersice.swift; sourceTree = "<group>"; };
 		054DC8A824344CDA008B2B4F /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		054DC8AA2434602C008B2B4F /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
+		055284CD244EC00700ACBF5F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 				05BBF750241503F100EF42E9 /* String+.swift */,
 				05A370C32415AA33009A654E /* URL+.swift */,
 				05CDE50924235DC2000AF5EE /* UIView+.swift */,
+				055284CD244EC00700ACBF5F /* UITextField+.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -598,6 +601,7 @@
 			files = (
 				0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */,
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
+				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
