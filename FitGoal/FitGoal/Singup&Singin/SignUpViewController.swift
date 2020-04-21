@@ -130,12 +130,12 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        if customAuthenticator.isUserInformationCorrect {
-            print("call AuthenticationVC")
-        } else {
-            print("not correct")
-            return
-        }
+//        if customAuthenticator.isUserInformationCorrect {
+//            print("call AuthenticationVC")
+//        } else {
+//            print("not correct")
+//            return
+//        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -171,30 +171,23 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditing(textFieldType: TextFieldType, with text: String) {
         switch textFieldType {
         case .userName:
-            let name = UserInfoField.userName(name: text)
-            customAuthenticator.userName = name
-            showAuthenticationMessage(retrievedFrom: name, inTextFieldType: textFieldType)
+            customAuthenticator.name = text
         case .emailAddress:
-            let email = UserInfoField.userEmail(email: text)
-            customAuthenticator.userEmail = email
-            showAuthenticationMessage(retrievedFrom: email, inTextFieldType: textFieldType)
+            customAuthenticator.email = text
         case .password:
-            let password = UserInfoField.password(password: text)
-            customAuthenticator.password = password
-            showAuthenticationMessage(retrievedFrom: password, inTextFieldType: textFieldType)
+            customAuthenticator.password = text
         case .confirmPassword:
-            let confirmPassword = UserInfoField.passwordConfirmation(passwordConfirmation: text)
-            customAuthenticator.passwordConfirmation = confirmPassword
-            showAuthenticationMessage(retrievedFrom: confirmPassword, inTextFieldType: textFieldType)
+            customAuthenticator.passwordConfirmation = text
         }
+        showAuthenticationMessage(in: textFieldType)
     }
     
-    private func showAuthenticationMessage(retrievedFrom userInfoField: UserInfoField, inTextFieldType textField: TextFieldType) {
-        switch userInfoField.state {
+    private func showAuthenticationMessage(in textFieldType: TextFieldType) {
+        switch customAuthenticator.userInfoState {
         case .valid:
             return
-        case .invalid(reason: let reason):
-            authenticationFormView.showAuthenticationMessage(message: reason.retrieveMessage, in: textField)
+        case .invalid(invalidStateInfo: let reason):
+            authenticationFormView.showAuthenticationMessage(message: reason.message, in: textFieldType)
         }
     }
     
