@@ -27,7 +27,7 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
             let password = AuthenticationFormViewSection(textFieldType: .password)
             
             sections = [emailAddress, password]
-            configureFormSection(sections: sections)
+            configureFormSections(sections: sections)
         case .signUp:
             let name = AuthenticationFormViewSection(textFieldType: .userName)
             let emailAddress = AuthenticationFormViewSection(textFieldType: .emailAddress)
@@ -35,7 +35,7 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
             let confirmPassword = AuthenticationFormViewSection(textFieldType: .confirmPassword)
             
             sections = [name, emailAddress, password, confirmPassword]
-            configureFormSection(sections: sections)
+            configureFormSections(sections: sections)
         }
     }
     
@@ -51,7 +51,7 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormSection(sections: [AuthenticationFormViewSection]) {
+    private func configureFormSections(sections: [AuthenticationFormViewSection]) {
         for section in sections {
             addArrangedSubview(section)
             section.textField.delegate = self
