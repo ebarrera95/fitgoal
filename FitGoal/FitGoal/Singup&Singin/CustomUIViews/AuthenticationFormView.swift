@@ -118,7 +118,6 @@ private class AuthenticationFormViewSection: UIView, UITextFieldDelegate {
     
     var message: String = "" {
         didSet {
-            messageLabel.isHidden = !messageLabel.isHidden
             formatMessageLabel(label: messageLabel, with: message)
         }
     }
@@ -132,7 +131,6 @@ private class AuthenticationFormViewSection: UIView, UITextFieldDelegate {
     private let messageLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
-        label.isHidden = true
         return label
     }()
     
@@ -174,7 +172,6 @@ private class AuthenticationFormViewSection: UIView, UITextFieldDelegate {
             color: .red,
             kern: 0.12
         )
-        label.isHidden = false
     }
     
     private func setMessageLabelConstraints() {
