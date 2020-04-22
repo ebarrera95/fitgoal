@@ -60,12 +60,7 @@ class IconBuilderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-    }
-    
     private func configureIndicator(in state: IconState){
-        //let indicator = UIImageView()
         switch state {
         case .selected:
             indicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
@@ -89,7 +84,7 @@ class IconBuilderView: UIView {
             attributedString = iconName.formattedText(
                 font: "Roboto-Light",
                 size: 15,
-                color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
+                color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
                 kern: 0.3
             )
         }
@@ -98,13 +93,13 @@ class IconBuilderView: UIView {
     
     //MARK: -Constraints
     
-    func setConstraints() {
+    private func setConstraints() {
         setIndicatorConstraints()
         setLabelConstraints()
         setMainImageConstraints()
     }
     
-    func setIndicatorConstraints() {
+    private func setIndicatorConstraints() {
         indicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -115,7 +110,7 @@ class IconBuilderView: UIView {
         ])
     }
     
-    func setLabelConstraints() {
+    private func setLabelConstraints() {
         title.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -124,11 +119,11 @@ class IconBuilderView: UIView {
         ])
     }
     
-    func setMainImageConstraints() {
+    private func setMainImageConstraints() {
         mainImage.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            mainImage.widthAnchor.constraint(equalToConstant: 40),
+            mainImage.widthAnchor.constraint(equalToConstant: 45),
             mainImage.heightAnchor.constraint(equalToConstant: 80),
             mainImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             mainImage.centerXAnchor.constraint(equalTo: self.centerXAnchor)
