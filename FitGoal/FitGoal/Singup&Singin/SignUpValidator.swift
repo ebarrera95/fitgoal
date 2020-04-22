@@ -8,34 +8,44 @@
 
 import Foundation
 
+struct UserInfo {
+    var fieldName: String
+    fileprivate var state: UserInfoState
+}
+
 class SignUpValidator {
     
-    var name: String = "" {
+    var name: UserInfo = UserInfo(fieldName: "", state: .valid) {
         didSet {
-            userInfoState = validateUserName(name: name)
+            name.state = validateUserName(name: name.fieldName)
         }
     }
     
-    var email: String = "" {
+    var email: UserInfo = UserInfo(fieldName: "", state: .valid) {
         didSet {
-            userInfoState = validateUserEmailAddress(emailAddress: email)
+            email.state = validateUserEmailAddress(emailAddress: email.fieldName)
         }
     }
     
-    var password: String = "" {
+    var password: UserInfo = UserInfo(fieldName: "", state: .valid) {
         didSet {
-            userInfoState = validatePassword(password: password)
+            password.state = validatePassword(password: password.fieldName)
         }
     }
     
-    var passwordConfirmation: String = "" {
+    var passwordConfirmation: UserInfo = UserInfo(fieldName: "", state: .valid) {
         didSet {
-            userInfoState = validatePasswordConfirmation(passwordConfirmation: passwordConfirmation)
+            passwordConfirmation.state = validatePasswordConfirmation(passwordConfirmation: passwordConfirmation.fieldName)
         }
     }
     
-    
-    var userInfoState = UserInfoState.valid
+    func isUserInformationValid() -> Bool {
+        return
+            name.state == .valid &&
+            email.state == .valid &&
+            password.state == .valid &&
+            passwordConfirmation.state == .valid
+    }
     
     private func validateUserName(name: String) -> UserInfoState {
         if name.isEmpty {
@@ -88,12 +98,26 @@ class SignUpValidator {
     }
 }
 
-enum UserInfoState {
+enum UserInfoState: Equatable {
     case valid
     case invalid(invalidStateInfo: InvalidState)
 }
 
-struct InvalidState {
+extension UserInfoState {
+    static func == (lhs: UserInfoState, rhs: UserInfoState) -> Bool {
+        switch (lhs, rhs ){
+        case (.valid, .valid):
+            return true
+        case (.invalid(let infoState1), .invalid(invalidStateInfo: let infoState2)):
+            return infoState1 == infoState2
+        default:
+            return false
+        }
+    }
+}
+
+
+struct InvalidState: Equatable {
     let message: String
     let reason: Reason
 }
