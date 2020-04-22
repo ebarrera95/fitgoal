@@ -8,11 +8,6 @@
 
 import Foundation
 
-struct UserInfo {
-    var userInput: String
-    var state: UserInfoState
-}
-
 class SignUpValidator {
     
     var name: UserInfo = UserInfo(userInput: "", state: .valid) {
@@ -92,10 +87,11 @@ class SignUpValidator {
             return .valid
         }
     }
-    
-    private func doPasswordsMatch(password: String, passwordConfirmation: String) -> Bool {
-        return true
-    }
+}
+
+struct UserInfo {
+    var userInput: String
+    var state: UserInfoState
 }
 
 enum UserInfoState: Equatable {
