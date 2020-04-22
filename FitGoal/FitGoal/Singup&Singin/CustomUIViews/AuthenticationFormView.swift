@@ -16,23 +16,23 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     weak var delegate: AuthenticationFormViewDelegate?
     
-    private var sections = [AuthenticationFormViewSection]()
+    private var sections = [AuthenticationFormSectionView]()
     
     convenience init(type: AuthenticationType) {
         
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = AuthenticationFormViewSection(textFieldType: .emailAddress)
-            let password = AuthenticationFormViewSection(textFieldType: .password)
+            let emailAddress = AuthenticationFormSectionView(textFieldType: .emailAddress)
+            let password = AuthenticationFormSectionView(textFieldType: .password)
             
             sections = [emailAddress, password]
             configureFormSections(sections: sections)
         case .signUp:
-            let name = AuthenticationFormViewSection(textFieldType: .userName)
-            let emailAddress = AuthenticationFormViewSection(textFieldType: .emailAddress)
-            let password = AuthenticationFormViewSection(textFieldType: .password)
-            let confirmPassword = AuthenticationFormViewSection(textFieldType: .confirmPassword)
+            let name = AuthenticationFormSectionView(textFieldType: .userName)
+            let emailAddress = AuthenticationFormSectionView(textFieldType: .emailAddress)
+            let password = AuthenticationFormSectionView(textFieldType: .password)
+            let confirmPassword = AuthenticationFormSectionView(textFieldType: .confirmPassword)
             
             sections = [name, emailAddress, password, confirmPassword]
             configureFormSections(sections: sections)
@@ -51,7 +51,7 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureFormSections(sections: [AuthenticationFormViewSection]) {
+    private func configureFormSections(sections: [AuthenticationFormSectionView]) {
         for section in sections {
             addArrangedSubview(section)
             section.textField.delegate = self
@@ -105,13 +105,13 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     // MARK: -Constraints
 
-    private func setSectionConstraints(for section: AuthenticationFormViewSection) {
+    private func setSectionConstraints(for section: AuthenticationFormSectionView) {
             section.translatesAutoresizingMaskIntoConstraints = false
             section.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
 }
 
-private class AuthenticationFormViewSection: UIView, UITextFieldDelegate {
+private class AuthenticationFormSectionView: UIView, UITextFieldDelegate {
     
     let textFieldType: TextFieldType
     let textField: UITextField
