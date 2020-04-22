@@ -11,15 +11,24 @@ import UIKit
 class IconBuilderView: UIView {
     
     private var title = UILabel()
+    
     private var indicator: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
+    
     private var mainImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
+    }()
+    
+    private var backgroundView: UIView = {
+        let background = UIView()
+        background.layer.borderWidth = 10
+        background.layer.borderColor = UIColor(red: 51, green: 225, blue: 255, alpha: 0.1).cgColor
+        return background
     }()
     
     convenience init(icon: BodyShape) {

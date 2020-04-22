@@ -17,8 +17,8 @@
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		0515518524501266001A72AA /* IconBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* IconBuilderView.swift */; };
 		0515518624501266001A72AA /* BodyShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* BodyShape.swift */; };
-		0515518724501266001A72AA /* UsersProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518424501266001A72AA /* UsersProfileViewController.swift */; };
 		0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518A24502417001A72AA /* UserLevelViewController.swift */; };
+		0515518D2450614D001A72AA /* BodyLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* BodyLevelView.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
@@ -89,8 +89,8 @@
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* IconBuilderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconBuilderView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* BodyShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyShape.swift; sourceTree = "<group>"; };
-		0515518424501266001A72AA /* UsersProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProfileViewController.swift; sourceTree = "<group>"; };
 		0515518A24502417001A72AA /* UserLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLevelViewController.swift; sourceTree = "<group>"; };
+		0515518C2450614D001A72AA /* BodyLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLevelView.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
@@ -189,6 +189,7 @@
 			children = (
 				0515518324501266001A72AA /* BodyShape.swift */,
 				0515518224501266001A72AA /* IconBuilderView.swift */,
+				0515518C2450614D001A72AA /* BodyLevelView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -197,7 +198,6 @@
 		05155189245015D0001A72AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0515518424501266001A72AA /* UsersProfileViewController.swift */,
 				0515518A24502417001A72AA /* UserLevelViewController.swift */,
 			);
 			path = ViewControllers;
@@ -624,6 +624,7 @@
 				0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */,
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
+				0515518D2450614D001A72AA /* BodyLevelView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */,
@@ -652,7 +653,6 @@
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
-				0515518724501266001A72AA /* UsersProfileViewController.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				0515518624501266001A72AA /* BodyShape.swift in Sources */,
 				0515518524501266001A72AA /* IconBuilderView.swift in Sources */,
