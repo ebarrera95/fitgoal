@@ -18,7 +18,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
-    private let customAuthenticator = SignUpValidator()
+    private let signUpValidator = SignUpValidator()
 
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -130,7 +130,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        if customAuthenticator.isUserInputValid() {
+        if signUpValidator.isUserInputValid() {
             print("call AuthenticationVC")
         } else {
             print("user input is not valid")
@@ -171,17 +171,17 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
         switch textFieldType {
         case .userName:
-            customAuthenticator.name.userInput = input
-            passAuthMessage(from: customAuthenticator.name, toSectionWithTextFieldType: textFieldType)
+            signUpValidator.name.userInput = input
+            passAuthMessage(from: signUpValidator.name, toSectionWithTextFieldType: textFieldType)
         case .emailAddress:
-            customAuthenticator.email.userInput = input
-            passAuthMessage(from: customAuthenticator.email, toSectionWithTextFieldType: textFieldType)
+            signUpValidator.email.userInput = input
+            passAuthMessage(from: signUpValidator.email, toSectionWithTextFieldType: textFieldType)
         case .password:
-            customAuthenticator.password.userInput = input
-            passAuthMessage(from: customAuthenticator.password, toSectionWithTextFieldType: textFieldType)
+            signUpValidator.password.userInput = input
+            passAuthMessage(from: signUpValidator.password, toSectionWithTextFieldType: textFieldType)
         case .confirmPassword:
-            customAuthenticator.passwordConfirmation.userInput = input
-            passAuthMessage(from: customAuthenticator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
+            signUpValidator.passwordConfirmation.userInput = input
+            passAuthMessage(from: signUpValidator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
         }
     }
     
