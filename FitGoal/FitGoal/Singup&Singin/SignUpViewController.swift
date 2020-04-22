@@ -130,10 +130,10 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        if customAuthenticator.isUserInformationValid() {
+        if customAuthenticator.isUserInputValid() {
             print("call AuthenticationVC")
         } else {
-            print("not correct")
+            print("user input is not valid")
             return
         }
     }
@@ -168,29 +168,29 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         show(vc, sender: self)
     }
     
-    func userDidEndEditing(textFieldType: TextFieldType, with text: String) {
+    func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
         switch textFieldType {
         case .userName:
-            customAuthenticator.name.fieldName = text
-            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.name)
+            customAuthenticator.name.userInput = input
+            passAuthMessage(from: customAuthenticator.name, toSectionWithTextFieldType: textFieldType)
         case .emailAddress:
-            customAuthenticator.email.fieldName = text
-            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.email)
+            customAuthenticator.email.userInput = input
+            passAuthMessage(from: customAuthenticator.email, toSectionWithTextFieldType: textFieldType)
         case .password:
-            customAuthenticator.password.fieldName = text
-            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.password)
+            customAuthenticator.password.userInput = input
+            passAuthMessage(from: customAuthenticator.password, toSectionWithTextFieldType: textFieldType)
         case .confirmPassword:
-            customAuthenticator.passwordConfirmation.fieldName = text
-            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.passwordConfirmation)
+            customAuthenticator.passwordConfirmation.userInput = input
+            passAuthMessage(from: customAuthenticator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
         }
     }
-    //TODO: Rename func
-    private func showAuthenticationMessage(in textFieldType: TextFieldType, userInfo: UserInfo) {
-        switch userInfo.state {
+    
+    private func passAuthMessage(from userInfoField: UserInfo, toSectionWithTextFieldType textFieldType: TextFieldType) {
+        switch userInfoField.state {
         case .valid:
             return
         case .invalid(invalidStateInfo: let reason):
-            authenticationFormView.showAuthenticationMessage(message: reason.message, in: textFieldType)
+            authenticationFormView.showAuthenticationMessage(message: reason.message, inSectionWithTextFieldType: textFieldType)
         }
     }
     

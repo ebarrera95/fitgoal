@@ -9,37 +9,37 @@
 import Foundation
 
 struct UserInfo {
-    var fieldName: String
+    var userInput: String
     var state: UserInfoState
 }
 
 class SignUpValidator {
     
-    var name: UserInfo = UserInfo(fieldName: "", state: .valid) {
+    var name: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
-            name.state = validateUserName(name: name.fieldName)
+            name.state = validateUserName(name: name.userInput)
         }
     }
     
-    var email: UserInfo = UserInfo(fieldName: "", state: .valid) {
+    var email: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
-            email.state = validateUserEmailAddress(emailAddress: email.fieldName)
+            email.state = validateUserEmailAddress(emailAddress: email.userInput)
         }
     }
     
-    var password: UserInfo = UserInfo(fieldName: "", state: .valid) {
+    var password: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
-            password.state = validatePassword(password: password.fieldName)
+            password.state = validatePassword(password: password.userInput)
         }
     }
     
-    var passwordConfirmation: UserInfo = UserInfo(fieldName: "", state: .valid) {
+    var passwordConfirmation: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
-            passwordConfirmation.state = validatePasswordConfirmation(passwordConfirmation: passwordConfirmation.fieldName)
+            passwordConfirmation.state = validatePasswordConfirmation(passwordConfirmation: passwordConfirmation.userInput)
         }
     }
     
-    func isUserInformationValid() -> Bool {
+    func isUserInputValid() -> Bool {
         return
             name.state == .valid &&
             email.state == .valid &&
@@ -49,7 +49,7 @@ class SignUpValidator {
     
     private func validateUserName(name: String) -> UserInfoState {
         if name.isEmpty {
-            return .invalid(invalidStateInfo: InvalidState(message: "Enter your name", reason: .emptyField))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Enter your name", reason: .emptyField))
         } else {
             return .valid
         }
@@ -57,9 +57,9 @@ class SignUpValidator {
     
     private func validateUserEmailAddress(emailAddress: String) -> UserInfoState {
         if emailAddress.isEmpty {
-            return .invalid(invalidStateInfo: InvalidState(message: "Enter your email address", reason: .emptyField))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Enter your email address", reason: .emptyField))
         } else if !isEmailAddressValid(emailAddress: emailAddress) {
-            return .invalid(invalidStateInfo: InvalidState(message: "Invalid email address", reason: .incorrectInfo))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Invalid email address", reason: .incorrectInfo))
         } else {
             return .valid
         }
@@ -72,9 +72,9 @@ class SignUpValidator {
     
     private func validatePassword(password: String) -> UserInfoState {
         if password.isEmpty {
-            return .invalid(invalidStateInfo: InvalidState(message: "Enter your password", reason: .emptyField))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Enter your password", reason: .emptyField))
         } else if !isPasswordValid(password: password) {
-            return .invalid(invalidStateInfo: InvalidState(message: "Invalid password", reason: .incorrectInfo))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Invalid password", reason: .incorrectInfo))
         } else {
             return .valid
         }
@@ -87,7 +87,7 @@ class SignUpValidator {
     
     private func validatePasswordConfirmation(passwordConfirmation: String) -> UserInfoState {
         if passwordConfirmation.isEmpty {
-            return .invalid(invalidStateInfo: InvalidState(message: "Confirm your password", reason: .emptyField))
+            return .invalid(invalidStateInfo: InvalidUserInfoState(message: "Confirm your password", reason: .emptyField))
         } else {
             return .valid
         }
@@ -100,7 +100,7 @@ class SignUpValidator {
 
 enum UserInfoState: Equatable {
     case valid
-    case invalid(invalidStateInfo: InvalidState)
+    case invalid(invalidStateInfo: InvalidUserInfoState)
 }
 
 extension UserInfoState {
@@ -116,12 +116,11 @@ extension UserInfoState {
     }
 }
 
-
-struct InvalidState: Equatable {
+struct InvalidUserInfoState: Equatable {
     let message: String
     let reason: Reason
-}
-
-enum Reason {
-    case emptyField, incorrectInfo, nonMatchingValues
+    
+    enum Reason {
+        case emptyField, incorrectInfo, nonMatchingValues
+    }
 }

@@ -9,34 +9,33 @@
 import UIKit
 
 protocol AuthenticationFormViewDelegate: AnyObject {
-    func userDidEndEditing(textFieldType: TextFieldType, with text: String)
+    func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String)
 }
 
 class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     weak var delegate: AuthenticationFormViewDelegate?
     
-    private var containerViews = [TextFieldContainerView]()
+    private var sections = [AuthenticationFormViewSection]()
     
     convenience init(type: AuthenticationType) {
         
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = TextFieldContainerView(textFieldType: .emailAddress)
-            let password = TextFieldContainerView(textFieldType: .password)
+            let emailAddress = AuthenticationFormViewSection(textFieldType: .emailAddress)
+            let password = AuthenticationFormViewSection(textFieldType: .password)
             
-            containerViews = [emailAddress, password]
-            
-            configureSectionSubviews(textFields: containerViews)
+            sections = [emailAddress, password]
+            configureFormSection(sections: sections)
         case .signUp:
-            let name = TextFieldContainerView(textFieldType: .userName)
-            let emailAddress = TextFieldContainerView(textFieldType: .emailAddress)
-            let password = TextFieldContainerView(textFieldType: .password)
-            let confirmPassword = TextFieldContainerView(textFieldType: .confirmPassword)
+            let name = AuthenticationFormViewSection(textFieldType: .userName)
+            let emailAddress = AuthenticationFormViewSection(textFieldType: .emailAddress)
+            let password = AuthenticationFormViewSection(textFieldType: .password)
+            let confirmPassword = AuthenticationFormViewSection(textFieldType: .confirmPassword)
             
-            containerViews = [name, emailAddress, password, confirmPassword]
-            configureSectionSubviews(textFields: containerViews)
+            sections = [name, emailAddress, password, confirmPassword]
+            configureFormSection(sections: sections)
         }
     }
     
@@ -52,21 +51,21 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureSectionSubviews(textFields: [TextFieldContainerView]) {
-        for textField in textFields {
-            addArrangedSubview(textField)
-            textField.textField.delegate = self
-            setTextFieldHeightConstraints(for: textField)
-            textField.textField.returnKeyType = (textField == textFields.last) ? .done : .next
+    private func configureFormSection(sections: [AuthenticationFormViewSection]) {
+        for section in sections {
+            addArrangedSubview(section)
+            section.textField.delegate = self
+            setSectionConstraints(for: section)
+            section.textField.returnKeyType = (section == sections.last) ? .done : .next
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        for index in containerViews.indices  {
-            if containerViews[index].textField == textField {
+        for index in sections.indices  {
+            if sections[index].textField == textField {
                 if textField.returnKeyType == .next {
                     textField.resignFirstResponder()
-                    containerViews[index + 1].textField.becomeFirstResponder()
+                    sections[index + 1].textField.becomeFirstResponder()
                 } else {
                     textField.resignFirstResponder()
                 }
@@ -77,27 +76,28 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        print("TextFieldDidBeginEditing")
-        for index in containerViews.indices {
-            if containerViews[index].textField == textField {
-                containerViews[index].errorMessage = ""
+        for index in sections.indices {
+            if sections[index].textField == textField {
+                sections[index].message = ""
+                return
             }
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        for index in containerViews.indices {
-            if containerViews[index].textField == textField {
-                let text = textField.text ?? ""
-                delegate?.userDidEndEditing(textFieldType: containerViews[index].textFieldType, with: text)
+        for index in sections.indices {
+            if sections[index].textField == textField {
+                let userInput = textField.text ?? ""
+                let textFieldType = sections[index].textFieldType
+                delegate?.userDidEndEditingSection(withTextFieldType: textFieldType, input: userInput)
             }
         }
     }
     
-    func showAuthenticationMessage(message: String, in textFieldType: TextFieldType) {
-        for view in containerViews {
+    func showAuthenticationMessage(message: String, inSectionWithTextFieldType textFieldType: TextFieldType) {
+        for view in sections {
             if view.textFieldType == textFieldType {
-                view.errorMessage = message
+                view.message = message
                 return
             }
         }
@@ -105,23 +105,21 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
     // MARK: -Constraints
 
-    private func setTextFieldHeightConstraints(for textField: TextFieldContainerView) {
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.heightAnchor.constraint(equalToConstant: 54).isActive = true
+    private func setSectionConstraints(for section: AuthenticationFormViewSection) {
+            section.translatesAutoresizingMaskIntoConstraints = false
+            section.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
 }
 
-private class TextFieldContainerView: UIView, UITextFieldDelegate {
+private class AuthenticationFormViewSection: UIView, UITextFieldDelegate {
     
     let textFieldType: TextFieldType
     let textField: UITextField
     
-    var errorMessage: String? {
+    var message: String = "" {
         didSet {
-            if let error = errorMessage {
-                errorMessageLabel.isHidden = !errorMessageLabel.isHidden
-                formatErrorMessageLabel(label: errorMessageLabel, with: error)
-            }
+            messageLabel.isHidden = !messageLabel.isHidden
+            formatMessageLabel(label: messageLabel, with: message)
         }
     }
     
@@ -131,7 +129,7 @@ private class TextFieldContainerView: UIView, UITextFieldDelegate {
         return line
     }()
     
-    private let errorMessageLabel: UILabel = {
+    private let messageLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .right
         label.isHidden = true
@@ -142,10 +140,14 @@ private class TextFieldContainerView: UIView, UITextFieldDelegate {
         self.textFieldType = textFieldType
         self.textField = UITextField(textField: textFieldType)
         super.init(frame: .zero)
-        self.addSubview(textField)
-        self.addSubview(buttonLine)
-        self.addSubview(errorMessageLabel)
-        setErrorLabelConstraints()
+        
+        let subviews = [
+            textField,
+            buttonLine,
+            messageLabel
+        ]
+        self.addMultipleSubviews(subviews)
+        setMessageLabelConstraints()
         
         textField.delegate = self
     }
@@ -165,7 +167,7 @@ private class TextFieldContainerView: UIView, UITextFieldDelegate {
         textField.frame = self.bounds
     }
     
-    private func formatErrorMessageLabel(label: UILabel, with title: String)  {
+    private func formatMessageLabel(label: UILabel, with title: String)  {
         label.attributedText = title.formattedText(
             font: "Roboto-Light",
             size: 15,
@@ -175,72 +177,12 @@ private class TextFieldContainerView: UIView, UITextFieldDelegate {
         label.isHidden = false
     }
     
-    private func setErrorLabelConstraints() {
-        errorMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setMessageLabelConstraints() {
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            errorMessageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
-            errorMessageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+            messageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
+            messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
-    }
-}
-
-enum TextFieldType {
-    case userName
-    case emailAddress
-    case password
-    case confirmPassword
-    
-   var placeholder: String {
-        switch self {
-        case .userName:
-            return "Name"
-        case .emailAddress:
-            return "Email"
-        case .password:
-            return "Password"
-        case .confirmPassword:
-            return "Confirm Password"
-        }
-    }
-    
-    var textContentType: UITextContentType {
-        switch self {
-        case .userName:
-            return .name
-        case .emailAddress:
-            return .emailAddress
-        case .password:
-            return .password
-        case .confirmPassword:
-            return .password
-        }
-    }
-    
-    var autocapitalizationType: UITextAutocapitalizationType {
-        switch self {
-        case .userName:
-            return .sentences
-        case .emailAddress, .password, .confirmPassword:
-            return .none
-        }
-    }
-    
-    var isSecureTextEntry: Bool {
-        switch self {
-        case .userName, .emailAddress:
-            return false
-        case .password, .confirmPassword:
-            return true
-        }
-    }
-    
-    var keyboardType: UIKeyboardType {
-        switch self {
-        case .userName, .password, .confirmPassword:
-            return .default
-        case .emailAddress:
-            return .emailAddress
-        }
     }
 }

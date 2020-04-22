@@ -24,6 +24,7 @@
 		054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8A824344CDA008B2B4F /* Authenticator.swift */; };
 		054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8AA2434602C008B2B4F /* AppPreferences.swift */; };
 		055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CD244EC00700ACBF5F /* UITextField+.swift */; };
+		055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CF244FDEC300ACBF5F /* TextFieldType.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
 		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
@@ -94,6 +95,7 @@
 		054DC8A824344CDA008B2B4F /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		054DC8AA2434602C008B2B4F /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		055284CD244EC00700ACBF5F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
+		055284CF244FDEC300ACBF5F /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
@@ -284,6 +286,7 @@
 			children = (
 				055F62CC2429868B0054934F /* IconView.swift */,
 				05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */,
+				055284CF244FDEC300ACBF5F /* TextFieldType.swift */,
 				058312A8242C291800708195 /* AuthenticationType.swift */,
 				0517AD532424432E0049E48B /* BackgroundView.swift */,
 				05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */,
@@ -620,6 +623,7 @@
 				058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */,
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
+				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,
 				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
 				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
 				054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */,
