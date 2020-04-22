@@ -130,12 +130,12 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-//        if customAuthenticator.isUserInformationCorrect {
-//            print("call AuthenticationVC")
-//        } else {
-//            print("not correct")
-//            return
-//        }
+        if customAuthenticator.isUserInformationValid() {
+            print("call AuthenticationVC")
+        } else {
+            print("not correct")
+            return
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -171,19 +171,22 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditing(textFieldType: TextFieldType, with text: String) {
         switch textFieldType {
         case .userName:
-            customAuthenticator.name = text
+            customAuthenticator.name.fieldName = text
+            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.name)
         case .emailAddress:
-            customAuthenticator.email = text
+            customAuthenticator.email.fieldName = text
+            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.email)
         case .password:
-            customAuthenticator.password = text
+            customAuthenticator.password.fieldName = text
+            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.password)
         case .confirmPassword:
-            customAuthenticator.passwordConfirmation = text
+            customAuthenticator.passwordConfirmation.fieldName = text
+            showAuthenticationMessage(in: textFieldType, userInfo: customAuthenticator.passwordConfirmation)
         }
-        showAuthenticationMessage(in: textFieldType)
     }
-    
-    private func showAuthenticationMessage(in textFieldType: TextFieldType) {
-        switch customAuthenticator.userInfoState {
+    //TODO: Rename func
+    private func showAuthenticationMessage(in textFieldType: TextFieldType, userInfo: UserInfo) {
+        switch userInfo.state {
         case .valid:
             return
         case .invalid(invalidStateInfo: let reason):

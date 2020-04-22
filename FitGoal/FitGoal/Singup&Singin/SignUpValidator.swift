@@ -10,7 +10,7 @@ import Foundation
 
 struct UserInfo {
     var fieldName: String
-    fileprivate var state: UserInfoState
+    var state: UserInfoState
 }
 
 class SignUpValidator {
