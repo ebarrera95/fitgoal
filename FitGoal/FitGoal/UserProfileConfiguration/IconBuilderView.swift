@@ -25,20 +25,8 @@ class IconBuilderView: UIView {
     convenience init(icon: BodyShape) {
         self.init(frame: .zero)
         mainImage.image = icon.image
-        switch icon {
-        case .skinny(let state):
-            title.attributedText = configureTitle(for: state, with: icon.name)
-            configureIndicator(in: state)
-        case .normal(let state):
-            title.attributedText = configureTitle(for: state, with: icon.name)
-            configureIndicator(in: state)
-        case .obese(let state):
-            title.attributedText = configureTitle(for: state, with: icon.name)
-            configureIndicator(in: state)
-        case .athletic(let state):
-            title.attributedText = configureTitle(for: state, with: icon.name)
-            configureIndicator(in: state)
-        }
+        configureIndicator(in: icon.state)
+        title.attributedText = configureTitle(for: icon.state, with: icon.name)
     }
     
     override init(frame: CGRect) {

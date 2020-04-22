@@ -16,7 +16,7 @@
 		050507F52431C54400CE58BC /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserInformation.swift */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		0515518524501266001A72AA /* IconBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* IconBuilderView.swift */; };
-		0515518624501266001A72AA /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* Icons.swift */; };
+		0515518624501266001A72AA /* BodyShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* BodyShape.swift */; };
 		0515518724501266001A72AA /* UsersProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518424501266001A72AA /* UsersProfileViewController.swift */; };
 		0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518A24502417001A72AA /* UserLevelViewController.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
@@ -88,7 +88,7 @@
 		050507F42431C54400CE58BC /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* IconBuilderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconBuilderView.swift; sourceTree = "<group>"; };
-		0515518324501266001A72AA /* Icons.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		0515518324501266001A72AA /* BodyShape.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BodyShape.swift; sourceTree = "<group>"; };
 		0515518424501266001A72AA /* UsersProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersProfileViewController.swift; sourceTree = "<group>"; };
 		0515518A24502417001A72AA /* UserLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLevelViewController.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		0515518824501594001A72AA /* UserProfileConfiguration */ = {
 			isa = PBXGroup;
 			children = (
-				0515518324501266001A72AA /* Icons.swift */,
+				0515518324501266001A72AA /* BodyShape.swift */,
 				0515518224501266001A72AA /* IconBuilderView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
@@ -654,7 +654,7 @@
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				0515518724501266001A72AA /* UsersProfileViewController.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
-				0515518624501266001A72AA /* Icons.swift in Sources */,
+				0515518624501266001A72AA /* BodyShape.swift in Sources */,
 				0515518524501266001A72AA /* IconBuilderView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,

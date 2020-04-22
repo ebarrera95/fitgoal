@@ -10,8 +10,6 @@ import UIKit
 
 class UsersProfileViewController: UIViewController {
     
-    let icon = IconBuilderView(icon: BodyShape.athletic(.selected))
-
     private let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
@@ -35,8 +33,8 @@ class UsersProfileViewController: UIViewController {
         view.addSubview(gradientBackgroundView)
         view.addSubview(scrollView)
         
-        let views = [icon]
-        scrollView.addMultipleSubviews(views)
+//        let views = [icon]
+//        scrollView.addMultipleSubviews(views)
         
         setConstraints()
     }
@@ -45,8 +43,8 @@ class UsersProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
         scrollView.contentSize = CGSize(width: 6 * view.frame.width, height: view.frame.height)
         
-        icon.frame = CGRect(x: 0, y: 0, width: 152, height: 152)
-        icon.center = view.center
+//        icon.frame = CGRect(x: 0, y: 0, width: 152, height: 152)
+//        icon.center = view.center
     }
     
     //TODO: Replace with utility funcion. Remember to replace all functions
@@ -70,4 +68,14 @@ class UsersProfileViewController: UIViewController {
         ])
     }
     
+}
+
+enum UserInfoSections {
+    case gender
+    case age
+    case height
+    case weight
+    case fitnessLevel
+    case fitnessGoal
+    case trainLevel
 }

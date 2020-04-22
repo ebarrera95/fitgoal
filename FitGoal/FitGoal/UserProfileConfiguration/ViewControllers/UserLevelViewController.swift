@@ -37,12 +37,11 @@ class UserLevelViewController: UIViewController {
 }
 
 private class BodyLevelView: UIView {
-    let skinnyBody = IconBuilderView(icon: BodyShape.skinny(.unselected))
-    let normalBody = IconBuilderView(icon: BodyShape.normal(.unselected))
-    let obeseBody = IconBuilderView(icon: BodyShape.obese(.unselected))
-    let athleticBody = IconBuilderView(icon: BodyShape.athletic(.unselected))
+    let skinnyBody = IconBuilderView(icon: BodyShape(shape: .skinny))
+    let normalBody = IconBuilderView(icon: BodyShape(shape: .normal))
+    let obeseBody = IconBuilderView(icon: BodyShape(shape: .obese))
+    let athleticBody = IconBuilderView(icon: BodyShape(shape: .athletic))
     
-
     override init(frame: CGRect) {
         super.init(frame: frame)
         let views = [
