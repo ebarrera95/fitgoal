@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol IconBuilderViewDelegate: AnyObject {
+    func userDidSelectIcon(icon: BodyShape)
+}
+
 class IconBuilderView: UIView {
+    
+    private var icon: BodyShape
+    
+    weak var delegate: IconBuilderViewDelegate?
     
     private var title = UILabel()
     
@@ -26,20 +34,26 @@ class IconBuilderView: UIView {
     
     private var backgroundView: UIView = {
         let background = UIView()
-        background.layer.borderWidth = 10
-        background.layer.borderColor = UIColor(red: 51, green: 225, blue: 255, alpha: 0.1).cgColor
+        background.layer.masksToBounds = true
+        background.layer.cornerRadius = 7
+        background.layer.borderWidth = 2
+        background.layer.borderColor = #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1).cgColor
+        background.backgroundColor = #colorLiteral(red: 0.2, green: 0.8823529412, blue: 1, alpha: 0.09823393486)
         return background
     }()
     
-    convenience init(icon: BodyShape) {
-        self.init(frame: .zero)
+    init(icon: BodyShape) {
+        self.icon = icon
+        super.init(frame: .zero)
         mainImage.image = icon.image
         configureIndicator(in: icon.state)
         title.attributedText = configureTitle(for: icon.state, with: icon.name)
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+        if icon.state == .unselected {
+            backgroundView.isHidden = true
+        } else {
+            backgroundView.isHidden = false
+        }
+        
         backgroundColor = .white
         layer.cornerRadius = 7
         layer.shadowOffset = CGSize(width: 0, height: 6)
@@ -47,14 +61,30 @@ class IconBuilderView: UIView {
         layer.shadowOpacity = 1
         layer.shadowRadius = 10
         
-        let views = [indicator, title, mainImage]
+        let views = [
+            backgroundView,
+            indicator,
+            title,
+            mainImage
+        ]
         self.addMultipleSubviews(views)
-        
         setConstraints()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func handleTap() {
+        delegate?.userDidSelectIcon(icon: icon)
     }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        backgroundView.frame = self.bounds
     }
     
     private func configureIndicator(in state: IconState){

@@ -6,10 +6,10 @@
 //  Copyright © 2020 Eliany Barrera. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
-class BodyLevelView: UIView {
+class BodyLevelView: UIView, IconBuilderViewDelegate {
+    
     let skinnyBody = IconBuilderView(icon: BodyShape(shape: .skinny))
     let normalBody = IconBuilderView(icon: BodyShape(shape: .normal))
     let obeseBody = IconBuilderView(icon: BodyShape(shape: .obese))
@@ -30,6 +30,10 @@ class BodyLevelView: UIView {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func userDidSelectIcon(icon: BodyShape) {
+        //Do something here
     }
     
     // MARK: - Constraints
