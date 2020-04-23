@@ -8,25 +8,34 @@
 
 import UIKit
 
+protocol AuthenticationFormViewDelegate: AnyObject {
+    func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String)
+}
+
 class AuthenticationFormView: UIStackView, UITextFieldDelegate {
     
+    weak var delegate: AuthenticationFormViewDelegate?
+    
+    private var sections = [AuthenticationFormSectionView]()
+    
     convenience init(type: AuthenticationType) {
+        
         self.init(frame: .zero)
         switch type {
         case .login:
-            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
-            let password = TextFieldType.password.getCustomTextField()
+            let emailAddress = AuthenticationFormSectionView(textFieldType: .emailAddress)
+            let password = AuthenticationFormSectionView(textFieldType: .password)
             
-            let textFields = [emailAddress, password]
-            configureSectionSubviews(textFields: textFields)
+            sections = [emailAddress, password]
+            configureFormSections(sections: sections)
         case .signUp:
-            let name = TextFieldType.userName.getCustomTextField()
-            let emailAddress = TextFieldType.emailAdress.getCustomTextField()
-            let password = TextFieldType.password.getCustomTextField()
-            let confirmPassword = TextFieldType.confirmPassword.getCustomTextField()
+            let name = AuthenticationFormSectionView(textFieldType: .userName)
+            let emailAddress = AuthenticationFormSectionView(textFieldType: .emailAddress)
+            let password = AuthenticationFormSectionView(textFieldType: .password)
+            let confirmPassword = AuthenticationFormSectionView(textFieldType: .confirmPassword)
             
-            let textFields = [name, emailAddress, password, confirmPassword]
-            configureSectionSubviews(textFields: textFields)
+            sections = [name, emailAddress, password, confirmPassword]
+            configureFormSections(sections: sections)
         }
     }
     
@@ -42,56 +51,103 @@ class AuthenticationFormView: UIStackView, UITextFieldDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureSectionSubviews(textFields: [CustomTextField]) {
-        for textField in textFields {
-            addArrangedSubview(textField)
-            textField.delegate = self
-            setTextFieldHeightConstraints(for: textField)
-            textField.returnKeyType = (textField == textFields.last) ? .done : .next
+    private func configureFormSections(sections: [AuthenticationFormSectionView]) {
+        for section in sections {
+            addArrangedSubview(section)
+            section.textField.delegate = self
+            setSectionConstraints(for: section)
+            section.textField.returnKeyType = (section == sections.last) ? .done : .next
         }
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField.returnKeyType == .next {
-            guard let textFieldIndex = self.subviews.firstIndex(of: textField) else { fatalError() }
-            textField.resignFirstResponder()
-            let nextTextField = self.subviews[textFieldIndex + 1]
-            nextTextField.becomeFirstResponder()
-        } else {
-            textField.resignFirstResponder()
+        for index in sections.indices  {
+            if sections[index].textField == textField {
+                if textField.returnKeyType == .next {
+                    textField.resignFirstResponder()
+                    sections[index + 1].textField.becomeFirstResponder()
+                } else {
+                    textField.resignFirstResponder()
+                }
+                return true
+            }
         }
         return true
     }
     
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        for index in sections.indices {
+            if sections[index].textField == textField {
+                sections[index].message = ""
+                return
+            }
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        for index in sections.indices {
+            if sections[index].textField == textField {
+                let userInput = textField.text ?? ""
+                let textFieldType = sections[index].textFieldType
+                delegate?.userDidEndEditingSection(withTextFieldType: textFieldType, input: userInput)
+            }
+        }
+    }
+    
+    func showAuthenticationMessage(message: String, inSectionWithTextFieldType textFieldType: TextFieldType) {
+        for view in sections {
+            if view.textFieldType == textFieldType {
+                view.message = message
+                return
+            }
+        }
+    }
+    
     // MARK: -Constraints
 
-    private func setTextFieldHeightConstraints(for textField: CustomTextField) {
-            textField.translatesAutoresizingMaskIntoConstraints = false
-            textField.heightAnchor.constraint(equalToConstant: 54).isActive = true
+    private func setSectionConstraints(for section: AuthenticationFormSectionView) {
+            section.translatesAutoresizingMaskIntoConstraints = false
+            section.heightAnchor.constraint(equalToConstant: 54).isActive = true
     }
 }
 
-private class CustomTextField: UITextField {
+private class AuthenticationFormSectionView: UIView, UITextFieldDelegate {
     
-    let buttonLine: UIView = {
+    let textFieldType: TextFieldType
+    let textField: UITextField
+    
+    var message: String = "" {
+        didSet {
+            formatMessageLabel(label: messageLabel, with: message)
+        }
+    }
+    
+    private let buttonLine: UIView = {
         let line = UIView()
         line.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
         return line
     }()
     
-    convenience init(placeholder: String) {
-        self.init(frame: .zero)
-        self.attributedPlaceholder = placeholder.formattedText(
-            font: "Roboto-Light",
-            size: 15,
-            color: UIColor(red: 0.52, green: 0.53, blue: 0.57, alpha: 1),
-            kern: 0
-        )
-    }
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        return label
+    }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addSubview(buttonLine)
+    init(textFieldType: TextFieldType) {
+        self.textFieldType = textFieldType
+        self.textField = UITextField(textField: textFieldType)
+        super.init(frame: .zero)
+        
+        let subviews = [
+            textField,
+            buttonLine,
+            messageLabel
+        ]
+        self.addMultipleSubviews(subviews)
+        setMessageLabelConstraints()
+        
+        textField.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -106,56 +162,24 @@ private class CustomTextField: UITextField {
             width: self.bounds.width,
             height: 1
         )
-    }
-}
-
-private enum TextFieldType {
-    case userName
-    case emailAdress
-    case password
-    case confirmPassword
-    
-    private var placeholder: String {
-        switch self {
-        case .userName:
-            return "Name"
-        case .emailAdress:
-            return "Email"
-        case .password:
-            return "Password"
-        case .confirmPassword:
-            return "Confirm Password"
-        }
+        textField.frame = self.bounds
     }
     
-    func getCustomTextField() -> CustomTextField {
-        switch self {
-        case .userName:
-            let name = CustomTextField(placeholder: placeholder)
-            name.textContentType = .name
-            name.returnKeyType = .next
-            return name
-        case .emailAdress:
-            let email = CustomTextField(placeholder: placeholder)
-            email.textContentType = .emailAddress
-            email.autocapitalizationType = .none
-            email.keyboardType = .emailAddress
-            email.returnKeyType = .next
-            return email
-        case .password:
-            let password = CustomTextField(placeholder: placeholder)
-            password.textContentType = .password
-            password.autocapitalizationType = .none
-            password.isSecureTextEntry = true
-            password.returnKeyType = .next
-            return password
-        case .confirmPassword:
-            let confirmPassword = CustomTextField(placeholder: placeholder)
-            confirmPassword.textContentType = .password
-            confirmPassword.autocapitalizationType = .none
-            confirmPassword.isSecureTextEntry = true
-            confirmPassword.returnKeyType  = .done
-            return confirmPassword
-        }
+    private func formatMessageLabel(label: UILabel, with title: String)  {
+        label.attributedText = title.formattedText(
+            font: "Roboto-Light",
+            size: 15,
+            color: .red,
+            kern: 0.12
+        )
+    }
+    
+    private func setMessageLabelConstraints() {
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            messageLabel.topAnchor.constraint(equalTo: self.bottomAnchor),
+            messageLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
+        ])
     }
 }

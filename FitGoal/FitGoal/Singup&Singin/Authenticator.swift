@@ -11,7 +11,7 @@ import Firebase
 import GoogleSignIn
 import FBSDKLoginKit
 
-class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
+class Authenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
     typealias UserInfoCallback = (Result<UserInformation, Error>) -> Void
@@ -81,7 +81,7 @@ class SocialMediaAuthenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
         twitterProvider.getCredentialWith(nil) { (credentials, error) in
             if let error = error {
                 completion(.failure(error))

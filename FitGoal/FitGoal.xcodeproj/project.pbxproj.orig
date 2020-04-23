@@ -637,8 +637,12 @@
 				0515518D2450614D001A72AA /* BodyLevelView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
+<<<<<<< HEAD
 				0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */,
+				054DC8A924344CDA008B2B4F /* SocialMediaAuthenticator.swift in Sources */,
+=======
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
+>>>>>>> master
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
 				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
