@@ -9,7 +9,7 @@
 import UIKit
 
 protocol IconBuilderViewDelegate: AnyObject {
-    func userDidSelectIcon(icon: BodyShape)
+    func userDidSelectOption(selection: BodyShape)
 }
 
 class IconBuilderView: UIView {
@@ -45,14 +45,8 @@ class IconBuilderView: UIView {
     init(icon: BodyShape) {
         self.icon = icon
         super.init(frame: .zero)
-        mainImage.image = icon.image
-        configureIndicator(in: icon.state)
-        title.attributedText = configureTitle(for: icon.state, with: icon.name)
-        if icon.state == .unselected {
-            backgroundView.isHidden = true
-        } else {
-            backgroundView.isHidden = false
-        }
+        configureIcon(for: icon.state)
+        backgroundView.isHidden = true
         
         backgroundColor = .white
         layer.cornerRadius = 7
@@ -73,10 +67,6 @@ class IconBuilderView: UIView {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         addGestureRecognizer(tapGesture)
     }
-    
-    @objc private func handleTap() {
-        delegate?.userDidSelectIcon(icon: icon)
-    }
 
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -87,6 +77,35 @@ class IconBuilderView: UIView {
         backgroundView.frame = self.bounds
     }
     
+    @objc private func handleTap() {
+        changeIconState()
+        switch icon.state {
+        case .selected:
+            delegate?.userDidSelectOption(selection: icon)
+        case .unselected:
+            return
+        }
+    }
+    
+    private func changeIconState() {
+        switch icon.state {
+        case .selected:
+            self.icon.state = .unselected
+            configureIcon(for: icon.state)
+            backgroundView.isHidden = true
+        case .unselected:
+            self.icon.state = .selected
+            configureIcon(for: icon.state)
+            backgroundView.isHidden = false
+        }
+    }
+    
+    private func configureIcon(for state: IconState) {
+        configureIndicator(in: icon.state)
+        title.attributedText = configureTitle(for: icon.state, with: icon.name)
+        mainImage.image = icon.image
+    }
+    
     private func configureIndicator(in state: IconState){
         switch state {
         case .selected:
@@ -95,7 +114,6 @@ class IconBuilderView: UIView {
             indicator.image = UIImage(imageLiteralResourceName: "unselectedIndicator")
         }
     }
-    
     
     private func configureTitle(for state: IconState, with iconName: String) -> NSAttributedString {
         var attributedString = NSAttributedString()

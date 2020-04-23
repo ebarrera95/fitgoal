@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BodyLevelView: UIView, IconBuilderViewDelegate {
+class BodyLevelView: UIView {
     
     let skinnyBody = IconBuilderView(icon: BodyShape(shape: .skinny))
     let normalBody = IconBuilderView(icon: BodyShape(shape: .normal))
@@ -30,10 +30,6 @@ class BodyLevelView: UIView, IconBuilderViewDelegate {
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    func userDidSelectIcon(icon: BodyShape) {
-        //Do something here
     }
     
     // MARK: - Constraints
