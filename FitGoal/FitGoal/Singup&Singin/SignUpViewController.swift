@@ -8,16 +8,18 @@
 
 import UIKit
 
-class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, IconViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
+class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, IconViewDelegate, AuthenticationFormViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
     private let backgroundView = BackgroundView()
     
     private let avatarView = IconView(iconType: .avatarChooser)
     
-    private let loginLink = AuthenticationTypeSwitcherView(type: .login)
+    private let authenticationSwitcherView = AuthenticationTypeSwitcherView(type: .login)
     
-    private let authenticationSwitcherView = AuthenticationFormView(type: .signUp)
+    private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
+    private let signUpValidator = SignUpValidator()
+
     private let mainLabel: UILabel = {
         let label = UILabel()
         let text = "SIGNUP".formattedText(
@@ -61,14 +63,15 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
             avatarView,
             mainLabel,
             createAccountButton,
-            loginLink,
-            authenticationSwitcherView
+            authenticationSwitcherView,
+            authenticationFormView
         ]
         scrollView.addMultipleSubviews(views)
         setConstraints()
         
-        loginLink.delegate = self
+        authenticationSwitcherView.delegate = self
         avatarView.delegate = self
+        authenticationFormView.delegate = self
         
         createAccountButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -123,14 +126,16 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func dismissKeyboard() {
-        authenticationSwitcherView.endEditing(true)
+        authenticationFormView.endEditing(true)
     }
     
     @objc private func presentViewController() {
-        let vc = HomeViewController(persistance: CoreDataPersistance())
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        if signUpValidator.isUserInputValid() {
+            print("call AuthenticationVC")
+        } else {
+            print("user input is not valid")
+            return
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -163,6 +168,32 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         show(vc, sender: self)
     }
     
+    func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
+        switch textFieldType {
+        case .userName:
+            signUpValidator.name.userInput = input
+            passAuthMessage(from: signUpValidator.name, toSectionWithTextFieldType: textFieldType)
+        case .emailAddress:
+            signUpValidator.email.userInput = input
+            passAuthMessage(from: signUpValidator.email, toSectionWithTextFieldType: textFieldType)
+        case .password:
+            signUpValidator.password.userInput = input
+            passAuthMessage(from: signUpValidator.password, toSectionWithTextFieldType: textFieldType)
+        case .confirmPassword:
+            signUpValidator.passwordConfirmation.userInput = input
+            passAuthMessage(from: signUpValidator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
+        }
+    }
+    
+    private func passAuthMessage(from userInfoField: UserInfo, toSectionWithTextFieldType textFieldType: TextFieldType) {
+        switch userInfoField.state {
+        case .valid:
+            return
+        case .invalid(invalidStateInfo: let reason):
+            authenticationFormView.showAuthenticationMessage(message: reason.message, inSectionWithTextFieldType: textFieldType)
+        }
+    }
+    
      //MARK: -Constraints
     func setConstraints() {
         setScrollViewConstraints()
@@ -181,21 +212,21 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     private func setLoginStackConstraints() {
-        loginLink.translatesAutoresizingMaskIntoConstraints = false
+        authenticationSwitcherView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            loginLink.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-            loginLink.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 64)
+            authenticationSwitcherView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
+            authenticationSwitcherView.topAnchor.constraint(equalTo: createAccountButton.bottomAnchor, constant: 64)
         ])
     }
     
     private func setSingUpStackConstraints() {
-        authenticationSwitcherView.translatesAutoresizingMaskIntoConstraints = false
+        authenticationFormView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            authenticationSwitcherView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
-            authenticationSwitcherView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
-            authenticationSwitcherView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -64)
+            authenticationFormView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 32),
+            authenticationFormView.topAnchor.constraint(equalTo: backgroundView.bottomAnchor, constant: 24),
+            authenticationFormView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -64)
         ])
     }
     
