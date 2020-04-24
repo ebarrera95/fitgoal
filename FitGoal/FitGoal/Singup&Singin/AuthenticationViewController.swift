@@ -87,29 +87,25 @@ class AuthenticationViewController: UIViewController {
         case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
             self.dismiss(animated: true) { print("Unable to login, reason: \(loginError)") }
         case .userPreviouslyLoggedInWith(let socialMedia):
-            let alert = UIAlertController(
-                title: "You've previously logged in with another social media",
-                message: "Please, log in with \(socialMedia)",
-                preferredStyle: .alert
-            )
-            
-            let action = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            
-            alert.addAction(action)
-            self.present(alert, animated: true)
+            let title = "You've previously logged in with another social media"
+            let message = "Please, log in with \(socialMedia)"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
         case .emailAssociatedToExistingAccount:
-            let alert = UIAlertController(
-                title: "You already have an account", message: "Please login",
-                preferredStyle: .alert
-            )
-            let action = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
-                self.dismiss(animated: true, completion: nil)
-            }
-            alert.addAction(action)
-            self.present(alert, animated: true)
+            let title = "You already have an account"
+            let message = "Please login with email and password"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
         }
+    }
+    
+    private func showLoginErrorAlert(title: String, message: String, preferredStyle: UIAlertController.Style) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
+        let action = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
+            self.dismiss(animated: true, completion: nil)
+        }
+        alert.addAction(action)
+        self.present(alert, animated: true)
     }
 
     private func login() {
