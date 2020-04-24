@@ -40,22 +40,12 @@ class Authenticator: NSObject, GIDSignInDelegate {
                 completion(.failure(error))
             }
         }
+        
         switch authenticationMethod {
         case .custom(let customAuth):
             customSignIn(customAuth: customAuth, completion: persistIfPossible(userInfoResult:))
         case .socialMedia(let socialMedia):
             authenticateWithSocialMedia(socialMedia: socialMedia, sender: sender, completion: persistIfPossible(userInfoResult:))
-        }
-    }
-    
-    private func authenticateWithSocialMedia(socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
-        switch socialMedia {
-        case .facebook:
-            facebookSignIn(sender: sender, completion: completion)
-        case .google:
-            googleSignIn(sender: sender, completion: completion)
-        case .twitter:
-            twitterSignIn(sender: sender, completion: completion)
         }
     }
     
@@ -136,6 +126,18 @@ class Authenticator: NSObject, GIDSignInDelegate {
     }
     
     //MARK: - Helper functions
+    
+    private func authenticateWithSocialMedia(socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
+        switch socialMedia {
+        case .facebook:
+            facebookSignIn(sender: sender, completion: completion)
+        case .google:
+            googleSignIn(sender: sender, completion: completion)
+        case .twitter:
+            twitterSignIn(sender: sender, completion: completion)
+        }
+    }
+    
     private func parseUserInformation(from dataResults: AuthDataResult?, error: Error?, completion: UserInfoCallback) {
         if let error = error {
             completion(.failure(error))
@@ -158,7 +160,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
             completion(.success(UserInformation(name: name, email: email)))
         }
     }
-     
+    
     private func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
         let credentials = providerSpecifications.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
