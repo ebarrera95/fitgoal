@@ -131,7 +131,11 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     @objc private func presentViewController() {
         if signUpValidator.isUserInputValid() {
-            let customAuth = CustomAuthentication(name: signUpValidator.name.userInput, email: signUpValidator.email.userInput, password: signUpValidator.password.userInput)
+            let customAuth = CustomAuthentication(
+                name: signUpValidator.name.userInput,
+                email: signUpValidator.email.userInput,
+                password: signUpValidator.password.userInput
+            )
             let vc = AuthenticationViewController(authMethod: .custom(customAuth))
             vc.modalPresentationStyle = .overCurrentContext
             vc.modalTransitionStyle = .crossDissolve
