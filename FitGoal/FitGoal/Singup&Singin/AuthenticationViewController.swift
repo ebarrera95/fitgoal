@@ -11,7 +11,7 @@ import UIKit
 class AuthenticationViewController: UIViewController {
     
     private var authenticator: Authenticator
-    
+
     private let placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
         placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
@@ -53,8 +53,8 @@ class AuthenticationViewController: UIViewController {
     
     private var viewDidAppearOnce = false
 
-    init(socialMedia: SocialMedia) {
-        self.authenticator = Authenticator(socialMedia: socialMedia)
+    init(authMethod: AuthenticationMethod) {
+        self.authenticator = Authenticator(authMethod: authMethod)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -93,11 +93,21 @@ class AuthenticationViewController: UIViewController {
                 preferredStyle: .alert
             )
             
-            let acion = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
+            let action = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
                 self.dismiss(animated: true, completion: nil)
             }
             
-            alert.addAction(acion)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        case .emailAssociatedToExistingAccount:
+            let alert = UIAlertController(
+                title: "You already have an account", message: "Please login",
+                preferredStyle: .alert
+            )
+            let action = UIAlertAction(title: "Got it!", style: .cancel) { (_) in
+                self.dismiss(animated: true, completion: nil)
+            }
+            alert.addAction(action)
             self.present(alert, animated: true)
         }
     }

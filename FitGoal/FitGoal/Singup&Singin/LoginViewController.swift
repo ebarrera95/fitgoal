@@ -168,7 +168,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
-        let vc = AuthenticationViewController(socialMedia: socialMedia)
+        let vc = AuthenticationViewController(authMethod:.socialMedia(socialMedia))
         vc.modalPresentationStyle = .overCurrentContext
         vc.modalTransitionStyle = .crossDissolve
         self.present(vc, animated: true)

@@ -20,12 +20,12 @@ class Authenticator: NSObject, GIDSignInDelegate {
     
     private var userInfoCallback: UserInfoCallback?
     
-    private var socialMedia: SocialMedia
+    var authenticationMethod: AuthenticationMethod
     
     private let twitterProvider = OAuthProvider(providerID: "twitter.com")
     
-    init(socialMedia: SocialMedia) {
-        self.socialMedia = socialMedia
+    init(authMethod: AuthenticationMethod) {
+        self.authenticationMethod = authMethod
         super.init()
         GIDSignIn.sharedInstance()?.delegate = self
     }
@@ -40,14 +40,22 @@ class Authenticator: NSObject, GIDSignInDelegate {
                 completion(.failure(error))
             }
         }
-        
-        switch self.socialMedia {
+        switch authenticationMethod {
+        case .custom(let customAuth):
+            customSignIn(customAuth: customAuth, completion: persistIfPossible(userInfoResult:))
+        case .socialMedia(let socialMedia):
+            authenticateWithSocialMedia(socialMedia: socialMedia, sender: sender, completion: persistIfPossible(userInfoResult:))
+        }
+    }
+    
+    private func authenticateWithSocialMedia(socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
+        switch socialMedia {
         case .facebook:
-            facebookSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
+            facebookSignIn(sender: sender, completion: completion)
         case .google:
-            googleSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
+            googleSignIn(sender: sender, completion: completion)
         case .twitter:
-            twitterSignIn(sender: sender, completion: persistIfPossible(userInfoResult:))
+            twitterSignIn(sender: sender, completion: completion)
         }
     }
     
@@ -95,6 +103,20 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
+    private func customSignIn(customAuth: CustomAuthentication, completion: @escaping UserInfoCallback) {
+        let email = customAuth.email
+        let userName = customAuth.name
+        let password = customAuth.password
+        
+        Auth.auth().createUser(withEmail: email, password: password) { (dataResults, error) in
+            if let error = error {
+                self.handleLoginError(error: error, providerSpecifications: .custom(email: email, password: password, name: userName), completion: completion)
+            } else {
+                self.authenticateUser(with: .custom(email: email, password: password, name: userName), completion: completion)
+            }
+        }
+    }
+    
     // MARK: -Google Delegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
@@ -136,28 +158,39 @@ class Authenticator: NSObject, GIDSignInDelegate {
             completion(.success(UserInformation(name: name, email: email)))
         }
     }
-    
-    private func authenticateUser(with authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
-        let credentials = authenticationMethod.credentials
+     
+    private func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
+        let credentials = providerSpecifications.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
             if let error = error {
-                self.handleLoginError(error: error, authenticationMethod: authenticationMethod, completion: completion)
+                self.handleLoginError(error: error, providerSpecifications: providerSpecifications, completion: completion)
             } else {
-                self.parseUserInformation(from: dataResults, error: error, completion: completion)
+                switch providerSpecifications {
+                case .facebook, .twitter, .google:
+                    self.parseUserInformation(from: dataResults, error: error, completion: completion)
+                case .custom(_, let email, let name):
+                    completion(.success(UserInformation(name: name, email: email)))
+                }
             }
         }
     }
     
-    private func handleLoginError(error: Error, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
+    private func handleLoginError(error: Error, providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
         let nsError = error as NSError
         if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
-            self.handleAccountExistsWithDifferentCredentials(error: nsError, authenticationMethod: authenticationMethod, completion: completion)
+            self.handleAccountExistsWithDifferentCredentials(
+                error: nsError,
+                providerSpecifications: providerSpecifications,
+                completion: completion
+            )
+        } else if nsError.code == AuthErrorCode.emailAlreadyInUse.rawValue {
+            completion(.failure(LoginError.emailAssociatedToExistingAccount))
         } else {
             completion(.failure(error))
         }
     }
     
-    private func handleAccountExistsWithDifferentCredentials(error: NSError, authenticationMethod: AuthenticationMethod, completion: @escaping UserInfoCallback) {
+    private func handleAccountExistsWithDifferentCredentials(error: NSError, providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
         guard let email = error.userInfo[AuthErrorUserInfoEmailKey] as? String else {
             completion(.failure(error))
             return
@@ -167,14 +200,14 @@ class Authenticator: NSObject, GIDSignInDelegate {
             if let error = error {
                 completion(.failure(error))
             }
-            else if let methods = signInMethod, !methods.contains(authenticationMethod.name) {
-                let previousMethod = SocialMedia.allCases.first(where: { methods.contains($0.rawValue) })
-                guard let existingMethod = previousMethod else {
+            else if let methods = signInMethod, !methods.contains(providerSpecifications.name) {
+                let previousMethod = Provider.allCases.first(where: { methods.contains($0.rawValue) })
+                guard let existingProvider = previousMethod else {
                     assertionFailure("This case will only happen: if the Firebase API changes the authentication method names or if the method that throws the error is found in the sign-in method list")
                     completion(.failure(LoginError.unrecognisedLoginMethod))
                     return
                 }
-                completion(.failure(LoginError.userPreviouslyLoggedInWith(existingMethod)))
+                completion(.failure(LoginError.userPreviouslyLoggedInWith(existingProvider)))
             }
         }
     }
@@ -184,8 +217,9 @@ enum LoginError: Error {
     case userCanceledLogin
     case noAuthCredentialsFound
     case noLoginResultsFound
-    case userPreviouslyLoggedInWith(SocialMedia)
+    case userPreviouslyLoggedInWith(Provider)
     case unrecognisedLoginMethod
+    case emailAssociatedToExistingAccount
 }
 
 private enum MissingUserInfoError: Error {
@@ -195,28 +229,46 @@ private enum MissingUserInfoError: Error {
     case noAuthenticationObjectFound
 }
 
-enum SocialMedia: String, CaseIterable {
+enum AuthenticationMethod {
+    case socialMedia(SocialMedia)
+    case custom(CustomAuthentication)
+}
+
+enum SocialMedia {
+    case facebook
+    case google
+    case twitter
+}
+
+struct CustomAuthentication {
+    let name: String
+    let email: String
+    let password: String
+}
+
+enum Provider: String, CaseIterable {
     case facebook = "facebook.com"
     case google = "google.com"
     case twitter = "twitter.com"
+    case emailAndPassword = "password"
 }
 
-private enum AuthenticationMethod {
+private enum ProviderSpecifications {
     case facebook(accessToke: String)
     case google(accessToken: String, tokenID: String)
     case twitter(credentials: AuthCredential)
-    case custom(email: String, password: String)
+    case custom(email: String, password: String, name: String)
     
     var name: String {
         switch self {
         case .facebook:
-            return SocialMedia.facebook.rawValue
+            return Provider.facebook.rawValue
         case .google:
-            return SocialMedia.google.rawValue
+            return Provider.google.rawValue
         case .twitter:
-            return SocialMedia.twitter.rawValue
+            return Provider.twitter.rawValue
         case .custom:
-            fatalError()
+            return Provider.emailAndPassword.rawValue
         }
     }
     
@@ -228,8 +280,9 @@ private enum AuthenticationMethod {
             return GoogleAuthProvider.credential(withIDToken: tokenID, accessToken: accessToken)
         case .twitter(let credentials):
             return credentials
-        case .custom:
-            fatalError()
+        case .custom(let email, let password, _):
+            return EmailAuthProvider.credential(withEmail: email, password: password)
+            
         }
     }
 }
