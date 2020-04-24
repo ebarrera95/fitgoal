@@ -20,7 +20,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
     
     private var userInfoCallback: UserInfoCallback?
     
-    var authenticationMethod: AuthenticationMethod
+    private var authenticationMethod: AuthenticationMethod
     
     private let twitterProvider = OAuthProvider(providerID: "twitter.com")
     
@@ -45,7 +45,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
         case .custom(let customAuth):
             customSignIn(customAuth: customAuth, completion: persistIfPossible(userInfoResult:))
         case .socialMedia(let socialMedia):
-            authenticateWithSocialMedia(socialMedia: socialMedia, sender: sender, completion: persistIfPossible(userInfoResult:))
+            authenticate(with: socialMedia, sender: sender, completion: persistIfPossible(userInfoResult:))
         }
     }
     
@@ -73,7 +73,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
                         completion(.failure(LoginError.noAuthCredentialsFound))
                         return
                     }
-                    self.authenticateUser(with: .facebook(accessToke: accessToken.tokenString), completion: completion)
+                    self.authenticateUser(with: .facebook(accessToken: accessToken.tokenString), completion: completion)
                 }
             }
         }
@@ -127,7 +127,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
     
     //MARK: - Helper functions
     
-    private func authenticateWithSocialMedia(socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func authenticate(with socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
         switch socialMedia {
         case .facebook:
             facebookSignIn(sender: sender, completion: completion)
@@ -209,7 +209,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
                     completion(.failure(LoginError.unrecognisedLoginMethod))
                     return
                 }
-                completion(.failure(LoginError.userPreviouslyLoggedInWith(existingProvider)))
+                completion(.failure(LoginError.userPreviouslyLoggedIn(existingProvider.rawValue)))
             }
         }
     }
@@ -219,16 +219,9 @@ enum LoginError: Error {
     case userCanceledLogin
     case noAuthCredentialsFound
     case noLoginResultsFound
-    case userPreviouslyLoggedInWith(Provider)
+    case userPreviouslyLoggedIn(String)
     case unrecognisedLoginMethod
     case emailAssociatedToExistingAccount
-}
-
-private enum MissingUserInfoError: Error {
-    case noUserFound
-    case noNameFound
-    case noEmailFound
-    case noAuthenticationObjectFound
 }
 
 enum AuthenticationMethod {
@@ -248,7 +241,14 @@ struct CustomAuthentication {
     let password: String
 }
 
-enum Provider: String, CaseIterable {
+private enum MissingUserInfoError: Error {
+    case noUserFound
+    case noNameFound
+    case noEmailFound
+    case noAuthenticationObjectFound
+}
+
+private enum Provider: String, CaseIterable {
     case facebook = "facebook.com"
     case google = "google.com"
     case twitter = "twitter.com"
@@ -256,7 +256,7 @@ enum Provider: String, CaseIterable {
 }
 
 private enum ProviderSpecifications {
-    case facebook(accessToke: String)
+    case facebook(accessToken: String)
     case google(accessToken: String, tokenID: String)
     case twitter(credentials: AuthCredential)
     case custom(email: String, password: String, name: String)

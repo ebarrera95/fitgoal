@@ -56,6 +56,8 @@ class AuthenticationViewController: UIViewController {
     init(authMethod: AuthenticationMethod) {
         self.authenticator = Authenticator(authMethod: authMethod)
         super.init(nibName: nil, bundle: nil)
+        self.modalPresentationStyle = .overCurrentContext
+        self.modalTransitionStyle = .crossDissolve
     }
     
     required init?(coder: NSCoder) {
@@ -86,9 +88,9 @@ class AuthenticationViewController: UIViewController {
         switch loginError {
         case .noAuthCredentialsFound, .noLoginResultsFound, .userCanceledLogin, .unrecognisedLoginMethod:
             self.dismiss(animated: true) { print("Unable to login, reason: \(loginError)") }
-        case .userPreviouslyLoggedInWith(let socialMedia):
-            let title = "You've previously logged in with another social media"
-            let message = "Please, log in with \(socialMedia)"
+        case .userPreviouslyLoggedIn(let provider):
+            let title = "You've previously logged in with another provider"
+            let message = "Please, log in with \(provider)"
             let style = UIAlertController.Style.alert
             showLoginErrorAlert(title: title, message: message, preferredStyle: style)
         case .emailAssociatedToExistingAccount:

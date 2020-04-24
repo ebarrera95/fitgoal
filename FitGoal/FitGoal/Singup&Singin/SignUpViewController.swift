@@ -136,10 +136,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
                 email: signUpValidator.email.userInput,
                 password: signUpValidator.password.userInput
             )
-            let vc = AuthenticationViewController(authMethod: .custom(customAuth))
-            vc.modalPresentationStyle = .overCurrentContext
-            vc.modalTransitionStyle = .crossDissolve
-            self.present(vc, animated: true)
+            self.present(AuthenticationViewController(authMethod: .custom(customAuth)), animated: true)
         } else {
             print("user input is not valid")
             return
