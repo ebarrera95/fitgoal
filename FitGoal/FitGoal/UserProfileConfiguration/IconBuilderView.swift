@@ -9,12 +9,12 @@
 import UIKit
 
 protocol IconBuilderViewDelegate: AnyObject {
-    func userDidSelectOption(selection: BodyShape)
+    func userDidSelectIcon(icon: IconBuilder)
 }
 
 class IconBuilderView: UIView {
     
-    private var icon: BodyShape
+    private var icon: IconBuilder
     
     weak var delegate: IconBuilderViewDelegate?
     
@@ -34,7 +34,6 @@ class IconBuilderView: UIView {
     
     private var backgroundView: UIView = {
         let background = UIView()
-        background.layer.masksToBounds = true
         background.layer.cornerRadius = 7
         background.layer.borderWidth = 2
         background.layer.borderColor = #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1).cgColor
@@ -42,10 +41,10 @@ class IconBuilderView: UIView {
         return background
     }()
     
-    init(icon: BodyShape) {
+    init(icon: IconBuilder) {
         self.icon = icon
         super.init(frame: .zero)
-        configureIcon(for: icon.state)
+        configureIcon(forState: icon.state)
         backgroundView.isHidden = true
         
         backgroundColor = .white
@@ -81,7 +80,7 @@ class IconBuilderView: UIView {
         changeIconState()
         switch icon.state {
         case .selected:
-            delegate?.userDidSelectOption(selection: icon)
+            delegate?.userDidSelectIcon(icon: icon)
         case .unselected:
             return
         }
@@ -91,16 +90,16 @@ class IconBuilderView: UIView {
         switch icon.state {
         case .selected:
             self.icon.state = .unselected
-            configureIcon(for: icon.state)
+            configureIcon(forState: icon.state)
             backgroundView.isHidden = true
         case .unselected:
             self.icon.state = .selected
-            configureIcon(for: icon.state)
+            configureIcon(forState: icon.state)
             backgroundView.isHidden = false
         }
     }
     
-    private func configureIcon(for state: IconState) {
+    private func configureIcon(forState state: IconState) {
         configureIndicator(in: icon.state)
         title.attributedText = configureTitle(for: icon.state, with: icon.name)
         mainImage.image = icon.image

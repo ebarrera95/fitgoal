@@ -25,8 +25,11 @@ class UserLevelViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
-        view.addSubview(gradientBackgroundView)
-        view.addSubview(bodyLevelChooserView)
+        let views = [
+            gradientBackgroundView,
+            bodyLevelChooserView
+        ]
+        view.addMultipleSubviews(views)
     }
     
     override func viewDidLayoutSubviews() {

@@ -9,27 +9,28 @@
 import Foundation
 import UIKit
 
-struct BodyShape {
+struct IconBuilder {
     
-    let shape: Shape
-    
+    let icon: Icon
     var state = IconState.unselected
     
     var name: String {
-        switch shape {
-        case .athletic, .normal, .obese, .skinny:
-            return shape.rawValue.capitalized
-        }
+        return icon.rawValue.capitalized
     }
     
     var image: UIImage {
-        let core = "BodyShape"
-        let bodyShapeImageName = shape.prefix + core + state.suffix
-        return UIImage(imageLiteralResourceName: bodyShapeImageName)
+        switch icon {
+        case .athletic, .normal, .obese, .skinny:
+            let coreName = "BodyShape"
+            let bodyShapeImageName = icon.prefix + coreName + state.suffix
+            return UIImage(imageLiteralResourceName: bodyShapeImageName)
+        case .female, .male:
+            let genderImageName = icon.prefix + state.suffix
+            return UIImage(imageLiteralResourceName: genderImageName)
+        }
     }
 
-    
-    private var isBodyShapeSelected: Bool {
+    private var isIconSelected: Bool {
         switch state {
         case .selected:
             return true
@@ -39,11 +40,13 @@ struct BodyShape {
     }
 }
 
-enum Shape: String {
+enum Icon: String {
     case skinny
     case normal
     case obese
     case athletic
+    case female
+    case male
     
     var prefix: String {
         return self.rawValue

@@ -10,10 +10,10 @@ import UIKit
 
 class BodyLevelView: UIView {
     
-    let skinnyBody = IconBuilderView(icon: BodyShape(shape: .skinny))
-    let normalBody = IconBuilderView(icon: BodyShape(shape: .normal))
-    let obeseBody = IconBuilderView(icon: BodyShape(shape: .obese))
-    let athleticBody = IconBuilderView(icon: BodyShape(shape: .athletic))
+    let skinnyBody = IconBuilderView(icon: IconBuilder(icon: .skinny))
+    let normalBody = IconBuilderView(icon: IconBuilder(icon: .normal))
+    let obeseBody = IconBuilderView(icon: IconBuilder(icon: .obese))
+    let athleticBody = IconBuilderView(icon: IconBuilder(icon: .athletic))
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,10 +34,10 @@ class BodyLevelView: UIView {
     
     // MARK: - Constraints
     private func setAxisConstraints() {
-        setAxisSkinnyBodyConstraints()
-        setAxisNormalBodyConstraints()
-        setAxisAthleticBodyConstraints()
-        setAxisObeseBodyConstraints()
+        setSkinnyBodyAxisConstraints()
+        setNormalBodyAxisConstraints()
+        setAthleticBodyAxisConstraints()
+        setObeseBodyAxisConstraints()
     }
     
     private func setDimensionConstraints(icons: [UIView]) {
@@ -49,7 +49,7 @@ class BodyLevelView: UIView {
         }
     }
     
-    private func setAxisSkinnyBodyConstraints() {
+    private func setSkinnyBodyAxisConstraints() {
         skinnyBody.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -58,7 +58,7 @@ class BodyLevelView: UIView {
         ])
     }
     
-    private func setAxisNormalBodyConstraints() {
+    private func setNormalBodyAxisConstraints() {
         normalBody.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -67,7 +67,7 @@ class BodyLevelView: UIView {
         ])
     }
     
-    private func setAxisObeseBodyConstraints() {
+    private func setObeseBodyAxisConstraints() {
         obeseBody.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -76,7 +76,7 @@ class BodyLevelView: UIView {
         ])
     }
     
-    private func setAxisAthleticBodyConstraints() {
+    private func setAthleticBodyAxisConstraints() {
         athleticBody.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
