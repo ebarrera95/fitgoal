@@ -53,7 +53,6 @@ class UserInputValidator {
                 email.state == .valid &&
                 password.state == .valid
         }
-        
     }
     
     private func validateUserName(name: String) -> UserInfoState {
