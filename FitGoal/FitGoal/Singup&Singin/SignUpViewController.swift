@@ -131,7 +131,12 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     @objc private func presentViewController() {
         if signUpValidator.isUserInputValid() {
-            print("call AuthenticationVC")
+            let customAuth = CustomAuthentication(
+                name: signUpValidator.name.userInput,
+                email: signUpValidator.email.userInput,
+                password: signUpValidator.password.userInput
+            )
+            self.present(AuthenticationViewController(authMethod: .custom(customAuth)), animated: true)
         } else {
             print("user input is not valid")
             return
