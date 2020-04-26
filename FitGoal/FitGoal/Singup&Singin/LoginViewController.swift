@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     
     private let loginForm = AuthenticationFormView(type: .login)
     
-    private let loginValidator = SignUpValidator(authenticationType: .login)
+    private let userInputValidator = UserInputValidator(authenticationType: .login)
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -138,11 +138,11 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     @objc private func presentViewController() {
-        if loginValidator.isUserInputValid() {
+        if userInputValidator.isUserInputValid() {
             let customAuth = CustomAuthentication(
-                name: loginValidator.name.userInput,
-                email: loginValidator.email.userInput,
-                password: loginValidator.password.userInput
+                name: userInputValidator.name.userInput,
+                email: userInputValidator.email.userInput,
+                password: userInputValidator.password.userInput
             )
             self.present(AuthenticationViewController(authMethod: .custom(customAuth), authenticationType: .login), animated: true)
         } else {
@@ -184,11 +184,11 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
         switch textFieldType {
         case .emailAddress:
-            loginValidator.email.userInput = input
-            passAuthMessage(from: loginValidator.email, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.email.userInput = input
+            passAuthMessage(from: userInputValidator.email, toSectionWithTextFieldType: textFieldType)
         case .password:
-            loginValidator.password.userInput = input
-            passAuthMessage(from: loginValidator.password, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.password.userInput = input
+            passAuthMessage(from: userInputValidator.password, toSectionWithTextFieldType: textFieldType)
         case .userName, .confirmPassword:
             return
         }

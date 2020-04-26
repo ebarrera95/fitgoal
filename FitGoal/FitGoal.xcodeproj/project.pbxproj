@@ -26,7 +26,7 @@
 		055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CD244EC00700ACBF5F /* UITextField+.swift */; };
 		055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CF244FDEC300ACBF5F /* TextFieldType.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
-		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
+		057E23C9244009DC004CAD01 /* UserInputValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* UserInputValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
 		058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */; };
 		05A370C42415AA33009A654E /* URL+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A370C32415AA33009A654E /* URL+.swift */; };
@@ -97,7 +97,7 @@
 		055284CD244EC00700ACBF5F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		055284CF244FDEC300ACBF5F /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
-		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
+		057E23C8244009DC004CAD01 /* UserInputValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInputValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
 		058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		05A370C32415AA33009A654E /* URL+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
@@ -192,7 +192,7 @@
 				05EB1B452424D27600E7984B /* LoginViewController.swift */,
 				0517AD5524244DD40049E48B /* GreetingViewController.swift */,
 				058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */,
-				057E23C8244009DC004CAD01 /* SignUpValidator.swift */,
+				057E23C8244009DC004CAD01 /* UserInputValidator.swift */,
 				05EB1B472424EA5900E7984B /* CustomUIViews */,
 			);
 			path = "Singup&Singin";
@@ -638,7 +638,7 @@
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
-				057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */,
+				057E23C9244009DC004CAD01 /* UserInputValidator.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

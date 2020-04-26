@@ -18,7 +18,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
-    private let signUpValidator = SignUpValidator(authenticationType: .signUp)
+    private let userInputValidator = UserInputValidator(authenticationType: .signUp)
 
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -130,11 +130,11 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     }
     
     @objc private func presentViewController() {
-        if signUpValidator.isUserInputValid() {
+        if userInputValidator.isUserInputValid() {
             let customAuth = CustomAuthentication(
-                name: signUpValidator.name.userInput,
-                email: signUpValidator.email.userInput,
-                password: signUpValidator.password.userInput
+                name: userInputValidator.name.userInput,
+                email: userInputValidator.email.userInput,
+                password: userInputValidator.password.userInput
             )
             self.present(AuthenticationViewController(authMethod: .custom(customAuth), authenticationType: .signUp), animated: true)
         } else {
@@ -176,17 +176,17 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
         switch textFieldType {
         case .userName:
-            signUpValidator.name.userInput = input
-            passAuthMessage(from: signUpValidator.name, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.name.userInput = input
+            passAuthMessage(from: userInputValidator.name, toSectionWithTextFieldType: textFieldType)
         case .emailAddress:
-            signUpValidator.email.userInput = input
-            passAuthMessage(from: signUpValidator.email, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.email.userInput = input
+            passAuthMessage(from: userInputValidator.email, toSectionWithTextFieldType: textFieldType)
         case .password:
-            signUpValidator.password.userInput = input
-            passAuthMessage(from: signUpValidator.password, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.password.userInput = input
+            passAuthMessage(from: userInputValidator.password, toSectionWithTextFieldType: textFieldType)
         case .confirmPassword:
-            signUpValidator.passwordConfirmation.userInput = input
-            passAuthMessage(from: signUpValidator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
+            userInputValidator.passwordConfirmation.userInput = input
+            passAuthMessage(from: userInputValidator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
         }
     }
     

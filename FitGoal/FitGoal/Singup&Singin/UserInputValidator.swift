@@ -8,7 +8,7 @@
 
 import Foundation
 
-class SignUpValidator {
+class UserInputValidator {
     
     var name: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
