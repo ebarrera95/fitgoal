@@ -34,12 +34,26 @@ class SignUpValidator {
         }
     }
     
+    private let authenticationType: AuthenticationType
+    
+    init(authenticationType: AuthenticationType) {
+        self.authenticationType = authenticationType
+    }
+    
     func isUserInputValid() -> Bool {
-        return
-            name.state == .valid &&
-            email.state == .valid &&
-            password.state == .valid &&
-            passwordConfirmation.state == .valid
+        switch self.authenticationType {
+        case .signUp:
+            return
+                name.state == .valid &&
+                email.state == .valid &&
+                password.state == .valid &&
+                passwordConfirmation.state == .valid
+        case .login:
+            return
+                email.state == .valid &&
+                password.state == .valid
+        }
+        
     }
     
     private func validateUserName(name: String) -> UserInfoState {

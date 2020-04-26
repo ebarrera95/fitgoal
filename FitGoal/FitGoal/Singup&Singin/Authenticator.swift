@@ -22,10 +22,13 @@ class Authenticator: NSObject, GIDSignInDelegate {
     
     private var authenticationMethod: AuthenticationMethod
     
+    private var authenticationType: AuthenticationType
+    
     private let twitterProvider = OAuthProvider(providerID: "twitter.com")
     
-    init(authMethod: AuthenticationMethod) {
+    init(authMethod: AuthenticationMethod, authenticationType: AuthenticationType) {
         self.authenticationMethod = authMethod
+        self.authenticationType = authenticationType
         super.init()
         GIDSignIn.sharedInstance()?.delegate = self
     }
@@ -98,12 +101,17 @@ class Authenticator: NSObject, GIDSignInDelegate {
         let userName = customAuth.name
         let password = customAuth.password
         
-        Auth.auth().createUser(withEmail: email, password: password) { (dataResults, error) in
-            if let error = error {
-                self.handleLoginError(error: error, providerSpecifications: .custom(email: email, password: password, name: userName), completion: completion)
-            } else {
-                self.authenticateUser(with: .custom(email: email, password: password, name: userName), completion: completion)
+        switch authenticationType {
+        case .signUp:
+            Auth.auth().createUser(withEmail: email, password: password) { (dataResults, error) in
+                if let error = error {
+                    self.handleLoginError(error: error, providerSpecifications: .custom(email: email, password: password, name: userName), completion: completion)
+                } else {
+                    self.authenticateUser(with: .custom(email: email, password: password, name: userName), completion: completion)
+                }
             }
+        case .login:
+            self.authenticateUser(with: .custom(email: email, password: password, name: userName), completion: completion)
         }
     }
     
@@ -161,7 +169,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    private func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
+    fileprivate func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
         let credentials = providerSpecifications.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
             if let error = error {

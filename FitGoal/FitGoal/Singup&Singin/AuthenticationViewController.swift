@@ -53,8 +53,8 @@ class AuthenticationViewController: UIViewController {
     
     private var viewDidAppearOnce = false
 
-    init(authMethod: AuthenticationMethod) {
-        self.authenticator = Authenticator(authMethod: authMethod)
+    init(authMethod: AuthenticationMethod, authenticationType: AuthenticationType) {
+        self.authenticator = Authenticator(authMethod: authMethod, authenticationType: authenticationType)
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .overCurrentContext
         self.modalTransitionStyle = .crossDissolve

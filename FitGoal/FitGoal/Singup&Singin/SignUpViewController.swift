@@ -18,7 +18,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
     
     private let authenticationFormView = AuthenticationFormView(type: .signUp)
     
-    private let signUpValidator = SignUpValidator()
+    private let signUpValidator = SignUpValidator(authenticationType: .signUp)
 
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -136,7 +136,7 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
                 email: signUpValidator.email.userInput,
                 password: signUpValidator.password.userInput
             )
-            self.present(AuthenticationViewController(authMethod: .custom(customAuth)), animated: true)
+            self.present(AuthenticationViewController(authMethod: .custom(customAuth), authenticationType: .signUp), animated: true)
         } else {
             print("user input is not valid")
             return
