@@ -118,10 +118,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
-        let vc = AuthenticationViewController(socialMedia: socialMedia)
-        vc.modalPresentationStyle = .overCurrentContext
-        vc.modalTransitionStyle = .crossDissolve
-        self.present(vc, animated: true)
+        self.present(AuthenticationViewController(authMethod: .socialMedia(socialMedia)), animated: true)
     }
 
     func userDidSwitchAuthenticationType() {
