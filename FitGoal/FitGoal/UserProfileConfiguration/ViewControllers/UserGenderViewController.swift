@@ -1,30 +1,30 @@
 //
-//  UserLevelViewController.swift
+//  UserGenderViewController.swift
 //  FitGoal
 //
-//  Created by Eliany Barrera on 22/4/20.
+//  Created by Eliany Barrera on 26/4/20.
 //  Copyright © 2020 Eliany Barrera. All rights reserved.
 //
 
 import UIKit
 
-class UserLevelViewController: UIViewController {
+class UserGenderViewController: UIViewController {
     
-    private var bodyLevelChooserView = BodyLevelView()
-    
+    private let genderChooserView = GenderView()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isOpaque = false
         
         let views = [
-            bodyLevelChooserView
+            genderChooserView
         ]
         view.addMultipleSubviews(views)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        bodyLevelChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        bodyLevelChooserView.center = view.center
+        genderChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 152)
+        genderChooserView.center = view.center
     }
+
 }

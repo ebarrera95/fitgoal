@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            let helloVC = GreetingViewController()
 //            window.rootViewController = helloVC
 //        }
-        let vc = UserLevelViewController()
+        let vc = UserProfilePageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: [UIPageViewController.OptionsKey.spineLocation : 3])
         window.rootViewController = vc
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
