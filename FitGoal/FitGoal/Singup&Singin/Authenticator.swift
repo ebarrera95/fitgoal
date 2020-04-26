@@ -195,6 +195,10 @@ class Authenticator: NSObject, GIDSignInDelegate {
             )
         } else if nsError.code == AuthErrorCode.emailAlreadyInUse.rawValue {
             completion(.failure(LoginError.emailAssociatedToExistingAccount))
+        } else if nsError.code == AuthErrorCode.wrongPassword.rawValue {
+            completion(.failure(LoginError.userEnterWrongPassword))
+        } else if nsError.code == AuthErrorCode.userNotFound.rawValue {
+            completion(.failure(LoginError.userNotFound))
         } else {
             completion(.failure(error))
         }
@@ -230,6 +234,8 @@ enum LoginError: Error {
     case userPreviouslyLoggedIn(String)
     case unrecognisedLoginMethod
     case emailAssociatedToExistingAccount
+    case userEnterWrongPassword
+    case userNotFound
 }
 
 enum AuthenticationMethod {

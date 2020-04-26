@@ -98,6 +98,16 @@ class AuthenticationViewController: UIViewController {
             let message = "Please login with email and password"
             let style = UIAlertController.Style.alert
             showLoginErrorAlert(title: title, message: message, preferredStyle: style)
+        case .userEnterWrongPassword:
+            let title = "Incorrect Password"
+            let message = "Please, enter the right password or reset it"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
+        case .userNotFound:
+            let title = "You don't have an account"
+            let message = "Please, sign up"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
         }
     }
     
