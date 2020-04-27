@@ -39,8 +39,9 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
     }()
     
     private lazy var userProfileViewControllers: [UIViewController] = [
-        UserLevelViewController(),
-        UserGenderViewController()
+        SelectorViewController(selectorType: .fitnessGoal),
+        SelectorViewController(selectorType: .gender),
+        SelectorViewController(selectorType: .fitnessLevel)
     ]
     
     override func viewDidLoad() {
