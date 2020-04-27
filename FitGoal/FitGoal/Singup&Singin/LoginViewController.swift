@@ -178,7 +178,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
-        self.present(AuthenticationViewController(authMethod:.socialMedia(socialMedia), authenticationType: .login), animated: true)
+        self.present(AuthenticationViewController(authMethod: .socialMedia(socialMedia), authenticationType: .login), animated: true)
     }
     
     func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
