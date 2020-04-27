@@ -8,12 +8,12 @@
 
 import UIKit
 
-class BodyLevelView: UIView {
+class FitnessLevelView: UIView {
     
-    let skinnyBody = IconBuilderView(icon: IconBuilder(icon: .skinny))
-    let normalBody = IconBuilderView(icon: IconBuilder(icon: .normal))
-    let obeseBody = IconBuilderView(icon: IconBuilder(icon: .obese))
-    let athleticBody = IconBuilderView(icon: IconBuilder(icon: .athletic))
+    let skinnyBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny))
+    let normalBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal))
+    let obeseBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese))
+    let athleticBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
     
     override init(frame: CGRect) {
         super.init(frame: frame)

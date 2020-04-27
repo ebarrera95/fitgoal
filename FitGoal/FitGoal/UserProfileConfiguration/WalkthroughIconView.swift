@@ -9,12 +9,12 @@
 import UIKit
 
 protocol IconBuilderViewDelegate: AnyObject {
-    func userDidSelectIcon(icon: IconBuilder)
+    func userDidSelectIcon(icon: WalkthroughIcon)
 }
 
-class IconBuilderView: UIView {
+class WalkthroughIconView: UIView {
     
-    private var icon: IconBuilder
+    private var icon: WalkthroughIcon
     
     weak var delegate: IconBuilderViewDelegate?
     
@@ -41,7 +41,7 @@ class IconBuilderView: UIView {
         return background
     }()
     
-    init(icon: IconBuilder) {
+    init(icon: WalkthroughIcon) {
         self.icon = icon
         super.init(frame: .zero)
         configureIcon(forState: icon.state)

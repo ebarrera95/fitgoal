@@ -9,23 +9,23 @@
 import Foundation
 import UIKit
 
-struct IconBuilder {
+struct WalkthroughIcon {
     
-    let icon: Icon
+    let iconType: WalkThroughIconType
     var state = IconState.unselected
     
     var name: String {
-        return icon.rawValue.capitalized
+        return iconType.rawValue.capitalized
     }
     
     var image: UIImage {
-        switch icon {
+        switch iconType {
         case .athletic, .normal, .obese, .skinny:
             let coreName = "BodyShape"
-            let bodyShapeImageName = icon.prefix + coreName + state.suffix
+            let bodyShapeImageName = iconType.prefix + coreName + state.suffix
             return UIImage(imageLiteralResourceName: bodyShapeImageName)
         case .female, .male:
-            let genderImageName = icon.prefix + state.suffix
+            let genderImageName = iconType.prefix + state.suffix
             return UIImage(imageLiteralResourceName: genderImageName)
         }
     }
@@ -40,7 +40,7 @@ struct IconBuilder {
     }
 }
 
-enum Icon: String {
+enum WalkThroughIconType: String {
     case skinny
     case normal
     case obese
