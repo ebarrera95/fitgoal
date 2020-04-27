@@ -118,7 +118,7 @@ class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDe
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
-        self.present(AuthenticationViewController(authMethod: .socialMedia(socialMedia)), animated: true)
+        self.present(AuthenticationViewController(authMethod: .socialMedia(socialMedia), authenticationType: .signUp), animated: true)
     }
 
     func userDidSwitchAuthenticationType() {
