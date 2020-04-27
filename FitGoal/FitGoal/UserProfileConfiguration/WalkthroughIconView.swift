@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol IconBuilderViewDelegate: AnyObject {
+protocol WalkthroughIconViewDelegate: AnyObject {
     func userDidSelectIcon(icon: WalkthroughIcon)
 }
 
@@ -16,7 +16,7 @@ class WalkthroughIconView: UIView {
     
     private var icon: WalkthroughIcon
     
-    weak var delegate: IconBuilderViewDelegate?
+    weak var delegate: WalkthroughIconViewDelegate?
     
     private var title = UILabel()
     

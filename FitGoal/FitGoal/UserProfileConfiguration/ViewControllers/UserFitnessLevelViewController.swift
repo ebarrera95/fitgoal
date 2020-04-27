@@ -8,9 +8,9 @@
 
 import UIKit
 
-class UserLevelViewController: UIViewController {
+class UserFitnessLevelViewController: UIViewController {
     
-    private var bodyLevelChooserView = FitnessLevelView()
+    private var fitnessLevelChooserView = FitnessLevelChooserView()
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
@@ -27,14 +27,14 @@ class UserLevelViewController: UIViewController {
         view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         let views = [
             gradientBackgroundView,
-            bodyLevelChooserView
+            fitnessLevelChooserView
         ]
         view.addMultipleSubviews(views)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        bodyLevelChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        bodyLevelChooserView.center = view.center
+        fitnessLevelChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
+        fitnessLevelChooserView.center = view.center
     }
 }

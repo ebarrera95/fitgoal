@@ -17,8 +17,8 @@
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
-		0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518A24502417001A72AA /* UserLevelViewController.swift */; };
-		0515518D2450614D001A72AA /* FitnessLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelView.swift */; };
+		0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */; };
+		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
@@ -93,8 +93,8 @@
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
-		0515518A24502417001A72AA /* UserLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLevelViewController.swift; sourceTree = "<group>"; };
-		0515518C2450614D001A72AA /* FitnessLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelView.swift; sourceTree = "<group>"; };
+		0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFitnessLevelViewController.swift; sourceTree = "<group>"; };
+		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
@@ -197,7 +197,7 @@
 			children = (
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
-				0515518C2450614D001A72AA /* FitnessLevelView.swift */,
+				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -206,7 +206,7 @@
 		05155189245015D0001A72AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				0515518A24502417001A72AA /* UserLevelViewController.swift */,
+				0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -637,10 +637,10 @@
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
-				0515518D2450614D001A72AA /* FitnessLevelView.swift in Sources */,
+				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
-				0515518B24502417001A72AA /* UserLevelViewController.swift in Sources */,
+				0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
