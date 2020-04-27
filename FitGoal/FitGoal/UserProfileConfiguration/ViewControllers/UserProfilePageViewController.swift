@@ -27,9 +27,6 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         return label
     }()
     
-    private var questionPrefix = UILabel()
-    private var questionSuffix = UILabel()
-    
     private let nextViewButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(imageLiteralResourceName: "next"), for: .normal)
@@ -56,25 +53,16 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         
         let views = [
             createYourProfileLabel,
-            questionSuffix,
-            questionPrefix,
             nextViewButton
         ]
         self.view.addMultipleSubviews(views)
         
         self.setViewControllers([userProfileViewControllers[0]], direction: .forward, animated: true, completion: nil)
-        if let viewController = viewControllers?.first as? UserLevelViewController {
-            self.questionPrefix.attributedText = getQuestionPrefix(text: viewController.questionPrefix)
-            self.questionSuffix.attributedText = getQuestionSuffix(text: viewController.questionSuffix)
-        }
-        
         setConstraints()
     }
     
     private func setConstraints() {
         setLabelConstraints()
-        setQuestionPrefixLabelConstraints()
-        setQuestionSuffixLabelConstraints()
         setButtonConstraints()
     }
     
@@ -91,22 +79,6 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         NSLayoutConstraint.activate([
             createYourProfileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
             createYourProfileLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 58)
-        ])
-    }
-    
-    private func setQuestionPrefixLabelConstraints() {
-        questionPrefix.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            questionPrefix.topAnchor.constraint(equalTo: self.createYourProfileLabel.bottomAnchor, constant: 40),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 58)
-        ])
-    }
-    
-    private func setQuestionSuffixLabelConstraints() {
-        questionSuffix.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            questionSuffix.topAnchor.constraint(equalTo: self.questionPrefix.bottomAnchor, constant: 16),
-            questionSuffix.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 58)
         ])
     }
     
@@ -151,24 +123,5 @@ extension UserProfilePageViewController {
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         guard let firstVC = viewControllers?.first, let firstVCIndex = userProfileViewControllers.firstIndex(of: firstVC) else { return 0 }
         return firstVCIndex
-    }
-}
-
-extension UserProfilePageViewController {
-    
-    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        if completed {
-            if let viewController = viewControllers?.first as? UserLevelViewController {
-                self.questionPrefix.attributedText = getQuestionPrefix(text: viewController.questionPrefix)
-                self.questionSuffix.attributedText = getQuestionSuffix(text: viewController.questionSuffix)
-                return
-            }
-            
-            if let viewController = viewControllers?.first as? UserGenderViewController {
-                self.questionPrefix.attributedText = getQuestionPrefix(text: viewController.questionPrefix)
-                self.questionSuffix.attributedText = getQuestionSuffix(text: viewController.questionSuffix)
-                return
-            }
-        }
     }
 }
