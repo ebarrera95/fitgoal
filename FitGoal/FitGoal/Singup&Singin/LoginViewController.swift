@@ -185,17 +185,17 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         switch textFieldType {
         case .emailAddress:
             loginValidator.email.userInput = input
-            passAuthMessage(from: loginValidator.email, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWithType: textFieldType, for: loginValidator.email.state)
         case .password:
             loginValidator.password.userInput = input
-            passAuthMessage(from: loginValidator.password, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWithType: textFieldType, for: loginValidator.password.state)
         case .userName, .confirmPassword:
             return
         }
     }
     
-    private func passAuthMessage(from userInfoField: UserInfo, toSectionWithTextFieldType textFieldType: TextFieldType) {
-        switch userInfoField.state {
+    private func showAuthenticationMessage(inSectionWithType textFieldType: TextFieldType, for state: UserInfoState) {
+        switch state {
         case .valid:
             return
         case .invalid(invalidStateInfo: let reason):

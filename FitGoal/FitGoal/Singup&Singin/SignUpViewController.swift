@@ -177,21 +177,21 @@ class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDele
         switch textFieldType {
         case .userName:
             signUpValidator.name.userInput = input
-            passAuthMessage(from: signUpValidator.name, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWith: textFieldType, for: signUpValidator.name.state)
         case .emailAddress:
             signUpValidator.email.userInput = input
-            passAuthMessage(from: signUpValidator.email, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWith: textFieldType, for: signUpValidator.email.state)
         case .password:
             signUpValidator.password.userInput = input
-            passAuthMessage(from: signUpValidator.password, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWith: textFieldType, for: signUpValidator.password.state)
         case .confirmPassword:
             signUpValidator.passwordConfirmation.userInput = input
-            passAuthMessage(from: signUpValidator.passwordConfirmation, toSectionWithTextFieldType: textFieldType)
+            showAuthenticationMessage(inSectionWith: textFieldType, for: signUpValidator.passwordConfirmation.state)
         }
     }
     
-    private func passAuthMessage(from userInfoField: UserInfo, toSectionWithTextFieldType textFieldType: TextFieldType) {
-        switch userInfoField.state {
+    private func showAuthenticationMessage(inSectionWith textFieldType: TextFieldType, for state: UserInfoState) {
+        switch state {
         case .valid:
             return
         case .invalid(invalidStateInfo: let reason):
