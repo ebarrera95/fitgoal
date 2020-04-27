@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserInputValidator {
+class SignUpValidator {
     
     var name: UserInfo = UserInfo(userInput: "", state: .valid) {
         didSet {
@@ -34,25 +34,12 @@ class UserInputValidator {
         }
     }
     
-    private let authenticationType: AuthenticationType
-    
-    init(authenticationType: AuthenticationType) {
-        self.authenticationType = authenticationType
-    }
-    
     func isUserInputValid() -> Bool {
-        switch self.authenticationType {
-        case .signUp:
-            return
-                name.state == .valid &&
-                email.state == .valid &&
-                password.state == .valid &&
-                passwordConfirmation.state == .valid
-        case .login:
-            return
-                email.state == .valid &&
-                password.state == .valid
-        }
+        return
+            name.state == .valid &&
+            email.state == .valid &&
+            password.state == .valid &&
+            passwordConfirmation.state == .valid
     }
     
     private func validateUserName(name: String) -> UserInfoState {

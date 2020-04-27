@@ -20,7 +20,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     
     private let loginForm = AuthenticationFormView(type: .login)
     
-    private let userInputValidator = UserInputValidator(authenticationType: .login)
+    private let loginValidator = LoginValidator()
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -138,11 +138,11 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     @objc private func presentViewController() {
-        if userInputValidator.isUserInputValid() {
+        if loginValidator.isUserInputValid() {
             let customAuth = CustomAuthentication(
-                name: userInputValidator.name.userInput,
-                email: userInputValidator.email.userInput,
-                password: userInputValidator.password.userInput
+                name: "",
+                email: loginValidator.email.userInput,
+                password: loginValidator.password.userInput
             )
             self.present(AuthenticationViewController(authMethod: .custom(customAuth), authenticationType: .login), animated: true)
         } else {
@@ -184,11 +184,11 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
         switch textFieldType {
         case .emailAddress:
-            userInputValidator.email.userInput = input
-            passAuthMessage(from: userInputValidator.email, toSectionWithTextFieldType: textFieldType)
+            loginValidator.email.userInput = input
+            passAuthMessage(from: loginValidator.email, toSectionWithTextFieldType: textFieldType)
         case .password:
-            userInputValidator.password.userInput = input
-            passAuthMessage(from: userInputValidator.password, toSectionWithTextFieldType: textFieldType)
+            loginValidator.password.userInput = input
+            passAuthMessage(from: loginValidator.password, toSectionWithTextFieldType: textFieldType)
         case .userName, .confirmPassword:
             return
         }
