@@ -12,6 +12,9 @@ class UserLevelViewController: UIViewController {
     
     private var bodyLevelChooserView = BodyLevelView()
     
+    let questionPrefix = "What is your current  fitness"
+    let questionSuffix = "LEVEL?"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isOpaque = false
@@ -25,6 +28,6 @@ class UserLevelViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         bodyLevelChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        bodyLevelChooserView.center = view.center
+        bodyLevelChooserView.center = CGPoint(x: view.center.x, y: view.center.y + 50)
     }
 }

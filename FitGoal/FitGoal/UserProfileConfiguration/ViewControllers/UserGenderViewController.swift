@@ -11,6 +11,10 @@ import UIKit
 class UserGenderViewController: UIViewController {
     
     private let genderChooserView = GenderView()
+    
+    let questionPrefix = "What is"
+    let questionSuffix = "YOUR GENDER?"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.isOpaque = false
@@ -24,7 +28,7 @@ class UserGenderViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         genderChooserView.frame = CGRect(x: 0, y: 0, width: 320, height: 152)
-        genderChooserView.center = view.center
+        genderChooserView.center = CGPoint(x: view.center.x, y: view.center.y - 30)
     }
 
 }
