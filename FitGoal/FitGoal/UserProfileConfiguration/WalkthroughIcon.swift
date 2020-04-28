@@ -14,7 +14,7 @@ struct WalkthroughIcon {
     let iconType: WalkThroughIconType
     var selected = false
     
-    private var suffix: String {
+    private var iconNameSuffix: String {
         if selected {
             return "Selected"
         } else {
@@ -30,10 +30,10 @@ struct WalkthroughIcon {
         switch iconType {
         case .athletic, .normal, .obese, .skinny:
             let coreName = "BodyShape"
-            let bodyShapeImageName = iconType.prefix + coreName + suffix
+            let bodyShapeImageName = iconType.prefix + coreName + iconNameSuffix
             return UIImage(imageLiteralResourceName: bodyShapeImageName)
         case .female, .male:
-            let genderImageName = iconType.prefix + suffix
+            let genderImageName = iconType.prefix + iconNameSuffix
             return UIImage(imageLiteralResourceName: genderImageName)
         }
     }

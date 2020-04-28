@@ -44,7 +44,7 @@ class WalkthroughIconView: UIView {
     init(icon: WalkthroughIcon) {
         self.icon = icon
         super.init(frame: .zero)
-        configureIcon(forState: icon.selected)
+        configureIcon(forState: icon.selected, withName: icon.name)
         backgroundView.isHidden = true
         
         backgroundColor = .white
@@ -88,23 +88,23 @@ class WalkthroughIconView: UIView {
     private func changeIconState() {
         if icon.selected {
             self.icon.selected = false
-            configureIcon(forState: icon.selected)
+            configureIcon(forState: icon.selected, withName: icon.name)
             backgroundView.isHidden = true
         } else {
             self.icon.selected = true
-            configureIcon(forState: icon.selected)
+            configureIcon(forState: icon.selected, withName: icon.name)
             backgroundView.isHidden = false
         }
     }
     
-    private func configureIcon(forState state: Bool) {
-        configureIndicator(for: icon.selected)
-        title.attributedText = configureTitle(for: icon.selected, with: icon.name)
+    private func configureIcon(forState selectedState: Bool, withName name: String) {
+        configureSelectionIndicator(for: selectedState)
+        title.attributedText = configureTitle(for: selectedState, with: name)
         mainImage.image = icon.image
     }
     
-    private func configureIndicator(for state: Bool) {
-        if state {
+    private func configureSelectionIndicator(for selectedState: Bool) {
+        if selectedState {
             indicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
         } else {
             indicator.image = UIImage(imageLiteralResourceName: "unselectedIndicator")
