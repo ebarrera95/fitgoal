@@ -44,7 +44,8 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
     private lazy var userProfileViewControllers: [UIViewController] = [
         SelectorViewController(selectorType: .gender),
         SelectorViewController(selectorType: .fitnessGoal),
-        SelectorViewController(selectorType: .fitnessLevel)
+        SelectorViewController(selectorType: .fitnessLevel),
+        SelectorViewController(selectorType: .age)
     ]
     
     private lazy var pageControl: UIPageControl = {

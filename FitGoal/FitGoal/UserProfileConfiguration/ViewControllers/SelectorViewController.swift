@@ -10,11 +10,14 @@ import UIKit
 
 class SelectorViewController: UIViewController {
     
+    private var selectorType: SelectorType
+    
     private var selectorView: UIView
     private var questionPrefix = UILabel()
     private var questionSuffix = UILabel()
     
     init(selectorType: SelectorType) {
+        self.selectorType = selectorType
         selectorView = selectorType.view
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: selectorType.prefix, suffix: selectorType.suffix)
@@ -44,7 +47,14 @@ class SelectorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
+        var viewHeight = Int()
+        switch selectorType {
+        case .age, .height, .weight:
+            viewHeight = 152
+        case .fitnessGoal, .fitnessLevel, .gender:
+            viewHeight = 320
+        }
+        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
         selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
     }
     
@@ -75,6 +85,9 @@ enum SelectorType {
     case fitnessLevel
     case fitnessGoal
     case gender
+    case age
+    case weight
+    case height
     
     var prefix: String {
         switch self {
@@ -82,8 +95,8 @@ enum SelectorType {
             return "What is"
         case .fitnessLevel:
             return "What is your current fitness"
-        case .gender:
-            return "What is your"
+        case .gender, .age, .height, .weight:
+            return "What is"
         }
     }
     
@@ -92,9 +105,15 @@ enum SelectorType {
         case .fitnessGoal:
             return "your goal".uppercased()
         case .gender:
-            return "gender".uppercased()
+            return "your gender".uppercased()
         case .fitnessLevel:
             return "level".uppercased()
+        case .age:
+            return "your age".uppercased()
+        case .weight:
+            return "your weight".uppercased()
+        case .height:
+            return "your height".uppercased()
         }
     }
     
@@ -106,6 +125,12 @@ enum SelectorType {
             return BodyLevelView()
         case .gender:
             return GenderView()
+        case .age:
+            return QuantitativeUserInfoView()
+        case .weight:
+            fatalError()
+        case .height:
+            fatalError()
         }
     }
 }
