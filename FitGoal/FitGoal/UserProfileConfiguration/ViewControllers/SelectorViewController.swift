@@ -45,7 +45,7 @@ class SelectorViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        selectorView.center = CGPoint(x: view.center.x, y: view.center.y)
+        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
     }
     
     private func setConstraints() {
@@ -56,7 +56,7 @@ class SelectorViewController: UIViewController {
     private func setQuestionPrefixLabelConstraints() {
         questionPrefix.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor, constant: -2),
+            questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
             questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
         ])
     }
@@ -68,8 +68,8 @@ class SelectorViewController: UIViewController {
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
     }
-
 }
+
 //TODO: This enum will be replaced after next PR
 enum SelectorType {
     case fitnessLevel
