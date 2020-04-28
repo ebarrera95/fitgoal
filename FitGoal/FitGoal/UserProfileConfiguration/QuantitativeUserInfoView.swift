@@ -13,6 +13,7 @@ class QuantitativeUserInfoView: UIView {
     private let textField: UITextField = {
         let texField = UITextField()
         texField.backgroundColor = .red
+        texField.layer.masksToBounds = true
         return texField
     }()
     
@@ -52,12 +53,13 @@ class QuantitativeUserInfoView: UIView {
         NSLayoutConstraint.activate([
             textField.bottomAnchor.constraint(equalTo: bottomAnchor),
             textField.widthAnchor.constraint(equalTo: widthAnchor),
-            textField.heightAnchor.constraint(equalTo: heightAnchor, constant: -60)
+            textField.heightAnchor.constraint(equalToConstant: 90)
         ])
     }
     
     private func setUnitSelectorConstraints() {
         dropDown.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             dropDown.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             dropDown.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
