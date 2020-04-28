@@ -22,14 +22,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.windowScene = windowScene
         self.window = window
         window.makeKeyAndVisible()
-        let appPreferences = AppPreferences()
-        if appPreferences.loggedInUser != nil {
-            let homeVC = HomeViewController(persistance: CoreDataPersistance())
-            window.rootViewController = homeVC
-        } else {
-            let helloVC = GreetingViewController()
-            window.rootViewController = helloVC
-        }
+//        let appPreferences = AppPreferences()
+//        if appPreferences.loggedInUser != nil {
+//            let homeVC = HomeViewController(persistance: CoreDataPersistance())
+//            window.rootViewController = homeVC
+//        } else {
+//            let helloVC = GreetingViewController()
+//            window.rootViewController = helloVC
+//        }
+        let vc = UserFitnessLevelViewController()
+        window.rootViewController = vc
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let openURLContext = URLContexts.first {

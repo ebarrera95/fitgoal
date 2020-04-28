@@ -15,6 +15,10 @@
 		050507ED24315B3800CE58BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 050507EC24315B3800CE58BC /* GoogleService-Info.plist */; };
 		050507F52431C54400CE58BC /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserInformation.swift */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
+		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
+		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
+		0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */; };
+		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
@@ -87,6 +91,10 @@
 		050507EC24315B3800CE58BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		050507F42431C54400CE58BC /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
+		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
+		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
+		0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFitnessLevelViewController.swift; sourceTree = "<group>"; };
+		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
@@ -182,6 +190,25 @@
 				05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */,
 			);
 			path = fonts;
+			sourceTree = "<group>";
+		};
+		0515518824501594001A72AA /* UserProfileConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				0515518324501266001A72AA /* WalkthroughIcon.swift */,
+				0515518224501266001A72AA /* WalkthroughIconView.swift */,
+				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
+				05155189245015D0001A72AA /* ViewControllers */,
+			);
+			path = UserProfileConfiguration;
+			sourceTree = "<group>";
+		};
+		05155189245015D0001A72AA /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				0515518A24502417001A72AA /* UserFitnessLevelViewController.swift */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		0517AD52242442F20049E48B /* Singup&Singin */ = {
@@ -340,6 +367,7 @@
 				F14233B8240CF77F000E8873 /* Info.plist */,
 				F14233AA240CF77D000E8873 /* AppDelegate.swift */,
 				F14233AC240CF77D000E8873 /* SceneDelegate.swift */,
+				0515518824501594001A72AA /* UserProfileConfiguration */,
 				056A49BE241F2A6300707791 /* SupportFiles */,
 				0517AD52242442F20049E48B /* Singup&Singin */,
 				056A49B7241F287A00707791 /* CoreData */,
@@ -609,8 +637,10 @@
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
+				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
+				0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
@@ -639,6 +669,8 @@
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
+				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
+				0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
