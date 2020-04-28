@@ -98,12 +98,12 @@ class WalkthroughIconView: UIView {
     }
     
     private func configureIcon(forState state: Bool) {
-        configureIndicator(in: icon.selected)
+        configureIndicator(for: icon.selected)
         title.attributedText = configureTitle(for: icon.selected, with: icon.name)
         mainImage.image = icon.image
     }
     
-    private func configureIndicator(in state: Bool){
+    private func configureIndicator(for state: Bool) {
         if state {
             indicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
         } else {
