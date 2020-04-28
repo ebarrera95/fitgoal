@@ -20,19 +20,19 @@ class WalkthroughIconView: UIView {
     
     private var title = UILabel()
     
-    private var indicator: UIImageView = {
+    private let indicator: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    private var mainImage: UIImageView = {
+    private let mainImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
-    private var backgroundView: UIView = {
+    private let backgroundView: UIView = {
         let background = UIView()
         background.layer.cornerRadius = 7
         background.layer.borderWidth = 2
@@ -44,7 +44,7 @@ class WalkthroughIconView: UIView {
     init(icon: WalkthroughIcon) {
         self.icon = icon
         super.init(frame: .zero)
-        configureIcon(forState: icon.state)
+        configureIcon(forState: icon.selected)
         backgroundView.isHidden = true
         
         backgroundColor = .white
@@ -78,53 +78,50 @@ class WalkthroughIconView: UIView {
     
     @objc private func handleTap() {
         changeIconState()
-        switch icon.state {
-        case .selected:
+        if icon.selected {
             delegate?.userDidSelectIcon(icon: icon)
-        case .unselected:
+        } else {
             return
         }
     }
     
     private func changeIconState() {
-        switch icon.state {
-        case .selected:
-            self.icon.state = .unselected
-            configureIcon(forState: icon.state)
+        if icon.selected {
+            self.icon.selected = false
+            configureIcon(forState: icon.selected)
             backgroundView.isHidden = true
-        case .unselected:
-            self.icon.state = .selected
-            configureIcon(forState: icon.state)
+        } else {
+            self.icon.selected = true
+            configureIcon(forState: icon.selected)
             backgroundView.isHidden = false
         }
     }
     
-    private func configureIcon(forState state: IconState) {
-        configureIndicator(in: icon.state)
-        title.attributedText = configureTitle(for: icon.state, with: icon.name)
+    private func configureIcon(forState state: Bool) {
+        configureIndicator(in: icon.selected)
+        title.attributedText = configureTitle(for: icon.selected, with: icon.name)
         mainImage.image = icon.image
     }
     
-    private func configureIndicator(in state: IconState){
-        switch state {
-        case .selected:
+    private func configureIndicator(in state: Bool){
+        if state {
             indicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
-        case .unselected:
+        } else {
             indicator.image = UIImage(imageLiteralResourceName: "unselectedIndicator")
         }
     }
     
-    private func configureTitle(for state: IconState, with iconName: String) -> NSAttributedString {
+    private func configureTitle(for state: Bool, with iconName: String) -> NSAttributedString {
         var attributedString = NSAttributedString()
-        switch state {
-        case .selected:
+        
+        if icon.selected {
             attributedString = iconName.formattedText(
                 font: "Roboto-Bold",
                 size: 15,
                 color: UIColor(red: 0.24, green: 0.78, blue: 0.9, alpha: 1),
                 kern: 0.3
             )
-        case .unselected:
+        } else {
             attributedString = iconName.formattedText(
                 font: "Roboto-Light",
                 size: 15,

@@ -12,7 +12,15 @@ import UIKit
 struct WalkthroughIcon {
     
     let iconType: WalkThroughIconType
-    var state = IconState.unselected
+    var selected = false
+    
+    private var suffix: String {
+        if selected {
+            return "Selected"
+        } else {
+            return "Unselected"
+        }
+    }
     
     var name: String {
         return iconType.rawValue.capitalized
@@ -22,20 +30,11 @@ struct WalkthroughIcon {
         switch iconType {
         case .athletic, .normal, .obese, .skinny:
             let coreName = "BodyShape"
-            let bodyShapeImageName = iconType.prefix + coreName + state.suffix
+            let bodyShapeImageName = iconType.prefix + coreName + suffix
             return UIImage(imageLiteralResourceName: bodyShapeImageName)
         case .female, .male:
-            let genderImageName = iconType.prefix + state.suffix
+            let genderImageName = iconType.prefix + suffix
             return UIImage(imageLiteralResourceName: genderImageName)
-        }
-    }
-
-    private var isIconSelected: Bool {
-        switch state {
-        case .selected:
-            return true
-        case .unselected:
-            return false
         }
     }
 }
@@ -50,14 +49,5 @@ enum WalkThroughIconType: String {
     
     var prefix: String {
         return self.rawValue
-    }
-}
-
-enum IconState: String {
-    case selected
-    case unselected
-    
-    var suffix: String {
-        return self.rawValue.capitalized
     }
 }
