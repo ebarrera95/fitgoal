@@ -10,15 +10,11 @@ import UIKit
 
 class SelectorViewController: UIViewController {
     
-    private let selectorType: SelectorType
-    
     private var selectorView: UIView
-    
     private var questionPrefix = UILabel()
     private var questionSuffix = UILabel()
     
     init(selectorType: SelectorType) {
-        self.selectorType = selectorType
         selectorView = selectorType.view
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: selectorType.prefix, suffix: selectorType.suffix)
@@ -49,7 +45,7 @@ class SelectorViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 50)
+        selectorView.center = CGPoint(x: view.center.x, y: view.center.y)
     }
     
     private func setConstraints() {
@@ -61,7 +57,7 @@ class SelectorViewController: UIViewController {
         questionPrefix.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor, constant: -2),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 58)
+            questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
         ])
     }
     
@@ -69,7 +65,7 @@ class SelectorViewController: UIViewController {
         questionSuffix.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
-            questionSuffix.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 58)
+            questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
     }
 
@@ -83,9 +79,9 @@ enum SelectorType {
     var prefix: String {
         switch self {
         case .fitnessGoal:
-            return "What is your fitness"
+            return "What is"
         case .fitnessLevel:
-            return "What is your fitness"
+            return "What is your current fitness"
         case .gender:
             return "What is your"
         }
@@ -94,7 +90,7 @@ enum SelectorType {
     var suffix: String {
         switch self {
         case .fitnessGoal:
-            return "goal".uppercased()
+            return "your goal".uppercased()
         case .gender:
             return "gender".uppercased()
         case .fitnessLevel:
