@@ -41,11 +41,28 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    private lazy var walkthroughViewControllers: [UIViewController] = [
-        UserProfileConfiguratorViewController(configuratorType: .gender),
-        UserProfileConfiguratorViewController(configuratorType: .fitnessGoal),
-        UserProfileConfiguratorViewController(configuratorType: .fitnessLevel)
-    ]
+    
+    private var walkthroughViewControllers: [UIViewController] = {
+        let gender = UserProfileConfiguratorViewController(
+            selectorView: GenderView(),
+            questionPrefix: "What is",
+            questionSuffix: "your gender".uppercased()
+        )
+        
+        let fitnessLevel = UserProfileConfiguratorViewController(
+            selectorView: FitnessLevelChooserView(),
+            questionPrefix: "What is your current fitness",
+            questionSuffix: "level".uppercased()
+        )
+        
+        let fitnessGoal = UserProfileConfiguratorViewController(
+            selectorView: FitnessLevelChooserView(),
+            questionPrefix: "What is",
+            questionSuffix: "your goal".uppercased()
+        )
+        
+        return [gender, fitnessLevel, fitnessGoal]
+    }()
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
@@ -125,18 +142,14 @@ extension WalkthroughPageViewController {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = walkthroughViewControllers.firstIndex(of: viewController) else { return nil }
-        if currentIndex == 0 {
-            return nil
-        }
+        guard !(currentIndex == 0) else { return nil }
         let previousIndex = currentIndex - 1
         return walkthroughViewControllers[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = walkthroughViewControllers.firstIndex(of: viewController) else { return nil }
-        if currentIndex == walkthroughViewControllers.count - 1 {
-            return nil
-        }
+        guard !(currentIndex == walkthroughViewControllers.count - 1) else { return nil }
         let nextIndex = currentIndex + 1
         return walkthroughViewControllers[nextIndex]
     }

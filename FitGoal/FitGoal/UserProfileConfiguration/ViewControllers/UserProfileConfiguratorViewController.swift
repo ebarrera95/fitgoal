@@ -10,17 +10,17 @@ import UIKit
 
 class UserProfileConfiguratorViewController: UIViewController {
     
-    private var configuratorType: UserProfileConfiguratorType
+    private let selectorView: UIView
+    private var selectorViewHeight: CGFloat?
     
-    private var selectorView: UIView
-    private var questionPrefix = UILabel()
-    private var questionSuffix = UILabel()
-    
-    init(configuratorType: UserProfileConfiguratorType) {
-        self.configuratorType = configuratorType
-        selectorView = configuratorType.view
+    private let questionPrefix = UILabel()
+    private let questionSuffix = UILabel()
+
+    init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
+        self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
-        configureQuestions(prefix: configuratorType.prefix, suffix: configuratorType.suffix)
+        self.selectorViewHeight = calculateViewHeight(for: self.selectorView)
+        configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +34,6 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.isOpaque = false
         
         let views = [
             selectorView,
@@ -48,20 +47,22 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let viewHeight = setHeight(forView: selectorView)
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
+        guard let height = selectorViewHeight else {
+            assertionFailure("SelectorView is incorrect")
+            return
+        }
+        
+        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: height)
         selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
     }
     
-    private func setHeight(forView view: UIView) -> CGFloat {
-        let viewHeight: CGFloat
-        switch configuratorType {
-        case .age, .height, .weight:
-            viewHeight = 152
-        case .fitnessGoal, .fitnessLevel, .gender:
-            viewHeight = 320
+    private func calculateViewHeight(for view: UIView) -> CGFloat? {
+        if view is FitnessLevelChooserView {
+            return 320
+        } else if view is GenderView {
+            return 320
         }
-        return viewHeight
+        return nil
     }
     
     //MARK: -Constraints
@@ -86,53 +87,5 @@ class UserProfileConfiguratorViewController: UIViewController {
             questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
-    }
-}
-
-enum UserProfileConfiguratorType {
-    case fitnessLevel
-    case fitnessGoal
-    case gender
-    case age
-    case weight
-    case height
-    
-    var prefix: String {
-        switch self {
-        case .fitnessGoal:
-            return "What is"
-        case .fitnessLevel:
-            return "What is your current fitness"
-        case .gender, .age, .height, .weight:
-            return "What is"
-        }
-    }
-    
-    var suffix: String {
-        var suffix = String()
-        switch self {
-        case .fitnessGoal:
-            suffix = "your goal"
-        case .gender:
-            suffix = "your gender"
-        case .fitnessLevel:
-            suffix = "level"
-        default:
-            fatalError()
-        }
-        return suffix.uppercased()
-    }
-    
-    var view: UIView {
-        switch self {
-        case .fitnessGoal:
-            return FitnessLevelChooserView()
-        case .fitnessLevel:
-            return FitnessLevelChooserView()
-        case .gender:
-            return GenderView()
-        default:
-            fatalError()
-        }
     }
 }
