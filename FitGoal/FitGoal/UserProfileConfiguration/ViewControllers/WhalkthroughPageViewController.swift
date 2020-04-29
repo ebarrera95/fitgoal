@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserProfilePageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
+class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     private var pendingIndex = Int()
     private var currentIndex = Int()
@@ -41,15 +41,15 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    private lazy var userProfileViewControllers: [UIViewController] = [
-        SelectorViewController(selectorType: .gender),
-        SelectorViewController(selectorType: .fitnessGoal),
-        SelectorViewController(selectorType: .fitnessLevel)
+    private lazy var walkthroughViewControllers: [UIViewController] = [
+        UserProfileConfiguratorViewController(configuratorType: .gender),
+        UserProfileConfiguratorViewController(configuratorType: .fitnessGoal),
+        UserProfileConfiguratorViewController(configuratorType: .fitnessLevel)
     ]
     
     private lazy var pageControl: UIPageControl = {
         let pageControl = UIPageControl()
-        pageControl.numberOfPages = userProfileViewControllers.count
+        pageControl.numberOfPages = walkthroughViewControllers.count
         pageControl.currentPage = currentIndex
         pageControl.pageIndicatorTintColor = .white
         pageControl.currentPageIndicatorTintColor = #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1)
@@ -71,17 +71,17 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         ]
         self.view.addMultipleSubviews(views)
         
-        self.setViewControllers([userProfileViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+        self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
         setConstraints()
         
         nextViewButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
     }
     
     @objc private func nextViewController() {
-        if currentIndex + 1 < userProfileViewControllers.count {
+        if (currentIndex + 1) < walkthroughViewControllers.count {
             currentIndex += 1
             pageControl.currentPage = currentIndex
-            self.setViewControllers([userProfileViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+            self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
         }
     }
     
@@ -91,14 +91,6 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
         setPageControlConstraints()
     }
     
-    private func getQuestionPrefix(text: String) -> NSAttributedString {
-        return text.formattedText(font: "Roboto-Light", size: 19, color: .white, kern: 0.23)
-    }
-    
-    private func getQuestionSuffix(text: String) -> NSAttributedString {
-        return text.formattedText(font: "Oswald-Medium", size: 49, color: .white, kern: 0.59)
-    }
- 
     private func setLabelConstraints() {
         createYourProfileLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -124,33 +116,32 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
             pageControl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
             pageControl.topAnchor.constraint(equalTo: createYourProfileLabel.topAnchor)
         ])
-        
     }
 }
 
-extension UserProfilePageViewController {
+extension WalkthroughPageViewController {
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = userProfileViewControllers.firstIndex(of: viewController) else { return nil }
+        guard let currentIndex = walkthroughViewControllers.firstIndex(of: viewController) else { return nil }
         if currentIndex == 0 {
             return nil
         }
         let previousIndex = currentIndex - 1
-        return userProfileViewControllers[previousIndex]
+        return walkthroughViewControllers[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let currentIndex = userProfileViewControllers.firstIndex(of: viewController) else { return nil }
-        if currentIndex == userProfileViewControllers.count - 1 {
+        guard let currentIndex = walkthroughViewControllers.firstIndex(of: viewController) else { return nil }
+        if currentIndex == walkthroughViewControllers.count - 1 {
             return nil
         }
         let nextIndex = currentIndex + 1
-        return userProfileViewControllers[nextIndex]
+        return walkthroughViewControllers[nextIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         guard let vc = pendingViewControllers.first else { return }
-        guard let index = userProfileViewControllers.firstIndex(of: vc) else { return }
+        guard let index = walkthroughViewControllers.firstIndex(of: vc) else { return }
         pendingIndex = index
     }
     

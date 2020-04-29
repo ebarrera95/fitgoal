@@ -8,19 +8,19 @@
 
 import UIKit
 
-class SelectorViewController: UIViewController {
+class UserProfileConfiguratorViewController: UIViewController {
     
-    private var selectorType: SelectorType
+    private var configuratorType: UserProfileConfiguratorType
     
     private var selectorView: UIView
     private var questionPrefix = UILabel()
     private var questionSuffix = UILabel()
     
-    init(selectorType: SelectorType) {
-        self.selectorType = selectorType
-        selectorView = selectorType.view
+    init(configuratorType: UserProfileConfiguratorType) {
+        self.configuratorType = configuratorType
+        selectorView = configuratorType.view
         super.init(nibName: nil, bundle: nil)
-        configureQuestions(prefix: selectorType.prefix, suffix: selectorType.suffix)
+        configureQuestions(prefix: configuratorType.prefix, suffix: configuratorType.suffix)
     }
     
     required init?(coder: NSCoder) {
@@ -41,6 +41,7 @@ class SelectorViewController: UIViewController {
             questionPrefix,
             questionSuffix
         ]
+        
         view.addMultipleSubviews(views)
         setConstraints()
     }
@@ -48,12 +49,13 @@ class SelectorViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         var viewHeight = Int()
-        switch selectorType {
+        switch configuratorType {
         case .age, .height, .weight:
             viewHeight = 152
         case .fitnessGoal, .fitnessLevel, .gender:
             viewHeight = 320
         }
+        
         selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
         selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
     }
@@ -65,6 +67,7 @@ class SelectorViewController: UIViewController {
     
     private func setQuestionPrefixLabelConstraints() {
         questionPrefix.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
             questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
@@ -73,6 +76,7 @@ class SelectorViewController: UIViewController {
     
     private func setQuestionSuffixLabelConstraints() {
         questionSuffix.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
@@ -80,7 +84,7 @@ class SelectorViewController: UIViewController {
     }
 }
 
-enum SelectorType {
+enum UserProfileConfiguratorType {
     case fitnessLevel
     case fitnessGoal
     case gender

@@ -26,6 +26,13 @@ class GenderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: -Contraints
+    
+    private func setAxisConstraints() {
+        setFemaleAxisConstraints()
+        setMaleAxisConstraints()
+    }
+    
     private func setDimensionConstraints(icons: [UIView]) {
         icons.forEach { (view) in
             NSLayoutConstraint.activate([
@@ -33,12 +40,6 @@ class GenderView: UIView {
                 view.widthAnchor.constraint(equalToConstant: 152)
             ])
         }
-    }
-    // MARK: -Contraints
-    
-    private func setAxisConstraints() {
-        setFemaleAxisConstraints()
-        setMaleAxisConstraints()
     }
     
     private func setFemaleAxisConstraints() {
@@ -59,5 +60,3 @@ class GenderView: UIView {
         ])
     }
 }
-
-
