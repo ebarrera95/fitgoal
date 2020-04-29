@@ -120,9 +120,9 @@ enum SelectorType {
     var view: UIView {
         switch self {
         case .fitnessGoal:
-            return BodyLevelView()
+            return FitnessLevelChooserView()
         case .fitnessLevel:
-            return BodyLevelView()
+            return FitnessLevelChooserView()
         case .gender:
             return GenderView()
         case .age:

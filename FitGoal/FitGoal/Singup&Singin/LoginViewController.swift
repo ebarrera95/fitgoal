@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
+class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate, AuthenticationFormViewDelegate {
     
     private let backgroundView = BackgroundView()
     
@@ -19,6 +19,8 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     private let socialMediaAuthenticationView = SocialMediaAuthenticationView()
     
     private let loginForm = AuthenticationFormView(type: .login)
+    
+    private let loginValidator = LoginValidator()
     
     private let mainLabel: UILabel = {
         let label = UILabel()
@@ -71,6 +73,7 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
         
         authenticationSwitcherView.delegate = self
         socialMediaAuthenticationView.delegate = self
+        loginForm.delegate = self
 
         loginButton.addTarget(self, action: #selector(presentViewController), for: .touchUpInside)
         
@@ -135,10 +138,17 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     @objc private func presentViewController() {
-        let vc = HomeViewController(persistance: CoreDataPersistance())
-        vc.modalPresentationStyle = .fullScreen
-        vc.modalTransitionStyle = .crossDissolve
-        show(vc, sender: self)
+        if loginValidator.isUserInputValid() {
+            let customAuth = CustomAuthentication(
+                name: "",
+                email: loginValidator.email.userInput,
+                password: loginValidator.password.userInput
+            )
+            self.present(AuthenticationViewController(authMethod: .custom(customAuth), authenticationType: .login), animated: true)
+        } else {
+            print("user input is not valid")
+            return
+        }
     }
     
     @objc private func keyboardWillShow(notification: NSNotification) {
@@ -168,7 +178,29 @@ class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDeleg
     }
     
     func userWillLogin(with socialMedia: SocialMedia) {
-        self.present(AuthenticationViewController(authMethod:.socialMedia(socialMedia)), animated: true)
+        self.present(AuthenticationViewController(authMethod: .socialMedia(socialMedia), authenticationType: .login), animated: true)
+    }
+    
+    func userDidEndEditingSection(withTextFieldType textFieldType: TextFieldType, input: String) {
+        switch textFieldType {
+        case .emailAddress:
+            loginValidator.email.userInput = input
+            showAuthenticationMessage(inSectionWithType: textFieldType, for: loginValidator.email.state)
+        case .password:
+            loginValidator.password.userInput = input
+            showAuthenticationMessage(inSectionWithType: textFieldType, for: loginValidator.password.state)
+        case .userName, .confirmPassword:
+            return
+        }
+    }
+    
+    private func showAuthenticationMessage(inSectionWithType textFieldType: TextFieldType, for state: UserInfoState) {
+        switch state {
+        case .valid:
+            return
+        case .invalid(invalidStateInfo: let reason):
+            loginForm.showAuthenticationMessage(message: reason.message, inSectionWithTextFieldType: textFieldType)
+        }
     }
     
     //MARK: -Constraints

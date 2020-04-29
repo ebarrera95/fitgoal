@@ -16,9 +16,9 @@
 		050507F52431C54400CE58BC /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserInformation.swift */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		05133A562457D21A0008DFA5 /* QuantitativeUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */; };
-		0515518524501266001A72AA /* IconBuilderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* IconBuilderView.swift */; };
-		0515518624501266001A72AA /* IconBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* IconBuilder.swift */; };
-		0515518D2450614D001A72AA /* BodyLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* BodyLevelView.swift */; };
+		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
+		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
+		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
@@ -32,6 +32,7 @@
 		054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8AA2434602C008B2B4F /* AppPreferences.swift */; };
 		055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CD244EC00700ACBF5F /* UITextField+.swift */; };
 		055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CF244FDEC300ACBF5F /* TextFieldType.swift */; };
+		055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F18252456AD14004A49C5 /* LoginValidator.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
 		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
@@ -94,9 +95,9 @@
 		050507F42431C54400CE58BC /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitativeUserInfoView.swift; sourceTree = "<group>"; };
-		0515518224501266001A72AA /* IconBuilderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconBuilderView.swift; sourceTree = "<group>"; };
-		0515518324501266001A72AA /* IconBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconBuilder.swift; sourceTree = "<group>"; };
-		0515518C2450614D001A72AA /* BodyLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLevelView.swift; sourceTree = "<group>"; };
+		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
+		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
+		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +111,7 @@
 		054DC8AA2434602C008B2B4F /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		055284CD244EC00700ACBF5F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
 		055284CF244FDEC300ACBF5F /* TextFieldType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldType.swift; sourceTree = "<group>"; };
+		055F18252456AD14004A49C5 /* LoginValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidator.swift; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
@@ -199,11 +201,11 @@
 		0515518824501594001A72AA /* UserProfileConfiguration */ = {
 			isa = PBXGroup;
 			children = (
-				0515518324501266001A72AA /* IconBuilder.swift */,
-				0515518224501266001A72AA /* IconBuilderView.swift */,
-				0515518C2450614D001A72AA /* BodyLevelView.swift */,
 				053E78A9245556EC00A8CF37 /* GenderView.swift */,
 				05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */,
+				0515518324501266001A72AA /* WalkthroughIcon.swift */,
+				0515518224501266001A72AA /* WalkthroughIconView.swift */,
+				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -229,6 +231,7 @@
 				0517AD5524244DD40049E48B /* GreetingViewController.swift */,
 				058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */,
 				057E23C8244009DC004CAD01 /* SignUpValidator.swift */,
+				055F18252456AD14004A49C5 /* LoginValidator.swift */,
 				05EB1B472424EA5900E7984B /* CustomUIViews */,
 			);
 			path = "Singup&Singin";
@@ -643,15 +646,17 @@
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
-				0515518D2450614D001A72AA /* BodyLevelView.swift in Sources */,
+				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
+				0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
 				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
+				055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
 				05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */,
 				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
@@ -676,8 +681,8 @@
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
-				0515518624501266001A72AA /* IconBuilder.swift in Sources */,
-				0515518524501266001A72AA /* IconBuilderView.swift in Sources */,
+				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
+				0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,

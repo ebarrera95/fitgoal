@@ -53,8 +53,8 @@ class AuthenticationViewController: UIViewController {
     
     private var viewDidAppearOnce = false
 
-    init(authMethod: AuthenticationMethod) {
-        self.authenticator = Authenticator(authMethod: authMethod)
+    init(authMethod: AuthenticationMethod, authenticationType: AuthenticationType) {
+        self.authenticator = Authenticator(authMethod: authMethod, authenticationType: authenticationType)
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = .overCurrentContext
         self.modalTransitionStyle = .crossDissolve
@@ -96,6 +96,16 @@ class AuthenticationViewController: UIViewController {
         case .emailAssociatedToExistingAccount:
             let title = "You already have an account"
             let message = "Please login with email and password"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
+        case .userEnterWrongPassword:
+            let title = "Incorrect Password"
+            let message = "Please, enter the right password or reset it"
+            let style = UIAlertController.Style.alert
+            showLoginErrorAlert(title: title, message: message, preferredStyle: style)
+        case .userNotFound:
+            let title = "You don't have an account"
+            let message = "Please, sign up"
             let style = UIAlertController.Style.alert
             showLoginErrorAlert(title: title, message: message, preferredStyle: style)
         }
