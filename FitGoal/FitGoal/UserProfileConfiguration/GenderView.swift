@@ -27,7 +27,6 @@ class GenderView: UIView {
     }
     
     // MARK: -Contraints
-    
     private func setAxisConstraints() {
         setFemaleAxisConstraints()
         setMaleAxisConstraints()

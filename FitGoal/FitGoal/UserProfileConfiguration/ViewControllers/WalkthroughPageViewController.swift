@@ -93,6 +93,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private func setLabelConstraints() {
         createYourProfileLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             createYourProfileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
             createYourProfileLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50)
@@ -101,6 +102,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private func setButtonConstraints() {
         nextViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             nextViewControllerButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30),
             nextViewControllerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
