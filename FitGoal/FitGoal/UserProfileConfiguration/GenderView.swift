@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 
 class GenderView: UIView {
-    let female = IconBuilderView(icon: .init(icon: .female))
-    let male = IconBuilderView(icon: .init(icon: .male))
+    let female = WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
+    let male = WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)) 
     
     override init(frame: CGRect) {
         super.init(frame: frame)
