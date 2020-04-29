@@ -108,14 +108,10 @@ enum SelectorType {
             suffix = "your gender"
         case .fitnessLevel:
             suffix = "level"
-        case .age:
-            suffix = "your age"
-        case .weight:
-            suffix = "your weight"
-        case .height:
-            suffix = "your height"
+        default:
+            fatalError()
         }
-        return suffix
+        return suffix.uppercased()
     }
     
     var view: UIView {
@@ -126,11 +122,7 @@ enum SelectorType {
             return FitnessLevelChooserView()
         case .gender:
             return GenderView()
-        case .age:
-            return QuantitativeUserInfoView()
-        case .weight:
-            fatalError()
-        case .height:
+        default:
             fatalError()
         }
     }

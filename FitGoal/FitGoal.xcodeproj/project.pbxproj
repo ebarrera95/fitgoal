@@ -15,7 +15,6 @@
 		050507ED24315B3800CE58BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 050507EC24315B3800CE58BC /* GoogleService-Info.plist */; };
 		050507F52431C54400CE58BC /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserInformation.swift */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
-		05133A562457D21A0008DFA5 /* QuantitativeUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
 		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
@@ -94,7 +93,6 @@
 		050507EC24315B3800CE58BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		050507F42431C54400CE58BC /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
-		05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuantitativeUserInfoView.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
 		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
@@ -202,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				053E78A9245556EC00A8CF37 /* GenderView.swift */,
-				05133A552457D21A0008DFA5 /* QuantitativeUserInfoView.swift */,
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
 				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
@@ -649,7 +646,6 @@
 				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
-				0515518B24502417001A72AA /* UserFitnessLevelViewController.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
@@ -688,7 +684,6 @@
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
-				05133A562457D21A0008DFA5 /* QuantitativeUserInfoView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
