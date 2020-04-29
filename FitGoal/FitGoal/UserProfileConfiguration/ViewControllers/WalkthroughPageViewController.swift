@@ -41,7 +41,6 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    
     private var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
             selectorView: GenderView(),
@@ -86,6 +85,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             nextViewControllerButton,
             pageControl
         ]
+        
         self.view.addMultipleSubviews(views)
         
         self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
