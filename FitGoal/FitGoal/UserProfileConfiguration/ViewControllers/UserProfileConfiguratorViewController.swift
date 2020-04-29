@@ -48,18 +48,23 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        var viewHeight = Int()
+        let viewHeight = setHeight(forView: selectorView)
+        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
+        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+    }
+    
+    private func setHeight(forView view: UIView) -> CGFloat {
+        let viewHeight: CGFloat
         switch configuratorType {
         case .age, .height, .weight:
             viewHeight = 152
         case .fitnessGoal, .fitnessLevel, .gender:
             viewHeight = 320
         }
-        
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
-        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+        return viewHeight
     }
     
+    //MARK: -Constraints
     private func setConstraints() {
         setQuestionPrefixLabelConstraints()
         setQuestionSuffixLabelConstraints()

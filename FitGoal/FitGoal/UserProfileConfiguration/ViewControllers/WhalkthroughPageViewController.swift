@@ -30,7 +30,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return label
     }()
     
-    private let nextViewButton: UIButton = {
+    private let nextViewControllerButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(imageLiteralResourceName: "next"), for: .normal)
         button.contentMode = .scaleAspectFit
@@ -66,7 +66,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         
         let views = [
             createYourProfileLabel,
-            nextViewButton,
+            nextViewControllerButton,
             pageControl
         ]
         self.view.addMultipleSubviews(views)
@@ -74,7 +74,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
         setConstraints()
         
-        nextViewButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
+        nextViewControllerButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
     }
     
     @objc private func nextViewController() {
@@ -100,12 +100,12 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func setButtonConstraints() {
-        nextViewButton.translatesAutoresizingMaskIntoConstraints = false
+        nextViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            nextViewButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30),
-            nextViewButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
-            nextViewButton.heightAnchor.constraint(equalToConstant: 72),
-            nextViewButton.widthAnchor.constraint(equalToConstant: 72)
+            nextViewControllerButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30),
+            nextViewControllerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
+            nextViewControllerButton.heightAnchor.constraint(equalToConstant: 72),
+            nextViewControllerButton.widthAnchor.constraint(equalToConstant: 72)
         ])
     }
     
