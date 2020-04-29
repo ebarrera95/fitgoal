@@ -44,13 +44,44 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         view.addMultipleSubviews(views)
         setConstraints()
+        
+        let dismissKeyBoardTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        view.addGestureRecognizer(dismissKeyBoardTap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        switch configuratorType {
+        case .age, .height, .weight:
+            guard let textField = selectorView as? UITextField else {
+                fatalError()
+            }
+            textField.resignFirstResponder()
+        case .fitnessGoal, .fitnessLevel, .gender:
+            return
+        }
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        layoutSelectorView()
+    }
+    
+    private func layoutSelectorView() {
         let viewHeight = setHeight(forView: selectorView)
         selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
-        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+        setSelectorViewCenter()
+    }
+    
+    private func setSelectorViewCenter() {
+        switch configuratorType {
+        case .age, .height, .weight:
+           selectorView.center = CGPoint(x: view.center.x, y: view.center.y - 30)
+        case .fitnessGoal, .fitnessLevel, .gender:
+            selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+        }
     }
     
     private func setHeight(forView view: UIView) -> CGFloat {
@@ -117,8 +148,12 @@ enum UserProfileConfiguratorType {
             suffix = "your gender"
         case .fitnessLevel:
             suffix = "level"
-        default:
-            fatalError()
+        case .age:
+            suffix = "your age"
+        case .weight:
+            suffix = "your weight"
+        case .height:
+            suffix = "your height"
         }
         return suffix.uppercased()
     }
@@ -131,8 +166,24 @@ enum UserProfileConfiguratorType {
             return FitnessLevelChooserView()
         case .gender:
             return GenderView()
-        default:
-            fatalError()
+        case .age, .height, .weight:
+            return getTextField()
         }
+    }
+    
+    private func getTextField() -> UITextField {
+        let texField = UITextField()
+        texField.backgroundColor = .white
+        texField.layer.cornerRadius = 7
+        texField.layer.shadowOffset = CGSize(width: 0, height: 6)
+        texField.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        texField.layer.shadowOpacity = 1
+        texField.layer.shadowRadius = 10
+        texField.layer.cornerRadius = 7
+        texField.keyboardType = .asciiCapableNumberPad
+        texField.textColor = #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1)
+        texField.font = UIFont(name: "Oswald-Medium", size: 50)
+        texField.textAlignment = .center
+        return texField
     }
 }
