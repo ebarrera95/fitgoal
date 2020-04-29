@@ -41,7 +41,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    private var walkthroughViewControllers: [UIViewController] = {
+    private let walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
             selectorView: GenderView(),
             questionPrefix: "What is",
