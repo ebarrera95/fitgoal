@@ -130,6 +130,7 @@ class UserProfilePageViewController: UIPageViewController, UIPageViewControllerD
 }
 
 extension UserProfilePageViewController {
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let currentIndex = userProfileViewControllers.firstIndex(of: viewController) else { return nil }
         if currentIndex == 0 {

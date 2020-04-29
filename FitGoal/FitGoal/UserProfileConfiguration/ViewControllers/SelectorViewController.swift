@@ -80,7 +80,6 @@ class SelectorViewController: UIViewController {
     }
 }
 
-//TODO: This enum will be replaced after next PR
 enum SelectorType {
     case fitnessLevel
     case fitnessGoal
@@ -101,20 +100,22 @@ enum SelectorType {
     }
     
     var suffix: String {
+        var suffix = String()
         switch self {
         case .fitnessGoal:
-            return "your goal".uppercased()
+            suffix = "your goal"
         case .gender:
-            return "your gender".uppercased()
+            suffix = "your gender"
         case .fitnessLevel:
-            return "level".uppercased()
+            suffix = "level"
         case .age:
-            return "your age".uppercased()
+            suffix = "your age"
         case .weight:
-            return "your weight".uppercased()
+            suffix = "your weight"
         case .height:
-            return "your height".uppercased()
+            suffix = "your height"
         }
+        return suffix
     }
     
     var view: UIView {
