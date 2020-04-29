@@ -13,14 +13,14 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private var pendingIndex = Int()
     private var currentIndex = Int()
     
+    private lazy var bottomConstraint = nextViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+    
     private var bottomConstant = CGFloat() {
         didSet {
             bottomConstraint.constant = bottomConstant
             bottomConstraint.isActive = true
         }
     }
-    
-    private lazy var bottomConstraint = nextViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
@@ -114,10 +114,16 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     @objc private func keyboardWillShow(notification: NSNotification) {
         guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
         bottomConstant = -keyboardSize.height
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
         bottomConstant = -30
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
+        }
     }
     
     private func setConstraints() {
