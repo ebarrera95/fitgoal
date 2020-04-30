@@ -35,8 +35,8 @@ class GenderView: UIView {
     private func setDimensionConstraints(icons: [UIView]) {
         icons.forEach { (view) in
             NSLayoutConstraint.activate([
-                view.heightAnchor.constraint(equalToConstant: 152),
-                view.widthAnchor.constraint(equalToConstant: 152)
+                view.heightAnchor.constraint(equalToConstant: 162),
+                view.widthAnchor.constraint(equalToConstant: 162)
             ])
         }
     }
