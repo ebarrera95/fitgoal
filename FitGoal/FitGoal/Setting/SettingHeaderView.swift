@@ -66,7 +66,6 @@ class SettingHeaderView: UIView {
             editProfileImageView
         ]
         self.addMultipleSubviews(views)
-        //backgroundColor = .red
         setConstraints()
     }
     
