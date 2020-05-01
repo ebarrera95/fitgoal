@@ -52,15 +52,15 @@ class UserProfileConfiguratorViewController: UIViewController {
             return
         }
         
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: height)
+        selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: height)
         selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
     }
     
     private func calculateViewHeight(for view: UIView) -> CGFloat? {
         if view is FitnessLevelChooserView {
-            return 320
+            return 340
         } else if view is GenderView {
-            return 320
+            return 340
         }
         return nil
     }
