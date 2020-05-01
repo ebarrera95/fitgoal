@@ -27,8 +27,8 @@ class UserPlanningViewController: UIViewController {
         return button
     }()
     
-    private let questionPrefix = UILabel()
-    private let questionSuffix = UILabel()
+    private let questionPrefixLabel = UILabel()
+    private let questionSuffixLabel = UILabel()
     
     init(questionPrefix: String, questionSuffix: String) {
         super.init(nibName: nil, bundle: nil)
@@ -44,7 +44,7 @@ class UserPlanningViewController: UIViewController {
         
         let plans = [easyPlan, mediumPlan, intensePlan]
         
-        let views = plans + [continueButton, questionPrefix, questionSuffix]
+        let views = plans + [continueButton, questionPrefixLabel, questionSuffixLabel]
         view.addMultipleSubviews(views)
         
         setDimensionConstraints(forViews: plans)
@@ -66,8 +66,8 @@ class UserPlanningViewController: UIViewController {
     }
     
     private func configureQuestions(prefix: String, suffix: String) {
-        questionPrefix.attributedText = prefix.formattedText(font: "Roboto-Light", size: 19, color: .white, kern: 0.23)
-        questionSuffix.attributedText = suffix.formattedText(font: "Oswald-Medium", size: 50, color: .white, kern: 0.59)
+        questionPrefixLabel.attributedText = prefix.formattedText(font: "Roboto-Light", size: 19, color: .white, kern: 0.23)
+        questionSuffixLabel.attributedText = suffix.formattedText(font: "Oswald-Medium", size: 50, color: .white, kern: 0.59)
     }
     
     private func setAxisConstraints() {
@@ -113,20 +113,20 @@ class UserPlanningViewController: UIViewController {
     }
     
     private func setQuestionPrefixLabelConstraints() {
-        questionPrefix.translatesAutoresizingMaskIntoConstraints = false
+        questionPrefixLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.easyPlan.leadingAnchor)
+            questionPrefixLabel.bottomAnchor.constraint(equalTo: self.questionSuffixLabel.topAnchor),
+            questionPrefixLabel.leadingAnchor.constraint(equalTo: self.easyPlan.leadingAnchor)
         ])
     }
     
     private func setQuestionSuffixLabelConstraints() {
-        questionSuffix.translatesAutoresizingMaskIntoConstraints = false
+        questionSuffixLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionSuffix.bottomAnchor.constraint(equalTo: easyPlan.topAnchor, constant: -16),
-            questionSuffix.leadingAnchor.constraint(equalTo: easyPlan.leadingAnchor)
+            questionSuffixLabel.bottomAnchor.constraint(equalTo: easyPlan.topAnchor, constant: -16),
+            questionSuffixLabel.leadingAnchor.constraint(equalTo: easyPlan.leadingAnchor)
         ])
     }
 }
