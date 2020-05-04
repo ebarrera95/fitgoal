@@ -11,15 +11,12 @@ import UIKit
 class UserProfileConfiguratorViewController: UIViewController {
     
     private let selectorView: UIView
-    private var selectorViewHeight: CGFloat?
-    
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
 
     init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
         self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
-        self.selectorViewHeight = calculateViewHeight(for: self.selectorView)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
     
@@ -47,22 +44,9 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        guard let height = selectorViewHeight else {
-            assertionFailure("SelectorView is incorrect")
-            return
-        }
         
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: height)
+        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
         selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
-    }
-    
-    private func calculateViewHeight(for view: UIView) -> CGFloat? {
-        if view is FitnessLevelChooserView {
-            return 320
-        } else if view is GenderView {
-            return 320
-        }
-        return nil
     }
     
     //MARK: -Constraints
