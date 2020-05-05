@@ -122,7 +122,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         self.view.addMultipleSubviews(views)
         
         self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-        changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
+        changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
         
         setConstraints()
         
@@ -148,11 +148,11 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             currentIndex += 1
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-            changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
+            changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
         }
     }
     
-    private func changeTitle(inLabel label: UILabel, forVCIndex index: Int) {
+    private func changeTitle(forLabel label: UILabel, vcIndex index: Int) {
         if walkthroughViewControllers[index] is UserPlanningViewController {
              label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
@@ -252,7 +252,7 @@ extension WalkthroughPageViewController {
         if completed {
             currentIndex = pendingIndex
             pageControl.currentPage = currentIndex
-            changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
+            changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
         }
     }
 }
