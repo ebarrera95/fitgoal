@@ -13,6 +13,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private var pendingIndex = Int()
     private var currentIndex = Int()
     
+    private let defaultBottomMargin = CGFloat(-30)
+    
     private lazy var bottomConstraint = nextViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
     
     private var bottomConstant = CGFloat() {
@@ -152,7 +154,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {
-        bottomConstant = -30
+        bottomConstant = defaultBottomMargin
         UIView.animate(withDuration: 0.33) {
             self.view.layoutIfNeeded()
         }
@@ -191,7 +193,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private func setButtonConstraints() {
         nextViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         
-        bottomConstant = -30
+        bottomConstant = defaultBottomMargin
         NSLayoutConstraint.activate([
             nextViewControllerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
             nextViewControllerButton.heightAnchor.constraint(equalToConstant: 72),
