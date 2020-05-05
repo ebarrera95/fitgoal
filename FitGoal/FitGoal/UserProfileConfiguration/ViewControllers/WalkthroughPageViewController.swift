@@ -18,6 +18,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             } else {
                 nextViewControllerButton.isHidden = false
             }
+        }
+    }
     
     private let defaultBottomMargin = CGFloat(-30)
     
@@ -158,9 +160,6 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
              titleLabel.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else {
             titleLabel.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
-        }
-    }
-    
         }
     }
     
