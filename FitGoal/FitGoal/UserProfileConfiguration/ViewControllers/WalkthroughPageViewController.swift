@@ -74,11 +74,6 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             questionSuffix: "your goal".uppercased()
         )
         
-        let planning = UserPlanningViewController (
-            questionPrefix: "How hard do you want to",
-            questionSuffix: "train".uppercased()
-        )
-        
         let age = UserProfileConfiguratorViewController(
             selectorView: getTextField(),
             questionPrefix: "What is",
@@ -96,6 +91,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             questionPrefix: "What is",
             questionSuffix: "your weight".uppercased()
         )
+        
+        let planning = UserPlanningViewController()
         
         return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
     }()

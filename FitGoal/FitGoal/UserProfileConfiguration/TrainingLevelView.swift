@@ -10,7 +10,12 @@ import UIKit
 
 class TrainingLevelView: UIView {
     
-    private let intensityLevelLabel = UILabel()
+    private let intensityLevelLabel: UILabel = {
+        let label = UILabel()
+        label.layer.masksToBounds = true
+        return label
+    }()
+    
     private let intensityLevelDescriptionLabel = UILabel()
     
     private let eatingPlanLabel: UILabel = {
@@ -33,22 +38,21 @@ class TrainingLevelView: UIView {
         return background
     }()
     
-    private var isViewSelected = false
+    private var viewIsSelected = false
     
     init(level: String, monthsTraining: Int, timesAWeek: Int, selectedStateColor: UIColor) {
         super.init(frame: .zero)
-        intensityLevelDescriptionLabel.attributedText = trainingIntensityAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
+        intensityLevelDescriptionLabel.attributedText = intensityLevelDescriptionAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
         
-        configureSelectionIndicatorImage(forState: isViewSelected)
+        configureSelectionIndicatorImage(if: viewIsSelected)
         
         backgroundView.layer.borderColor = selectedStateColor.cgColor
         backgroundView.isHidden = true
         backgroundView.backgroundColor = selectedStateColor.withAlphaComponent(0.1)
         
         intensityLevelLabel.backgroundColor = selectedStateColor
-        intensityLevelLabel.attributedText = intensityLevel(text: level)
+        intensityLevelLabel.attributedText = intensityLevelAttributedText(text: level)
         intensityLevelLabel.textAlignment = .center
-        intensityLevelLabel.layer.masksToBounds = true
         
         let views = [
             backgroundView,
@@ -76,29 +80,29 @@ class TrainingLevelView: UIView {
     }
     
     @objc private func handleTap() {
-        if isViewSelected {
-            isViewSelected = false
-            configureSelectionIndicatorImage(forState: isViewSelected)
+        if viewIsSelected {
+            viewIsSelected = false
+            configureSelectionIndicatorImage(if: viewIsSelected)
             backgroundView.isHidden = true
         } else {
-            isViewSelected = true
-            configureSelectionIndicatorImage(forState: isViewSelected)
+            viewIsSelected = true
+            configureSelectionIndicatorImage(if: viewIsSelected)
             backgroundView.isHidden = false
         }
     }
     
-    private func trainingIntensityAttributedText(months: Int, timesAWeek: Int) -> NSAttributedString {
+    private func intensityLevelDescriptionAttributedText(months: Int, timesAWeek: Int) -> NSAttributedString {
         let text = "\(months) month training \(timesAWeek) times a week".uppercased()
         return text.formattedText(font: "Oswald-Medium", size: 21, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.17)
     }
     
-    private func intensityLevel(text: String) ->
+    private func intensityLevelAttributedText(text: String) ->
         NSAttributedString {
         return text.formattedText(font: "Roboto-Light", size: 12, color: .white, kern: 0.17)
     }
     
     
-    private func configureSelectionIndicatorImage(forState selectedState: Bool) {
+    private func configureSelectionIndicatorImage(if selectedState: Bool) {
         if selectedState {
             selectionIndicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
         } else {

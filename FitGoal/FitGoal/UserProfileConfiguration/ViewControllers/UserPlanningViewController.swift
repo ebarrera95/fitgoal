@@ -27,27 +27,26 @@ class UserPlanningViewController: UIViewController {
         return button
     }()
     
-    private let questionPrefixLabel = UILabel()
-    private let questionSuffixLabel = UILabel()
-    
-    init(questionPrefix: String, questionSuffix: String) {
-        super.init(nibName: nil, bundle: nil)
-        configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let questionPrefixLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = "How hard do you want to".formattedText(font: "Roboto-Light", size: 19, color: .white, kern: 0.23)
+        return label
+    }()
+    private let questionSuffixLabel: UILabel = {
+        let label = UILabel()
+        label.attributedText = "train".uppercased().formattedText(font: "Oswald-Medium", size: 50, color: .white, kern: 0.59)
+        return label
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let trainingPlansViews = [easyPlan, mediumPlan, intensePlan]
+        let trainingPlanViews = [easyPlan, mediumPlan, intensePlan]
         
-        let views = trainingPlansViews + [continueButton, questionPrefixLabel, questionSuffixLabel]
+        let views = trainingPlanViews + [continueButton, questionPrefixLabel, questionSuffixLabel]
         view.addMultipleSubviews(views)
         
-        setDimensionConstraints(forViews: trainingPlansViews)
+        setDimensionConstraints(forViews: trainingPlanViews)
         setAxisConstraints()
         setQuestionPrefixLabelConstraints()
         setQuestionSuffixLabelConstraints()
@@ -62,11 +61,6 @@ class UserPlanningViewController: UIViewController {
             height: 52
         )
         continueButton.layer.cornerRadius = continueButton.bounds.height/2
-    }
-    
-    private func configureQuestions(prefix: String, suffix: String) {
-        questionPrefixLabel.attributedText = prefix.formattedText(font: "Roboto-Light", size: 19, color: .white, kern: 0.23)
-        questionSuffixLabel.attributedText = suffix.formattedText(font: "Oswald-Medium", size: 50, color: .white, kern: 0.59)
     }
     
     private func setAxisConstraints() {
