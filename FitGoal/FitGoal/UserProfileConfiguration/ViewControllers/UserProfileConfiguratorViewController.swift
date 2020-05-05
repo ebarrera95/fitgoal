@@ -10,17 +10,14 @@ import UIKit
 
 class UserProfileConfiguratorViewController: UIViewController {
     
-    private var configuratorType: UserProfileConfiguratorType
-    
-    private var selectorView: UIView
-    private var questionPrefix = UILabel()
-    private var questionSuffix = UILabel()
-    
-    init(configuratorType: UserProfileConfiguratorType) {
-        self.configuratorType = configuratorType
-        selectorView = configuratorType.view
+    private let selectorView: UIView
+    private let questionPrefix = UILabel()
+    private let questionSuffix = UILabel()
+
+    init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
+        self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
-        configureQuestions(prefix: configuratorType.prefix, suffix: configuratorType.suffix)
+        configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
     
     required init?(coder: NSCoder) {
@@ -34,7 +31,6 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.isOpaque = false
         
         let views = [
             selectorView,
@@ -117,73 +113,5 @@ class UserProfileConfiguratorViewController: UIViewController {
             questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
-    }
-}
-
-enum UserProfileConfiguratorType {
-    case fitnessLevel
-    case fitnessGoal
-    case gender
-    case age
-    case weight
-    case height
-    
-    var prefix: String {
-        switch self {
-        case .fitnessGoal:
-            return "What is"
-        case .fitnessLevel:
-            return "What is your current fitness"
-        case .gender, .age, .height, .weight:
-            return "What is"
-        }
-    }
-    
-    var suffix: String {
-        var suffix = String()
-        switch self {
-        case .fitnessGoal:
-            suffix = "your goal"
-        case .gender:
-            suffix = "your gender"
-        case .fitnessLevel:
-            suffix = "level"
-        case .age:
-            suffix = "your age"
-        case .weight:
-            suffix = "your weight"
-        case .height:
-            suffix = "your height"
-        }
-        return suffix.uppercased()
-    }
-    
-    var view: UIView {
-        switch self {
-        case .fitnessGoal:
-            return FitnessLevelChooserView()
-        case .fitnessLevel:
-            return FitnessLevelChooserView()
-        case .gender:
-            return GenderView()
-        case .age, .height, .weight:
-            return getTextField()
-        }
-    }
-    
-    private func getTextField() -> UITextField {
-        let texField = UITextField()
-        texField.backgroundColor = .white
-        texField.layer.cornerRadius = 7
-        texField.layer.shadowOffset = CGSize(width: 0, height: 6)
-        texField.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
-        texField.layer.shadowOpacity = 1
-        texField.layer.shadowRadius = 10
-        texField.layer.cornerRadius = 7
-        texField.keyboardType = .asciiCapableNumberPad
-        texField.textColor = #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1)
-        texField.font = UIFont(name: "Oswald-Medium", size: 50)
-        texField.textAlignment = .center
-        return texField
     }
 }
