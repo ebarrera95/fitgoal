@@ -11,7 +11,7 @@ import UIKit
 class TrainingLevelView: UIView {
     
     private let intensityLevelLabel = UILabel()
-    private let trainingIntensityLabel = UILabel()
+    private let intensityLevelDescriptionLabel = UILabel()
     
     private let eatingPlanLabel: UILabel = {
         let label = UILabel()
@@ -37,7 +37,7 @@ class TrainingLevelView: UIView {
     
     init(level: String, monthsTraining: Int, timesAWeek: Int, selectedStateColor: UIColor) {
         super.init(frame: .zero)
-        trainingIntensityLabel.attributedText = trainingIntensityAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
+        intensityLevelDescriptionLabel.attributedText = trainingIntensityAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
         
         configureSelectionIndicatorImage(forState: isViewSelected)
         
@@ -53,7 +53,7 @@ class TrainingLevelView: UIView {
         let views = [
             backgroundView,
             intensityLevelLabel,
-            trainingIntensityLabel,
+            intensityLevelDescriptionLabel,
             eatingPlanLabel,
             selectionIndicator,
         ]
@@ -118,7 +118,7 @@ class TrainingLevelView: UIView {
         setIndicatorConstraints()
         setIntensityLevelLabelConstraints()
         setEatingPlanLabelConstraints()
-        setTrainingIntensityLevelLabelConstraints()
+        setIntensityLevelDescriptionLabelConstraints()
     }
     
     private func setIndicatorConstraints() {
@@ -143,12 +143,12 @@ class TrainingLevelView: UIView {
         ])
     }
     
-    private func setTrainingIntensityLevelLabelConstraints() {
-        trainingIntensityLabel.translatesAutoresizingMaskIntoConstraints = false
+    private func setIntensityLevelDescriptionLabelConstraints() {
+        intensityLevelDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            trainingIntensityLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            trainingIntensityLabel.topAnchor.constraint(equalTo: self.intensityLevelLabel.bottomAnchor, constant: 20),
+            intensityLevelDescriptionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            intensityLevelDescriptionLabel.topAnchor.constraint(equalTo: self.intensityLevelLabel.bottomAnchor, constant: 20),
         ])
     }
     
