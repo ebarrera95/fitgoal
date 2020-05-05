@@ -123,7 +123,6 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private func getTextField() -> UITextField {
         let texField = UITextField()
         texField.backgroundColor = .white
-        texField.layer.cornerRadius = 7
         texField.layer.shadowOffset = CGSize(width: 0, height: 6)
         texField.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
         texField.layer.shadowOpacity = 1
