@@ -15,8 +15,6 @@ class SettingsViewController: UITableViewController {
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
         self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
-        
-        tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
     }
     
     override func viewDidLayoutSubviews() {
@@ -27,18 +25,18 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 0
 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-        return cell
-    }
+//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+//        return cell
+//    }
 
 
     /*
@@ -86,9 +84,4 @@ class SettingsViewController: UITableViewController {
     }
     */
 
-}
-
-enum SettingSection: Int {
-    case userInfo
-    case accountInfo
 }

@@ -109,7 +109,7 @@ class SettingHeaderView: UIView {
         
         NSLayoutConstraint.activate([
             userAvatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            userAvatarImageView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 16),
+            userAvatarImageView.topAnchor.constraint(equalTo: mainTitleLabel.bottomAnchor, constant: 20),
             userAvatarImageView.widthAnchor.constraint(equalToConstant: 100),
             userAvatarImageView.heightAnchor.constraint(equalToConstant: 100)
         ])
