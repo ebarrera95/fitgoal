@@ -13,6 +13,15 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private var pendingIndex = Int()
     private var currentIndex = Int()
     
+    private lazy var bottomConstraint = nextViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+    
+    private var bottomConstant = CGFloat() {
+        didSet {
+            bottomConstraint.constant = bottomConstant
+            bottomConstraint.isActive = true
+        }
+    }
+    
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
@@ -110,6 +119,20 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         setConstraints()
         
         nextViewControllerButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     @objc private func nextViewController() {
@@ -117,6 +140,21 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             currentIndex += 1
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+        }
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        bottomConstant = -keyboardSize.height
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        bottomConstant = -30
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
         }
     }
     
@@ -153,8 +191,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private func setButtonConstraints() {
         nextViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         
+        bottomConstant = -30
         NSLayoutConstraint.activate([
-            nextViewControllerButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30),
             nextViewControllerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
             nextViewControllerButton.heightAnchor.constraint(equalToConstant: 72),
             nextViewControllerButton.widthAnchor.constraint(equalToConstant: 72)
