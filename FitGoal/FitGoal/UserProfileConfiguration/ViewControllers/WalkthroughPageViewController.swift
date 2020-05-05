@@ -41,7 +41,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    private let walkthroughViewControllers: [UIViewController] = {
+    private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
             selectorView: GenderView(),
             questionPrefix: "What is",
@@ -60,7 +60,25 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             questionSuffix: "your goal".uppercased()
         )
         
-        return [gender, fitnessLevel, fitnessGoal]
+        let age = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your age".uppercased()
+        )
+        
+        let height = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your height".uppercased()
+        )
+        
+        let weight = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your weight".uppercased()
+        )
+        
+        return [gender, fitnessLevel, fitnessGoal, age, height, weight]
     }()
     
     private lazy var pageControl: UIPageControl = {
@@ -100,6 +118,22 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
         }
+    }
+    
+    private func getTextField() -> UITextField {
+        let texField = UITextField()
+        texField.backgroundColor = .white
+        texField.layer.cornerRadius = 7
+        texField.layer.shadowOffset = CGSize(width: 0, height: 6)
+        texField.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        texField.layer.shadowOpacity = 1
+        texField.layer.shadowRadius = 10
+        texField.layer.cornerRadius = 7
+        texField.keyboardType = .asciiCapableNumberPad
+        texField.textColor = #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1)
+        texField.font = UIFont(name: "Oswald-Medium", size: 50)
+        texField.textAlignment = .center
+        return texField
     }
     
     private func setConstraints() {
