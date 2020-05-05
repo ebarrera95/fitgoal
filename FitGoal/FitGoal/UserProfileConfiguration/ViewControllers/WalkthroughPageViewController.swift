@@ -42,7 +42,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return gradientView
     }()
     
-    private let titleLabel = UILabel()
+    private let viewTitleLabel = UILabel()
     
     private let nextViewControllerButton: UIButton = {
         let button = UIButton()
@@ -115,14 +115,14 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         view.insertSubview(gradientBackgroundView, at: 0)
         
         let views = [
-            titleLabel,
+            viewTitleLabel,
             nextViewControllerButton,
             pageControl
         ]
         self.view.addMultipleSubviews(views)
         
         self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-        changeLabelTitle(forIndex: currentIndex)
+        changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
         
         setConstraints()
         
@@ -148,15 +148,15 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             currentIndex += 1
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
-            changeLabelTitle(forIndex: currentIndex)
+            changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
         }
     }
     
-    private func changeLabelTitle(forIndex index: Int) {
+    private func changeTitle(inLabel label: UILabel, forVCIndex index: Int) {
         if walkthroughViewControllers[index] is UserPlanningViewController {
-             titleLabel.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
+             label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
-            titleLabel.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
+            label.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         }
     }
     
@@ -197,11 +197,11 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func setLabelConstraints() {
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        viewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
-            titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30)
+            viewTitleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            viewTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30)
         ])
     }
     
@@ -221,7 +221,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         
         NSLayoutConstraint.activate([
             pageControl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-            pageControl.topAnchor.constraint(equalTo: titleLabel.topAnchor)
+            pageControl.topAnchor.constraint(equalTo: viewTitleLabel.topAnchor)
         ])
     }
 }
@@ -252,7 +252,7 @@ extension WalkthroughPageViewController {
         if completed {
             currentIndex = pendingIndex
             pageControl.currentPage = currentIndex
-            changeLabelTitle(forIndex: currentIndex)
+            changeTitle(inLabel: viewTitleLabel, forVCIndex: currentIndex)
         }
     }
 }
