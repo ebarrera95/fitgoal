@@ -15,13 +15,6 @@ class UserInfoCell: UITableViewCell {
     let mainLabel = UILabel()
     let userInfo = UILabel()
     
-//    init(frame: CGRect) {
-//        super.init(frame: frame)
-//
-//    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
 }
