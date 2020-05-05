@@ -13,6 +13,17 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private var pendingIndex = Int()
     private var currentIndex = Int()
     
+    private let defaultBottomMargin = CGFloat(-30)
+    
+    private lazy var bottomConstraint = nextViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+    
+    private var bottomConstant = CGFloat() {
+        didSet {
+            bottomConstraint.constant = bottomConstant
+            bottomConstraint.isActive = true
+        }
+    }
+    
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
         gradientView.layer.cornerRadius = 150
@@ -41,7 +52,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return button
     }()
     
-    private let walkthroughViewControllers: [UIViewController] = {
+    private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
             selectorView: GenderView(),
             questionPrefix: "What is",
@@ -60,7 +71,25 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             questionSuffix: "your goal".uppercased()
         )
         
-        return [gender, fitnessLevel, fitnessGoal]
+        let age = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your age".uppercased()
+        )
+        
+        let height = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your height".uppercased()
+        )
+        
+        let weight = UserProfileConfiguratorViewController(
+            selectorView: getTextField(),
+            questionPrefix: "What is",
+            questionSuffix: "your weight".uppercased()
+        )
+        
+        return [gender, fitnessLevel, fitnessGoal, age, height, weight]
     }()
     
     private lazy var pageControl: UIPageControl = {
@@ -92,6 +121,20 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         setConstraints()
         
         nextViewControllerButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow(notification:)),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide(notification:)),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
     }
     
     @objc private func nextViewController() {
@@ -100,6 +143,36 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
         }
+    }
+    
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        guard let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else { return }
+        bottomConstant = -keyboardSize.height
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    @objc private func keyboardWillHide(notification: NSNotification) {
+        bottomConstant = defaultBottomMargin
+        UIView.animate(withDuration: 0.33) {
+            self.view.layoutIfNeeded()
+        }
+    }
+    
+    private func getTextField() -> UITextField {
+        let texField = UITextField()
+        texField.backgroundColor = .white
+        texField.layer.shadowOffset = CGSize(width: 0, height: 6)
+        texField.layer.shadowColor = UIColor(red: 0.51, green: 0.53, blue: 0.64, alpha: 0.12).cgColor
+        texField.layer.shadowOpacity = 1
+        texField.layer.shadowRadius = 10
+        texField.layer.cornerRadius = 7
+        texField.keyboardType = .asciiCapableNumberPad
+        texField.textColor = #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1)
+        texField.font = UIFont(name: "Oswald-Medium", size: 50)
+        texField.textAlignment = .center
+        return texField
     }
     
     private func setConstraints() {
@@ -120,8 +193,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private func setButtonConstraints() {
         nextViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         
+        bottomConstant = defaultBottomMargin
         NSLayoutConstraint.activate([
-            nextViewControllerButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -30),
             nextViewControllerButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -30),
             nextViewControllerButton.heightAnchor.constraint(equalToConstant: 72),
             nextViewControllerButton.widthAnchor.constraint(equalToConstant: 72)

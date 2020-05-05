@@ -13,7 +13,7 @@ class UserProfileConfiguratorViewController: UIViewController {
     private let selectorView: UIView
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
-
+    
     init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
         self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
@@ -40,13 +40,34 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         view.addMultipleSubviews(views)
         setConstraints()
+        
+        let dismissKeyBoardTap = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        view.addGestureRecognizer(dismissKeyBoardTap)
+    }
+    
+    @objc private func dismissKeyboard() {
+        guard let textField = selectorView as? UITextField else {
+            return
+        }
+        textField.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
-        selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+        layoutSelectorView()
+    }
+    
+    private func layoutSelectorView() {
+        if selectorView is UITextField {
+            selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 152)
+            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
+        } else {
+            selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
+            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
+        }
     }
     
     //MARK: -Constraints
