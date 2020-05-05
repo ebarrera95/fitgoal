@@ -38,13 +38,13 @@ class TrainingLevelView: UIView {
         return background
     }()
     
-    private var viewIsSelected = false
+    private var isViewSelected = false
     
     init(level: String, monthsTraining: Int, timesAWeek: Int, selectedStateColor: UIColor) {
         super.init(frame: .zero)
         intensityLevelDescriptionLabel.attributedText = intensityLevelDescriptionAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
         
-        configureSelectionIndicatorImage(if: viewIsSelected)
+        configureSelectionIndicatorImage(forState: isViewSelected)
         
         backgroundView.layer.borderColor = selectedStateColor.cgColor
         backgroundView.isHidden = true
@@ -80,13 +80,13 @@ class TrainingLevelView: UIView {
     }
     
     @objc private func handleTap() {
-        if viewIsSelected {
-            viewIsSelected = false
-            configureSelectionIndicatorImage(if: viewIsSelected)
+        if isViewSelected {
+            isViewSelected = false
+            configureSelectionIndicatorImage(forState: isViewSelected)
             backgroundView.isHidden = true
         } else {
-            viewIsSelected = true
-            configureSelectionIndicatorImage(if: viewIsSelected)
+            isViewSelected = true
+            configureSelectionIndicatorImage(forState: isViewSelected)
             backgroundView.isHidden = false
         }
     }
@@ -102,7 +102,7 @@ class TrainingLevelView: UIView {
     }
     
     
-    private func configureSelectionIndicatorImage(if selectedState: Bool) {
+    private func configureSelectionIndicatorImage(forState selectedState: Bool) {
         if selectedState {
             selectionIndicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
         } else {
