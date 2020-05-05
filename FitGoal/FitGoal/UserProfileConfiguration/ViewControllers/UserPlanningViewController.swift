@@ -10,9 +10,9 @@ import UIKit
 
 class UserPlanningViewController: UIViewController {
     
-    private let easyPlan = TrainingLevelView(level: "Easy", monthTraining: 6, timesAWeek: 2, selectorStateColor: #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1))
-    private let mediumPlan = TrainingLevelView(level: "Medium", monthTraining: 4, timesAWeek: 4, selectorStateColor: #colorLiteral(red: 1, green: 0.6492816915, blue: 0.5106400314, alpha: 1))
-    private let intensePlan = TrainingLevelView(level: "Intense", monthTraining: 2, timesAWeek: 5, selectorStateColor: #colorLiteral(red: 0.9873231897, green: 0.1885731705, blue: 0.05805841231, alpha: 1))
+    private let easyPlan = TrainingLevelView(level: "Easy", monthsTraining: 6, timesAWeek: 2, selectedStateColor: #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1))
+    private let mediumPlan = TrainingLevelView(level: "Medium", monthsTraining: 4, timesAWeek: 4, selectedStateColor: #colorLiteral(red: 1, green: 0.6492816915, blue: 0.5106400314, alpha: 1))
+    private let intensePlan = TrainingLevelView(level: "Intense", monthsTraining: 2, timesAWeek: 5, selectedStateColor: #colorLiteral(red: 0.9873231897, green: 0.1885731705, blue: 0.05805841231, alpha: 1))
     
     private let continueButton: UIButton = {
         let button = UIButton()
@@ -42,12 +42,12 @@ class UserPlanningViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let plans = [easyPlan, mediumPlan, intensePlan]
+        let trainingPlansViews = [easyPlan, mediumPlan, intensePlan]
         
-        let views = plans + [continueButton, questionPrefixLabel, questionSuffixLabel]
+        let views = trainingPlansViews + [continueButton, questionPrefixLabel, questionSuffixLabel]
         view.addMultipleSubviews(views)
         
-        setDimensionConstraints(forViews: plans)
+        setDimensionConstraints(forViews: trainingPlansViews)
         setAxisConstraints()
         setQuestionPrefixLabelConstraints()
         setQuestionSuffixLabelConstraints()
@@ -61,7 +61,6 @@ class UserPlanningViewController: UIViewController {
             width: view.bounds.width - 32,
             height: 52
         )
-
         continueButton.layer.cornerRadius = continueButton.bounds.height/2
     }
     

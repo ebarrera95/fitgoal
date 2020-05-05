@@ -158,7 +158,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private func changeLabelTitle(forIndex index: Int) {
         if walkthroughViewControllers[index] is UserPlanningViewController {
              titleLabel.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
-        } else {
+        } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
             titleLabel.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         }
     }

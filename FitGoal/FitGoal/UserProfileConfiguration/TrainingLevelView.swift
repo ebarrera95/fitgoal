@@ -20,7 +20,7 @@ class TrainingLevelView: UIView {
         return label
     }()
     
-    private let indicator: UIImageView = {
+    private let selectionIndicator: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         return imageView
@@ -35,17 +35,17 @@ class TrainingLevelView: UIView {
     
     private var isViewSelected = false
     
-    init(level: String, monthTraining: Int, timesAWeek: Int, selectorStateColor: UIColor) {
+    init(level: String, monthsTraining: Int, timesAWeek: Int, selectedStateColor: UIColor) {
         super.init(frame: .zero)
-        trainingIntensityLabel.attributedText = trainingIntensityExplanationText(months: monthTraining, timesAWeek: timesAWeek)
+        trainingIntensityLabel.attributedText = trainingIntensityAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
         
-        configureSelectionIndicator(for: isViewSelected)
+        configureSelectionIndicatorImage(forState: isViewSelected)
         
-        backgroundView.layer.borderColor = selectorStateColor.cgColor
+        backgroundView.layer.borderColor = selectedStateColor.cgColor
         backgroundView.isHidden = true
-        backgroundView.backgroundColor = selectorStateColor.withAlphaComponent(0.1)
+        backgroundView.backgroundColor = selectedStateColor.withAlphaComponent(0.1)
         
-        intensityLevelLabel.backgroundColor = selectorStateColor
+        intensityLevelLabel.backgroundColor = selectedStateColor
         intensityLevelLabel.attributedText = intensityLevel(text: level)
         intensityLevelLabel.textAlignment = .center
         intensityLevelLabel.layer.masksToBounds = true
@@ -55,7 +55,7 @@ class TrainingLevelView: UIView {
             intensityLevelLabel,
             trainingIntensityLabel,
             eatingPlanLabel,
-            indicator,
+            selectionIndicator,
         ]
         self.addMultipleSubviews(views)
         
@@ -78,16 +78,16 @@ class TrainingLevelView: UIView {
     @objc private func handleTap() {
         if isViewSelected {
             isViewSelected = false
-            configureSelectionIndicator(for: isViewSelected)
+            configureSelectionIndicatorImage(forState: isViewSelected)
             backgroundView.isHidden = true
         } else {
             isViewSelected = true
-            configureSelectionIndicator(for: isViewSelected)
+            configureSelectionIndicatorImage(forState: isViewSelected)
             backgroundView.isHidden = false
         }
     }
     
-    private func trainingIntensityExplanationText(months: Int, timesAWeek: Int) -> NSAttributedString {
+    private func trainingIntensityAttributedText(months: Int, timesAWeek: Int) -> NSAttributedString {
         let text = "\(months) month training \(timesAWeek) times a week".uppercased()
         return text.formattedText(font: "Oswald-Medium", size: 21, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.17)
     }
@@ -98,11 +98,11 @@ class TrainingLevelView: UIView {
     }
     
     
-    private func configureSelectionIndicator(for selectedState: Bool) {
+    private func configureSelectionIndicatorImage(forState selectedState: Bool) {
         if selectedState {
-            indicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
+            selectionIndicator.image = UIImage(imageLiteralResourceName: "selectedIndicator")
         } else {
-            indicator.image = UIImage(imageLiteralResourceName: "unselectedIndicator")
+            selectionIndicator.image = UIImage(imageLiteralResourceName: "unselectedIndicator")
         }
     }
     
@@ -122,13 +122,13 @@ class TrainingLevelView: UIView {
     }
     
     private func setIndicatorConstraints() {
-        indicator.translatesAutoresizingMaskIntoConstraints = false
+        selectionIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            indicator.widthAnchor.constraint(equalToConstant: 27),
-            indicator.heightAnchor.constraint(equalToConstant: 27),
-            indicator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
-            indicator.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            selectionIndicator.widthAnchor.constraint(equalToConstant: 27),
+            selectionIndicator.heightAnchor.constraint(equalToConstant: 27),
+            selectionIndicator.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -8),
+            selectionIndicator.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
         ])
     }
     
