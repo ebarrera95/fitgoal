@@ -49,15 +49,10 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     @objc private func dismissKeyboard() {
-        switch configuratorType {
-        case .age, .height, .weight:
-            guard let textField = selectorView as? UITextField else {
-                fatalError()
-            }
-            textField.resignFirstResponder()
-        case .fitnessGoal, .fitnessLevel, .gender:
+        guard let textField = selectorView as? UITextField else {
             return
         }
+        textField.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,29 +61,16 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     private func layoutSelectorView() {
-        let viewHeight = setHeight(forView: selectorView)
-        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: viewHeight)
+        selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
         setSelectorViewCenter()
     }
     
     private func setSelectorViewCenter() {
-        switch configuratorType {
-        case .age, .height, .weight:
-           selectorView.center = CGPoint(x: view.center.x, y: view.center.y - 30)
-        case .fitnessGoal, .fitnessLevel, .gender:
-            selectorView.center = CGPoint(x: view.center.x, y: view.center.y + 30)
+        if let selectorView = self.selectorView as? UITextField {
+            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
+        } else {
+            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
         }
-    }
-    
-    private func setHeight(forView view: UIView) -> CGFloat {
-        let viewHeight: CGFloat
-        switch configuratorType {
-        case .age, .height, .weight:
-            viewHeight = 152
-        case .fitnessGoal, .fitnessLevel, .gender:
-            viewHeight = 320
-        }
-        return viewHeight
     }
     
     //MARK: -Constraints
