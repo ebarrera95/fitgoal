@@ -15,6 +15,8 @@ class SettingsViewController: UITableViewController {
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
         self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
+        
+        self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
     }
     
     override func viewDidLayoutSubviews() {
@@ -25,18 +27,39 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 0
+        return 1
 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return 5
     }
 
-//    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-//        return cell
-//    }
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: .zero)
+        let sectionName = UILabel()
+        sectionName.attributedText = "user info".uppercased().formattedText(
+            font: "Roboto-Bold",
+            size: 15,
+            color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1),
+            kern: 0.14
+        )
+        header.addSubview(sectionName)
+        sectionName.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sectionName.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 16),
+            sectionName.topAnchor.constraint(equalTo: header.topAnchor, constant: 24)
+        ])
+        return header
+    }
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
 
 
     /*
