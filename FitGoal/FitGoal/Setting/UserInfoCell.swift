@@ -11,6 +11,7 @@ import UIKit
 class UserInfoCell: UITableViewCell {
     
     static let identifier = "UserInfoCell"
-    
-    
+    private let icon = UIImageView()
+    private let cellTitle = UILabel()
+    private let userInformation = UILabel()
 }
