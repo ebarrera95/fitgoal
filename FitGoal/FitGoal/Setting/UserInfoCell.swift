@@ -12,7 +12,11 @@ class UserInfoCell: UITableViewCell {
     
     var cellInformation: CellInformation? {
         didSet {
-            guard let cellInfo = cellInformation else { return }
+            guard let cellInfo = cellInformation else {
+                assertionFailure("no cellInfo found")
+                return
+            }
+            
             icon.image = cellInfo.cellIcon
             configureCellTitle(withText: cellInfo.cellName)
             configureUserInformationLabel(withText: cellInfo.userInformation)
