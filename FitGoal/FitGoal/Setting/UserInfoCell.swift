@@ -20,6 +20,10 @@ class UserInfoCell: UITableViewCell {
             icon.image = cellInfo.cellIcon
             configureCellTitle(withText: cellInfo.cellName)
             configureUserInformationLabel(withText: cellInfo.userInformation)
+            if cellInfo.cellName == "Goals" {
+                self.accessoryType = .disclosureIndicator
+                userInformation.isHidden = true
+            }
         }
     }
     

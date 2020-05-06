@@ -15,7 +15,12 @@ class SettingsViewController: UITableViewController {
         CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
         CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
         CellInformation(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
-        CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: ">")
+        CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: "")
+    ]
+    
+    let accountInformation: [String] = [
+        "Notifications",
+        "Account Info"
     ]
 
     override func viewDidLoad() {
@@ -25,6 +30,7 @@ class SettingsViewController: UITableViewController {
         self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
+        self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
     }
     
     override func viewDidLayoutSubviews() {
@@ -35,40 +41,72 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return 2
 
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellInformation.count
+        guard let settingsSection = SettingsTableViewSection(rawValue: section) else {
+            fatalError("Section value should have a corresponding case in the SettingsSection enum")
+        }
+        switch settingsSection {
+        case .userInfo:
+            return cellInformation.count
+        case .accountInfo:
+            return 2
+        }
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-        if let cell = cell as? UserInfoCell {
-            cell.cellInformation = cellInformation[indexPath.row]
-            return cell
+        guard let settingsSection = SettingsTableViewSection(rawValue: indexPath.section) else {
+            fatalError("Section value should have a corresponding case in the SettingsSection enum")
         }
-        return cell
+        
+        switch settingsSection {
+        case .userInfo:
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+            guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
+                userInfoCell.cellInformation = cellInformation[indexPath.row]
+                return userInfoCell
+        case .accountInfo:
+            let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
+            guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
+            accountInfoCell.cellTitle = accountInformation[indexPath.row]
+            return accountInfoCell
+        }
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let header = UIView(frame: .zero)
+        guard let settingsSection = SettingsTableViewSection(rawValue: section) else {
+            fatalError("Section value should have a corresponding case in the SettingsSection enum")
+        }
+        
+        switch settingsSection {
+        case .userInfo:
+            return headerView(withText: "user info")
+        case .accountInfo:
+            return headerView(withText: "account info")
+        }
+    }
+    
+    private func headerView(withText text: String) -> UIView {
+        let headerView = UIView(frame: .zero)
         let sectionName = UILabel()
-        sectionName.attributedText = "user info".uppercased().formattedText(
+        sectionName.attributedText = text.uppercased().formattedText(
             font: "Roboto-Bold",
             size: 15,
             color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1),
             kern: 0.14
         )
-        header.addSubview(sectionName)
+        headerView.addSubview(sectionName)
         sectionName.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            sectionName.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 16),
-            sectionName.topAnchor.constraint(equalTo: header.topAnchor, constant: 24)
+            sectionName.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 16),
+            sectionName.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 24)
         ])
-        return header
+        return headerView
     }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -113,6 +151,11 @@ class SettingsViewController: UITableViewController {
     }
     */
 }
+enum SettingsTableViewSection: Int {
+    case userInfo
+    case accountInfo
+}
+
 struct CellInformation {
     let cellName: String
     let cellIcon: UIImage
