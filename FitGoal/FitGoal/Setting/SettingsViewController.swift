@@ -41,19 +41,19 @@ class SettingsViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 2
-
+        return SettingsTableViewSection.allCases.count
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         guard let settingsSection = SettingsTableViewSection(rawValue: section) else {
             fatalError("Section value should have a corresponding case in the SettingsSection enum")
         }
+        
         switch settingsSection {
         case .userInfo:
             return cellInformation.count
         case .accountInfo:
-            return 2
+            return accountInformation.count
         }
     }
 
@@ -151,7 +151,7 @@ class SettingsViewController: UITableViewController {
     }
     */
 }
-enum SettingsTableViewSection: Int {
+enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
 }
