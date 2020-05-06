@@ -62,10 +62,10 @@ class UserProfileConfiguratorViewController: UIViewController {
     
     private func layoutSelectorView() {
         if selectorView is UITextField {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 152)
+            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
             selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
         } else {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 320, height: 320)
+            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
             selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
         }
     }

@@ -11,7 +11,15 @@ import UIKit
 class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
     private var pendingIndex = Int()
-    private var currentIndex = Int()
+    private var currentIndex = Int() {
+        didSet {
+            if currentIndex == (walkthroughViewControllers.count - 1) {
+                nextViewControllerButton.isHidden = true
+            } else {
+                nextViewControllerButton.isHidden = false
+            }
+        }
+    }
     
     private let defaultBottomMargin = CGFloat(-30)
     
@@ -34,12 +42,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         return gradientView
     }()
     
-    private let createYourProfileLabel: UILabel = {
-        let label = UILabel()
-        let title = "Create your Profile".uppercased()
-        label.attributedText = title.formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
-        return label
-    }()
+    private let viewTitleLabel = UILabel()
     
     private let nextViewControllerButton: UIButton = {
         let button = UIButton()
@@ -89,7 +92,9 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             questionSuffix: "your weight".uppercased()
         )
         
-        return [gender, fitnessLevel, fitnessGoal, age, height, weight]
+        let planning = UserPlanningViewController()
+        
+        return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
     }()
     
     private lazy var pageControl: UIPageControl = {
@@ -110,14 +115,15 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         view.insertSubview(gradientBackgroundView, at: 0)
         
         let views = [
-            createYourProfileLabel,
+            viewTitleLabel,
             nextViewControllerButton,
             pageControl
         ]
-        
         self.view.addMultipleSubviews(views)
         
         self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+        changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
+        
         setConstraints()
         
         nextViewControllerButton.addTarget(self, action: #selector(nextViewController), for: .touchUpInside)
@@ -142,6 +148,15 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             currentIndex += 1
             pageControl.currentPage = currentIndex
             self.setViewControllers([walkthroughViewControllers[currentIndex]], direction: .forward, animated: true, completion: nil)
+            changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
+        }
+    }
+    
+    private func changeTitle(forLabel label: UILabel, vcIndex index: Int) {
+        if walkthroughViewControllers[index] is UserPlanningViewController {
+             label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
+        } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
+            label.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         }
     }
     
@@ -182,11 +197,11 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func setLabelConstraints() {
-        createYourProfileLabel.translatesAutoresizingMaskIntoConstraints = false
+        viewTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            createYourProfileLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
-            createYourProfileLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 50)
+            viewTitleLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 100),
+            viewTitleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 30)
         ])
     }
     
@@ -206,7 +221,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         
         NSLayoutConstraint.activate([
             pageControl.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -50),
-            pageControl.topAnchor.constraint(equalTo: createYourProfileLabel.topAnchor)
+            pageControl.topAnchor.constraint(equalTo: viewTitleLabel.topAnchor)
         ])
     }
 }
@@ -237,6 +252,7 @@ extension WalkthroughPageViewController {
         if completed {
             currentIndex = pendingIndex
             pageControl.currentPage = currentIndex
+            changeTitle(forLabel: viewTitleLabel, vcIndex: currentIndex)
         }
     }
 }
