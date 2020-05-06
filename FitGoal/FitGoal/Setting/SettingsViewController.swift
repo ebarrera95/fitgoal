@@ -32,10 +32,14 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
+        
+        if let headerView = self.tableView.tableHeaderView as? SettingHeaderView {
+            headerView.delegate = self
+        }
     }
     
     func userWillEditProfile() {
-        
+        print("here")
     }
     
     // MARK: - Table view data source
