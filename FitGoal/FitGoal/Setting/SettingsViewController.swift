@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SettingsViewController: UITableViewController {
-    
+class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
+
     let cellInformation: [CellInformation] = [
         CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
         CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
@@ -32,6 +32,10 @@ class SettingsViewController: UITableViewController {
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
+    }
+    
+    func userWillEditProfile() {
+        
     }
     
     // MARK: - Table view data source

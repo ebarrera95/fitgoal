@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol SettingHeaderViewDelegate: AnyObject {
+    func userWillEditProfile()
+}
+
 class SettingHeaderView: UIView {
+    
+    weak var delegate: SettingHeaderViewDelegate?
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
@@ -43,16 +49,18 @@ class SettingHeaderView: UIView {
         return view
     }()
     
-    private let editProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(imageLiteralResourceName: "editProfile")
-        return imageView
+    private let editProfileButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(imageLiteralResourceName: "editProfile"), for: .normal)
+        return button
     }()
     
     convenience init(frame: CGRect, userName: String, userFitnessLevel: String, userProfileImage: UIImage?) {
         self.init(frame: frame)
         configureUserNameLabel(withText: userName)
         configureUserFitnessLabelLevel(withText: userFitnessLevel)
+        
+        editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -63,7 +71,7 @@ class SettingHeaderView: UIView {
             userNameLabel,
             userFitnessLevelLabel,
             userAvatarImageView,
-            editProfileImageView
+            editProfileButton
         ]
         self.addMultipleSubviews(views)
         setConstraints()
@@ -71,6 +79,10 @@ class SettingHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func handleEditProfile() {
+        self.delegate?.userWillEditProfile()
     }
     
     override func layoutSubviews() {
@@ -116,13 +128,13 @@ class SettingHeaderView: UIView {
     }
     
     private func setEditProfileConstraints() {
-        editProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+        editProfileButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            editProfileImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            editProfileImageView.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
-            editProfileImageView.widthAnchor.constraint(equalToConstant: 26),
-            editProfileImageView.heightAnchor.constraint(equalToConstant: 26)
+            editProfileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            editProfileButton.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
+            editProfileButton.widthAnchor.constraint(equalToConstant: 26),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 26)
         ])
     }
     
