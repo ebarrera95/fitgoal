@@ -8,7 +8,14 @@
 
 import UIKit
 
+protocol UserInfoCellDelegate: AnyObject {
+    func userWillEditCell()
+    func userDidEditCell()
+}
+
 class UserInfoCell: UITableViewCell {
+    
+    weak var delegate: UserInfoCellDelegate?
     
     var cellInformation: CellInformation? {
         didSet {
@@ -31,12 +38,16 @@ class UserInfoCell: UITableViewCell {
     private let icon = UIImageView()
     private let cellTitle = UILabel()
     private let userInformation = UILabel()
+    private let editButton = UIButton()
+    
+    private var userWillEditCell = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
+        editButton.addTarget(self, action: #selector(handleEditTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -49,6 +60,17 @@ class UserInfoCell: UITableViewCell {
     
     private func configureUserInformationLabel(withText text: String) {
         userInformation.attributedText = text.formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
+    }
+    
+    @objc private func handleEditTap() {
+        userWillEditCell = !userWillEditCell
+        if userWillEditCell {
+            editButton.setAttributedTitle("Done".formattedText(font: "Oswald-Medium", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
+            self.delegate?.userWillEditCell()
+        } else {
+            editButton.setAttributedTitle("Edit".formattedText(font: "Oswald-Medium", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
+            self.delegate?.userDidEditCell()
+        }
     }
     
     private func setConstraints() {
