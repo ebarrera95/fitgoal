@@ -54,7 +54,7 @@ class UserInfoCell: UITableViewCell {
         contentView.addMultipleSubviews(views)
         setConstraints()
         editButton.addTarget(self, action: #selector(handleEditTap), for: .touchUpInside)
-        editButton.setAttributedTitle("Edit".formattedText(font: "Oswald-Medium", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
+        editButton.setAttributedTitle("Edit".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
     }
     
     required init?(coder: NSCoder) {
@@ -72,10 +72,10 @@ class UserInfoCell: UITableViewCell {
     @objc private func handleEditTap() {
         userWillEditCell = !userWillEditCell
         if userWillEditCell {
-            editButton.setAttributedTitle("Done".formattedText(font: "Oswald-Medium", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
+            editButton.setAttributedTitle("Done".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
             self.delegate?.userWillEditCell()
         } else {
-            editButton.setAttributedTitle("Edit".formattedText(font: "Oswald-Medium", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
+            editButton.setAttributedTitle("Edit".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
             self.delegate?.userDidEditCell()
         }
     }
@@ -119,8 +119,8 @@ class UserInfoCell: UITableViewCell {
             NSLayoutConstraint.activate([
                 editButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
                 editButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                editButton.heightAnchor.constraint(equalToConstant: 30),
-                editButton.widthAnchor.constraint(equalToConstant: 30)
+                editButton.heightAnchor.constraint(equalToConstant: 35),
+                editButton.widthAnchor.constraint(equalToConstant: 35)
             ])
         }
     }
