@@ -38,23 +38,13 @@ class UserInfoCell: UITableViewCell {
     private let cellTitle = UILabel()
     private let userInformation = UILabel()
     
-    private let editButton: UIButton = {
-        let button = UIButton()
-        button.isHidden = false
-        return button
-    }()
-    
     private var userWillEditCell = false
-    
-    private var iconLeadingConstraint: NSLayoutConstraint!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let views = [icon, cellTitle, userInformation, editButton]
         contentView.addMultipleSubviews(views)
         setConstraints()
-        editButton.addTarget(self, action: #selector(handleEditTap), for: .touchUpInside)
-        editButton.setAttributedTitle("Edit".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
     }
     
     required init?(coder: NSCoder) {
@@ -84,7 +74,6 @@ class UserInfoCell: UITableViewCell {
         setIconConstraints()
         setCellTitleConstraints()
         setUserInformationConstraints()
-        setEditButtonConstraints()
     }
     
     private func setIconConstraints() {
@@ -111,17 +100,5 @@ class UserInfoCell: UITableViewCell {
             userInformation.trailingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor, constant: -16),
             userInformation.centerYAnchor.constraint(lessThanOrEqualTo: self.contentView.centerYAnchor)
         ])
-    }
-    
-    private func setEditButtonConstraints() {
-        if !editButton.isHidden {
-            editButton.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                editButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
-                editButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                editButton.heightAnchor.constraint(equalToConstant: 35),
-                editButton.widthAnchor.constraint(equalToConstant: 35)
-            ])
-        }
     }
 }
