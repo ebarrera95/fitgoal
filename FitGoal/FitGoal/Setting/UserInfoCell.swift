@@ -42,7 +42,7 @@ class UserInfoCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        let views = [icon, cellTitle, userInformation, editButton]
+        let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
     }
@@ -58,18 +58,7 @@ class UserInfoCell: UITableViewCell {
     private func configureUserInformationLabel(withText text: String) {
         userInformation.attributedText = text.formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
-    
-    @objc private func handleEditTap() {
-        userWillEditCell = !userWillEditCell
-        if userWillEditCell {
-            editButton.setAttributedTitle("Done".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
-            self.delegate?.userWillEditCell()
-        } else {
-            editButton.setAttributedTitle("Edit".formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.3), for: .normal)
-            self.delegate?.userDidEditCell()
-        }
-    }
-    
+
     private func setConstraints() {
         setIconConstraints()
         setCellTitleConstraints()
@@ -79,7 +68,7 @@ class UserInfoCell: UITableViewCell {
     private func setIconConstraints() {
         icon.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            icon.leadingAnchor.constraint(equalTo: self.editButton.trailingAnchor, constant: 8),
+            icon.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 16),
             icon.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             icon.heightAnchor.constraint(equalToConstant: 50),
             icon.widthAnchor.constraint(equalToConstant: 50)
