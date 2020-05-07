@@ -39,7 +39,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     }
     
     func userWillEditProfile() {
-        print("here")
+        //
     }
     
     // MARK: - Table view data source
@@ -118,6 +118,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
 }
 enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
