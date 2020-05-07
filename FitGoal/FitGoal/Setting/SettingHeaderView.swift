@@ -8,13 +8,7 @@
 
 import UIKit
 
-protocol SettingHeaderViewDelegate: AnyObject {
-    func userWillEditProfile()
-}
-
 class SettingHeaderView: UIView {
-    
-    weak var delegate: SettingHeaderViewDelegate?
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
@@ -60,7 +54,6 @@ class SettingHeaderView: UIView {
         configureUserNameLabel(withText: userName)
         configureUserFitnessLabelLevel(withText: userFitnessLevel)
         
-        editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -79,10 +72,6 @@ class SettingHeaderView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    @objc func handleEditProfile() {
-        self.delegate?.userWillEditProfile()
     }
     
     override func layoutSubviews() {

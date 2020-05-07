@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
+class SettingsViewController: UITableViewController {
 
     let cellInformation: [CellInformation] = [
         CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
@@ -33,13 +33,6 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
         
-        if let headerView = self.tableView.tableHeaderView as? SettingHeaderView {
-            headerView.delegate = self
-        }
-    }
-    
-    func userWillEditProfile() {
-        //
     }
     
     // MARK: - Table view data source
@@ -118,8 +111,8 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-    
 }
+
 enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
