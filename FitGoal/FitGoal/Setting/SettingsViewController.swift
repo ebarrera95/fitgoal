@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
 
-    let cellInformation: [CellInformation] = [
+    private let cellInformation: [CellInformation] = [
         CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
         CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
         CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
@@ -18,10 +18,12 @@ class SettingsViewController: UITableViewController {
         CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: "")
     ]
     
-    let accountInformation: [String] = [
+    private let accountInformation: [String] = [
         "Notifications",
         "Account Info"
     ]
+    
+    private var genderPickerViewIndexPath: Int? 
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +34,7 @@ class SettingsViewController: UITableViewController {
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
+        self.tableView.register(GenderPickerViewCell.self, forCellReuseIdentifier: GenderPickerViewCell.identifier)
         
     }
     
