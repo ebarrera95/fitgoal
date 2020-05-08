@@ -18,7 +18,7 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
             }
             icon.image = cellInfo.cellIcon
             configureCellTitle(withText: cellInfo.cellName)
-            configureUserInformationLabel(withText: cellInfo.userInformation)
+            configureUserInformation(withText: cellInfo.userInformation)
             if cellInfo.cellName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
@@ -60,7 +60,7 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
         cellTitle.attributedText = text.formattedText(font: "Roboto-Light", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
     
-    private func configureUserInformationLabel(withText text: String) {
+    private func configureUserInformation(withText text: String) {
         userInformation.attributedText = text.formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
 
@@ -130,7 +130,7 @@ extension UserInfoCell {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let gender = optionsInPickerView[row]
-        configureUserInformationLabel(withText: gender)
+        configureUserInformation(withText: gender)
         self.resignFirstResponder()
     }
 }
