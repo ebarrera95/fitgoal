@@ -11,13 +11,16 @@ import UIKit
 class GenderPickerViewCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
     
     static let identifier = "GenderPickerViewCell"
-    private let genderPicker = UIPickerView()
+    private let genderPickerView = UIPickerView()
     
     private let optionsInPickerView = ["Male", "Female"]
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.addSubview(genderPicker)
+        contentView.addSubview(genderPickerView)
+        genderPickerView.delegate = self
+        genderPickerView.dataSource = self
+        setPickerViewConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -25,7 +28,7 @@ class GenderPickerViewCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewD
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return optionsInPickerView.count
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -35,14 +38,24 @@ class GenderPickerViewCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return contentView.bounds.height
     }
-    
-    func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        return contentView.bounds.width
-    }
-    
+
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = optionsInPickerView[row]
-        return title.formattedText(font: "Oswald-Light", size: 15, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12)
+        let mutableAttributedString = NSMutableAttributedString(attributedString: title.formattedText(font: "Roboto-Regular", size: 12, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12))
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let range = NSRange(location: 0, length: (title as NSString).length)
+        mutableAttributedString.addAttributes([.paragraphStyle : paragraphStyle], range: range)
+        return mutableAttributedString as NSAttributedString
     }
     
+    private func setPickerViewConstraints() {
+        genderPickerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            genderPickerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            genderPickerView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            genderPickerView.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            genderPickerView.widthAnchor.constraint(equalTo: contentView.widthAnchor)
+        ])
+    }
 }

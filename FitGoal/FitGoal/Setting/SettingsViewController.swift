@@ -23,7 +23,7 @@ class SettingsViewController: UITableViewController {
         "Account Info"
     ]
     
-    private var genderPickerViewIndexPath: Int? 
+    private var genderPickerViewIndexPath = 3
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,11 +64,16 @@ class SettingsViewController: UITableViewController {
         
         switch settingsSection {
         case .userInfo:
-            let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-            cell.selectionStyle = .none
-            guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                userInfoCell.cellInformation = cellInformation[indexPath.row]
-                return userInfoCell
+            if indexPath.row == 3 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: GenderPickerViewCell.identifier, for: indexPath)
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+                cell.selectionStyle = .none
+                guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
+                    userInfoCell.cellInformation = cellInformation[indexPath.row]
+                    return userInfoCell
+            }
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             cell.selectionStyle = .none
