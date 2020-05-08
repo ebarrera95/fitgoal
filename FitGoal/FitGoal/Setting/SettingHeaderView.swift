@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol SettingHeaderViewDelegate: AnyObject {
+    func userWillEditProfile()
+    func userDidEditProfile()
+}
+
 class SettingHeaderView: UIView {
+    
+    weak var delegate: SettingHeaderViewDelegate?
+    private var userWillEditProfile = false
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
@@ -54,6 +62,7 @@ class SettingHeaderView: UIView {
         configureUserNameLabel(withText: userName)
         configureUserFitnessLabelLevel(withText: userFitnessLevel)
         
+        editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -87,6 +96,20 @@ class SettingHeaderView: UIView {
         userFitnessLevelLabel.attributedText = text.formattedText(font: "Roboto-Light", size: 14, color: .white, kern: 0.17)
     }
     
+    @objc func handleEditProfile() {
+        if userWillEditProfile {
+            editProfileButton.setImage(UIImage(imageLiteralResourceName: "editProfile"), for: .normal)
+            editProfileButton.setAttributedTitle(nil, for: .normal)
+            userWillEditProfile = false
+            self.delegate?.userWillEditProfile()
+        } else {
+            editProfileButton.setImage(nil, for: .normal)
+            editProfileButton.setAttributedTitle("Done".formattedText(font: "Roboto-Bold", size: 16, color: .white, kern: 0.12), for: .normal)
+            userWillEditProfile = true
+            self.delegate?.userWillEditProfile()
+        }
+    }
+
     //MARK: - Constraints
     private func setConstraints() {
         setMainLabelConstraints()
@@ -122,8 +145,8 @@ class SettingHeaderView: UIView {
         NSLayoutConstraint.activate([
             editProfileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             editProfileButton.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
-            editProfileButton.widthAnchor.constraint(equalToConstant: 26),
-            editProfileButton.heightAnchor.constraint(equalToConstant: 26)
+            editProfileButton.widthAnchor.constraint(equalToConstant: 40),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     

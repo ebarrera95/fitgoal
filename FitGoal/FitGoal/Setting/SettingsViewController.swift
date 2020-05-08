@@ -8,8 +8,8 @@
 
 import UIKit
 
-class SettingsViewController: UITableViewController {
-
+class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
+    
     private let cellInformation: [CellInformation] = [
         CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
         CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
@@ -23,6 +23,8 @@ class SettingsViewController: UITableViewController {
         "Account Info"
     ]
     
+    private var isEditModeEnable = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -33,6 +35,19 @@ class SettingsViewController: UITableViewController {
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
         
+        if let headerView = self.tableView.tableHeaderView as? SettingHeaderView {
+            headerView.delegate = self
+        }
+    }
+    
+    func userWillEditProfile() {
+        isEditModeEnable = true
+        tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
+    }
+    
+    func userDidEditProfile() {
+        isEditModeEnable = false
+        tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
     }
     
     // MARK: - Table view data source
@@ -65,7 +80,12 @@ class SettingsViewController: UITableViewController {
             cell.selectionStyle = .none
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
                 userInfoCell.cellInformation = cellInformation[indexPath.row]
-                return userInfoCell
+            if isEditModeEnable {
+                userInfoCell.enableEditMode()
+            } else {
+                userInfoCell.disableEditMode()
+            }
+            return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             cell.selectionStyle = .none
@@ -106,16 +126,6 @@ class SettingsViewController: UITableViewController {
         return headerView
     }
     
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        let cell = tableView.cellForRow(at: indexPath)
-        guard let userInfoCell = cell as? UserInfoCell else { return false }
-        if userInfoCell.cellInformation?.cellName == "Gender" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -125,7 +135,7 @@ class SettingsViewController: UITableViewController {
     }
 }
 
-enum SettingsTableViewSection: Int, CaseIterable {
+private enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
 }

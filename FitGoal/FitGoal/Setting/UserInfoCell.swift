@@ -22,19 +22,17 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
             if cellInfo.cellName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
-            }
-            if cellInfo.cellName == "Gender" {
-                userInformation.inputView = genderPickerView
-                userInformation.tintColor = .clear
             } else {
-                userInformation.isUserInteractionEnabled = false
+                self.accessoryType = .none
+                userInformation.isHidden = false
             }
+            optionsInPickerView = generateArrayForPickerView()
         }
     }
     
-    private let optionsInPickerView = ["Male", "Female"]
-    
+    private var optionsInPickerView = [String()]
     static let identifier = "UserInfoCell"
+    
     private let icon = UIImageView()
     private let cellTitle = UILabel()
     private let userInformation = UITextField()
@@ -54,6 +52,34 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func enableEditMode() {
+        guard let cellInfo = cellInformation else {
+            assertionFailure("no cellInfo found")
+            return
+        }
+        if cellInfo.cellName == "Gender" {
+            userInformation.inputView = genderPickerView
+            userInformation.tintColor = .clear
+        } else {
+            userInformation.isUserInteractionEnabled = false
+        }
+    }
+    
+    func disableEditMode() {
+        userInformation.isUserInteractionEnabled = false
+    }
+    
+    private func generateArrayForPickerView() -> [String] {
+        guard let userInfo = cellInformation else { assertionFailure("no cellInfo found")
+            return []
+        }
+        if userInfo.userInformation == "Male" {
+            return ["Male, Female"]
+        } else {
+            return ["Female", "Male"]
+        }
     }
     
     private func configureCellTitle(withText text: String) {
@@ -131,6 +157,5 @@ extension UserInfoCell {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let gender = optionsInPickerView[row]
         configureUserInformation(withText: gender)
-        self.resignFirstResponder()
     }
 }
