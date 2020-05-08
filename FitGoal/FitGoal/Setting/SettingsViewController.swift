@@ -10,7 +10,7 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    let cellInformation: [CellInformation] = [
+    private let cellInformation: [CellInformation] = [
         CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
         CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
         CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
@@ -24,20 +24,13 @@ class SettingsViewController: UITableViewController {
         
         self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
         self.tableView.tableFooterView = UIView()
-        
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-    }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
-
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,6 +62,7 @@ class SettingsViewController: UITableViewController {
         ])
         return header
     }
+    
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -77,6 +71,7 @@ class SettingsViewController: UITableViewController {
         return 50
     }
 }
+
 struct CellInformation {
     let cellName: String
     let cellIcon: UIImage
