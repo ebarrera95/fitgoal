@@ -62,11 +62,13 @@ class SettingsViewController: UITableViewController {
         switch settingsSection {
         case .userInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+            cell.selectionStyle = .none
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
                 userInfoCell.cellInformation = cellInformation[indexPath.row]
                 return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
+            cell.selectionStyle = .none
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
             accountInfoCell.cellTitle = accountInformation[indexPath.row]
             return accountInfoCell
@@ -102,6 +104,16 @@ class SettingsViewController: UITableViewController {
             sectionName.topAnchor.constraint(equalTo: headerView.topAnchor, constant: 24)
         ])
         return headerView
+    }
+    
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        let cell = tableView.cellForRow(at: indexPath)
+        guard let userInfoCell = cell as? UserInfoCell else { return false }
+        if userInfoCell.cellInformation?.cellName == "Gender" {
+            return true
+        } else {
+            return false
+        }
     }
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
