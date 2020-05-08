@@ -22,7 +22,11 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
-        self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
+        self.tableView.tableHeaderView = SettingHeaderView(
+            frame: CGRect(x: 0, y: 0, width: 0, height: 250),
+            userName: "Eliany Barrera",
+            userFitnessLevel: "Intermediate", userProfileImage: nil
+        )
         self.tableView.tableFooterView = UIView()
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
     }

@@ -16,6 +16,7 @@ class UserInfoCell: UITableViewCell {
                 assertionFailure("no cellInfo found")
                 return
             }
+            
             if cellInfo.cellName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
@@ -23,6 +24,7 @@ class UserInfoCell: UITableViewCell {
                 self.accessoryType = .none
                 userInformation.isHidden = false
             }
+            
             icon.image = cellInfo.cellIcon
             configureCellTitleLabel(withText: cellInfo.cellName)
             configureUserInformationLabel(withText: cellInfo.userInformation)
