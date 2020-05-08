@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserInfoCell: UITableViewCell {
+class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     
     var cellInformation: CellInformation? {
         didSet {
@@ -23,13 +23,23 @@ class UserInfoCell: UITableViewCell {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
             }
+            if cellInfo.cellName == "Gender" {
+                userInformation.inputView = genderPickerView
+                userInformation.tintColor = .clear
+            } else {
+                userInformation.isUserInteractionEnabled = false
+            }
         }
     }
+    
+    private let optionsInPickerView = ["Male", "Female"]
     
     static let identifier = "UserInfoCell"
     private let icon = UIImageView()
     private let cellTitle = UILabel()
-    private let userInformation = UILabel()
+    private let userInformation = UITextField()
+    
+    private let genderPickerView = UIPickerView()
     
     var userWillEditCell = false
     
@@ -38,7 +48,8 @@ class UserInfoCell: UITableViewCell {
         let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
-
+        genderPickerView.delegate = self
+        genderPickerView.dataSource = self
     }
     
     required init?(coder: NSCoder) {
@@ -57,6 +68,7 @@ class UserInfoCell: UITableViewCell {
         setIconConstraints()
         setCellTitleConstraints()
         setUserInformationConstraints()
+        setPickerViewConstraints()
     }
     
     private func setIconConstraints() {
@@ -83,5 +95,42 @@ class UserInfoCell: UITableViewCell {
             userInformation.trailingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor, constant: -16),
             userInformation.centerYAnchor.constraint(lessThanOrEqualTo: self.contentView.centerYAnchor)
         ])
+    }
+    
+    private func setPickerViewConstraints() {
+        genderPickerView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            genderPickerView.heightAnchor.constraint(equalToConstant: 150)
+        ])
+    }
+}
+
+extension UserInfoCell {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return optionsInPickerView.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return contentView.bounds.height
+    }
+
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let title = optionsInPickerView[row]
+        let mutableAttributedString = NSMutableAttributedString(attributedString: title.formattedText(font: "Roboto-Regular", size: 12, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12))
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.alignment = .center
+        let range = NSRange(location: 0, length: (title as NSString).length)
+        mutableAttributedString.addAttributes([.paragraphStyle : paragraphStyle], range: range)
+        return mutableAttributedString as NSAttributedString
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        let gender = optionsInPickerView[row]
+        configureUserInformationLabel(withText: gender)
+        self.resignFirstResponder()
     }
 }

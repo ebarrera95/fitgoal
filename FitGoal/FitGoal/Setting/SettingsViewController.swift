@@ -23,8 +23,6 @@ class SettingsViewController: UITableViewController {
         "Account Info"
     ]
     
-    private var genderPickerViewIndexPath = 3
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -34,7 +32,6 @@ class SettingsViewController: UITableViewController {
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
-        self.tableView.register(GenderPickerViewCell.self, forCellReuseIdentifier: GenderPickerViewCell.identifier)
         
     }
     
@@ -64,16 +61,11 @@ class SettingsViewController: UITableViewController {
         
         switch settingsSection {
         case .userInfo:
-            if indexPath.row == 3 {
-                let cell = tableView.dequeueReusableCell(withIdentifier: GenderPickerViewCell.identifier, for: indexPath)
-                return cell
-            } else {
-                let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-                cell.selectionStyle = .none
-                guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                    userInfoCell.cellInformation = cellInformation[indexPath.row]
-                    return userInfoCell
-            }
+            let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+            cell.selectionStyle = .none
+            guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
+                userInfoCell.cellInformation = cellInformation[indexPath.row]
+                return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             cell.selectionStyle = .none
@@ -130,9 +122,6 @@ class SettingsViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
-    }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     }
 }
 
