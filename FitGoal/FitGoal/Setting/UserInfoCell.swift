@@ -8,14 +8,7 @@
 
 import UIKit
 
-protocol UserInfoCellDelegate: AnyObject {
-    func userWillEditCell()
-    func userDidEditCell()
-}
-
 class UserInfoCell: UITableViewCell {
-    
-    weak var delegate: UserInfoCellDelegate?
     
     var cellInformation: CellInformation? {
         didSet {
@@ -38,13 +31,14 @@ class UserInfoCell: UITableViewCell {
     private let cellTitle = UILabel()
     private let userInformation = UILabel()
     
-    private var userWillEditCell = false
+    var userWillEditCell = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
+
     }
     
     required init?(coder: NSCoder) {
