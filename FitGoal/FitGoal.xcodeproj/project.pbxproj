@@ -17,6 +17,7 @@
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		05133A60245A4BC60008DFA5 /* TrainingLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */; };
 		05133A62245A5D880008DFA5 /* UserPlanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */; };
+		051401F42468DD1B003A1770 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051401F32468DD1B003A1770 /* UserPreferences.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
 		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
@@ -99,6 +100,7 @@
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLevelView.swift; sourceTree = "<group>"; };
 		05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlanningViewController.swift; sourceTree = "<group>"; };
+		051401F32468DD1B003A1770 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
 		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 			children = (
 				0555BA99245BA51100422BCD /* SettingsViewController.swift */,
 				0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */,
+				051401F32468DD1B003A1770 /* UserPreferences.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -684,6 +687,7 @@
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
 				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,
+				051401F42468DD1B003A1770 /* UserPreferences.swift in Sources */,
 				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
 				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
 				054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */,
