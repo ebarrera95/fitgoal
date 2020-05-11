@@ -10,6 +10,8 @@ import UIKit
 
 class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     
+    private var userPreferences: UserPreferences?
+    
     private var pendingIndex = Int()
     private var currentIndex = Int() {
         didSet {
