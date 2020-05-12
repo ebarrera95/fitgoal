@@ -10,9 +10,9 @@ import UIKit
 
 class UserInfoCell: UITableViewCell {
     
-    var cellInformation: CellInformation? {
+    var userInfoCellContent: UserInfoCellContent? {
         didSet {
-            guard let cellInfo = cellInformation else {
+            guard let cellInfo = userInfoCellContent else {
                 assertionFailure("no cellInfo found")
                 return
             }

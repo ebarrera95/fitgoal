@@ -10,12 +10,12 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    private let cellInformation: [CellInformation] = [
-        CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
-        CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
-        CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
-        CellInformation(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
-        CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: ">")
+    private let userInfoCellsContent: [UserInfoCellContent] = [
+        UserInfoCellContent(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
+        UserInfoCellContent(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
+        UserInfoCellContent(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
+        UserInfoCellContent(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
+        UserInfoCellContent(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: ">")
     ]
 
     override func viewDidLoad() {
@@ -39,14 +39,14 @@ class SettingsViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return cellInformation.count
+        return userInfoCellsContent.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
         guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
         userInfoCell.selectionStyle = .none
-        userInfoCell.cellInformation = cellInformation[indexPath.row]
+        userInfoCell.userInfoCellContent = userInfoCellsContent[indexPath.row]
         return userInfoCell
     }
     
@@ -77,7 +77,7 @@ class SettingsViewController: UITableViewController {
     }
 }
 
-struct CellInformation {
+struct UserInfoCellContent {
     let cellName: String
     let cellIcon: UIImage
     let userInformation: String
