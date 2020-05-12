@@ -23,6 +23,7 @@
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
+		0530E84A246A452F0033302B /* CountDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E849246A452F0033302B /* CountDownViewController.swift */; };
 		053E78A6245538B700A8CF37 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */; };
 		053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */; };
 		053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A9245556EC00A8CF37 /* GenderView.swift */; };
@@ -105,6 +106,7 @@
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
+		0530E849246A452F0033302B /* CountDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewController.swift; sourceTree = "<group>"; };
 		053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileConfiguratorViewController.swift; sourceTree = "<group>"; };
 		053E78A9245556EC00A8CF37 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				0517AD52242442F20049E48B /* Singup&Singin */,
 				056A49B7241F287A00707791 /* CoreData */,
 				056A49B8241F288A00707791 /* Utilities */,
+				0530E849246A452F0033302B /* CountDownViewController.swift */,
 				056A49B9241F28BB00707791 /* HomeViewController */,
 				056A49BC241F29F300707791 /* Model */,
 				056A49BD241F2A2B00707791 /* ExerciseDetailViewController */,
@@ -691,6 +694,7 @@
 				053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */,
 				050507F52431C54400CE58BC /* UserInformation.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
+				0530E84A246A452F0033302B /* CountDownViewController.swift in Sources */,
 				053E78A6245538B700A8CF37 /* WalkthroughPageViewController.swift in Sources */,
 				0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */,
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
