@@ -20,9 +20,8 @@ class CountDownViewController: UIViewController {
     }()
     
     private var timer = Timer()
-    private var countdownSeconds = 0
-    
-    private let countdownMessages = ["Ready!", "You can do it!", "Let's start!"]
+    private var countdownSeconds = 3
+    private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
     private func generateGradientView(cornerRadius: CGFloat, maskedCorners: CACornerMask, colors: [UIColor], rotationAngle: CGFloat, translationInX: CGFloat, translationInY: CGFloat, alpha: CGFloat) -> UIView {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
@@ -77,10 +76,10 @@ class CountDownViewController: UIViewController {
     
     private func runCountdown() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
-            if self.countdownSeconds < self.countdownMessages.count {
-                self.setCountdownTime(time: String(self.countdownSeconds + 1))
-                self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds])
-                self.countdownSeconds += 1
+            if self.countdownSeconds > 0 {
+                self.setCountdownTime(time: String(self.countdownSeconds))
+                self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
+                self.countdownSeconds -= 1
             } else {
                 timer.invalidate()
             }
