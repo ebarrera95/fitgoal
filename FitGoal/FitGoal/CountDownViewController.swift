@@ -11,9 +11,16 @@ import UIKit
 class CountDownViewController: UIViewController {
     
     private let countDownLabel = UILabel()
-    private var motivationMessage = String()
-    private let motivationMessageLabel = UILabel()
-    private let stopLabel = UILabel()
+    private let countDownMessageLabel = UILabel()
+    
+    private let stopButton: UIButton = {
+        let button = UIButton()
+        button.setAttributedTitle("stop".uppercased().formattedText(font: "Roboto-Light", size: 15, color: .white, kern: 0.18), for: .normal)
+        return button
+    }()
+    
+    private var timer = Timer()
+    private let countDownMessage = ["Ready!", "You can do it!", "Let's start!"]
     
     private func generateGradientView(cornerRadius: CGFloat, maskedCorners: CACornerMask, colors: [UIColor], rotationAngle: CGFloat, translationInX: CGFloat, translationInY: CGFloat, alpha: CGFloat) -> UIView {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
@@ -66,11 +73,55 @@ class CountDownViewController: UIViewController {
         return [gradientBackgroundView, topLeftGradientView, topRightGradientView, bottomRightGradientView]
     }
     
+    private func runTimer() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+        })
+    }
+    
+    private func setCountDownMessage(message: String) {
+        countDownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
+    }
+    private func setCountDownTime(time: String) {
+        countDownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let views = generateBackgroundView()
+        let views = generateBackgroundView() + [countDownLabel, countDownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
+//        setCountDownMessage()
+//        setCountDownTime()
+        setConstraints()
     }
-
+    
+    private func setConstraints() {
+        setStopButtonConstraints()
+        setCountDownLabelConstraints()
+        setCountDownMessageLabelConstraint()
+    }
+    
+    private func setStopButtonConstraints() {
+        stopButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stopButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -54)
+        ])
+    }
+    
+    private func setCountDownLabelConstraints() {
+        countDownLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            countDownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            countDownLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 16)
+        ])
+    }
+    
+    private func setCountDownMessageLabelConstraint() {
+        countDownMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            countDownMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            countDownMessageLabel.topAnchor.constraint(equalTo: countDownLabel.bottomAnchor, constant: 16)
+        ])
+    }
+    
 }
