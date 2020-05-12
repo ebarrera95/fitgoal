@@ -8,7 +8,15 @@
 
 import UIKit
 
+protocol TrainingLevelViewDelegate: AnyObject {
+    func userDidSelectTrainingLevel(trainingLevelView: TrainingLevelView)
+}
+
 class TrainingLevelView: UIView {
+    
+    weak var delegate: TrainingLevelViewDelegate?
+    
+    let userLevel: String
     
     private let intensityLevelLabel: UILabel = {
         let label = UILabel()
@@ -41,9 +49,9 @@ class TrainingLevelView: UIView {
     private var isViewSelected = false
     
     init(level: String, monthsTraining: Int, timesAWeek: Int, selectedStateColor: UIColor) {
+        self.userLevel = level
         super.init(frame: .zero)
         intensityLevelDescriptionLabel.attributedText = intensityLevelDescriptionAttributedText(months: monthsTraining, timesAWeek: timesAWeek)
-        
         configureSelectionIndicatorImage(forState: isViewSelected)
         
         backgroundView.layer.borderColor = selectedStateColor.cgColor
@@ -79,15 +87,20 @@ class TrainingLevelView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func deselectView() {
+        isViewSelected = false
+        configureSelectionIndicatorImage(forState: isViewSelected)
+        backgroundView.isHidden = true
+    }
+    
     @objc private func handleTap() {
         if isViewSelected {
-            isViewSelected = false
-            configureSelectionIndicatorImage(forState: isViewSelected)
-            backgroundView.isHidden = true
+            deselectView()
         } else {
             isViewSelected = true
             configureSelectionIndicatorImage(forState: isViewSelected)
             backgroundView.isHidden = false
+            delegate?.userDidSelectTrainingLevel(trainingLevelView: self)
         }
     }
     

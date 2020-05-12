@@ -8,11 +8,15 @@
 
 import UIKit
 
-class UserPlanningViewController: UIViewController {
+class UserPlanningViewController: UIViewController, TrainingLevelViewDelegate {
+    
+    private let appPreferences = AppPreferences()
     
     private let easyPlan = TrainingLevelView(level: "Easy", monthsTraining: 6, timesAWeek: 2, selectedStateColor: #colorLiteral(red: 0.2431372549, green: 0.7803921569, blue: 0.9019607843, alpha: 1))
     private let mediumPlan = TrainingLevelView(level: "Medium", monthsTraining: 4, timesAWeek: 4, selectedStateColor: #colorLiteral(red: 1, green: 0.6492816915, blue: 0.5106400314, alpha: 1))
     private let intensePlan = TrainingLevelView(level: "Intense", monthsTraining: 2, timesAWeek: 5, selectedStateColor: #colorLiteral(red: 0.9873231897, green: 0.1885731705, blue: 0.05805841231, alpha: 1))
+    
+    private lazy var trainingPlanViews = [easyPlan, mediumPlan, intensePlan]
     
     private let continueButton: UIButton = {
         let button = UIButton()
@@ -41,8 +45,6 @@ class UserPlanningViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let trainingPlanViews = [easyPlan, mediumPlan, intensePlan]
-        
         let views = trainingPlanViews + [continueButton, questionPrefixLabel, questionSuffixLabel]
         view.addMultipleSubviews(views)
         
@@ -50,6 +52,13 @@ class UserPlanningViewController: UIViewController {
         setAxisConstraints()
         setQuestionPrefixLabelConstraints()
         setQuestionSuffixLabelConstraints()
+        setTrainingPlanViewsDelegate()
+    }
+    
+    private func setTrainingPlanViewsDelegate() {
+        trainingPlanViews.forEach { (view) in
+            view.delegate = self
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,6 +70,16 @@ class UserPlanningViewController: UIViewController {
             height: 52
         )
         continueButton.layer.cornerRadius = continueButton.bounds.height/2
+    }
+    
+    func userDidSelectTrainingLevel(trainingLevelView: TrainingLevelView) {
+        for view in trainingPlanViews {
+            if view == trainingLevelView {
+                appPreferences.trainingIntensity = trainingLevelView.userLevel
+            } else {
+                view.deselectView()
+            }
+        }
     }
     
     private func setAxisConstraints() {

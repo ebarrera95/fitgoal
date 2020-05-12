@@ -93,9 +93,7 @@ class WalkthroughIconView: UIView {
     
     private func changeIconState() {
         if icon.selected {
-            self.icon.selected = false
-            configureIcon(forState: icon.selected, withName: icon.name)
-            backgroundView.isHidden = true
+            deselectView()
         } else {
             self.icon.selected = true
             configureIcon(forState: icon.selected, withName: icon.name)
