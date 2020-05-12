@@ -112,7 +112,7 @@ class ExerciseCell: UICollectionViewCell {
     
     private var exersiceStatus: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
+        //imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
         imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         return imageView
     }()
