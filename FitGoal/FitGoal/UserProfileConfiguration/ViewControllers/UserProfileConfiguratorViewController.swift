@@ -8,16 +8,32 @@
 
 import UIKit
 
-class UserProfileConfiguratorViewController: UIViewController {
+class UserProfileConfiguratorViewController: UIViewController, GenderViewDelegate, FitnessLevelChooserViewDelegate, UITextFieldDelegate {
+    
+    private let userProfileType: UserProfileType
+    
+    private let appPreferences = AppPreferences()
     
     private let selectorView: UIView
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
     
-    init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
+    init(selectorView: UIView, questionPrefix: String, questionSuffix: String, userProfileType: UserProfileType) {
+        self.userProfileType = userProfileType
         self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
+        setSelectorViewDelegate()
+    }
+    
+    private func setSelectorViewDelegate() {
+        if let genderView = selectorView as? GenderView {
+            genderView.delegate = self
+        } else if let fitnessLevelView = selectorView as? FitnessLevelChooserView {
+            fitnessLevelView.delegate = self
+        } else if let textField = selectorView as? UITextField {
+            textField.delegate = self
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -70,6 +86,40 @@ class UserProfileConfiguratorViewController: UIViewController {
         }
     }
     
+    func userDidSelectGender(gender: String) {
+        appPreferences.userGender = gender
+    }
+    
+    func userDidSelectFitnessLevel(level: String) {
+        switch userProfileType {
+        case .fitnessLevel:
+            appPreferences.fitnessLevel = level
+        case .fitnessGoal:
+            appPreferences.fitnessGoal = level
+        default:
+            fatalError()
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch userProfileType {
+        case .age:
+            guard let text = textField.text else { return }
+            let age = Int(text) ?? 0
+            appPreferences.age = age
+        case .height:
+            guard let text = textField.text else { return }
+            let height = Int(text) ?? 0
+            appPreferences.height = height
+        case .weight:
+            guard let text = textField.text else { return }
+            let weight = Int(text) ?? 0
+            appPreferences.weight = weight
+        default:
+            fatalError()
+        }
+    }
+    
     //MARK: -Constraints
     private func setConstraints() {
         setQuestionPrefixLabelConstraints()
@@ -93,4 +143,13 @@ class UserProfileConfiguratorViewController: UIViewController {
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
     }
+}
+
+enum UserProfileType {
+    case gender
+    case fitnessLevel
+    case fitnessGoal
+    case age
+    case height
+    case weight
 }

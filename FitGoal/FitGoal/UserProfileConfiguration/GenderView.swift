@@ -9,21 +9,46 @@
 import Foundation
 import UIKit
 
-class GenderView: UIView {
+protocol GenderViewDelegate: AnyObject {
+    func userDidSelectGender(gender: String)
+}
+
+class GenderView: UIView, WalkthroughIconViewDelegate {
+    
+    weak var delegate: GenderViewDelegate?
+    
     private let female = WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
-    private let male = WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)) 
+    private let male = WalkthroughIconView(icon: WalkthroughIcon(iconType: .male))
+    
+    private lazy var iconViews = [female, male]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let views = [female, male]
         
-        addMultipleSubviews(views)
+        addMultipleSubviews(iconViews)
         setAxisConstraints()
-        setDimensionConstraints(icons: views)
+        setDimensionConstraints(icons: iconViews)
+        setIconViewsDelegate()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setIconViewsDelegate() {
+        iconViews.forEach { (view) in
+            view.delegate = self
+        }
+    }
+    
+    func userDidSelectIcon(iconView: WalkthroughIconView) {
+        for view in iconViews {
+            if view == iconView {
+                delegate?.userDidSelectGender(gender: iconView.icon.name)
+            } else {
+                view.deselectView()
+            }
+        }
     }
     
     // MARK: -Contraints

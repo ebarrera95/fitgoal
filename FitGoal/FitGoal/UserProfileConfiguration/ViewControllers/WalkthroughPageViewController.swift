@@ -61,37 +61,43 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         let gender = UserProfileConfiguratorViewController(
             selectorView: GenderView(),
             questionPrefix: "What is",
-            questionSuffix: "your gender".uppercased()
+            questionSuffix: "your gender".uppercased(),
+            userProfileType: .gender
         )
         
         let fitnessLevel = UserProfileConfiguratorViewController(
             selectorView: FitnessLevelChooserView(),
             questionPrefix: "What is your current fitness",
-            questionSuffix: "level".uppercased()
+            questionSuffix: "level".uppercased(),
+            userProfileType: .fitnessLevel
         )
         
         let fitnessGoal = UserProfileConfiguratorViewController(
             selectorView: FitnessLevelChooserView(),
             questionPrefix: "What is",
-            questionSuffix: "your goal".uppercased()
+            questionSuffix: "your goal".uppercased(),
+            userProfileType: .fitnessGoal
         )
         
         let age = UserProfileConfiguratorViewController(
             selectorView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your age".uppercased()
+            questionSuffix: "your age".uppercased(),
+            userProfileType: .age
         )
         
         let height = UserProfileConfiguratorViewController(
             selectorView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your height".uppercased()
+            questionSuffix: "your height".uppercased(),
+            userProfileType: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
             selectorView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your weight".uppercased()
+            questionSuffix: "your weight".uppercased(),
+            userProfileType: .weight
         )
         
         let planning = UserPlanningViewController()

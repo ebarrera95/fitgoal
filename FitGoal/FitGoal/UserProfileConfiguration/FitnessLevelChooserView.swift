@@ -8,28 +8,48 @@
 
 import UIKit
 
-class FitnessLevelChooserView: UIView {
+protocol FitnessLevelChooserViewDelegate: AnyObject {
+    func userDidSelectFitnessLevel(level: String)
+}
+
+class FitnessLevelChooserView: UIView, WalkthroughIconViewDelegate {
+    
+    weak var delegate: FitnessLevelChooserViewDelegate?
     
     private let skinnyBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny))
     private let normalBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal))
     private let obeseBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese))
     private let athleticBody = WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
     
+    private lazy var iconViews = [skinnyBody, normalBody, obeseBody, athleticBody]
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        let views = [
-            skinnyBody,
-            normalBody,
-            obeseBody,
-            athleticBody
-        ]
-        addMultipleSubviews(views)
+        
+        addMultipleSubviews(iconViews)
         setAxisConstraints()
-        setDimensionConstraints(icons: views)
+        setDimensionConstraints(icons: iconViews)
+        setIconViewsDelegate()
     }
     
     required init(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setIconViewsDelegate() {
+        iconViews.forEach { (view) in
+            view.delegate = self
+        }
+    }
+    
+    func userDidSelectIcon(iconView: WalkthroughIconView) {
+        for view in iconViews {
+            if view == iconView {
+                delegate?.userDidSelectFitnessLevel(level: iconView.icon.name)
+            } else {
+                view.deselectView()
+            }
+        }
     }
     
     // MARK: - Constraints
