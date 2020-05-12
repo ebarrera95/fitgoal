@@ -10,12 +10,12 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    private let userInfoCellsContent: [UserInfoCellContent] = [
-        UserInfoCellContent(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
-        UserInfoCellContent(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
-        UserInfoCellContent(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
-        UserInfoCellContent(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
-        UserInfoCellContent(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: ">")
+    private let userInfoCellsContent: [UserPreference] = [
+        UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
+        UserPreference(preferenceName: "Weight", preferenceImage: UIImage(imageLiteralResourceName: "weight"), preferenceValue: "135 LB"),
+        UserPreference(preferenceName: "Gender", preferenceImage: UIImage(imageLiteralResourceName: "gender"), preferenceValue: "Female"),
+        UserPreference(preferenceName: "Age", preferenceImage: UIImage(imageLiteralResourceName: "age"), preferenceValue: "28"),
+        UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
     ]
 
     override func viewDidLoad() {
@@ -46,7 +46,7 @@ class SettingsViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
         guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
         userInfoCell.selectionStyle = .none
-        userInfoCell.userInfoCellContent = userInfoCellsContent[indexPath.row]
+        userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
         return userInfoCell
     }
     
@@ -77,9 +77,9 @@ class SettingsViewController: UITableViewController {
     }
 }
 
-struct UserInfoCellContent {
-    let cellName: String
-    let cellIcon: UIImage
-    let userInformation: String
+struct UserPreference {
+    let preferenceName: String
+    let preferenceImage: UIImage
+    let preferenceValue: String
 }
 

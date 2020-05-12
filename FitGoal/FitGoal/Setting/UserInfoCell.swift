@@ -10,14 +10,14 @@ import UIKit
 
 class UserInfoCell: UITableViewCell {
     
-    var userInfoCellContent: UserInfoCellContent? {
+    var userPreference: UserPreference? {
         didSet {
-            guard let cellInfo = userInfoCellContent else {
+            guard let userPreference = userPreference else {
                 assertionFailure("no cellInfo found")
                 return
             }
             
-            if cellInfo.cellName == "Goals" {
+            if userPreference.preferenceName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
             } else {
@@ -25,9 +25,9 @@ class UserInfoCell: UITableViewCell {
                 userInformation.isHidden = false
             }
             
-            icon.image = cellInfo.cellIcon
-            configureCellTitleLabel(withText: cellInfo.cellName)
-            configureUserInformationLabel(withText: cellInfo.userInformation)
+            icon.image = userPreference.preferenceImage
+            configureCellTitleLabel(withText: userPreference.preferenceName)
+            configureUserInformationLabel(withText: userPreference.preferenceValue)
         }
     }
     
