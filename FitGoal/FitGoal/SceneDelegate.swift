@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            let helloVC = GreetingViewController()
 //            window.rootViewController = helloVC
 //        }
-        let vc = HomeViewController(persistance: CoreDataPersistance())
+        let vc = ExercisePlayerViewController()
         window.rootViewController = vc
     }
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
