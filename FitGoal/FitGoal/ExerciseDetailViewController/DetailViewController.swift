@@ -59,11 +59,12 @@ class DetailViewController: UIViewController {
         return imageView
     }()
     
-    private var playButton: UIImageView = {
-        let view = UIImageView(image: UIImage(imageLiteralResourceName: "PlayButton"))
-        view.frame = CGRect(x: 0, y: 0, width: 72, height: 72)
-        view.contentMode = .scaleAspectFit
-        return view
+    private var playButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(imageLiteralResourceName: "PlayButton"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 72, height: 72)
+        button.contentMode = .scaleAspectFit
+        return button
         
     }()
     
@@ -163,6 +164,8 @@ class DetailViewController: UIViewController {
         )
         super.init(nibName: nil, bundle: nil)
         fetchImage(with: imageURL)
+        startExerciseButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
+        playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
     }
     
     override func viewDidLoad() {
@@ -171,7 +174,6 @@ class DetailViewController: UIViewController {
         view.addSubview(scrollView)
         view.addSubview(startExerciseButton)
         grayShadow.addSubview(exerciseImage)
-        
         
         let views = [gradientBackgroundView,
                      cellTitle,
@@ -199,6 +201,10 @@ class DetailViewController: UIViewController {
         
         startExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 100, width: view.bounds.width - 32, height: 54)
         startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
+    }
+    
+    @objc func handlePlayButton() {
+        self.present(CountDownViewController(), animated: true, completion: nil)
     }
     
     private func setConstraints(){
