@@ -100,6 +100,13 @@ class CountDownViewController: UIViewController {
         view.addMultipleSubviews(views)
         setConstraints()
         runCountdown()
+        stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
+    }
+    
+    @objc private func handleCountdownStop() {
+        self.dismiss(animated: true) {
+            self.timer.invalidate()
+        }
     }
     
     private func setConstraints() {
