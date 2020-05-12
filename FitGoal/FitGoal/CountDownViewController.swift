@@ -23,57 +23,6 @@ class CountDownViewController: UIViewController {
     private var countdownSeconds = 3
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
-    private func generateGradientView(cornerRadius: CGFloat, maskedCorners: CACornerMask, colors: [UIColor], rotationAngle: CGFloat, translationInX: CGFloat, translationInY: CGFloat, alpha: CGFloat) -> UIView {
-        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
-        gradientView.layer.cornerRadius =  cornerRadius
-        gradientView.layer.maskedCorners = maskedCorners
-        gradientView.colors = colors
-        let rotation = CGAffineTransform(rotationAngle: rotationAngle / 180 * CGFloat.pi)
-        gradientView.alpha = alpha
-        gradientView.transform = rotation.translatedBy(x: translationInX, y: translationInY)
-        return gradientView
-    }
-    
-    private func generateBackgroundView() -> [UIView]  {
-        let gradientBackgroundView: UIView = {
-            let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: view.bounds.height, height: view.bounds.height))
-            gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
-            return gradientView
-        }()
-        
-        let topLeftGradientView = generateGradientView(
-            cornerRadius: 175,
-            maskedCorners: .layerMinXMaxYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
-            rotationAngle: -30,
-            translationInX: 60,
-            translationInY: -730,
-            alpha: 0.1
-        )
-        
-        let topRightGradientView = generateGradientView(
-            cornerRadius: 175,
-            maskedCorners: .layerMaxXMaxYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
-            rotationAngle: 35,
-            translationInX: -350,
-            translationInY: -630,
-            alpha: 0.25
-        )
-        
-        let bottomRightGradientView = generateGradientView(
-            cornerRadius: 130,
-            maskedCorners: .layerMinXMinYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
-            rotationAngle: 60,
-            translationInX: 620,
-            translationInY: 450,
-            alpha: 0.70
-        )
-        
-        return [gradientBackgroundView, topLeftGradientView, topRightGradientView, bottomRightGradientView]
-    }
-    
     private func runCountdown() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
             if self.countdownSeconds > 0 {
@@ -96,7 +45,8 @@ class CountDownViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
+        let views = [countdownLabel, countdownMessageLabel, stopButton]
+        view.addSubview(ExerciseBackgroundView(frame: self.view.frame))
         view.addMultipleSubviews(views)
         setConstraints()
         runCountdown()
