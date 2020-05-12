@@ -10,8 +10,8 @@ import UIKit
 
 class CountDownViewController: UIViewController {
     
-    private let countDownLabel = UILabel()
-    private let countDownMessageLabel = UILabel()
+    private let countdownLabel = UILabel()
+    private let countdownMessageLabel = UILabel()
     
     private let stopButton: UIButton = {
         let button = UIButton()
@@ -20,7 +20,9 @@ class CountDownViewController: UIViewController {
     }()
     
     private var timer = Timer()
-    private let countDownMessage = ["Ready!", "You can do it!", "Let's start!"]
+    private var countdownSeconds = 0
+    
+    private let countdownMessages = ["Ready!", "You can do it!", "Let's start!"]
     
     private func generateGradientView(cornerRadius: CGFloat, maskedCorners: CACornerMask, colors: [UIColor], rotationAngle: CGFloat, translationInX: CGFloat, translationInY: CGFloat, alpha: CGFloat) -> UIView {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
@@ -73,25 +75,32 @@ class CountDownViewController: UIViewController {
         return [gradientBackgroundView, topLeftGradientView, topRightGradientView, bottomRightGradientView]
     }
     
-    private func runTimer() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+    private func runCountdown() {
+        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
+            if self.countdownSeconds < self.countdownMessages.count {
+                self.setCountdownTime(time: String(self.countdownSeconds + 1))
+                self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds])
+                self.countdownSeconds += 1
+            } else {
+                timer.invalidate()
+            }
         })
     }
-    
-    private func setCountDownMessage(message: String) {
-        countDownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
+
+    private func setCountdownMessage(message: String) {
+        countdownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
     }
-    private func setCountDownTime(time: String) {
-        countDownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
+    
+    private func setCountdownTime(time: String) {
+        countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let views = generateBackgroundView() + [countDownLabel, countDownMessageLabel, stopButton]
+        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
-//        setCountDownMessage()
-//        setCountDownTime()
         setConstraints()
+        runCountdown()
     }
     
     private func setConstraints() {
@@ -109,19 +118,18 @@ class CountDownViewController: UIViewController {
     }
     
     private func setCountDownLabelConstraints() {
-        countDownLabel.translatesAutoresizingMaskIntoConstraints = false
+        countdownLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            countDownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            countDownLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 16)
+            countdownLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            countdownLabel.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: 16)
         ])
     }
     
     private func setCountDownMessageLabelConstraint() {
-        countDownMessageLabel.translatesAutoresizingMaskIntoConstraints = false
+        countdownMessageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            countDownMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            countDownMessageLabel.topAnchor.constraint(equalTo: countDownLabel.bottomAnchor, constant: 16)
+            countdownMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            countdownMessageLabel.topAnchor.constraint(equalTo: countdownLabel.bottomAnchor, constant: 16)
         ])
     }
-    
 }
