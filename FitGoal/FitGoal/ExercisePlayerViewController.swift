@@ -81,12 +81,6 @@ class ExercisePlayerViewController: UIViewController {
         return placeholder
     }()
     
-    private let stopButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle("stop".uppercased().formattedText(font: "Roboto-Light", size: 15, color: .white, kern: 0.18), for: .normal)
-        return button
-    }()
-    
     init(exercise: Exercise) {
         self.exercise = exercise
         super.init(nibName: nil, bundle: nil)
@@ -100,19 +94,16 @@ class ExercisePlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         belowImageShadowView.addSubview(exerciseImage)
-        view.addSubview(BackgroundGradientView(frame: view.bounds))
         let views = [
             colourfulImageShadowView,
             belowImageShadowView,
             aboveImageGradientView,
             playButton,
-            placeholder,
-            stopButton
+            placeholder
         ]
         view.addMultipleSubviews(views)
         setBelowImageShadowViewConstraints()
         setColourfulImageShadowViewConstraints()
-        setStopButtonConstraints()
     }
     
     override func viewDidLayoutSubviews() {
@@ -133,6 +124,7 @@ class ExercisePlayerViewController: UIViewController {
                     self.imageLoadingState = .finished(image)
                 }
             }
+            
         }
     }
     
@@ -155,14 +147,6 @@ class ExercisePlayerViewController: UIViewController {
             belowImageShadowView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             belowImageShadowView.heightAnchor.constraint(equalToConstant: 228),
             belowImageShadowView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-    }
-    
-    private func setStopButtonConstraints() {
-        stopButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stopButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -54)
         ])
     }
 }

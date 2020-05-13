@@ -52,8 +52,8 @@ class CountDownViewController: UIViewController {
             self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
             self.countdownSeconds -= 1
         } else {
-            let viewController = ExercisePlayerViewController(exercise: self.exercise)
-            viewController.modalPresentationStyle = .fullScreen
+            let viewController = RoutinePlayerPageViewController(firstExercise: self.exercise, exercises: self.exercises)
+            //viewController.modalPresentationStyle = .fullScreen
             self.present(viewController, animated: true) {
                 self.timer.invalidate()
             }
