@@ -144,7 +144,13 @@ extension HomeViewController {
 
 extension HomeViewController: RoutineInspectorCellDelegate {
     func userDidSelectExercise(_ exercise: Exercise) {
-        let vc = DetailViewController(exercise: exercise)
-        show(vc, sender: self.homeCollectionView)
+        switch routineState {
+        case .unset:
+            return
+        case .inspecting(let exercises):
+            let vc = DetailViewController(exercise: exercise, exercises: exercises)
+            show(vc, sender: self.homeCollectionView)
+        }
+        
     }
 }

@@ -9,6 +9,9 @@
 import UIKit
 
 class CountDownViewController: UIViewController {
+    
+    private let exercise: Exercise
+    private let exercises: [Exercise]
    
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
@@ -23,8 +26,16 @@ class CountDownViewController: UIViewController {
     private var countdownSeconds = 3
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
+    init(exercises: [Exercise], exercise: Exercise) {
+        self.exercises = exercises
+        self.exercise = exercise
+        super.init(nibName: nil, bundle: nil)
+    }
     
-   
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(BackgroundGradientView(frame: view.bounds))
@@ -41,7 +52,7 @@ class CountDownViewController: UIViewController {
             self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
             self.countdownSeconds -= 1
         } else {
-            let viewController = ExercisePlayerViewController()
+            let viewController = ExercisePlayerViewController(exercise: self.exercise)
             viewController.modalPresentationStyle = .fullScreen
             self.present(viewController, animated: true) {
                 self.timer.invalidate()
@@ -59,15 +70,6 @@ class CountDownViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
     
-    private func removeCountdownViews() {
-        countdownLabel.removeFromSuperview()
-        countdownMessageLabel.removeFromSuperview()
-    }
-    
-    private func insertExerciseViews() {
-        
-    }
-
     private func setCountdownMessage(message: String) {
         countdownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
     }
