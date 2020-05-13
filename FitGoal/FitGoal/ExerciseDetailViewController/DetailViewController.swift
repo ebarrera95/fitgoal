@@ -204,7 +204,7 @@ class DetailViewController: UIViewController {
     }
     
     @objc func handlePlayButton() {
-        self.present(CountDownViewController(), animated: true, completion: nil)
+        self.present(ExercisePlayerViewController(exercise: Exercise(id: 1, name: "Ex", url: URL(string: "https://www.youtube.com")!, description: ""), routine: []), animated: true, completion: nil)
     }
     
     private func setConstraints(){

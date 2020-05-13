@@ -8,7 +8,11 @@
 
 import UIKit
 
-class ExercisePlayerViewController: UIViewController {
+class ExercisePlayerViewController: UIPageViewController {
+    //MARK: -This properties are connected to the VC second stage
+    
+    private let exercise: Exercise
+    private let routine: [Exercise]
     
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
@@ -23,21 +27,126 @@ class ExercisePlayerViewController: UIViewController {
     private var countdownSeconds = 3
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
-    private func runCountdown() {
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    private var exerciseImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 7
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+    private var imageGradient: UIView = {
+           let gradientView = GradientView(frame: .zero)
+           gradientView.layer.cornerRadius = 7
+           gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
+           return gradientView
+    }()
+    
+    private var grayShadow: UIView = {
+        var shadow = UIView()
+        shadow.backgroundColor = .red
+        shadow.clipsToBounds = false
+        shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
+        shadow.layer.shadowColor = UIColor(r: 131, g: 164, b: 133, a: 12).cgColor
+        shadow.layer.shadowOpacity = 1
+        shadow.layer.shadowRadius = 10
+        return shadow
+    }()
+    
+    private var shadowWithGradient: UIView = {
+        let gradientView = GradientView(frame: .zero)
+        gradientView.layer.cornerRadius = 9
+        gradientView.colors = [#colorLiteral(red: 0.18, green: 0.74, blue: 0.89, alpha: 1), #colorLiteral(red: 0.51, green: 0.09, blue: 0.86, alpha: 1)]
+        gradientView.startPoint = CGPoint(x: 0, y: 0.70)
+        gradientView.endPoint = CGPoint(x: 1, y: 0.74)
+        gradientView.alpha = 0.15
+        return gradientView
+    }()
+    
+    private var playButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(imageLiteralResourceName: "PlayButton"), for: .normal)
+        button.frame = CGRect(x: 0, y: 0, width: 72, height: 72)
+        button.contentMode = .scaleAspectFit
+        return button
+    }()
+    
+    private var placeholder: UIActivityIndicatorView = {
+        let placeholder = UIActivityIndicatorView()
+        placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
+        placeholder.style = .medium
+        return placeholder
+    }()
+    
+    init(exercise: Exercise, routine: [Exercise]) {
+        self.exercise = exercise
+        self.routine = routine
+        super.init(transitionStyle: .scroll,
+            navigationOrientation: .horizontal, options: nil)
     }
     
-    //TODO: Ask Rey for possible memory cycle here
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let views = [countdownLabel, countdownMessageLabel, stopButton]
+        view.addSubview(ExerciseBackgroundView(frame: self.view.frame))
+        view.addMultipleSubviews(views)
+        setConstraintsForCountDownRelatedViews()
+        runCountdown()
+        stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        exerciseImage.frame = grayShadow.bounds
+        imageGradient.frame = grayShadow.frame
+        playButton.center = grayShadow.center
+    }
+    
     @objc private func fireTimer() {
         if self.countdownSeconds > 0 {
             self.setCountdownTime(time: String(self.countdownSeconds))
             self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
             self.countdownSeconds -= 1
         } else {
-            self.present(ExercisePlayerViewController(), animated: true) {
-                self.timer.invalidate()
-            }
+            self.timer.invalidate()
+            removeCountdownViews()
+            insertExerciseViews()
         }
+    }
+    
+    @objc private func handleCountdownStop() {
+        self.dismiss(animated: true) {
+            self.timer.invalidate()
+        }
+    }
+    
+    private func runCountdown() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    }
+    
+    private func removeCountdownViews() {
+        countdownLabel.removeFromSuperview()
+        countdownMessageLabel.removeFromSuperview()
+    }
+    
+    private func insertExerciseViews() {
+        grayShadow.addSubview(exerciseImage)
+        let views = [
+            grayShadow,
+            imageGradient,
+            shadowWithGradient,
+            playButton,
+            placeholder
+        ]
+        view.addMultipleSubviews(views)
+        setGrayShadowConstraints()
+        setShadowWithGradientConstraints()
+        view.layoutIfNeeded()
     }
 
     private func setCountdownMessage(message: String) {
@@ -48,23 +157,7 @@ class ExercisePlayerViewController: UIViewController {
         countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let views = [countdownLabel, countdownMessageLabel, stopButton]
-        view.addSubview(ExerciseBackgroundView(frame: self.view.frame))
-        view.addMultipleSubviews(views)
-        setConstraints()
-        runCountdown()
-        stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
-    }
-    
-    @objc private func handleCountdownStop() {
-        self.dismiss(animated: true) {
-            self.timer.invalidate()
-        }
-    }
-    
-    private func setConstraints() {
+    private func setConstraintsForCountDownRelatedViews() {
         setStopButtonConstraints()
         setCountDownLabelConstraints()
         setCountDownMessageLabelConstraint()
@@ -91,6 +184,28 @@ class ExercisePlayerViewController: UIViewController {
         NSLayoutConstraint.activate([
             countdownMessageLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             countdownMessageLabel.topAnchor.constraint(equalTo: countdownLabel.bottomAnchor, constant: 16)
+        ])
+    }
+    
+    private func setShadowWithGradientConstraints() {
+       shadowWithGradient.translatesAutoresizingMaskIntoConstraints = false
+       
+       NSLayoutConstraint.activate([
+           shadowWithGradient.bottomAnchor.constraint(equalTo: grayShadow.bottomAnchor, constant: 16),
+           shadowWithGradient.leadingAnchor.constraint(equalTo: grayShadow.leadingAnchor, constant: 16),
+           shadowWithGradient.trailingAnchor.constraint(equalTo: grayShadow.trailingAnchor, constant: -16),
+           shadowWithGradient.heightAnchor.constraint(equalToConstant: 30)
+       ])
+    }
+    
+    private func setGrayShadowConstraints() {
+        grayShadow.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            grayShadow.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            grayShadow.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            grayShadow.heightAnchor.constraint(equalToConstant: 228),
+            grayShadow.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
 }
