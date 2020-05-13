@@ -27,13 +27,16 @@ class CountDownViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
     }
     
+    //TODO: Ask Rey for possible memory cycle here
     @objc private func fireTimer() {
         if self.countdownSeconds > 0 {
             self.setCountdownTime(time: String(self.countdownSeconds))
             self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
             self.countdownSeconds -= 1
         } else {
-            timer.invalidate()
+            self.present(ExercisePlayerViewController(), animated: true) {
+                self.timer.invalidate()
+            }
         }
     }
 
