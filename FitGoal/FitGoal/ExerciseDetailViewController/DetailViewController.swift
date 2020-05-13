@@ -10,8 +10,6 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    private let exercise: Exercise
-
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -150,7 +148,6 @@ class DetailViewController: UIViewController {
     //MARK: -VC life cycle
     
     init(exercise: Exercise) {
-        self.exercise = exercise
         let imageURL = exercise.url
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
@@ -207,7 +204,7 @@ class DetailViewController: UIViewController {
     }
     
     @objc func handlePlayButton() {
-        self.present(ExercisePlayerViewController(exercise: self.exercise), animated: true, completion: nil)
+        self.present(CountDownViewController(), animated: true, completion: nil)
     }
     
     private func setConstraints(){
