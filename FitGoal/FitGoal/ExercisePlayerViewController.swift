@@ -1,5 +1,5 @@
 //
-//  CountDownViewController.swift
+//  ExercisePlayerViewController.swift
 //  FitGoal
 //
 //  Created by Eliany Barrera on 12/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CountDownViewController: UIViewController {
+class ExercisePlayerViewController: UIViewController {
     
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
