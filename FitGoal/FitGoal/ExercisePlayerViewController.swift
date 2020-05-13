@@ -108,8 +108,7 @@ class ExercisePlayerViewController: UIPageViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let views = [countdownLabel, countdownMessageLabel, stopButton]
-        view.addSubview(ExerciseBackgroundView(frame: self.view.frame))
+        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
         setConstraintsForCountDownRelatedViews()
         runCountdown()
@@ -242,17 +241,7 @@ class ExercisePlayerViewController: UIPageViewController {
     }
 }
 
-//TODO: See if this makes sense, it could be that a better way exist to manage repeating backgrounds that creating a new type for it.
-class ExerciseBackgroundView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        addMultipleSubviews(generateBackgroundView())
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
+extension ExercisePlayerViewController {
     private func generateGradientView(cornerRadius: CGFloat, maskedCorners: CACornerMask, colors: [UIColor], rotationAngle: CGFloat, translationInX: CGFloat, translationInY: CGFloat, alpha: CGFloat) -> UIView {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
         gradientView.layer.cornerRadius =  cornerRadius
@@ -266,7 +255,7 @@ class ExerciseBackgroundView: UIView {
     
     private func generateBackgroundView() -> [UIView]  {
         let gradientBackgroundView: UIView = {
-            let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: bounds.height, height: bounds.height))
+            let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: view.bounds.height, height: view.bounds.height))
             gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
             return gradientView
         }()
