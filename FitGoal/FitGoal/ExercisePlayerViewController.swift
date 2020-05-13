@@ -9,10 +9,8 @@
 import UIKit
 
 class ExercisePlayerViewController: UIPageViewController {
-    //MARK: -This properties are connected to the VC second stage
-    
+   
     private let exercise: Exercise
-    private let routine: [Exercise]
     
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
@@ -79,9 +77,8 @@ class ExercisePlayerViewController: UIPageViewController {
         return placeholder
     }()
     
-    init(exercise: Exercise, routine: [Exercise]) {
+    init(exercise: Exercise) {
         self.exercise = exercise
-        self.routine = routine
         super.init(transitionStyle: .scroll,
             navigationOrientation: .horizontal, options: nil)
     }
