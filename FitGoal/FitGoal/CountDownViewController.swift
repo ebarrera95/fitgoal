@@ -24,15 +24,17 @@ class CountDownViewController: UIViewController {
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
     private func runCountdown() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
-            if self.countdownSeconds > 0 {
-                self.setCountdownTime(time: String(self.countdownSeconds))
-                self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
-                self.countdownSeconds -= 1
-            } else {
-                timer.invalidate()
-            }
-        })
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    }
+    
+    @objc private func fireTimer() {
+        if self.countdownSeconds > 0 {
+            self.setCountdownTime(time: String(self.countdownSeconds))
+            self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
+            self.countdownSeconds -= 1
+        } else {
+            timer.invalidate()
+        }
     }
 
     private func setCountdownMessage(message: String) {

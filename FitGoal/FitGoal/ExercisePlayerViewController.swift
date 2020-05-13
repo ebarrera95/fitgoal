@@ -10,12 +10,14 @@ import UIKit
 
 class ExercisePlayerViewController: UIPageViewController {
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(ExerciseBackgroundView(frame: self.view.frame))
     }
 }
 
+//TODO: See if this makes sense, it could be that a better way exist to manage repeating backgrounds that creating a new type for it.
 class ExerciseBackgroundView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
