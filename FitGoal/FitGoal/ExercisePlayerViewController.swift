@@ -25,7 +25,7 @@ class ExercisePlayerViewController: UIPageViewController {
     private var countdownSeconds = 3
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
     
-    private var exerciseImage: UIImageView = {
+    private let exerciseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -34,16 +34,15 @@ class ExercisePlayerViewController: UIPageViewController {
         return imageView
     }()
     
-    private var imageGradient: UIView = {
+    private let imageGradient: UIView = {
            let gradientView = GradientView(frame: .zero)
            gradientView.layer.cornerRadius = 7
            gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
            return gradientView
     }()
     
-    private var grayShadow: UIView = {
+    private let grayShadow: UIView = {
         var shadow = UIView()
-        shadow.backgroundColor = .red
         shadow.clipsToBounds = false
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
         shadow.layer.shadowColor = UIColor(r: 131, g: 164, b: 133, a: 12).cgColor
@@ -52,7 +51,7 @@ class ExercisePlayerViewController: UIPageViewController {
         return shadow
     }()
     
-    private var shadowWithGradient: UIView = {
+    private let shadowWithGradient: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 9
         gradientView.colors = [#colorLiteral(red: 0.18, green: 0.74, blue: 0.89, alpha: 1), #colorLiteral(red: 0.51, green: 0.09, blue: 0.86, alpha: 1)]
@@ -62,7 +61,7 @@ class ExercisePlayerViewController: UIPageViewController {
         return gradientView
     }()
     
-    private var playButton: UIButton = {
+    private let playButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(imageLiteralResourceName: "PlayButton"), for: .normal)
         button.frame = CGRect(x: 0, y: 0, width: 72, height: 72)
@@ -70,17 +69,37 @@ class ExercisePlayerViewController: UIPageViewController {
         return button
     }()
     
-    private var placeholder: UIActivityIndicatorView = {
+    private let placeholder: UIActivityIndicatorView = {
         let placeholder = UIActivityIndicatorView()
         placeholder.color = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
         placeholder.style = .medium
         return placeholder
     }()
     
+    private var imageLoadingState: ImageLoadingState = .inProgress {
+        didSet {
+            switch imageLoadingState {
+            case .inProgress:
+                imageGradient.isHidden = true
+                playButton.isHidden = true
+                placeholder.startAnimating()
+            case .finished(let image):
+                imageGradient.isHidden = false
+                playButton.isHidden = false
+                placeholder.stopAnimating()
+                exerciseImage.image = image
+            case .failed(let error):
+                print("Unable to load image with error: \(error)")
+            }
+        }
+    }
+    
     init(exercise: Exercise) {
         self.exercise = exercise
         super.init(transitionStyle: .scroll,
             navigationOrientation: .horizontal, options: nil)
+        let imageURL = exercise.url
+        fetchImage(with: imageURL)
     }
     
     required init?(coder: NSCoder) {
@@ -134,12 +153,13 @@ class ExercisePlayerViewController: UIPageViewController {
     private func insertExerciseViews() {
         grayShadow.addSubview(exerciseImage)
         let views = [
+            shadowWithGradient,
             grayShadow,
             imageGradient,
-            shadowWithGradient,
             playButton,
             placeholder
         ]
+        
         view.addMultipleSubviews(views)
         setGrayShadowConstraints()
         setShadowWithGradientConstraints()
@@ -154,6 +174,21 @@ class ExercisePlayerViewController: UIPageViewController {
         countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
     }
     
+    private func fetchImage(with imageURL: URL) {
+        imageURL.fetchImage { result in
+            DispatchQueue.main.async {
+                switch result {
+                case .failure(let error):
+                    self.imageLoadingState = .failed(error)
+                case .success(let image):
+                    imageCache[imageURL] = image
+                    self.imageLoadingState = .finished(image)
+                }
+            }
+        }
+    }
+    
+    //MARK: -Constraints
     private func setConstraintsForCountDownRelatedViews() {
         setStopButtonConstraints()
         setCountDownLabelConstraints()
