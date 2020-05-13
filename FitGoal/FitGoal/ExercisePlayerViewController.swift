@@ -158,11 +158,9 @@ class ExercisePlayerViewController: UIPageViewController {
             playButton,
             placeholder
         ]
-        
         view.addMultipleSubviews(views)
         setBelowImageShadowViewConstraints()
         setColourfulImageShadowViewConstraints()
-        view.layoutIfNeeded()
     }
 
     private func setCountdownMessage(message: String) {
