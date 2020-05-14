@@ -36,7 +36,6 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     private func getInitialIndex(of exercise: Exercise, in exercises: [Exercise] ) -> Int  {
         for index in exercises.indices {
             if exercises[index] == exercise {
-                print(index)
                 return index
             }
         }
@@ -47,7 +46,6 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
         var viewControllers: [UIViewController] = []
         for index in exercises.indices {
             viewControllers.append(ExercisePlayerViewController(exercise: exercises[index]))
-            
         }
         return viewControllers
     }

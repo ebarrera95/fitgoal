@@ -99,7 +99,6 @@ extension HomeViewController: SuggestedRoutineCellDelegate {
         persitence.clearData()
         persitence.save(exercises: routineExercises)
         routineState = .inspecting(routineExercises)
-        
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
@@ -148,7 +147,10 @@ extension HomeViewController: RoutineInspectorCellDelegate {
         case .unset:
             return
         case .inspecting(let exercises):
-            let vc = DetailViewController(exercise: exercise, exercises: exercises)
+            let orderedExercises = exercises.sorted { (ex1, ex2) -> Bool in
+                return ex1.id < ex2.id
+            }
+            let vc = DetailViewController(exercise: exercise, exercises: orderedExercises)
             show(vc, sender: self.homeCollectionView)
         }
     }
