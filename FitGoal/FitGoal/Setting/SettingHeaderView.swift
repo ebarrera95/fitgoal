@@ -43,10 +43,10 @@ class SettingHeaderView: UIView {
         return view
     }()
     
-    private let editProfileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(imageLiteralResourceName: "editProfile")
-        return imageView
+    private let editProfileButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(imageLiteralResourceName: "editProfile"), for: .normal)
+        return button
     }()
     
     convenience init(frame: CGRect, userName: String, userFitnessLevel: String, userProfileImage: UIImage?) {
@@ -63,7 +63,7 @@ class SettingHeaderView: UIView {
             userNameLabel,
             userFitnessLevelLabel,
             userAvatarImageView,
-            editProfileImageView
+            editProfileButton
         ]
         self.addMultipleSubviews(views)
         setConstraints()
@@ -116,13 +116,13 @@ class SettingHeaderView: UIView {
     }
     
     private func setEditProfileConstraints() {
-        editProfileImageView.translatesAutoresizingMaskIntoConstraints = false
+        editProfileButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            editProfileImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
-            editProfileImageView.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
-            editProfileImageView.widthAnchor.constraint(equalToConstant: 26),
-            editProfileImageView.heightAnchor.constraint(equalToConstant: 26)
+            editProfileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            editProfileButton.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
+            editProfileButton.widthAnchor.constraint(equalToConstant: 26),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 26)
         ])
     }
     
@@ -143,5 +143,4 @@ class SettingHeaderView: UIView {
             userNameLabel.bottomAnchor.constraint(equalTo: userFitnessLevelLabel.topAnchor, constant: -4)
         ])
     }
-    
 }

@@ -10,24 +10,29 @@ import UIKit
 
 class UserInfoCell: UITableViewCell {
     
-    var cellInformation: CellInformation? {
+    var userPreference: UserPreference? {
         didSet {
-            guard let cellInfo = cellInformation else {
+            guard let userPreference = userPreference else {
                 assertionFailure("no cellInfo found")
                 return
             }
             
-            icon.image = cellInfo.cellIcon
-            configureCellTitle(withText: cellInfo.cellName)
-            configureUserInformationLabel(withText: cellInfo.userInformation)
-            if cellInfo.cellName == "Goals" {
+            if userPreference.preferenceName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
+            } else {
+                self.accessoryType = .none
+                userInformation.isHidden = false
             }
+            
+            icon.image = userPreference.preferenceImage
+            configureCellTitleLabel(withText: userPreference.preferenceName)
+            configureUserInformationLabel(withText: userPreference.preferenceValue)
         }
     }
     
     static let identifier = "UserInfoCell"
+    
     private let icon = UIImageView()
     private let cellTitle = UILabel()
     private let userInformation = UILabel()
@@ -43,7 +48,7 @@ class UserInfoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureCellTitle(withText text: String) {
+    private func configureCellTitleLabel(withText text: String) {
         cellTitle.attributedText = text.formattedText(font: "Roboto-Light", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
     

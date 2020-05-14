@@ -10,15 +10,15 @@ import UIKit
 
 class SettingsViewController: UITableViewController {
     
-    let cellInformation: [CellInformation] = [
-        CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
-        CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
-        CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
-        CellInformation(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
-        CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: "")
+    private let userInfoCellsContent: [UserPreference] = [
+        UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
+        UserPreference(preferenceName: "Weight", preferenceImage: UIImage(imageLiteralResourceName: "weight"), preferenceValue: "135 LB"),
+        UserPreference(preferenceName: "Gender", preferenceImage: UIImage(imageLiteralResourceName: "gender"), preferenceValue: "Female"),
+        UserPreference(preferenceName: "Age", preferenceImage: UIImage(imageLiteralResourceName: "age"), preferenceValue: "28"),
+        UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
     ]
     
-    let accountInformation: [String] = [
+    private let accountInformation: [String] = [
         "Notifications",
         "Account Info"
     ]
@@ -27,9 +27,13 @@ class SettingsViewController: UITableViewController {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
         
-        self.tableView.tableHeaderView = SettingHeaderView(frame: CGRect(x: 0, y: 0, width: 0, height: 250), userName: "Eliany Barrera", userFitnessLevel: "Intermediate", userProfileImage: nil)
+        self.tableView.tableHeaderView = SettingHeaderView(
+            frame: CGRect(x: 0, y: 0, width: 0, height: 250),
+            userName: "Eliany Barrera",
+            userFitnessLevel: "Intermediate",
+            userProfileImage: nil
+        )
         self.tableView.tableFooterView = UIView()
-        
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
     }
@@ -47,7 +51,7 @@ class SettingsViewController: UITableViewController {
         
         switch settingsSection {
         case .userInfo:
-            return cellInformation.count
+            return userInfoCellsContent.count
         case .accountInfo:
             return accountInformation.count
         }
@@ -62,7 +66,7 @@ class SettingsViewController: UITableViewController {
         case .userInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                userInfoCell.cellInformation = cellInformation[indexPath.row]
+                userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
                 return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
@@ -110,51 +114,16 @@ class SettingsViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
-
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
 }
+
 enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
 }
 
-struct CellInformation {
-    let cellName: String
-    let cellIcon: UIImage
-    let userInformation: String
+struct UserPreference {
+    let preferenceName: String
+    let preferenceImage: UIImage
+    let preferenceValue: String
 }
 
