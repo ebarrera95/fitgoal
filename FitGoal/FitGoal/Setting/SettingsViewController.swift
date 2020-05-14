@@ -9,6 +9,14 @@
 import UIKit
 
 class SettingsViewController: UITableViewController {
+    
+    private let userInfoCellsContent: [UserPreference] = [
+        UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
+        UserPreference(preferenceName: "Weight", preferenceImage: UIImage(imageLiteralResourceName: "weight"), preferenceValue: "135 LB"),
+        UserPreference(preferenceName: "Gender", preferenceImage: UIImage(imageLiteralResourceName: "gender"), preferenceValue: "Female"),
+        UserPreference(preferenceName: "Age", preferenceImage: UIImage(imageLiteralResourceName: "age"), preferenceValue: "28"),
+        UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,5 +28,58 @@ class SettingsViewController: UITableViewController {
             userFitnessLevel: "Intermediate",
             userProfileImage: nil
         )
+        self.tableView.tableFooterView = UIView()
+        self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
+    }
+    
+    // MARK: - Table view data source
+
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return userInfoCellsContent.count
+    }
+
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
+        guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
+        userInfoCell.selectionStyle = .none
+        userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
+        return userInfoCell
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let header = UIView(frame: .zero)
+        let sectionName = UILabel()
+        sectionName.attributedText = "user info".uppercased().formattedText(
+            font: "Roboto-Bold",
+            size: 15,
+            color: #colorLiteral(red: 0.501960814, green: 0.501960814, blue: 0.501960814, alpha: 1),
+            kern: 0.14
+        )
+        header.addSubview(sectionName)
+        sectionName.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            sectionName.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 16),
+            sectionName.topAnchor.constraint(equalTo: header.topAnchor, constant: 24)
+        ])
+        return header
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
     }
 }
+
+struct UserPreference {
+    let preferenceName: String
+    let preferenceImage: UIImage
+    let preferenceValue: String
+}
+
