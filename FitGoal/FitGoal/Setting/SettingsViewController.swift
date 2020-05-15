@@ -18,9 +18,9 @@ class SettingsViewController: UITableViewController {
         UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
     ]
     
-    private let accountInformation: [String] = [
-        "Notifications",
-        "Account Info"
+    private let accountInformation: [AccountInfoCellType] = [
+        .notifications(accessoryView: UISwitch()),
+        .accountInfo(accessoryType: .disclosureIndicator)
     ]
 
     override func viewDidLoad() {
@@ -71,7 +71,7 @@ class SettingsViewController: UITableViewController {
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
-            accountInfoCell.cellTitle = accountInformation[indexPath.row]
+            accountInfoCell.cellType = accountInformation[indexPath.row]
             return accountInfoCell
         }
     }
@@ -116,7 +116,7 @@ class SettingsViewController: UITableViewController {
     }
 }
 
-enum SettingsTableViewSection: Int, CaseIterable {
+private enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
 }
@@ -127,3 +127,16 @@ struct UserPreference {
     let preferenceValue: String
 }
 
+enum AccountInfoCellType {
+    case notifications(accessoryView: UIView)
+    case accountInfo(accessoryType: UITableViewCell.AccessoryType)
+    
+    var name: String {
+        switch self {
+        case .notifications:
+            return "Notifications"
+        case .accountInfo:
+            return "Account Info"
+        }
+    }
+}
