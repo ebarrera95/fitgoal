@@ -93,6 +93,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
             userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
+            userInfoCell.selectionStyle = .none
             if isEditModeEnable {
                 userInfoCell.enableEditMode()
             } else {
@@ -102,6 +103,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
+            accountInfoCell.selectionStyle = .none
             accountInfoCell.cellType = accountInformation[indexPath.row]
             return accountInfoCell
         }
@@ -145,6 +147,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
     }
+    
 }
 
 private enum SettingsTableViewSection: Int, CaseIterable {
