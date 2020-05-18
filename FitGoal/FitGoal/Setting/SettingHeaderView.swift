@@ -167,5 +167,4 @@ class SettingHeaderView: UIView {
             userNameLabel.bottomAnchor.constraint(equalTo: userFitnessLevelLabel.topAnchor, constant: -4)
         ])
     }
-    
 }

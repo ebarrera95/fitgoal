@@ -10,21 +10,21 @@ import UIKit
 
 class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     
-    private let cellInformation: [CellInformation] = [
-        CellInformation(cellName: "Height", cellIcon: UIImage(imageLiteralResourceName: "height"), userInformation: "173"),
-        CellInformation(cellName: "Weight", cellIcon: UIImage(imageLiteralResourceName: "weight"), userInformation: "135 LB"),
-        CellInformation(cellName: "Gender", cellIcon: UIImage(imageLiteralResourceName: "gender"), userInformation: "Female"),
-        CellInformation(cellName: "Age", cellIcon: UIImage(imageLiteralResourceName: "age"), userInformation: "28"),
-        CellInformation(cellName: "Goals", cellIcon: UIImage(imageLiteralResourceName: "goal"), userInformation: "")
+    private let userInfoCellsContent: [UserPreference] = [
+        UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
+        UserPreference(preferenceName: "Weight", preferenceImage: UIImage(imageLiteralResourceName: "weight"), preferenceValue: "135 LB"),
+        UserPreference(preferenceName: "Gender", preferenceImage: UIImage(imageLiteralResourceName: "gender"), preferenceValue: "Female"),
+        UserPreference(preferenceName: "Age", preferenceImage: UIImage(imageLiteralResourceName: "age"), preferenceValue: "28"),
+        UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
     ]
     
-    private let accountInformation: [String] = [
-        "Notifications",
-        "Account Info"
+    private let accountInformation: [AccountInfoCellType] = [
+        .notifications(accessoryView: UISwitch()),
+        .accountInfo(accessoryType: .disclosureIndicator)
     ]
-    
+
     private var isEditModeEnable = false
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -34,7 +34,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
-        
+
         if let headerView = self.tableView.tableHeaderView as? SettingHeaderView {
             headerView.delegate = self
         }
@@ -48,6 +48,15 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     func userDidEditProfile() {
         isEditModeEnable = false
         tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
+        self.tableView.tableHeaderView = SettingHeaderView(
+            frame: CGRect(x: 0, y: 0, width: 0, height: 250),
+            userName: "Eliany Barrera",
+            userFitnessLevel: "Intermediate",
+            userProfileImage: nil
+        )
+        self.tableView.tableFooterView = UIView()
+        self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
+        self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
     }
     
     // MARK: - Table view data source
@@ -63,7 +72,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         
         switch settingsSection {
         case .userInfo:
-            return cellInformation.count
+            return userInfoCellsContent.count
         case .accountInfo:
             return accountInformation.count
         }
@@ -77,20 +86,18 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         switch settingsSection {
         case .userInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
-            cell.selectionStyle = .none
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                userInfoCell.cellInformation = cellInformation[indexPath.row]
-            if isEditModeEnable {
+                userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
+                if isEditModeEnable {
                 userInfoCell.enableEditMode()
             } else {
                 userInfoCell.disableEditMode()
             }
-            return userInfoCell
+                return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
-            cell.selectionStyle = .none
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
-            accountInfoCell.cellTitle = accountInformation[indexPath.row]
+            accountInfoCell.cellType = accountInformation[indexPath.row]
             return accountInfoCell
         }
     }
@@ -140,9 +147,22 @@ private enum SettingsTableViewSection: Int, CaseIterable {
     case accountInfo
 }
 
-struct CellInformation {
-    let cellName: String
-    let cellIcon: UIImage
-    let userInformation: String
+struct UserPreference {
+    let preferenceName: String
+    let preferenceImage: UIImage
+    let preferenceValue: String
 }
 
+enum AccountInfoCellType {
+    case notifications(accessoryView: UIView)
+    case accountInfo(accessoryType: UITableViewCell.AccessoryType)
+    
+    var name: String {
+        switch self {
+        case .notifications:
+            return "Notifications"
+        case .accountInfo:
+            return "Account Info"
+        }
+    }
+}

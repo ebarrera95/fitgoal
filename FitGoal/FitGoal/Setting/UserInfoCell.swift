@@ -8,18 +8,16 @@
 
 import UIKit
 
-class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    var cellInformation: CellInformation? {
+    var userPreference: UserPreference? {
         didSet {
-            guard let cellInfo = cellInformation else {
+            guard let userPreference = userPreference else {
                 assertionFailure("no cellInfo found")
                 return
             }
-            icon.image = cellInfo.cellIcon
-            configureCellTitle(withText: cellInfo.cellName)
-            configureUserInformation(withText: cellInfo.userInformation)
-            if cellInfo.cellName == "Goals" {
+            
+            if userPreference.preferenceName == "Goals" {
                 self.accessoryType = .disclosureIndicator
                 userInformation.isHidden = true
             } else {
@@ -27,10 +25,14 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
                 userInformation.isHidden = false
             }
             optionsInPickerView = generateArrayForPickerView()
+            icon.image = userPreference.preferenceImage
+            configureCellTitle(withText: userPreference.preferenceName)
+            configureUserInformation(withText: userPreference.preferenceValue)
         }
     }
     
     private var optionsInPickerView = [String()]
+    
     static let identifier = "UserInfoCell"
     
     private let icon = UIImageView()
@@ -55,11 +57,11 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
     }
     
     func enableEditMode() {
-        guard let cellInfo = cellInformation else {
+        guard let cellInfo = userPreference else {
             assertionFailure("no cellInfo found")
             return
         }
-        if cellInfo.cellName == "Gender" {
+        if cellInfo.preferenceName == "Gender" {
             userInformation.inputView = genderPickerView
             userInformation.tintColor = .clear
         } else {
@@ -72,10 +74,10 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
     }
     
     private func generateArrayForPickerView() -> [String] {
-        guard let userInfo = cellInformation else { assertionFailure("no cellInfo found")
+        guard let userInfo = userPreference else { assertionFailure("no cellInfo found")
             return []
         }
-        if userInfo.userInformation == "Male" {
+        if userInfo.preferenceName == "Male" {
             return ["Male, Female"]
         } else {
             return ["Female", "Male"]
