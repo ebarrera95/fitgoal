@@ -92,13 +92,13 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         case .userInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
-                if isEditModeEnable {
+            userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
+            if isEditModeEnable {
                 userInfoCell.enableEditMode()
             } else {
                 userInfoCell.disableEditMode()
             }
-                return userInfoCell
+            return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
