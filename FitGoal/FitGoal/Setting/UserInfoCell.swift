@@ -26,22 +26,20 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
             }
             optionsInPickerView = generatePickerViewOptions()
             icon.image = userPreference.preferenceImage
-            configureCellTitle(withText: userPreference.preferenceName)
-            configureUserInformation(withText: userPreference.preferenceValue)
+            configureCellTitleLabel(withText: userPreference.preferenceName)
+            configureUserInformationLabel(withText: userPreference.preferenceValue)
         }
     }
     
-    private var optionsInPickerView = [String()]
-    
     static let identifier = "UserInfoCell"
+    var userWillEditCell = false
+    
+    private var optionsInPickerView = [String()]
     
     private let icon = UIImageView()
     private let cellTitle = UILabel()
     private let userInformation = UITextField()
-    
     private let genderPickerView = UIPickerView()
-    
-    var userWillEditCell = false
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -85,11 +83,11 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
         }
     }
     
-    private func configureCellTitle(withText text: String) {
+    private func configureCellTitleLabel(withText text: String) {
         cellTitle.attributedText = text.formattedText(font: "Roboto-Light", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
     
-    private func configureUserInformation(withText text: String) {
+    private func configureUserInformationLabel(withText text: String) {
         userInformation.attributedText = text.formattedText(font: "Roboto-Bold", size: 15, color: #colorLiteral(red: 0.5215686275, green: 0.5333333333, blue: 0.568627451, alpha: 1), kern: 0.3)
     }
 
@@ -149,7 +147,8 @@ extension UserInfoCell {
 
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = optionsInPickerView[row]
-        let mutableAttributedString = NSMutableAttributedString(attributedString: title.formattedText(font: "Roboto-Regular", size: 12, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12))
+        let attributedTitle = title.formattedText(font: "Roboto-Regular", size: 12, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12)
+        let mutableAttributedString = NSMutableAttributedString(attributedString: attributedTitle)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         let range = NSRange(location: 0, length: (title as NSString).length)
@@ -159,6 +158,6 @@ extension UserInfoCell {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let gender = optionsInPickerView[row]
-        configureUserInformation(withText: gender)
+        configureUserInformationLabel(withText: gender)
     }
 }
