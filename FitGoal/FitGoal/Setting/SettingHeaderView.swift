@@ -101,7 +101,7 @@ class SettingHeaderView: UIView {
             editProfileButton.setImage(UIImage(imageLiteralResourceName: "editProfile"), for: .normal)
             editProfileButton.setAttributedTitle(nil, for: .normal)
             userWillEditProfile = false
-            self.delegate?.userWillEditProfile()
+            self.delegate?.userDidEditProfile()
         } else {
             editProfileButton.setImage(nil, for: .normal)
             editProfileButton.setAttributedTitle("Done".formattedText(font: "Roboto-Bold", size: 16, color: .white, kern: 0.12), for: .normal)

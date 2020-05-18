@@ -53,15 +53,6 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     func userDidEditProfile() {
         isEditModeEnable = false
         tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
-        self.tableView.tableHeaderView = SettingHeaderView(
-            frame: CGRect(x: 0, y: 0, width: 0, height: 250),
-            userName: "Eliany Barrera",
-            userFitnessLevel: "Intermediate",
-            userProfileImage: nil
-        )
-        self.tableView.tableFooterView = UIView()
-        self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
-        self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
     }
     
     // MARK: - Table view data source

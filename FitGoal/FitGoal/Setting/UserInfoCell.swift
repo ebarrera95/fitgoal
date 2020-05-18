@@ -24,7 +24,7 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
                 self.accessoryType = .none
                 userInformation.isHidden = false
             }
-            optionsInPickerView = generateArrayForPickerView()
+            optionsInPickerView = generatePickerViewOptions()
             icon.image = userPreference.preferenceImage
             configureCellTitle(withText: userPreference.preferenceName)
             configureUserInformation(withText: userPreference.preferenceValue)
@@ -73,8 +73,9 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
         userInformation.isUserInteractionEnabled = false
     }
     
-    private func generateArrayForPickerView() -> [String] {
-        guard let userInfo = userPreference else { assertionFailure("no cellInfo found")
+    private func generatePickerViewOptions() -> [String] {
+        guard let userInfo = userPreference else {
+            assertionFailure("no cellInfo found")
             return []
         }
         if userInfo.preferenceName == "Male" {
