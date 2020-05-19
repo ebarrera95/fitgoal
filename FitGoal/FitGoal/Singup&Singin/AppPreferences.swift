@@ -97,15 +97,15 @@ class AppPreferences {
     }
     
     var weight: Int? {
-           get {
-               guard let weight = defaults.value(forKey: UsersInfoKey.weight.rawValue) as? Int else { return nil }
-               return weight
-           } set (weight) {
-               if let weight = weight {
-                   defaults.set(weight, forKey: UsersInfoKey.weight.rawValue)
-               }
-           }
-       }
+        get {
+            guard let weight = defaults.value(forKey: UsersInfoKey.weight.rawValue) as? Int else { return nil }
+            return weight
+        } set (weight) {
+            if let weight = weight {
+                defaults.set(weight, forKey: UsersInfoKey.weight.rawValue)
+            }
+        }
+    }
 }
 
 private enum UsersInfoKey: String {
