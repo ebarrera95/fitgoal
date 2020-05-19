@@ -23,7 +23,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
         .accountInfo(accessoryType: .disclosureIndicator)
     ]
 
-    private var isEditModeEnable = false
+    private var isEditModeEnabled = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,12 +46,12 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     }
     
     func userWillEditProfile() {
-        isEditModeEnable = true
+        isEditModeEnabled = true
         tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
     }
     
     func userDidEditProfile() {
-        isEditModeEnable = false
+        isEditModeEnabled = false
         tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
     }
     
@@ -85,7 +85,7 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
             userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
             userInfoCell.selectionStyle = .none
-            if isEditModeEnable {
+            if isEditModeEnabled {
                 userInfoCell.enableEditMode()
             } else {
                 userInfoCell.disableEditMode()

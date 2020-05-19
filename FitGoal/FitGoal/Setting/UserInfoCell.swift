@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSource {
+class UserInfoCell: UITableViewCell {
     
     var userPreference: UserPreference? {
         didSet {
@@ -132,7 +132,7 @@ class UserInfoCell: UITableViewCell, UIPickerViewDelegate, UIPickerViewDataSourc
     }
 }
 
-extension UserInfoCell {
+extension UserInfoCell: UIPickerViewDelegate, UIPickerViewDataSource {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
