@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingsViewController: UITableViewController {
+class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     
     private let userInfoCellsContent: [UserPreference] = [
         UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
@@ -23,6 +23,8 @@ class SettingsViewController: UITableViewController {
         .accountInfo(accessoryType: .disclosureIndicator)
     ]
 
+    private var isEditModeEnabled = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = #colorLiteral(red: 0.9647058824, green: 0.9647058824, blue: 0.9647058824, alpha: 1)
@@ -34,8 +36,23 @@ class SettingsViewController: UITableViewController {
             userProfileImage: nil
         )
         self.tableView.tableFooterView = UIView()
+        
         self.tableView.register(UserInfoCell.self, forCellReuseIdentifier: UserInfoCell.identifier)
         self.tableView.register(AccountInfoCell.self, forCellReuseIdentifier: AccountInfoCell.identifier)
+
+        if let headerView = self.tableView.tableHeaderView as? SettingHeaderView {
+            headerView.delegate = self
+        }
+    }
+    
+    func userWillEditProfile() {
+        isEditModeEnabled = true
+        tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
+    }
+    
+    func userDidEditProfile() {
+        isEditModeEnabled = false
+        tableView.reloadSections([SettingsTableViewSection.userInfo.rawValue], with: .none)
     }
     
     // MARK: - Table view data source
@@ -66,11 +83,18 @@ class SettingsViewController: UITableViewController {
         case .userInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: UserInfoCell.identifier, for: indexPath)
             guard let userInfoCell = cell as? UserInfoCell else { fatalError() }
-                userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
-                return userInfoCell
+            userInfoCell.userPreference = userInfoCellsContent[indexPath.row]
+            userInfoCell.selectionStyle = .none
+            if isEditModeEnabled {
+                userInfoCell.enableEditMode()
+            } else {
+                userInfoCell.disableEditMode()
+            }
+            return userInfoCell
         case .accountInfo:
             let cell = tableView.dequeueReusableCell(withIdentifier: AccountInfoCell.identifier, for: indexPath)
             guard let accountInfoCell = cell as? AccountInfoCell else { fatalError() }
+            accountInfoCell.selectionStyle = .none
             accountInfoCell.cellType = accountInformation[indexPath.row]
             return accountInfoCell
         }
