@@ -66,8 +66,8 @@ class AppPreferences {
             guard let trainingIntensity = defaults.string(forKey: UsersInfoKey.trainingIntensity.rawValue) else { return nil }
             return trainingIntensity
         } set (trainingIntensity) {
-            if let trainingIntensity = trainingIntensity {
-                defaults.set(trainingIntensity, forKey: UsersInfoKey.trainingIntensity.rawValue)
+            if let userTrainingIntensity = trainingIntensity {
+                defaults.set(userTrainingIntensity, forKey: UsersInfoKey.trainingIntensity.rawValue)
             }
         }
     }
@@ -77,8 +77,8 @@ class AppPreferences {
             guard let age = defaults.value(forKey: UsersInfoKey.age.rawValue) as? Int else { return nil }
             return age
         } set (age) {
-            if let age = age {
-                defaults.set(age, forKey: UsersInfoKey.age.rawValue)
+            if let userAge = age {
+                defaults.set(userAge, forKey: UsersInfoKey.age.rawValue)
             }
         }
     }
@@ -88,8 +88,8 @@ class AppPreferences {
             guard let height = defaults.value(forKey: UsersInfoKey.height.rawValue) as? Int else { return nil }
             return height
         } set (height) {
-            if let height = height {
-                defaults.set(height, forKey: UsersInfoKey.height.rawValue)
+            if let userHeight = height {
+                defaults.set(userHeight, forKey: UsersInfoKey.height.rawValue)
             }
         }
     }
@@ -99,8 +99,8 @@ class AppPreferences {
             guard let weight = defaults.value(forKey: UsersInfoKey.weight.rawValue) as? Int else { return nil }
             return weight
         } set (weight) {
-            if let weight = weight {
-                defaults.set(weight, forKey: UsersInfoKey.weight.rawValue)
+            if let userWeight = weight {
+                defaults.set(userWeight, forKey: UsersInfoKey.weight.rawValue)
             }
         }
     }
