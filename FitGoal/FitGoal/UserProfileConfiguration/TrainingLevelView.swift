@@ -93,13 +93,17 @@ class TrainingLevelView: UIView {
         backgroundView.isHidden = true
     }
     
+    private func selectView() {
+        isViewSelected = true
+        configureSelectionIndicatorImage(forState: isViewSelected)
+        backgroundView.isHidden = false
+    }
+    
     @objc private func handleTap() {
         if isViewSelected {
             deselectView()
         } else {
-            isViewSelected = true
-            configureSelectionIndicatorImage(forState: isViewSelected)
-            backgroundView.isHidden = false
+            selectView()
             delegate?.userDidSelectTrainingLevel(trainingLevelView: self)
         }
     }
