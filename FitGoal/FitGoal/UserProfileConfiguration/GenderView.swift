@@ -41,12 +41,12 @@ class GenderView: UIView, WalkthroughIconViewDelegate {
         }
     }
     
-    func userDidSelectIcon(iconView: WalkthroughIconView) {
+    func userDidSelectView(iconView: WalkthroughIconView) {
         for view in iconViews {
             if view == iconView {
                 delegate?.userDidSelectGender(gender: iconView.icon.name)
             } else {
-                view.deselectView()
+                view.deselectIconView()
             }
         }
     }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol WalkthroughIconViewDelegate: AnyObject {
-    func userDidSelectIcon(iconView: WalkthroughIconView)
+    func userDidSelectView(iconView: WalkthroughIconView)
 }
 
 class WalkthroughIconView: UIView {
@@ -79,25 +79,29 @@ class WalkthroughIconView: UIView {
     @objc private func handleTap() {
         changeIconState()
         if icon.selected {
-            delegate?.userDidSelectIcon(iconView: self)
+            delegate?.userDidSelectView(iconView: self)
         } else {
             return
         }
     }
     
-    func deselectView() {
+    func deselectIconView() {
         icon.selected = false
         backgroundView.isHidden = true
         configureIcon(forState: icon.selected, withName: icon.name)
     }
     
+    private func selectIconView() {
+        self.icon.selected = true
+        backgroundView.isHidden = false
+        configureIcon(forState: icon.selected, withName: icon.name)
+    }
+    
     private func changeIconState() {
         if icon.selected {
-            deselectView()
+            deselectIconView()
         } else {
-            self.icon.selected = true
-            configureIcon(forState: icon.selected, withName: icon.name)
-            backgroundView.isHidden = false
+            selectIconView()
         }
     }
     
