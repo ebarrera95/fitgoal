@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserProfileConfiguratorViewController: UIViewController, GenderViewDelegate, FitnessLevelChooserViewDelegate, UITextFieldDelegate {
+class UserProfileConfiguratorViewController: UIViewController {
     
     private let userProfileType: UserProfileType
     
@@ -86,40 +86,6 @@ class UserProfileConfiguratorViewController: UIViewController, GenderViewDelegat
         }
     }
     
-    func userDidSelectGender(gender: String) {
-        appPreferences.userGender = gender
-    }
-    
-    func userDidSelectFitnessLevel(level: String) {
-        switch userProfileType {
-        case .fitnessLevel:
-            appPreferences.fitnessLevel = level
-        case .fitnessGoal:
-            appPreferences.fitnessGoal = level
-        default:
-            fatalError()
-        }
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        switch userProfileType {
-        case .age:
-            guard let text = textField.text else { return }
-            let age = Int(text) ?? 0
-            appPreferences.age = age
-        case .height:
-            guard let text = textField.text else { return }
-            let height = Int(text) ?? 0
-            appPreferences.height = height
-        case .weight:
-            guard let text = textField.text else { return }
-            let weight = Int(text) ?? 0
-            appPreferences.weight = weight
-        default:
-            fatalError()
-        }
-    }
-    
     //MARK: -Constraints
     private func setConstraints() {
         setQuestionPrefixLabelConstraints()
@@ -142,6 +108,46 @@ class UserProfileConfiguratorViewController: UIViewController, GenderViewDelegat
             questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
             questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
         ])
+    }
+}
+
+extension UserProfileConfiguratorViewController: GenderViewDelegate {
+    func userDidSelectGender(gender: String) {
+        appPreferences.userGender = gender
+    }
+}
+
+extension UserProfileConfiguratorViewController: FitnessLevelChooserViewDelegate {
+    func userDidSelectFitnessLevel(level: String) {
+        switch userProfileType {
+        case .fitnessLevel:
+            appPreferences.fitnessLevel = level
+        case .fitnessGoal:
+            appPreferences.fitnessGoal = level
+        default:
+            assertionFailure("fitnessLevelDelegate shouldn't be called for views that are not fitnessLevelView")
+        }
+    }
+}
+
+extension UserProfileConfiguratorViewController: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        switch userProfileType {
+        case .age:
+            guard let text = textField.text else { return }
+            let age = Int(text) ?? 0
+            appPreferences.age = age
+        case .height:
+            guard let text = textField.text else { return }
+            let height = Int(text) ?? 0
+            appPreferences.height = height
+        case .weight:
+            guard let text = textField.text else { return }
+            let weight = Int(text) ?? 0
+            appPreferences.weight = weight
+        default:
+            assertionFailure("textFieldDelegate shouldn't be called for views that are not textField")
+        }
     }
 }
 

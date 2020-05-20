@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserPlanningViewController: UIViewController, TrainingLevelViewDelegate {
+class UserPlanningViewController: UIViewController {
     
     private let appPreferences = AppPreferences()
     
@@ -72,16 +72,6 @@ class UserPlanningViewController: UIViewController, TrainingLevelViewDelegate {
         continueButton.layer.cornerRadius = continueButton.bounds.height/2
     }
     
-    func userDidSelectTrainingLevel(trainingLevelView: TrainingLevelView) {
-        for view in trainingPlanViews {
-            if view == trainingLevelView {
-                appPreferences.trainingIntensity = trainingLevelView.userLevel
-            } else {
-                view.deselectView()
-            }
-        }
-    }
-    
     private func setAxisConstraints() {
         setEasyPlanAxisConstraints()
         setMediumPlanAxisConstraints()
@@ -140,5 +130,17 @@ class UserPlanningViewController: UIViewController, TrainingLevelViewDelegate {
             questionSuffixLabel.bottomAnchor.constraint(equalTo: easyPlan.topAnchor, constant: -16),
             questionSuffixLabel.leadingAnchor.constraint(equalTo: easyPlan.leadingAnchor)
         ])
+    }
+}
+
+extension UserPlanningViewController: TrainingLevelViewDelegate {
+    func userDidSelectTrainingLevel(trainingLevelView: TrainingLevelView) {
+        for view in trainingPlanViews {
+            if view == trainingLevelView {
+                appPreferences.trainingIntensity = trainingLevelView.userLevel
+            } else {
+                view.deselectView()
+            }
+        }
     }
 }
