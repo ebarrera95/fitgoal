@@ -9,7 +9,7 @@
 import Foundation
 class AppPreferences {
     
-    let defaults = UserDefaults.standard
+    private let defaults = UserDefaults.standard
     
     var loggedInUser: UserInformation? {
         get {
@@ -30,78 +30,57 @@ class AppPreferences {
     
     var userGender: String? {
         get {
-            guard let gender = defaults.string(forKey: UsersInfoKey.gender.rawValue) else { return nil }
-            return gender
+            return defaults.string(forKey: UsersInfoKey.gender.rawValue)
         } set (userGender) {
-            if let gender = userGender {
-                defaults.set(gender, forKey: UsersInfoKey.name.rawValue)
-            }
+            defaults.set(userGender, forKey: UsersInfoKey.name.rawValue)
         }
     }
     
     var fitnessLevel: String? {
         get {
-            guard let fitnessLevel = defaults.string(forKey: UsersInfoKey.fitnessLevel.rawValue) else { return nil }
-            return fitnessLevel
+            return defaults.string(forKey: UsersInfoKey.fitnessLevel.rawValue)
         } set (userFitnessLevel) {
-            if let fitnessLevel = userFitnessLevel {
-                defaults.set(fitnessLevel, forKey: UsersInfoKey.name.rawValue)
-            }
+            defaults.set(userFitnessLevel, forKey: UsersInfoKey.name.rawValue)
         }
     }
     
     var fitnessGoal: String? {
         get {
-            guard let fitnessGoal = defaults.string(forKey: UsersInfoKey.fitnessGoal.rawValue) else { return nil }
-            return fitnessGoal
+            return defaults.string(forKey: UsersInfoKey.fitnessGoal.rawValue)
         } set (userFitnessGoal) {
-            if let fitnessGoal = userFitnessGoal {
-                defaults.set(fitnessGoal, forKey: UsersInfoKey.fitnessGoal.rawValue)
-            }
+            defaults.set(userFitnessGoal, forKey: UsersInfoKey.fitnessGoal.rawValue)
         }
     }
     
     var trainingIntensity: String? {
         get {
-            guard let trainingIntensity = defaults.string(forKey: UsersInfoKey.trainingIntensity.rawValue) else { return nil }
-            return trainingIntensity
-        } set (trainingIntensity) {
-            if let userTrainingIntensity = trainingIntensity {
-                defaults.set(userTrainingIntensity, forKey: UsersInfoKey.trainingIntensity.rawValue)
-            }
+            return defaults.string(forKey: UsersInfoKey.trainingIntensity.rawValue)
+        } set (userTrainingIntensity) {
+            defaults.set(userTrainingIntensity, forKey: UsersInfoKey.trainingIntensity.rawValue)
         }
     }
     
     var age: Int? {
         get {
-            guard let age = defaults.value(forKey: UsersInfoKey.age.rawValue) as? Int else { return nil }
-            return age
-        } set (age) {
-            if let userAge = age {
-                defaults.set(userAge, forKey: UsersInfoKey.age.rawValue)
-            }
+            return defaults.value(forKey: UsersInfoKey.age.rawValue) as? Int
+        } set (userAge) {
+            defaults.set(userAge, forKey: UsersInfoKey.age.rawValue)
         }
     }
     
     var height: Int? {
         get {
-            guard let height = defaults.value(forKey: UsersInfoKey.height.rawValue) as? Int else { return nil }
-            return height
-        } set (height) {
-            if let userHeight = height {
-                defaults.set(userHeight, forKey: UsersInfoKey.height.rawValue)
-            }
+            return defaults.value(forKey: UsersInfoKey.height.rawValue) as? Int
+        } set (userHeight) {
+            defaults.set(userHeight, forKey: UsersInfoKey.height.rawValue)
         }
     }
     
     var weight: Int? {
         get {
-            guard let weight = defaults.value(forKey: UsersInfoKey.weight.rawValue) as? Int else { return nil }
-            return weight
-        } set (weight) {
-            if let userWeight = weight {
-                defaults.set(userWeight, forKey: UsersInfoKey.weight.rawValue)
-            }
+            return defaults.value(forKey: UsersInfoKey.weight.rawValue) as? Int
+        } set (userWeight) {
+            defaults.set(userWeight, forKey: UsersInfoKey.weight.rawValue)
         }
     }
 }
