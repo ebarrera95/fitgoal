@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol WalkthroughIconViewDelegate: AnyObject {
-    func userDidSelectView(iconView: WalkthroughIconView)
-}
-
 class WalkthroughIconView: UIView {
     
     var icon: WalkthroughIcon
-    
-    weak var delegate: WalkthroughIconViewDelegate?
     
     private var title = UILabel()
     
@@ -41,6 +35,16 @@ class WalkthroughIconView: UIView {
         return background
     }()
     
+    var isSelected = false {
+        didSet {
+            if isSelected {
+                self.selectIconView()
+            } else {
+                self.deselectIconView()
+            }
+        }
+    }
+    
     init(icon: WalkthroughIcon) {
         self.icon = icon
         super.init(frame: .zero)
@@ -62,9 +66,6 @@ class WalkthroughIconView: UIView {
         ]
         self.addMultipleSubviews(views)
         setConstraints()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        addGestureRecognizer(tapGesture)
     }
 
     required init(coder: NSCoder) {
@@ -76,16 +77,7 @@ class WalkthroughIconView: UIView {
         backgroundView.frame = self.bounds
     }
     
-    @objc private func handleTap() {
-        changeIconState()
-        if icon.selected {
-            delegate?.userDidSelectView(iconView: self)
-        } else {
-            return
-        }
-    }
-    
-    func deselectIconView() {
+    private func deselectIconView() {
         icon.selected = false
         backgroundView.isHidden = true
         configureIcon(forState: icon.selected, withName: icon.name)
@@ -95,14 +87,6 @@ class WalkthroughIconView: UIView {
         self.icon.selected = true
         backgroundView.isHidden = false
         configureIcon(forState: icon.selected, withName: icon.name)
-    }
-    
-    private func changeIconState() {
-        if icon.selected {
-            deselectIconView()
-        } else {
-            selectIconView()
-        }
     }
     
     private func configureIcon(forState selectedState: Bool, withName name: String) {

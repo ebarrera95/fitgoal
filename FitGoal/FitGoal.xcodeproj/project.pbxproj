@@ -19,13 +19,12 @@
 		05133A62245A5D880008DFA5 /* UserPlanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
-		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
+		0516265A2478C7FA002A4329 /* ListIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051626592478C7FA002A4329 /* ListIconView.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		053E78A6245538B700A8CF37 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */; };
 		053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */; };
-		053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A9245556EC00A8CF37 /* GenderView.swift */; };
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
 		0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DD241511CF004A0F65 /* ExerciseCell.swift */; };
 		0546E2E02415134C004A0F65 /* Exersice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DF2415134C004A0F65 /* Exersice.swift */; };
@@ -103,13 +102,12 @@
 		05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlanningViewController.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
-		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
+		051626592478C7FA002A4329 /* ListIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIconView.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileConfiguratorViewController.swift; sourceTree = "<group>"; };
-		053E78A9245556EC00A8CF37 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
 		0546E2DD241511CF004A0F65 /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
 		0546E2DF2415134C004A0F65 /* Exersice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exersice.swift; sourceTree = "<group>"; };
@@ -211,10 +209,9 @@
 		0515518824501594001A72AA /* UserProfileConfiguration */ = {
 			isa = PBXGroup;
 			children = (
-				053E78A9245556EC00A8CF37 /* GenderView.swift */,
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
-				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
+				051626592478C7FA002A4329 /* ListIconView.swift */,
 				05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
@@ -669,7 +666,6 @@
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
-				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
@@ -678,6 +674,7 @@
 				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
+				0516265A2478C7FA002A4329 /* ListIconView.swift in Sources */,
 				055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
 				05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */,
@@ -704,7 +701,6 @@
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
 				0555BA9A245BA51100422BCD /* SettingsViewController.swift in Sources */,
-				053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
 				05133A60245A4BC60008DFA5 /* TrainingLevelView.swift in Sources */,

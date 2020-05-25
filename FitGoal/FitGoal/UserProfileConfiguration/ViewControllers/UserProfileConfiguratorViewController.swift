@@ -11,7 +11,6 @@ import UIKit
 class UserProfileConfiguratorViewController: UIViewController {
     
     private let userProfileType: UserProfileType
-    
     private let appPreferences = AppPreferences()
     
     private let selectorView: UIView
@@ -23,17 +22,6 @@ class UserProfileConfiguratorViewController: UIViewController {
         self.selectorView = selectorView
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
-        setSelectorViewDelegate()
-    }
-    
-    private func setSelectorViewDelegate() {
-        if let genderView = selectorView as? GenderView {
-            genderView.delegate = self
-        } else if let fitnessLevelView = selectorView as? FitnessLevelChooserView {
-            fitnessLevelView.delegate = self
-        } else if let textField = selectorView as? UITextField {
-            textField.delegate = self
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -62,6 +50,15 @@ class UserProfileConfiguratorViewController: UIViewController {
             action: #selector(dismissKeyboard)
         )
         view.addGestureRecognizer(dismissKeyBoardTap)
+        setDelegate(for: selectorView)
+    }
+    
+    private func setDelegate(for selectorView: UIView) {
+        if let selectorView = self.selectorView as? UITextField {
+            selectorView.delegate = self
+        } else if let selectorView = self.selectorView as? ListIconView {
+            selectorView.delegate = self
+        }
     }
     
     @objc private func dismissKeyboard() {
@@ -111,25 +108,6 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
 }
 
-extension UserProfileConfiguratorViewController: GenderViewDelegate {
-    func userDidSelectGender(gender: String) {
-        appPreferences.userGender = gender
-    }
-}
-
-extension UserProfileConfiguratorViewController: FitnessLevelChooserViewDelegate {
-    func userDidSelectFitnessLevel(level: String) {
-        switch userProfileType {
-        case .fitnessLevel:
-            appPreferences.fitnessLevel = level
-        case .fitnessGoal:
-            appPreferences.fitnessGoal = level
-        default:
-            assertionFailure("fitnessLevelDelegate shouldn't be called for views that are not fitnessLevelView")
-        }
-    }
-}
-
 extension UserProfileConfiguratorViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         switch userProfileType {
@@ -149,6 +127,37 @@ extension UserProfileConfiguratorViewController: UITextFieldDelegate {
             assertionFailure("textFieldDelegate shouldn't be called for views that are not textField")
         }
     }
+}
+
+extension UserProfileConfiguratorViewController: IconListViewDelegate {
+    func iconListView(_ listView: ListIconView, didSelectIcon iconView: WalkthroughIconView) {
+        switch userProfileType {
+        case .fitnessGoal:
+            appPreferences.fitnessGoal = iconView.icon.name
+        case .fitnessLevel:
+            appPreferences.fitnessLevel = iconView.icon.name
+        case .gender:
+            appPreferences.userGender = iconView.icon.name
+        default:
+            fatalError()
+        }
+    }
+    
+    func iconListView(_ listView: ListIconView, didDeselectIcon iconView: WalkthroughIconView) {
+        print("deselected")
+        switch userProfileType {
+        case .fitnessGoal:
+            appPreferences.fitnessGoal = nil
+        case .fitnessLevel:
+            appPreferences.fitnessLevel = nil
+        case .gender:
+            appPreferences.userGender = nil
+        default:
+            fatalError()
+        }
+    }
+    
+    
 }
 
 enum UserProfileType {
