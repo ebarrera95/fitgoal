@@ -10,16 +10,16 @@ import UIKit
 
 class UserProfileConfiguratorViewController: UIViewController {
     
-    private let userProfileType: UserProfileType
-    private let appPreferences = AppPreferences()
-    
-    private let selectorView: UIView
+    private let userInfoEntryView: UIView
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
     
-    init(selectorView: UIView, questionPrefix: String, questionSuffix: String, userProfileType: UserProfileType) {
-        self.userProfileType = userProfileType
-        self.selectorView = selectorView
+    private let userInfoEntryViewDelegate: UserInfoEntryViewDelegate
+    
+    init(userInfoEntryView: UIView, questionPrefix: String, questionSuffix: String, userProfileType: UserProfileType) {
+        self.userInfoEntryView = userInfoEntryView
+        self.userInfoEntryViewDelegate = UserInfoEntryViewDelegate(userInfoEntryView: userInfoEntryView, userProfileType: userProfileType)
+        
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
@@ -37,7 +37,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         super.viewDidLoad()
         
         let views = [
-            selectorView,
+            userInfoEntryView,
             questionPrefix,
             questionSuffix
         ]
@@ -50,19 +50,10 @@ class UserProfileConfiguratorViewController: UIViewController {
             action: #selector(dismissKeyboard)
         )
         view.addGestureRecognizer(dismissKeyBoardTap)
-        setDelegate(for: selectorView)
-    }
-    
-    private func setDelegate(for selectorView: UIView) {
-        if let selectorView = self.selectorView as? UITextField {
-            selectorView.delegate = self
-        } else if let selectorView = self.selectorView as? ListIconView {
-            selectorView.delegate = self
-        }
     }
     
     @objc private func dismissKeyboard() {
-        guard let textField = selectorView as? UITextField else {
+        guard let textField = userInfoEntryView as? UITextField else {
             return
         }
         textField.resignFirstResponder()
@@ -74,12 +65,12 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     private func layoutSelectorView() {
-        if selectorView is UITextField {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
+        if userInfoEntryView is UITextField {
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
         } else {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
         }
     }
     
@@ -94,7 +85,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
+            questionPrefix.leadingAnchor.constraint(equalTo: self.userInfoEntryView.leadingAnchor)
         ])
     }
     
@@ -102,62 +93,10 @@ class UserProfileConfiguratorViewController: UIViewController {
         questionSuffix.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
-            questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
+            questionSuffix.bottomAnchor.constraint(equalTo: userInfoEntryView.topAnchor, constant: -16),
+            questionSuffix.leadingAnchor.constraint(equalTo: userInfoEntryView.leadingAnchor)
         ])
     }
-}
-
-extension UserProfileConfiguratorViewController: UITextFieldDelegate {
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        switch userProfileType {
-        case .age:
-            guard let text = textField.text else { return }
-            let age = Int(text) ?? 0
-            appPreferences.age = age
-        case .height:
-            guard let text = textField.text else { return }
-            let height = Int(text) ?? 0
-            appPreferences.height = height
-        case .weight:
-            guard let text = textField.text else { return }
-            let weight = Int(text) ?? 0
-            appPreferences.weight = weight
-        default:
-            assertionFailure("textFieldDelegate shouldn't be called for views that are not textField")
-        }
-    }
-}
-
-extension UserProfileConfiguratorViewController: IconListViewDelegate {
-    func iconListView(_ listView: ListIconView, didSelectIcon iconView: WalkthroughIconView) {
-        switch userProfileType {
-        case .fitnessGoal:
-            appPreferences.fitnessGoal = iconView.icon.name
-        case .fitnessLevel:
-            appPreferences.fitnessLevel = iconView.icon.name
-        case .gender:
-            appPreferences.userGender = iconView.icon.name
-        default:
-            fatalError()
-        }
-    }
-    
-    func iconListView(_ listView: ListIconView, didDeselectIcon iconView: WalkthroughIconView) {
-        print("deselected")
-        switch userProfileType {
-        case .fitnessGoal:
-            appPreferences.fitnessGoal = nil
-        case .fitnessLevel:
-            appPreferences.fitnessLevel = nil
-        case .gender:
-            appPreferences.userGender = nil
-        default:
-            fatalError()
-        }
-    }
-    
-    
 }
 
 enum UserProfileType {

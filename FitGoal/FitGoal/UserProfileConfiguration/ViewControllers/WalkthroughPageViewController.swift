@@ -57,7 +57,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            selectorView: ListIconView(iconList:[
+            userInfoEntryView: ListIconView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
             ]),
@@ -67,7 +67,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         )
 
         let fitnessLevel = UserProfileConfiguratorViewController(
-            selectorView: ListIconView(iconList:[
+            userInfoEntryView: ListIconView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
@@ -79,7 +79,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         )
 
         let fitnessGoal = UserProfileConfiguratorViewController(
-            selectorView: ListIconView(iconList:[
+            userInfoEntryView: ListIconView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
@@ -91,21 +91,21 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         )
         
         let age = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your age".uppercased(),
             userProfileType: .age
         )
         
         let height = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your height".uppercased(),
             userProfileType: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your weight".uppercased(),
             userProfileType: .weight
