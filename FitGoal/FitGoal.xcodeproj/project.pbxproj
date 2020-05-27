@@ -17,7 +17,7 @@
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
-		0516265A2478C7FA002A4329 /* ListIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051626592478C7FA002A4329 /* ListIconView.swift */; };
+		0516265A2478C7FA002A4329 /* IconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051626592478C7FA002A4329 /* IconListView.swift */; };
 		0516265E247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516265D247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift */; };
 		05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */; };
 		05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */; };
@@ -103,7 +103,7 @@
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
-		051626592478C7FA002A4329 /* ListIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListIconView.swift; sourceTree = "<group>"; };
+		051626592478C7FA002A4329 /* IconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListView.swift; sourceTree = "<group>"; };
 		0516265D247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntryViewDelegate.swift; sourceTree = "<group>"; };
 		0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerViewController.swift; sourceTree = "<group>"; };
 		05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewCell.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 			children = (
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
-				051626592478C7FA002A4329 /* ListIconView.swift */,
+				051626592478C7FA002A4329 /* IconListView.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -684,7 +684,7 @@
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */,
-				0516265A2478C7FA002A4329 /* ListIconView.swift in Sources */,
+				0516265A2478C7FA002A4329 /* IconListView.swift in Sources */,
 				055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
 				05162664247DE317002A4329 /* UserPlannerTableViewDataSource.swift in Sources */,

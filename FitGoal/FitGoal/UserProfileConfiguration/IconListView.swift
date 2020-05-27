@@ -9,11 +9,11 @@
 import UIKit
 
 protocol IconListViewDelegate: AnyObject {
-    func iconListView(_ listView: ListIconView, didSelectIcon iconView: WalkthroughIconView)
-    func iconListView(_ listView: ListIconView, didDeselectIcon iconView: WalkthroughIconView)
+    func iconListView(_ listView: IconListView, didSelectIcon iconView: WalkthroughIconView)
+    func iconListView(_ listView: IconListView, didDeselectIcon iconView: WalkthroughIconView)
 }
 
-class ListIconView: UIView {
+class IconListView: UIView {
     
     weak var delegate: IconListViewDelegate?
     

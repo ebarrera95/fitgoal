@@ -57,7 +57,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            userInfoEntryView: ListIconView(iconList:[
+            userInfoEntryView: IconListView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
             ]),
@@ -67,7 +67,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         )
 
         let fitnessLevel = UserProfileConfiguratorViewController(
-            userInfoEntryView: ListIconView(iconList:[
+            userInfoEntryView: IconListView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
@@ -79,7 +79,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
         )
 
         let fitnessGoal = UserProfileConfiguratorViewController(
-            userInfoEntryView: ListIconView(iconList:[
+            userInfoEntryView: IconListView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),

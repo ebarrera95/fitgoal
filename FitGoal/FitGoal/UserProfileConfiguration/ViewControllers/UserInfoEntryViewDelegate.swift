@@ -22,12 +22,12 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
     private func setDelegate(forView userInfoEntryView: UIView) {
         if let userInfoEntryView = userInfoEntryView as? UITextField {
             userInfoEntryView.delegate = self
-        } else if let userInfoEntryView = userInfoEntryView as? ListIconView {
+        } else if let userInfoEntryView = userInfoEntryView as? IconListView {
             userInfoEntryView.delegate = self
         }
     }
     
-    func iconListView(_ listView: ListIconView, didSelectIcon iconView: WalkthroughIconView) {
+    func iconListView(_ listView: IconListView, didSelectIcon iconView: WalkthroughIconView) {
         switch userProfileType {
         case .fitnessGoal:
             appPreferences.fitnessGoal = iconView.icon.name
@@ -40,7 +40,7 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
         }
     }
     
-    func iconListView(_ listView: ListIconView, didDeselectIcon iconView: WalkthroughIconView) {
+    func iconListView(_ listView: IconListView, didDeselectIcon iconView: WalkthroughIconView) {
         switch userProfileType {
         case .fitnessGoal:
             appPreferences.fitnessGoal = nil
