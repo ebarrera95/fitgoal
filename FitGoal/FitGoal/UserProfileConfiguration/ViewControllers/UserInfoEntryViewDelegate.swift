@@ -6,7 +6,6 @@
 //  Copyright © 2020 Eliany Barrera. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDelegate {
