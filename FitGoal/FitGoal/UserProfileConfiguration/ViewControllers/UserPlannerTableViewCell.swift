@@ -46,7 +46,7 @@ class UserPlannerTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        programIntensityLabel.layer.cornerRadius = programIntensityLabel.bounds.height/2
+        programIntensityLabel.layer.cornerRadius = 10
     }
     
     private func configureContentView() {
