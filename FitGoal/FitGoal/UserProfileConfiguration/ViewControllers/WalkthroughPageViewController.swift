@@ -111,7 +111,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             userProfileType: .weight
         )
         
-        let planning = UserPlanningViewController()
+        let planning = UserPlannerViewController()
         
         return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
     }()
@@ -172,7 +172,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func changeTitle(forLabel label: UILabel, vcIndex index: Int) {
-        if walkthroughViewControllers[index] is UserPlanningViewController {
+        if walkthroughViewControllers[index] is UserPlannerViewController {
              label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
             label.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
