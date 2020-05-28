@@ -32,7 +32,6 @@ class UserInfoCell: UITableViewCell {
     }
     
     static let identifier = "UserInfoCell"
-    var userWillEditCell = false
     
     private var optionsInPickerView = [String()]
     

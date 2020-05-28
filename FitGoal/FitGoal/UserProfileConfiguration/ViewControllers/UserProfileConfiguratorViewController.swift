@@ -10,12 +10,16 @@ import UIKit
 
 class UserProfileConfiguratorViewController: UIViewController {
     
-    private let selectorView: UIView
+    private let userInfoEntryView: UIView
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
     
-    init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
-        self.selectorView = selectorView
+    private let userInfoEntryViewDelegate: UserInfoEntryViewDelegate
+    
+    init(userInfoEntryView: UIView, questionPrefix: String, questionSuffix: String, userProfileType: UserProfileType) {
+        self.userInfoEntryView = userInfoEntryView
+        self.userInfoEntryViewDelegate = UserInfoEntryViewDelegate(userInfoEntryView: userInfoEntryView, userProfileType: userProfileType)
+        
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
@@ -33,7 +37,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         super.viewDidLoad()
         
         let views = [
-            selectorView,
+            userInfoEntryView,
             questionPrefix,
             questionSuffix
         ]
@@ -49,10 +53,7 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     @objc private func dismissKeyboard() {
-        guard let textField = selectorView as? UITextField else {
-            return
-        }
-        textField.resignFirstResponder()
+        userInfoEntryView.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,12 +62,12 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     private func layoutSelectorView() {
-        if selectorView is UITextField {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
+        if userInfoEntryView is UITextField {
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
         } else {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
         }
     }
     
@@ -81,7 +82,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
+            questionPrefix.leadingAnchor.constraint(equalTo: self.userInfoEntryView.leadingAnchor)
         ])
     }
     
@@ -89,8 +90,17 @@ class UserProfileConfiguratorViewController: UIViewController {
         questionSuffix.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
-            questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
+            questionSuffix.bottomAnchor.constraint(equalTo: userInfoEntryView.topAnchor, constant: -16),
+            questionSuffix.leadingAnchor.constraint(equalTo: userInfoEntryView.leadingAnchor)
         ])
     }
+}
+
+enum UserProfileType {
+    case gender
+    case fitnessLevel
+    case fitnessGoal
+    case age
+    case height
+    case weight
 }

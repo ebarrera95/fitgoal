@@ -8,15 +8,9 @@
 
 import UIKit
 
-protocol WalkthroughIconViewDelegate: AnyObject {
-    func userDidSelectIcon(icon: WalkthroughIcon)
-}
-
 class WalkthroughIconView: UIView {
     
-    private var icon: WalkthroughIcon
-    
-    weak var delegate: WalkthroughIconViewDelegate?
+    var icon: WalkthroughIcon
     
     private var title = UILabel()
     
@@ -41,6 +35,14 @@ class WalkthroughIconView: UIView {
         return background
     }()
     
+    var isSelected = false {
+        didSet {
+            icon.selected = isSelected
+            backgroundView.isHidden = !isSelected
+            configureIcon(forState: icon.selected, withName: icon.name)
+        }
+    }
+    
     init(icon: WalkthroughIcon) {
         self.icon = icon
         super.init(frame: .zero)
@@ -62,9 +64,6 @@ class WalkthroughIconView: UIView {
         ]
         self.addMultipleSubviews(views)
         setConstraints()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        addGestureRecognizer(tapGesture)
     }
 
     required init(coder: NSCoder) {
@@ -74,27 +73,6 @@ class WalkthroughIconView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         backgroundView.frame = self.bounds
-    }
-    
-    @objc private func handleTap() {
-        changeIconState()
-        if icon.selected {
-            delegate?.userDidSelectIcon(icon: icon)
-        } else {
-            return
-        }
-    }
-    
-    private func changeIconState() {
-        if icon.selected {
-            self.icon.selected = false
-            configureIcon(forState: icon.selected, withName: icon.name)
-            backgroundView.isHidden = true
-        } else {
-            self.icon.selected = true
-            configureIcon(forState: icon.selected, withName: icon.name)
-            backgroundView.isHidden = false
-        }
     }
     
     private func configureIcon(forState selectedState: Bool, withName name: String) {

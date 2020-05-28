@@ -57,42 +57,61 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            selectorView: GenderView(),
+            userInfoEntryView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
+            ]),
             questionPrefix: "What is",
-            questionSuffix: "your gender".uppercased()
+            questionSuffix: "your gender".uppercased(),
+            userProfileType: .gender
         )
-        
+
         let fitnessLevel = UserProfileConfiguratorViewController(
-            selectorView: FitnessLevelChooserView(),
+            userInfoEntryView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
+            ]),
             questionPrefix: "What is your current fitness",
-            questionSuffix: "level".uppercased()
+            questionSuffix: "level".uppercased(),
+            userProfileType: .fitnessLevel
         )
-        
+
         let fitnessGoal = UserProfileConfiguratorViewController(
-            selectorView: FitnessLevelChooserView(),
+            userInfoEntryView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
+            ]),
             questionPrefix: "What is",
-            questionSuffix: "your goal".uppercased()
+            questionSuffix: "your goal".uppercased(),
+            userProfileType: .fitnessGoal
         )
         
         let age = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your age".uppercased()
+            questionSuffix: "your age".uppercased(),
+            userProfileType: .age
         )
         
         let height = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your height".uppercased()
+            questionSuffix: "your height".uppercased(),
+            userProfileType: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            userInfoEntryView: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your weight".uppercased()
+            questionSuffix: "your weight".uppercased(),
+            userProfileType: .weight
         )
         
-        let planning = UserPlanningViewController()
+        let planning = UserPlannerViewController()
         
         return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
     }()
@@ -153,7 +172,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func changeTitle(forLabel label: UILabel, vcIndex index: Int) {
-        if walkthroughViewControllers[index] is UserPlanningViewController {
+        if walkthroughViewControllers[index] is UserPlannerViewController {
              label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
             label.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
