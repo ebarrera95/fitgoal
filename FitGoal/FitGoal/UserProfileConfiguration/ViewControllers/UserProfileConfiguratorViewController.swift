@@ -53,10 +53,7 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     @objc private func dismissKeyboard() {
-        guard let textField = userInfoEntryView as? UITextField else {
-            return
-        }
-        textField.resignFirstResponder()
+        userInfoEntryView.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {

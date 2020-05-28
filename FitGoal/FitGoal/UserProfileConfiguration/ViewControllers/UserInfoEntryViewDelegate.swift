@@ -36,7 +36,7 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
         case .gender:
             appPreferences.userGender = iconView.icon.name
         default:
-            assertionFailure("ListIconViewDelegate shouldn't be called for views that are not listIconView")
+            assertionFailure("non supported enum cases")
         }
     }
     
@@ -49,7 +49,7 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
         case .gender:
             appPreferences.userGender = nil
         default:
-            assertionFailure("ListIconViewDelegate shouldn't be called for views that are not listIconView")
+            assertionFailure("non supported enum cases")
         }
     }
     
@@ -68,7 +68,7 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
                 appPreferences.weight = weight
             }
         default:
-            assertionFailure("textFieldDelegate shouldn't be called for views that are not textField")
+            assertionFailure("non supported enum cases")
         }
     }
 }

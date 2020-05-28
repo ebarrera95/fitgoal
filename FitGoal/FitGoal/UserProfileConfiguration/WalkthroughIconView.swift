@@ -37,11 +37,9 @@ class WalkthroughIconView: UIView {
     
     var isSelected = false {
         didSet {
-            if isSelected {
-                self.selectIconView()
-            } else {
-                self.deselectIconView()
-            }
+            icon.selected = isSelected
+            backgroundView.isHidden = !isSelected
+            configureIcon(forState: icon.selected, withName: icon.name)
         }
     }
     
@@ -75,18 +73,6 @@ class WalkthroughIconView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         backgroundView.frame = self.bounds
-    }
-    
-    private func deselectIconView() {
-        icon.selected = false
-        backgroundView.isHidden = true
-        configureIcon(forState: icon.selected, withName: icon.name)
-    }
-    
-    private func selectIconView() {
-        self.icon.selected = true
-        backgroundView.isHidden = false
-        configureIcon(forState: icon.selected, withName: icon.name)
     }
     
     private func configureIcon(forState selectedState: Bool, withName name: String) {
