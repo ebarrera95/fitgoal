@@ -14,11 +14,11 @@ import FBSDKLoginKit
 class Authenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
-    typealias UserInfoCallback = (Result<UserInformation, Error>) -> Void
+    typealias UserIdentificationCallback = (Result<UserIdentification, Error>) -> Void
     
     private let appPreferences = AppPreferences()
     
-    private var userInfoCallback: UserInfoCallback?
+    private var userIdentificationCallback: UserIdentificationCallback?
     
     private var authenticationMethod: AuthenticationMethod
     
@@ -34,10 +34,10 @@ class Authenticator: NSObject, GIDSignInDelegate {
     }
     
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
-        func persistIfPossible(userInfoResult: Result<UserInformation, Error>) {
-            switch userInfoResult {
-            case .success(let userInfo):
-                appPreferences.loggedInUser = userInfo
+        func persistIfPossible(userIdentificationResult: Result<UserIdentification, Error>) {
+            switch userIdentificationResult {
+            case .success(let userIdentification):
+                appPreferences.loggedInUser = userIdentification
                 completion(.success(()))
             case .failure(let error):
                 completion(.failure(error))
@@ -46,19 +46,19 @@ class Authenticator: NSObject, GIDSignInDelegate {
         
         switch authenticationMethod {
         case .custom(let customAuth):
-            customSignIn(customAuth: customAuth, completion: persistIfPossible(userInfoResult:))
+            customSignIn(customAuth: customAuth, completion: persistIfPossible(userIdentificationResult:))
         case .socialMedia(let socialMedia):
-            authenticate(with: socialMedia, sender: sender, completion: persistIfPossible(userInfoResult:))
+            authenticate(with: socialMedia, sender: sender, completion: persistIfPossible(userIdentificationResult:))
         }
     }
     
-    private func googleSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
-        self.userInfoCallback = completion
+    private func googleSignIn(sender: UIViewController, completion: @escaping UserIdentificationCallback) {
+        self.userIdentificationCallback = completion
         GIDSignIn.sharedInstance()?.presentingViewController = sender
         GIDSignIn.sharedInstance()?.signIn()
     }
     
-    private func facebookSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func facebookSignIn(sender: UIViewController, completion: @escaping UserIdentificationCallback) {
         let permissions = ["public_profile", "email"]
         
         LoginManager().logIn(permissions: permissions, from: sender) { (loginResults, error) in
@@ -82,7 +82,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    private func twitterSignIn(sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func twitterSignIn(sender: UIViewController, completion: @escaping UserIdentificationCallback) {
         twitterProvider.getCredentialWith(nil) { (credentials, error) in
             if let error = error {
                 completion(.failure(error))
@@ -96,7 +96,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    private func customSignIn(customAuth: CustomAuthentication, completion: @escaping UserInfoCallback) {
+    private func customSignIn(customAuth: CustomAuthentication, completion: @escaping UserIdentificationCallback) {
         let email = customAuth.email
         let userName = customAuth.name
         let password = customAuth.password
@@ -118,15 +118,15 @@ class Authenticator: NSObject, GIDSignInDelegate {
     // MARK: -Google Delegate
     func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
         if let error = error {
-            userInfoCallback?(.failure(error))
+            userIdentificationCallback?(.failure(error))
         } else {
             guard let authentication = user.authentication else {
-                userInfoCallback?(.failure(MissingUserInfoError.noAuthenticationObjectFound))
+                userIdentificationCallback?(.failure(MissingUserIdentifierError.noAuthenticationObjectFound))
                 return
             }
             
-            guard let callback = userInfoCallback else {
-                assertionFailure("nil userInfoCallback")
+            guard let callback = userIdentificationCallback else {
+                assertionFailure("nil userIdentificationCallback")
                 return
             }
             self.authenticateUser(with: .google(accessToken: authentication.accessToken, tokenID: authentication.idToken), completion: callback)
@@ -135,7 +135,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
     
     //MARK: - Helper functions
     
-    private func authenticate(with socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserInfoCallback) {
+    private func authenticate(with socialMedia: SocialMedia, sender: UIViewController, completion: @escaping UserIdentificationCallback) {
         switch socialMedia {
         case .facebook:
             facebookSignIn(sender: sender, completion: completion)
@@ -146,30 +146,30 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    private func parseUserInformation(from dataResults: AuthDataResult?, error: Error?, completion: UserInfoCallback) {
+    private func parseUserIdentifiers(from dataResults: AuthDataResult?, error: Error?, completion: UserIdentificationCallback) {
         if let error = error {
             completion(.failure(error))
         } else {
             guard let user = dataResults?.user else {
-                completion(.failure(MissingUserInfoError.noUserFound))
+                completion(.failure(MissingUserIdentifierError.noUserFound))
                 return
             }
             
             guard let name = user.displayName else {
-                completion(.failure(MissingUserInfoError.noNameFound))
+                completion(.failure(MissingUserIdentifierError.noNameFound))
                 return
             }
             
             guard let email = user.email else {
-                completion(.failure(MissingUserInfoError.noEmailFound))
+                completion(.failure(MissingUserIdentifierError.noEmailFound))
                 return
             }
             
-            completion(.success(UserInformation(name: name, email: email)))
+            completion(.success(UserIdentification(name: name, email: email)))
         }
     }
     
-    fileprivate func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
+    fileprivate func authenticateUser(with providerSpecifications: ProviderSpecifications, completion: @escaping UserIdentificationCallback) {
         let credentials = providerSpecifications.credentials
         Auth.auth().signIn(with: credentials) { (dataResults, error) in
             if let error = error {
@@ -177,15 +177,15 @@ class Authenticator: NSObject, GIDSignInDelegate {
             } else {
                 switch providerSpecifications {
                 case .facebook, .twitter, .google:
-                    self.parseUserInformation(from: dataResults, error: error, completion: completion)
+                    self.parseUserIdentifiers(from: dataResults, error: error, completion: completion)
                 case .custom(_, let email, let name):
-                    completion(.success(UserInformation(name: name, email: email)))
+                    completion(.success(UserIdentification(name: name, email: email)))
                 }
             }
         }
     }
     
-    private func handleLoginError(error: Error, providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
+    private func handleLoginError(error: Error, providerSpecifications: ProviderSpecifications, completion: @escaping UserIdentificationCallback) {
         let nsError = error as NSError
         if nsError.code == AuthErrorCode.accountExistsWithDifferentCredential.rawValue {
             self.handleAccountExistsWithDifferentCredentials(
@@ -204,7 +204,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
         }
     }
     
-    private func handleAccountExistsWithDifferentCredentials(error: NSError, providerSpecifications: ProviderSpecifications, completion: @escaping UserInfoCallback) {
+    private func handleAccountExistsWithDifferentCredentials(error: NSError, providerSpecifications: ProviderSpecifications, completion: @escaping UserIdentificationCallback) {
         guard let email = error.userInfo[AuthErrorUserInfoEmailKey] as? String else {
             completion(.failure(error))
             return
@@ -255,7 +255,7 @@ struct CustomAuthentication {
     let password: String
 }
 
-private enum MissingUserInfoError: Error {
+private enum MissingUserIdentifierError: Error {
     case noUserFound
     case noNameFound
     case noEmailFound

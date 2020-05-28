@@ -11,11 +11,11 @@ class AppPreferences {
     
     private let defaults = UserDefaults.standard
     
-    var loggedInUser: UserInformation? {
+    var loggedInUser: UserIdentification? {
         get {
             guard let name = defaults.string(forKey: UsersInfoKey.name.rawValue) else { return nil }
             guard let email = defaults.string(forKey: UsersInfoKey.email.rawValue) else { return nil }
-            return UserInformation(name: name, email: email)
+            return UserIdentification(name: name, email: email)
         }
         set(userInfo) {
             if let userInfo = userInfo {
