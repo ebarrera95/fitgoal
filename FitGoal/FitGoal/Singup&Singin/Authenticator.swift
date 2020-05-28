@@ -14,7 +14,7 @@ import FBSDKLoginKit
 class Authenticator: NSObject, GIDSignInDelegate {
     
     typealias SignInCallback = (Result<Void, Error>) -> Void
-    typealias UserInfoCallback = (Result<UserInformation, Error>) -> Void
+    typealias UserInfoCallback = (Result<UserIdentification, Error>) -> Void
     
     private let appPreferences = AppPreferences()
     
@@ -34,7 +34,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
     }
     
     func authenticate(sender: UIViewController, completion: @escaping SignInCallback) {
-        func persistIfPossible(userInfoResult: Result<UserInformation, Error>) {
+        func persistIfPossible(userInfoResult: Result<UserIdentification, Error>) {
             switch userInfoResult {
             case .success(let userInfo):
                 appPreferences.loggedInUser = userInfo
@@ -165,7 +165,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
                 return
             }
             
-            completion(.success(UserInformation(name: name, email: email)))
+            completion(.success(UserIdentification(name: name, email: email)))
         }
     }
     
@@ -179,7 +179,7 @@ class Authenticator: NSObject, GIDSignInDelegate {
                 case .facebook, .twitter, .google:
                     self.parseUserInformation(from: dataResults, error: error, completion: completion)
                 case .custom(_, let email, let name):
-                    completion(.success(UserInformation(name: name, email: email)))
+                    completion(.success(UserIdentification(name: name, email: email)))
                 }
             }
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserInformation {
+struct UserIdentification {
     let name: String
     let email: String
 }
