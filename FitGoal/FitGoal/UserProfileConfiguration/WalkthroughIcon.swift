@@ -49,6 +49,6 @@ struct WalkthroughIcon {
 }
 
 enum WalkThroughIconType {
-    case gender(gender: Gender)
-    case fitnessLevel(fitnessLevel: FitnessLevel)
+    case gender(Gender)
+    case fitnessLevel(FitnessLevel)
 }
