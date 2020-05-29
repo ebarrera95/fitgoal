@@ -22,6 +22,6 @@ class UserPlannerTableViewDelegate: NSObject, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let cell = tableView.cellForRow(at: indexPath) as? UserPlannerTableViewCell else { fatalError() }
-        appPreferences.trainingIntensity = cell.trainingProgram?.trainingLevel.rawValue
+        appPreferences.trainingIntensity = cell.trainingProgram?.trainingLevel
     }
 }

@@ -30,11 +30,26 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
     func iconListView(_ listView: IconListView, didSelectIcon iconView: WalkthroughIconView) {
         switch userProfileType {
         case .fitnessGoal:
-            appPreferences.fitnessGoal = iconView.icon.name
+            switch iconView.icon.iconType {
+            case .fitnessLevel(let fitnessLevel):
+                appPreferences.fitnessGoal = fitnessLevel
+            default:
+                return
+            }
         case .fitnessLevel:
-            appPreferences.fitnessLevel = iconView.icon.name
+            switch iconView.icon.iconType {
+            case .fitnessLevel(let fitnessLevel):
+                appPreferences.fitnessLevel = fitnessLevel
+            default:
+                return
+            }
         case .gender:
-            appPreferences.userGender = iconView.icon.name
+            switch iconView.icon.iconType {
+            case .gender(let gender):
+                appPreferences.userGender = gender
+            default:
+                return
+            }
         default:
             assertionFailure("non supported enum cases")
         }

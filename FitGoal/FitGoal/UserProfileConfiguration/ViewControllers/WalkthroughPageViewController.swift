@@ -58,8 +58,8 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
             userInfoEntryView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .male)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .female))
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(gender: .male))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(gender: .female)))
             ]),
             questionPrefix: "What is",
             questionSuffix: "your gender".uppercased(),
@@ -68,10 +68,10 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
 
         let fitnessLevel = UserProfileConfiguratorViewController(
             userInfoEntryView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .athletic)))
             ]),
             questionPrefix: "What is your current fitness",
             questionSuffix: "level".uppercased(),
@@ -80,10 +80,10 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
 
         let fitnessGoal = UserProfileConfiguratorViewController(
             userInfoEntryView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .skinny)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .normal)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .obese)),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .athletic))
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(fitnessLevel: .athletic)))
             ]),
             questionPrefix: "What is",
             questionSuffix: "your goal".uppercased(),
