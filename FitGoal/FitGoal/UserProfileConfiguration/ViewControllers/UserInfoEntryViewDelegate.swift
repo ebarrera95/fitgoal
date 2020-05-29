@@ -28,6 +28,8 @@ class UserInfoEntryViewDelegate: NSObject, IconListViewDelegate,  UITextFieldDel
     }
     
     func iconListView(_ listView: IconListView, didSelectIcon iconView: WalkthroughIconView) {
+        //Not the best func structure, I'll deal with it in the next PR
+        
         switch userProfileType {
         case .fitnessGoal:
             switch iconView.icon.iconType {
