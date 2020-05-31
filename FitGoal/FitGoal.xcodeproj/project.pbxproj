@@ -40,6 +40,7 @@
 		0555BA9C245BA9BD00422BCD /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */; };
 		055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F18252456AD14004A49C5 /* LoginValidator.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
+		0562319F2483A0BC001FC32D /* IconListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */; };
 		05644D4E2461381F00E32434 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05644D4D2461381F00E32434 /* UserInfoCell.swift */; };
 		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
@@ -127,6 +128,7 @@
 		0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 		055F18252456AD14004A49C5 /* LoginValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidator.swift; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListViewDelegate.swift; sourceTree = "<group>"; };
 		05644D4D2461381F00E32434 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
 				051626592478C7FA002A4329 /* IconListView.swift */,
+				0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */,
 				05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
@@ -720,6 +723,7 @@
 				0555BA9A245BA51100422BCD /* SettingsViewController.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
+				0562319F2483A0BC001FC32D /* IconListViewDelegate.swift in Sources */,
 				0516265E247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift in Sources */,
 				0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
