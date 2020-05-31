@@ -57,37 +57,34 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            iconListView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.male))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.female)))
+            iconListView: IconListView(iconList: [
+            WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.male))),
+            WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.female)))
             ]),
             questionPrefix: "What is",
-            questionSuffix: "your gender".uppercased(),
-            qualitativeUserInfo: .gender
+            questionSuffix: "your gender".uppercased()
         )
         
         let currentFitnessLevel = UserProfileConfiguratorViewController(
             iconListView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.skinny))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.normal))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.obese))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.athletic)))
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .currentFitnessLevel(.skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .currentFitnessLevel(.normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .currentFitnessLevel(.obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .currentFitnessLevel(.athletic)))
             ]),
             questionPrefix: "What is your current fitness",
-            questionSuffix: "level".uppercased(),
-            qualitativeUserInfo: .currentFitnessLevel
+            questionSuffix: "level".uppercased()
         )
         
         let fitnessGoal = UserProfileConfiguratorViewController(
             iconListView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.skinny))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.normal))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.obese))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.athletic)))
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.athletic)))
             ]),
             questionPrefix: "What is",
-            questionSuffix:  "your goal".uppercased(),
-            qualitativeUserInfo: .fitnessGoal
+            questionSuffix:  "your goal".uppercased()
         )
         
         let age = UserProfileConfiguratorViewController(

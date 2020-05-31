@@ -23,12 +23,12 @@ class UserProfileConfiguratorViewController: UIViewController {
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
     
-    convenience init(iconListView: IconListView, questionPrefix: String, questionSuffix: String, qualitativeUserInfo: QualitativeUserInfo) {
+    convenience init(iconListView: IconListView, questionPrefix: String, questionSuffix: String) {
         
         self.init(userInfoEntryView: iconListView, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
         guard let iconListView = userInfoEntryView as? IconListView else { return }
-        self.iconListViewDelegate = IconListDelegate(listView: iconListView, qualitativeUserInfo: qualitativeUserInfo)
+        self.iconListViewDelegate = IconListDelegate(listView: iconListView)
         iconListView.delegate = self.iconListViewDelegate
     }
     
