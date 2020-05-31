@@ -91,21 +91,21 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
             textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your age".uppercased(),
-            quantitativeInfo: .age
+            quantitativeUserInfo: .age
         )
         
         let height = UserProfileConfiguratorViewController(
             textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your height".uppercased(),
-            quantitativeInfo: .height
+            quantitativeUserInfo: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
             textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your weight".uppercased(),
-            quantitativeInfo: .weight
+            quantitativeUserInfo: .weight
         )
 
         let planning = UserPlannerViewController()

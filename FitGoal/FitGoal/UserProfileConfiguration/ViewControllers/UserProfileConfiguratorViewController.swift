@@ -32,12 +32,12 @@ class UserProfileConfiguratorViewController: UIViewController {
         iconListView.delegate = self.iconListViewDelegate
     }
     
-    convenience init(textField: UITextField, questionPrefix: String, questionSuffix: String, quantitativeInfo: QuantitativeUserInfo) {
+    convenience init(textField: UITextField, questionPrefix: String, questionSuffix: String, quantitativeUserInfo: QuantitativeUserInfo) {
         
         self.init(userInfoEntryView: textField, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
         guard let textField = userInfoEntryView as? UITextField else { return }
-        self.userInfoTextFieldDelegate = UserInfoTextFieldDelegate(textField: textField, quantitativeUserInfo: quantitativeInfo)
+        self.userInfoTextFieldDelegate = UserInfoTextFieldDelegate(textField: textField, quantitativeUserInfo: quantitativeUserInfo)
         textField.delegate = userInfoTextFieldDelegate
     }
     
