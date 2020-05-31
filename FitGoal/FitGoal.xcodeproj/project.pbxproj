@@ -18,7 +18,6 @@
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
 		0516265A2478C7FA002A4329 /* IconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051626592478C7FA002A4329 /* IconListView.swift */; };
-		0516265E247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516265D247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift */; };
 		05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */; };
 		05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */; };
 		05162664247DE317002A4329 /* UserPlannerTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */; };
@@ -107,7 +106,6 @@
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
 		051626592478C7FA002A4329 /* IconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListView.swift; sourceTree = "<group>"; };
-		0516265D247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEntryViewDelegate.swift; sourceTree = "<group>"; };
 		0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerViewController.swift; sourceTree = "<group>"; };
 		05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewCell.swift; sourceTree = "<group>"; };
 		05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewDataSource.swift; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 				05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */,
 				0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */,
 				053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */,
-				0516265D247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift */,
 				053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */,
 			);
 			path = ViewControllers;
@@ -728,7 +725,6 @@
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
 				0562319F2483A0BC001FC32D /* IconListViewDelegate.swift in Sources */,
-				0516265E247B7A1D002A4329 /* UserInfoEntryViewDelegate.swift in Sources */,
 				0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
