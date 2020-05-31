@@ -11,16 +11,16 @@ import UIKit
 class UserInfoTextFieldDelegate: NSObject, UITextFieldDelegate {
     
     private let appPreferences = AppPreferences()
-    private let userInfo: QuantitativeUserInfo
+    private let quantitativeUserInfo: QuantitativeUserInfo
     
     init(textField: UITextField, quantitativeUserInfo: QuantitativeUserInfo) {
-        self.userInfo = quantitativeUserInfo
+        self.quantitativeUserInfo = quantitativeUserInfo
         super.init()
         textField.delegate = self
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        switch userInfo {
+        switch quantitativeUserInfo {
         case .age:
             if let text = textField.text, let age = Int(text) {
                 appPreferences.age = age
