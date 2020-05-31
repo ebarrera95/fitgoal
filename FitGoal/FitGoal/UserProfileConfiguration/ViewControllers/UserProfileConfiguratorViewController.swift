@@ -23,7 +23,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
     }
     
-    convenience init(iconListView: IconListView, qualitativeUserInfo: QualitativeUserInfo, questionPrefix: String, questionSuffix: String) {
+    convenience init(iconListView: IconListView, questionPrefix: String, questionSuffix: String, qualitativeUserInfo: QualitativeUserInfo) {
         
         self.init(userInfoEntryView: iconListView, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
@@ -32,7 +32,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         iconListView.delegate = self.iconListViewDelegate
     }
     
-    convenience init(textField: UITextField, quantitativeInfo: QuantitativeUserInfo, questionPrefix: String, questionSuffix: String) {
+    convenience init(textField: UITextField, questionPrefix: String, questionSuffix: String, quantitativeInfo: QuantitativeUserInfo) {
         
         self.init(userInfoEntryView: textField, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
