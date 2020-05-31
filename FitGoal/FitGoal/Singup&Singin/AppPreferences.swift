@@ -28,35 +28,35 @@ class AppPreferences {
         }
     }
     
-    var userGender: String? {
+    var userGender: Gender? {
         get {
-            return defaults.string(forKey: UsersInfoKey.gender.rawValue)
+            return readEnum(forKey: UsersInfoKey.gender.rawValue)
         } set (userGender) {
-            defaults.set(userGender, forKey: UsersInfoKey.name.rawValue)
+            defaults.set(userGender?.rawValue, forKey: UsersInfoKey.gender.rawValue)
         }
     }
     
-    var fitnessLevel: String? {
+    var fitnessLevel: FitnessLevel? {
         get {
-            return defaults.string(forKey: UsersInfoKey.fitnessLevel.rawValue)
+            return readEnum(forKey: UsersInfoKey.fitnessLevel.rawValue)
         } set (userFitnessLevel) {
-            defaults.set(userFitnessLevel, forKey: UsersInfoKey.name.rawValue)
+            defaults.set(userFitnessLevel?.rawValue, forKey: UsersInfoKey.fitnessLevel.rawValue)
         }
     }
     
-    var fitnessGoal: String? {
+    var fitnessGoal: FitnessLevel? {
         get {
-            return defaults.string(forKey: UsersInfoKey.fitnessGoal.rawValue)
+            return readEnum(forKey: UsersInfoKey.fitnessGoal.rawValue)
         } set (userFitnessGoal) {
-            defaults.set(userFitnessGoal, forKey: UsersInfoKey.fitnessGoal.rawValue)
+            defaults.set(userFitnessGoal?.rawValue, forKey: UsersInfoKey.fitnessGoal.rawValue)
         }
     }
     
-    var trainingIntensity: String? {
+    var trainingIntensity: TrainingLevel? {
         get {
-            return defaults.string(forKey: UsersInfoKey.trainingIntensity.rawValue)
+            return readEnum(forKey: UsersInfoKey.trainingIntensity.rawValue)
         } set (userTrainingIntensity) {
-            defaults.set(userTrainingIntensity, forKey: UsersInfoKey.trainingIntensity.rawValue)
+            defaults.set(userTrainingIntensity?.rawValue, forKey: UsersInfoKey.trainingIntensity.rawValue)
         }
     }
     
@@ -82,6 +82,16 @@ class AppPreferences {
         } set (userWeight) {
             defaults.set(userWeight, forKey: UsersInfoKey.weight.rawValue)
         }
+    }
+    
+    private func readEnum<T: RawRepresentable>(forKey key: String) -> T? where T.RawValue == String {
+        guard let value = defaults.string(forKey: key) else { return nil }
+        guard let parsedValue = T(rawValue: value) else {
+            assertionFailure("value doesn't match raw representable")
+            return nil
+        }
+        
+        return parsedValue
     }
 }
 

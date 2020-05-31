@@ -62,6 +62,7 @@
 		05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */; };
 		05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */; };
 		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
+		05FC8A8A247F9FE8005C3FF6 /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */; };
 		1D7FE1880AE1195404A71B35 /* libPods-FitGoal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6537303486DC6B0C92115EB1 /* libPods-FitGoal.a */; };
 		C0E9C52B32FD169709712A9E /* libPods-FitGoalUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26CC521159F56056E916FD2 /* libPods-FitGoalUITests.a */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
@@ -148,6 +149,7 @@
 		05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeSwitcherView.swift; sourceTree = "<group>"; };
 		05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFormView.swift; sourceTree = "<group>"; };
 		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		4EE093ADD58E1D7923CE8C65 /* Pods-FitGoal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.release.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.release.xcconfig"; sourceTree = "<group>"; };
 		4F50A60850CCD7C728954905 /* Pods-FitGoalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoalTests.debug.xcconfig"; path = "Target Support Files/Pods-FitGoalTests/Pods-FitGoalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6498C1122412C9CA50CDACC3 /* Pods-FitGoal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.debug.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.debug.xcconfig"; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
 				051626592478C7FA002A4329 /* IconListView.swift */,
+				05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -684,6 +687,7 @@
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
 				05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */,
+				05FC8A8A247F9FE8005C3FF6 /* UserInformation.swift in Sources */,
 				0516265A2478C7FA002A4329 /* IconListView.swift in Sources */,
 				055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,

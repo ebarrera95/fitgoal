@@ -174,9 +174,3 @@ struct TrainingProgram {
     let weeklyFrequency: Int
     let eatingPlanDescription = "Follow a flexible eating plan"
 }
-
-enum TrainingLevel: String {
-    case easy
-    case medium
-    case intense
-}
