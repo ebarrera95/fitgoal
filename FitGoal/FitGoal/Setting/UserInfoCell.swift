@@ -94,10 +94,8 @@ class UserInfoCell: UITableViewCell {
         switch gender {
         case .female:
             return [Gender.female.rawValue.capitalized, Gender.male.rawValue.capitalized]
-        case .male:
+        case .male, .none:
             return [Gender.male.rawValue.capitalized, Gender.female.rawValue.capitalized]
-        case .none:
-            return [Gender.female.rawValue.capitalized, Gender.male.rawValue.capitalized]
         }
     }
     
