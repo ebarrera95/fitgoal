@@ -20,19 +20,17 @@ class UserInfoTextFieldDelegate: NSObject, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text, let value = Int(text) else {
+            assertionFailure("value must be and Int")
+            return
+        }
         switch quantitativeUserInfo {
         case .age:
-            if let text = textField.text, let age = Int(text) {
-                appPreferences.age = age
-            }
+            appPreferences.age = value
         case .height:
-            if let text = textField.text, let height = Int(text) {
-                appPreferences.height = height
-            }
+            appPreferences.height = value
         case .weight:
-            if let text = textField.text, let weight = Int(text) {
-                appPreferences.weight = weight
-            }
+            appPreferences.weight = value
         }
     }
 }

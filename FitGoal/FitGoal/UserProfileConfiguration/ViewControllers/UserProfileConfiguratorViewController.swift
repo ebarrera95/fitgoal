@@ -27,7 +27,6 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         self.init(userInfoEntryView: iconListView, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
-        guard let iconListView = userInfoEntryView as? IconListView else { return }
         self.iconListViewDelegate = IconListDelegate(listView: iconListView)
         iconListView.delegate = self.iconListViewDelegate
     }
@@ -36,7 +35,6 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         self.init(userInfoEntryView: textField, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
         
-        guard let textField = userInfoEntryView as? UITextField else { return }
         self.userInfoTextFieldDelegate = UserInfoTextFieldDelegate(textField: textField, quantitativeUserInfo: quantitativeUserInfo)
         textField.delegate = userInfoTextFieldDelegate
     }

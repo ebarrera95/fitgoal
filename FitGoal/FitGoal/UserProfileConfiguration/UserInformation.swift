@@ -13,7 +13,7 @@ enum Gender: String {
     case female
 }
 
-enum FitnessLevel: String {
+enum Fitness: String {
     case skinny
     case normal
     case obese

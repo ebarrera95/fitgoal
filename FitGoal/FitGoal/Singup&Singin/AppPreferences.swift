@@ -36,7 +36,7 @@ class AppPreferences {
         }
     }
     
-    var fitnessLevel: FitnessLevel? {
+    var fitnessLevel: Fitness? {
         get {
             return readEnum(forKey: UsersInfoKey.fitnessLevel.rawValue)
         } set (userFitnessLevel) {
@@ -44,7 +44,7 @@ class AppPreferences {
         }
     }
     
-    var fitnessGoal: FitnessLevel? {
+    var fitnessGoal: Fitness? {
         get {
             return readEnum(forKey: UsersInfoKey.fitnessGoal.rawValue)
         } set (userFitnessGoal) {

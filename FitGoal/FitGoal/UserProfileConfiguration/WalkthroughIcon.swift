@@ -28,8 +28,8 @@ struct WalkthroughIcon {
     
     var name: String {
         switch iconType {
-        case .currentFitnessLevel(let fitnessLevel):
-            return fitnessLevel.rawValue.capitalized
+        case .fitnessLevel(let fitness):
+            return fitness.rawValue.capitalized
         case .fitnessGoal(let fitnessGoal):
             return fitnessGoal.rawValue.capitalized
         case .gender(let gender):
@@ -39,7 +39,7 @@ struct WalkthroughIcon {
     
     var image: UIImage {
         switch iconType {
-        case .currentFitnessLevel, .fitnessGoal:
+        case .fitnessLevel, .fitnessGoal:
             let coreName = "BodyShape"
             let bodyShapeImageName = iconNamePrefix + coreName + iconNameSuffix
             return UIImage(imageLiteralResourceName: bodyShapeImageName)
@@ -52,6 +52,6 @@ struct WalkthroughIcon {
 
 enum WalkThroughIconType {
     case gender(Gender)
-    case currentFitnessLevel(FitnessLevel)
-    case fitnessGoal(FitnessLevel)
+    case fitnessLevel(Fitness)
+    case fitnessGoal(Fitness)
 }

@@ -18,7 +18,7 @@ class IconListDelegate: IconListViewDelegate {
     
     func iconListView(_ listView: IconListView, didSelectIcon iconView: WalkthroughIconView) {
         switch iconView.icon.iconType {
-        case .currentFitnessLevel(let fitnessLevel):
+        case .fitnessLevel(let fitnessLevel):
             appPreferences.fitnessLevel = fitnessLevel
         case .fitnessGoal(let fitnessGoal):
             appPreferences.fitnessGoal = fitnessGoal
@@ -31,7 +31,7 @@ class IconListDelegate: IconListViewDelegate {
         switch iconView.icon.iconType {
         case .fitnessGoal:
             appPreferences.fitnessGoal = nil
-        case .currentFitnessLevel:
+        case .fitnessLevel:
             appPreferences.fitnessLevel = nil
         case .gender:
             appPreferences.userGender = nil
