@@ -10,12 +10,14 @@ import UIKit
 
 class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
     
-    private let userInfoCellsContent: [UserPreference] = [
-        UserPreference(preferenceName: "Height", preferenceImage: UIImage(imageLiteralResourceName: "height"), preferenceValue: "173"),
-        UserPreference(preferenceName: "Weight", preferenceImage: UIImage(imageLiteralResourceName: "weight"), preferenceValue: "135 LB"),
-        UserPreference(preferenceName: "Gender", preferenceImage: UIImage(imageLiteralResourceName: "gender"), preferenceValue: "Female"),
-        UserPreference(preferenceName: "Age", preferenceImage: UIImage(imageLiteralResourceName: "age"), preferenceValue: "28"),
-        UserPreference(preferenceName: "Goals", preferenceImage: UIImage(imageLiteralResourceName: "goal"), preferenceValue: "")
+    private let appPreferences = AppPreferences()
+    
+    private lazy var userInfoCellsContent: [UserPreference] = [
+        UserPreference(userPreferenceType: .age(appPreferences.age)),
+        UserPreference(userPreferenceType: .weight(appPreferences.weight)),
+        UserPreference(userPreferenceType: .gender(appPreferences.userGender)),
+        UserPreference(userPreferenceType: .height(appPreferences.height)),
+        UserPreference(userPreferenceType: .goal(appPreferences.fitnessGoal))
     ]
     
     private let accountInformation: [AccountInfoCellType] = [
@@ -143,12 +145,6 @@ class SettingsViewController: UITableViewController, SettingHeaderViewDelegate {
 private enum SettingsTableViewSection: Int, CaseIterable {
     case userInfo
     case accountInfo
-}
-
-struct UserPreference {
-    let preferenceName: String
-    let preferenceImage: UIImage
-    let preferenceValue: String
 }
 
 enum AccountInfoCellType {

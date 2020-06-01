@@ -16,18 +16,12 @@ class UserInfoCell: UITableViewCell {
                 assertionFailure("no cellInfo found")
                 return
             }
+            setAccessoryType(for: userPreference)
             
-            if userPreference.preferenceName == "Goals" {
-                self.accessoryType = .disclosureIndicator
-                userInformation.isHidden = true
-            } else {
-                self.accessoryType = .none
-                userInformation.isHidden = false
-            }
             optionsInPickerView = generatePickerViewOptions()
-            icon.image = userPreference.preferenceImage
-            configureCellTitleLabel(withText: userPreference.preferenceName)
-            configureUserInformationLabel(withText: userPreference.preferenceValue)
+            icon.image = userPreference.image
+            configureCellTitleLabel(withText: userPreference.preferenceName())
+            configureUserInformationLabel(withText: userPreference.preferenceValue())
         }
     }
     
@@ -58,10 +52,11 @@ class UserInfoCell: UITableViewCell {
             assertionFailure("no cellInfo found")
             return
         }
-        if cellInfo.preferenceName == "Gender" {
+        switch cellInfo.preferenceType {
+        case .gender(_):
             userInformation.inputView = genderPickerView
             userInformation.tintColor = .clear
-        } else {
+        default:
             userInformation.isUserInteractionEnabled = false
         }
     }
@@ -75,10 +70,32 @@ class UserInfoCell: UITableViewCell {
             assertionFailure("no cellInfo found")
             return []
         }
-        if userInfo.preferenceName == "Male" {
-            return ["Male, Female"]
-        } else {
-            return ["Female", "Male"]
+        
+        switch userInfo.preferenceType {
+        case .gender(let gender):
+            return generateGenderPickerOptions(startingWith: gender)
+        default:
+            return []
+        }
+    }
+    
+    private func setAccessoryType(for userPreference: UserPreference) {
+        switch userPreference.preferenceType {
+        case .goal(_):
+            self.accessoryType = .disclosureIndicator
+            userInformation.isHidden = true
+        default:
+            self.accessoryType = .none
+            userInformation.isHidden = false
+        }
+    }
+    
+    private func generateGenderPickerOptions(startingWith gender: Gender?) -> [String] {
+        switch gender {
+        case .female:
+            return [Gender.female.rawValue.capitalized, Gender.male.rawValue.capitalized]
+        case .male, .none:
+            return [Gender.male.rawValue.capitalized, Gender.female.rawValue.capitalized]
         }
     }
     
