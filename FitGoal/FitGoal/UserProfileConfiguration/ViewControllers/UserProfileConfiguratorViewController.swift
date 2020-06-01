@@ -14,14 +14,29 @@ class UserProfileConfiguratorViewController: UIViewController {
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
     
-    private let userInfoEntryViewDelegate: UserInfoEntryViewDelegate
+    private var iconListViewDelegate: IconListDelegate?
+    private var userInfoTextFieldDelegate: UserInfoTextFieldDelegate?
     
-    init(userInfoEntryView: UIView, questionPrefix: String, questionSuffix: String, userProfileType: UserProfileType) {
+    private init(userInfoEntryView: UIView, questionPrefix: String, questionSuffix: String) {
         self.userInfoEntryView = userInfoEntryView
-        self.userInfoEntryViewDelegate = UserInfoEntryViewDelegate(userInfoEntryView: userInfoEntryView, userProfileType: userProfileType)
-        
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
+    }
+    
+    convenience init(iconListView: IconListView, questionPrefix: String, questionSuffix: String) {
+        
+        self.init(userInfoEntryView: iconListView, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
+        
+        self.iconListViewDelegate = IconListDelegate(listView: iconListView)
+        iconListView.delegate = self.iconListViewDelegate
+    }
+    
+    convenience init(textField: UITextField, questionPrefix: String, questionSuffix: String, quantitativeUserInfo: QuantitativeUserInfo) {
+        
+        self.init(userInfoEntryView: textField, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
+        
+        self.userInfoTextFieldDelegate = UserInfoTextFieldDelegate(textField: textField, quantitativeUserInfo: quantitativeUserInfo)
+        textField.delegate = userInfoTextFieldDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -94,13 +109,4 @@ class UserProfileConfiguratorViewController: UIViewController {
             questionSuffix.leadingAnchor.constraint(equalTo: userInfoEntryView.leadingAnchor)
         ])
     }
-}
-
-enum UserProfileType {
-    case gender
-    case fitnessLevel
-    case fitnessGoal
-    case age
-    case height
-    case weight
 }

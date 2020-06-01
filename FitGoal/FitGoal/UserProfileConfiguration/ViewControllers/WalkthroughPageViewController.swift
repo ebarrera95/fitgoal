@@ -57,63 +57,60 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            userInfoEntryView: IconListView(iconList:[
+            iconListView: IconListView(iconList: [
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.male))),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.female)))
             ]),
             questionPrefix: "What is",
-            questionSuffix: "your gender".uppercased(),
-            userProfileType: .gender
+            questionSuffix: "your gender".uppercased()
         )
-
-        let fitnessLevel = UserProfileConfiguratorViewController(
-            userInfoEntryView: IconListView(iconList:[
+        
+        let currentFitnessLevel = UserProfileConfiguratorViewController(
+            iconListView: IconListView(iconList:[
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.skinny))),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.normal))),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.obese))),
                 WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.athletic)))
             ]),
             questionPrefix: "What is your current fitness",
-            questionSuffix: "level".uppercased(),
-            userProfileType: .fitnessLevel
+            questionSuffix: "level".uppercased()
         )
-
+        
         let fitnessGoal = UserProfileConfiguratorViewController(
-            userInfoEntryView: IconListView(iconList:[
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.skinny))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.normal))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.obese))),
-                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.athletic)))
+            iconListView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.athletic)))
             ]),
             questionPrefix: "What is",
-            questionSuffix: "your goal".uppercased(),
-            userProfileType: .fitnessGoal
+            questionSuffix:  "your goal".uppercased()
         )
         
         let age = UserProfileConfiguratorViewController(
-            userInfoEntryView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your age".uppercased(),
-            userProfileType: .age
+            quantitativeUserInfo: .age
         )
         
         let height = UserProfileConfiguratorViewController(
-            userInfoEntryView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your height".uppercased(),
-            userProfileType: .height
+            quantitativeUserInfo: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
-            userInfoEntryView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
             questionSuffix: "your weight".uppercased(),
-            userProfileType: .weight
+            quantitativeUserInfo: .weight
         )
-        
+
         let planning = UserPlannerViewController()
         
-        return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
+        return [gender, currentFitnessLevel, fitnessGoal, age, height, weight, planning]
     }()
     
     private lazy var pageControl: UIPageControl = {
