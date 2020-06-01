@@ -23,7 +23,7 @@ enum UserPreferenceType {
             return "height"
         case .weight:
             return "weight"
-        case .gender(:
+        case .gender:
             return "gender"
         case .goal:
             return "goal"
