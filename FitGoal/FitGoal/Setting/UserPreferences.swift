@@ -14,6 +14,21 @@ enum UserPreferenceType {
     case age(Int?)
     case gender(Gender?)
     case goal(Fitness?)
+    
+    var preferenceName: String {
+        switch self {
+        case .age:
+            return  "age"
+        case .height:
+            return "height"
+        case .weight:
+            return "weight"
+        case .gender(:
+            return "gender"
+        case .goal:
+            return "goal"
+        }
+    }
 }
 
 class UserPreference {
@@ -22,50 +37,26 @@ class UserPreference {
     
     init(userPreferenceType: UserPreferenceType) {
         self.preferenceType = userPreferenceType
-        func preferenceImage() -> UIImage {
-            switch userPreferenceType {
-            case .height(_):
-                return UIImage(imageLiteralResourceName: "height")
-            case .weight(_):
-                return UIImage(imageLiteralResourceName: "weight")
-            case .age(_):
-                return UIImage(imageLiteralResourceName: "age")
-            case .gender(_):
-                return UIImage(imageLiteralResourceName: "gender")
-            case .goal(_):
-                return UIImage(imageLiteralResourceName: "goal")
-            }
-        }
-        self.image = preferenceImage()
+        self.image = UIImage(imageLiteralResourceName: userPreferenceType.preferenceName)
     }
     
     func preferenceName() -> String {
-        switch self.preferenceType {
-        case .age(_):
-            return  "Age"
-        case .height(_):
-            return "Height"
-        case .weight(_):
-            return "Weight"
-        case .gender(_):
-            return "Gender"
-        case .goal(_):
-            return "Goal"
-        }
+        return preferenceType.preferenceName.capitalized
     }
     
     func preferenceValue() -> String {
+        let notSet = "Not Set"
         switch self.preferenceType {
         case .age(let age):
-            return  (age != nil) ? String(age!) : "Not Set"
+            return  (age != nil) ? String(age!) : notSet
         case .height(let height):
-            return (height != nil) ? String(height!) : "Not Set"
+            return (height != nil) ? String(height!) : notSet
         case .weight(let weight):
-            return (weight != nil) ? String(weight!) : "Not Set"
+            return (weight != nil) ? String(weight!) : notSet
         case .gender(let gender):
-            return (gender != nil) ? String(gender!.rawValue) : "Not Set"
+            return (gender != nil) ? String(gender!.rawValue.capitalized) : notSet
         case .goal(let fitnessGoal):
-            return (fitnessGoal != nil) ? String(fitnessGoal!.rawValue) : "Not Set"
+            return (fitnessGoal != nil) ? String(fitnessGoal!.rawValue.capitalized) : notSet
         }
     }
 }
