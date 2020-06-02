@@ -10,37 +10,37 @@ import UIKit
 
 class UserInfoCell: UITableViewCell {
     
+    private var userInfoEditor: UserInfoEditor?
+    
     var userPreference: UserPreference? {
         didSet {
             guard let userPreference = userPreference else {
                 assertionFailure("no cellInfo found")
                 return
             }
-            setAccessoryType(for: userPreference)
             
-            optionsInPickerView = generatePickerViewOptions()
             icon.image = userPreference.image
-            configureCellTitleLabel(withText: userPreference.preferenceName())
-            configureUserInformationLabel(withText: userPreference.preferenceValue())
+            configureCellTitleLabel(withText: userPreference.preferenceName)
+            configureUserInformationLabel(withText: userPreference.preferenceValue)
         }
     }
     
     static let identifier = "UserInfoCell"
     
-    private var optionsInPickerView = [String()]
+    private var optionsInPickerView: [String] = []
     
     private let icon = UIImageView()
     private let cellTitle = UILabel()
     private let userInformation = UITextField()
-    private let genderPickerView = UIPickerView()
+    private let userInfoPickerView = UIPickerView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
-        genderPickerView.delegate = self
-        genderPickerView.dataSource = self
+        userInfoPickerView.delegate = self
+        userInfoPickerView.dataSource = self
     }
     
     required init?(coder: NSCoder) {
@@ -48,14 +48,18 @@ class UserInfoCell: UITableViewCell {
     }
     
     func enableEditMode() {
-        guard let cellInfo = userPreference else {
+        guard let userPreference = userPreference else {
             assertionFailure("no cellInfo found")
             return
         }
-        switch cellInfo.preferenceType {
-        case .gender(_):
-            userInformation.inputView = genderPickerView
+        switch userPreference.preferenceType {
+        case .gender, .goal:
+            userInfoEditor = UserInfoEditor(userPreference: userPreference)
+            optionsInPickerView = userInfoEditor!.userOptions
+            
+            userInformation.inputView = userInfoPickerView
             userInformation.tintColor = .clear
+            userInformation.isUserInteractionEnabled = true
         default:
             userInformation.isUserInteractionEnabled = false
         }
@@ -63,40 +67,6 @@ class UserInfoCell: UITableViewCell {
     
     func disableEditMode() {
         userInformation.isUserInteractionEnabled = false
-    }
-    
-    private func generatePickerViewOptions() -> [String] {
-        guard let userInfo = userPreference else {
-            assertionFailure("no cellInfo found")
-            return []
-        }
-        
-        switch userInfo.preferenceType {
-        case .gender(let gender):
-            return generateGenderPickerOptions(startingWith: gender)
-        default:
-            return []
-        }
-    }
-    
-    private func setAccessoryType(for userPreference: UserPreference) {
-        switch userPreference.preferenceType {
-        case .goal(_):
-            self.accessoryType = .disclosureIndicator
-            userInformation.isHidden = true
-        default:
-            self.accessoryType = .none
-            userInformation.isHidden = false
-        }
-    }
-    
-    private func generateGenderPickerOptions(startingWith gender: Gender?) -> [String] {
-        switch gender {
-        case .female:
-            return [Gender.female.rawValue.capitalized, Gender.male.rawValue.capitalized]
-        case .male, .none:
-            return [Gender.male.rawValue.capitalized, Gender.female.rawValue.capitalized]
-        }
     }
     
     private func configureCellTitleLabel(withText text: String) {
@@ -141,18 +111,14 @@ class UserInfoCell: UITableViewCell {
     }
     
     private func setPickerViewConstraints() {
-        genderPickerView.translatesAutoresizingMaskIntoConstraints = false
+        userInfoPickerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            genderPickerView.heightAnchor.constraint(equalToConstant: 150)
+            userInfoPickerView.heightAnchor.constraint(equalToConstant: 150)
         ])
     }
 }
 
-extension UserInfoCell: UIPickerViewDelegate, UIPickerViewDataSource {
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
+extension UserInfoCell: UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return optionsInPickerView.count
     }
@@ -160,9 +126,16 @@ extension UserInfoCell: UIPickerViewDelegate, UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
         return contentView.bounds.height
     }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+}
 
+extension UserInfoCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let title = optionsInPickerView[row]
+        
         let attributedTitle = title.formattedText(font: "Roboto-Regular", size: 12, color: #colorLiteral(red: 0.3333333433, green: 0.3333333433, blue: 0.3333333433, alpha: 1), kern: 0.12)
         let mutableAttributedString = NSMutableAttributedString(attributedString: attributedTitle)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -173,7 +146,8 @@ extension UserInfoCell: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let gender = optionsInPickerView[row]
-        configureUserInformationLabel(withText: gender)
+        let newValue = optionsInPickerView[row]
+        configureUserInformationLabel(withText: newValue)
+        userInfoEditor?.newPreferenceValue = newValue
     }
 }

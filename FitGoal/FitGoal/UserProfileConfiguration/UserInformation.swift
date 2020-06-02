@@ -8,12 +8,12 @@
 
 import Foundation
 
-enum Gender: String {
+enum Gender: String, CaseIterable {
     case male
     case female
 }
 
-enum Fitness: String {
+enum Fitness: String, CaseIterable {
     case skinny
     case normal
     case obese
