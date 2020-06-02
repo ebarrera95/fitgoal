@@ -49,13 +49,13 @@ class UserInfoCell: UITableViewCell {
     }
     
     func enableEditMode() {
-        guard let cellInfo = userPreference else {
+        guard let userPreference = userPreference else {
             assertionFailure("no cellInfo found")
             return
         }
-        switch cellInfo.preferenceType {
+        switch userPreference.preferenceType {
         case .gender, .goal:
-            userInfoEditor = UserInfoEditor(userPreference: cellInfo)
+            userInfoEditor = UserInfoEditor(userPreference: userPreference)
             optionsInPickerView = userInfoEditor!.userOptions
             
             userInformation.inputView = userInfoPickerView

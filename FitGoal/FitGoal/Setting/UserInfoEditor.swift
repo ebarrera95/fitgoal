@@ -12,7 +12,7 @@ class UserInfoEditor {
     
     private let appPreferences = AppPreferences()
     
-    let userPreference: UserPreference
+    private let userPreference: UserPreference
     var newPreferenceValue: String? {
         didSet {
             guard let newPreference = newPreferenceValue else {
@@ -26,7 +26,7 @@ class UserInfoEditor {
     
     init(userPreference: UserPreference) {
         self.userPreference = userPreference
-        self.userOptions = arrangeOptions(for: userPreference)
+        self.userOptions = arrangeOptions(for: userPreference).map { $0.capitalized }
     }
         
     private func arrangeOptions(for userPreference: UserPreference) -> [String] {
@@ -48,24 +48,27 @@ class UserInfoEditor {
             return array.map { $0.rawValue }
         }
         
-        array = Array(array.drop { $0 == userCase })
-        //print(array)
-        var rawValueArray = array.map { $0.rawValue }
-        rawValueArray = rawValueArray + [userCase.rawValue]
-        return rawValueArray
+        for index in array.indices {
+            if array[index] == userCase {
+                array.remove(at: index)
+                break
+            }
+        }
+        array.insert(userCase, at: 0)
+        return array.map { $0.rawValue }
     }
     
     private func save(preference newPreference: String) {
         switch self.userPreference.preferenceType {
         case .gender:
-            guard let newGender = Gender(rawValue: newPreference) else {
+            guard let newGender = Gender(rawValue: newPreference.lowercased()) else {
                 assertionFailure("value doesn't match raw representable")
                 return
             }
             appPreferences.userGender = newGender
             userPreference.preferenceType = UserPreferenceType.gender(newGender)
         case .goal:
-            guard let newGoal = Fitness(rawValue: newPreference) else {
+            guard let newGoal = Fitness(rawValue: newPreference.lowercased()) else {
                 assertionFailure("value doesn't match raw representable")
                 return
             }
