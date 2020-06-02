@@ -39,7 +39,6 @@ class UserInfoCell: UITableViewCell {
         let views = [icon, cellTitle, userInformation]
         contentView.addMultipleSubviews(views)
         setConstraints()
-        
         userInfoPickerView.delegate = self
         userInfoPickerView.dataSource = self
     }
