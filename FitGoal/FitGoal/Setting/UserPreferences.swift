@@ -40,11 +40,11 @@ class UserPreference {
         self.image = UIImage(imageLiteralResourceName: userPreferenceType.preferenceName)
     }
     
-    func preferenceName() -> String {
+    var preferenceName: String {
         return preferenceType.preferenceName.capitalized
     }
     
-    func preferenceValue() -> String {
+    var preferenceValue: String {
         let notSet = "Not Set"
         switch self.preferenceType {
         case .age(let age):
