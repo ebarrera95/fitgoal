@@ -12,10 +12,10 @@ class UserInfoEditor {
     
     private let appPreferences = AppPreferences()
     
-    private let oldPreference: UserPreference
-    var newPreference: String? {
+    let userPreference: UserPreference
+    var newPreferenceValue: String? {
         didSet {
-            guard let newPreference = newPreference else {
+            guard let newPreference = newPreferenceValue else {
                 return
             }
             save(preference: newPreference)
@@ -25,7 +25,7 @@ class UserInfoEditor {
     var userOptions: [String] = []
     
     init(userPreference: UserPreference) {
-        self.oldPreference = userPreference
+        self.userPreference = userPreference
         self.userOptions = arrangeOptions(for: userPreference)
     }
         
@@ -49,26 +49,28 @@ class UserInfoEditor {
         }
         
         array = Array(array.drop { $0 == userCase })
-        print(array)
+        //print(array)
         var rawValueArray = array.map { $0.rawValue }
         rawValueArray = rawValueArray + [userCase.rawValue]
         return rawValueArray
     }
     
     private func save(preference newPreference: String) {
-        switch self.oldPreference.preferenceType {
+        switch self.userPreference.preferenceType {
         case .gender:
             guard let newGender = Gender(rawValue: newPreference) else {
                 assertionFailure("value doesn't match raw representable")
                 return
             }
             appPreferences.userGender = newGender
+            userPreference.preferenceType = UserPreferenceType.gender(newGender)
         case .goal:
             guard let newGoal = Fitness(rawValue: newPreference) else {
                 assertionFailure("value doesn't match raw representable")
                 return
             }
             appPreferences.fitnessGoal = newGoal
+            userPreference.preferenceType = UserPreferenceType.goal(newGoal)
         default:
             assertionFailure("No implementation has been made for this case")
             return

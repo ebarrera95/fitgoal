@@ -32,7 +32,7 @@ enum UserPreferenceType {
 }
 
 class UserPreference {
-    let preferenceType: UserPreferenceType
+    var preferenceType: UserPreferenceType
     let image: UIImage
     
     init(userPreferenceType: UserPreferenceType) {

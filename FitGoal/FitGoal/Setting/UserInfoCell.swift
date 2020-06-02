@@ -149,8 +149,6 @@ extension UserInfoCell: UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         let newValue = optionsInPickerView[row]
         configureUserInformationLabel(withText: newValue)
-        userInfoEditor?.newPreference = newValue
+        userInfoEditor?.newPreferenceValue = newValue
     }
 }
-
-
