@@ -26,6 +26,7 @@
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		051C6BFC2484A0F400E02ED5 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */; };
+		051C6C002485CA4A00E02ED5 /* GenderPickerViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFF2485CA4A00E02ED5 /* GenderPickerViewDelegate.swift */; };
 		053E78A6245538B700A8CF37 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */; };
 		053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */; };
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
@@ -115,6 +116,7 @@
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		051C6BFF2485CA4A00E02ED5 /* GenderPickerViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderPickerViewDelegate.swift; sourceTree = "<group>"; };
 		053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileConfiguratorViewController.swift; sourceTree = "<group>"; };
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				0555BA99245BA51100422BCD /* SettingsViewController.swift */,
 				051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */,
 				05644D4D2461381F00E32434 /* UserInfoCell.swift */,
+				051C6BFF2485CA4A00E02ED5 /* GenderPickerViewDelegate.swift */,
 				0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */,
 				054B905E24627CF600E9BCD2 /* AccountInfoCell.swift */,
 			);
@@ -690,6 +693,7 @@
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
+				051C6C002485CA4A00E02ED5 /* GenderPickerViewDelegate.swift in Sources */,
 				056231A12483A4A6001FC32D /* UserInfoTextFieldDelegate.swift in Sources */,
 				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
