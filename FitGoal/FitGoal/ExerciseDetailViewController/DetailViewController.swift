@@ -299,3 +299,24 @@ class DetailViewController: UIViewController {
         ])
     }
 }
+
+extension DetailViewController: ImageFetcherDelegate {
+    func imageFetcherIsInProgress() {
+        imageGradient.isHidden = true
+        playButton.isHidden = true
+        placeholder.startAnimating()
+    }
+    
+    func imageFetcher(_ imageFetcher: ImageFetcher, didFinishFetchingWith image: UIImage) {
+        imageGradient.isHidden = false
+        playButton.isHidden = false
+        placeholder.stopAnimating()
+        exerciseImage.image = image
+    }
+    
+    func imageFetcher(_ imageFetcher: ImageFetcher, failedWith error: Error) {
+        fatalError("Couldn't fetch image with error \(error)")
+    }
+    
+    
+}

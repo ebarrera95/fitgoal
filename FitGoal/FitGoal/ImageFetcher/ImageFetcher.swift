@@ -20,6 +20,10 @@ protocol ImageFetcherDelegate: AnyObject {
 
 class ImageFetcher {
     
+    init(url: URL) {
+        fetchImage(with: url)
+    }
+    
     weak var delegate: ImageFetcherDelegate?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
