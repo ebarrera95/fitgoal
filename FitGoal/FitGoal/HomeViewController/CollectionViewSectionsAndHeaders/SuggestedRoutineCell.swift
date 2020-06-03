@@ -199,13 +199,3 @@ class SuggestedRoutineCell: UICollectionViewCell {
         }
     }
 }
-
-enum ImageLoadingState {
-    case inProgress
-    case finished(UIImage)
-    case failed(Error)
-}
-
-enum NetworkError: Error {
-    case invalidImage
-}

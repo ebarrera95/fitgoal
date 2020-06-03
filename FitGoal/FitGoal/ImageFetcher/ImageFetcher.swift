@@ -20,12 +20,12 @@ protocol ImageFetcherDelegate: AnyObject {
 
 class ImageFetcher {
     
-    init(url: URL) {
-        fetchImage(with: url)
-    }
-    
     weak var delegate: ImageFetcherDelegate?
+    private var currentImageDownloadTask: URLSessionTask?
     
+    init(url: URL) {
+        self.currentImageDownloadTask = fetchImage(with: url)
+    }
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
             switch imageLoadingState {
@@ -39,8 +39,8 @@ class ImageFetcher {
         }
     }
     
-    private func fetchImage(with imageURL: URL) {
-        imageURL.fetchImage { result in
+    private func fetchImage(with imageURL: URL) -> URLSessionTask? {
+        return imageURL.fetchImage { result in
             DispatchQueue.main.async {
                 switch result {
                 case .failure(let error):
@@ -52,4 +52,18 @@ class ImageFetcher {
             }
         }
     }
+    
+    func cancelFetching() {
+        self.currentImageDownloadTask?.cancel()
+    }
+}
+
+enum ImageLoadingState {
+    case inProgress
+    case finished(UIImage)
+    case failed(Error)
+}
+
+enum NetworkError: Error {
+    case invalidImage
 }

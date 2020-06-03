@@ -11,6 +11,7 @@ import UIKit
 class DetailViewController: UIViewController {
 
     private let imageFetcher: ImageFetcher
+    private var exerciseImageFetcherDelegate: ExerciseImageFetcherDelegate?
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -149,7 +150,14 @@ class DetailViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         startExerciseButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
-        self.imageFetcher.delegate = self
+        
+        self.exerciseImageFetcherDelegate = ExerciseImageFetcherDelegate(
+            exerciseImageView: exerciseImage,
+            imageGradient: imageGradient,
+            placeholder: placeholder,
+            playExerciseButton: playButton
+        )
+        self.imageFetcher.delegate = self.exerciseImageFetcherDelegate
     }
     
     override func viewDidLoad() {
@@ -186,6 +194,7 @@ class DetailViewController: UIViewController {
         startExerciseButton.frame = CGRect (x: 16, y: view.bounds.maxY - 100, width: view.bounds.width - 32, height: 54)
         startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
     }
+    
     
     @objc func handlePlayButton() {
         self.present(CountDownViewController(), animated: true, completion: nil)
@@ -268,25 +277,4 @@ class DetailViewController: UIViewController {
             text.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: -16)
         ])
     }
-}
-
-extension DetailViewController: ImageFetcherDelegate {
-    func imageFetcherIsInProgress() {
-        imageGradient.isHidden = true
-        playButton.isHidden = true
-        placeholder.startAnimating()
-    }
-    
-    func imageFetcher(_ imageFetcher: ImageFetcher, didFinishFetchingWith image: UIImage) {
-        imageGradient.isHidden = false
-        playButton.isHidden = false
-        placeholder.stopAnimating()
-        exerciseImage.image = image
-    }
-    
-    func imageFetcher(_ imageFetcher: ImageFetcher, failedWith error: Error) {
-        fatalError("Couldn't fetch image with error \(error)")
-    }
-    
-    
 }
