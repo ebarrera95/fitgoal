@@ -195,7 +195,6 @@ class DetailViewController: UIViewController {
         startExerciseButton.layer.cornerRadius = startExerciseButton.bounds.height/2
     }
     
-    
     @objc func handlePlayButton() {
         self.present(CountDownViewController(), animated: true, completion: nil)
     }

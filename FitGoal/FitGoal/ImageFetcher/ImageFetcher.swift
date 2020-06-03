@@ -11,6 +11,7 @@ import UIKit
 var imageCache: [URL: UIImage] = [:]
 
 protocol ImageFetcherDelegate: AnyObject {
+    
     func imageFetcherIsInProgress()
     
     func imageFetcher(_ imageFetcher: ImageFetcher, didFinishFetchingWith image: UIImage)
