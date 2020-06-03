@@ -8,3 +8,4 @@
 
 import UIKit
 
+var imageCache: [URL: UIImage] = [:]
