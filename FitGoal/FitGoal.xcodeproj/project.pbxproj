@@ -364,6 +364,14 @@
 			path = SupportFiles;
 			sourceTree = "<group>";
 		};
+		05CD555924885E6F00CCB470 /* ImageFetcher */ = {
+			isa = PBXGroup;
+			children = (
+				05CD555724885AC900CCB470 /* ImageFetcher.swift */,
+			);
+			path = ImageFetcher;
+			sourceTree = "<group>";
+		};
 		05EB1B472424EA5900E7984B /* CustomUIViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -427,7 +435,7 @@
 				056A49B7241F287A00707791 /* CoreData */,
 				056A49B8241F288A00707791 /* Utilities */,
 				0530E849246A452F0033302B /* CountDownViewController.swift */,
-				05CD555724885AC900CCB470 /* ImageFetcher.swift */,
+				05CD555924885E6F00CCB470 /* ImageFetcher */,
 				056A49B9241F28BB00707791 /* HomeViewController */,
 				056A49BC241F29F300707791 /* Model */,
 				056A49BD241F2A2B00707791 /* ExerciseDetailViewController */,
