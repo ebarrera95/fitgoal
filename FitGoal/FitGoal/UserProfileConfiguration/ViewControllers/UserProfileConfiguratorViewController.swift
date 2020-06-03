@@ -10,14 +10,33 @@ import UIKit
 
 class UserProfileConfiguratorViewController: UIViewController {
     
-    private let selectorView: UIView
+    private let userInfoEntryView: UIView
     private let questionPrefix = UILabel()
     private let questionSuffix = UILabel()
     
-    init(selectorView: UIView, questionPrefix: String, questionSuffix: String) {
-        self.selectorView = selectorView
+    private var iconListViewDelegate: IconListDelegate?
+    private var userInfoTextFieldDelegate: UserInfoTextFieldDelegate?
+    
+    private init(userInfoEntryView: UIView, questionPrefix: String, questionSuffix: String) {
+        self.userInfoEntryView = userInfoEntryView
         super.init(nibName: nil, bundle: nil)
         configureQuestions(prefix: questionPrefix, suffix: questionSuffix)
+    }
+    
+    convenience init(iconListView: IconListView, questionPrefix: String, questionSuffix: String) {
+        
+        self.init(userInfoEntryView: iconListView, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
+        
+        self.iconListViewDelegate = IconListDelegate(listView: iconListView)
+        iconListView.delegate = self.iconListViewDelegate
+    }
+    
+    convenience init(textField: UITextField, questionPrefix: String, questionSuffix: String, quantitativeUserInfo: QuantitativeUserInfo) {
+        
+        self.init(userInfoEntryView: textField, questionPrefix: questionPrefix, questionSuffix: questionSuffix)
+        
+        self.userInfoTextFieldDelegate = UserInfoTextFieldDelegate(textField: textField, quantitativeUserInfo: quantitativeUserInfo)
+        textField.delegate = userInfoTextFieldDelegate
     }
     
     required init?(coder: NSCoder) {
@@ -33,7 +52,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         super.viewDidLoad()
         
         let views = [
-            selectorView,
+            userInfoEntryView,
             questionPrefix,
             questionSuffix
         ]
@@ -49,10 +68,7 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     @objc private func dismissKeyboard() {
-        guard let textField = selectorView as? UITextField else {
-            return
-        }
-        textField.resignFirstResponder()
+        userInfoEntryView.resignFirstResponder()
     }
     
     override func viewDidLayoutSubviews() {
@@ -61,12 +77,12 @@ class UserProfileConfiguratorViewController: UIViewController {
     }
     
     private func layoutSelectorView() {
-        if selectorView is UITextField {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
+        if userInfoEntryView is UITextField {
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 152)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y - 30)
         } else {
-            selectorView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
-            selectorView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
+            userInfoEntryView.frame = CGRect(x: 0, y: 0, width: 340, height: 340)
+            userInfoEntryView.center = CGPoint(x: self.view.center.x, y: self.view.center.y + 30)
         }
     }
     
@@ -81,7 +97,7 @@ class UserProfileConfiguratorViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             questionPrefix.bottomAnchor.constraint(equalTo: self.questionSuffix.topAnchor),
-            questionPrefix.leadingAnchor.constraint(equalTo: self.selectorView.leadingAnchor)
+            questionPrefix.leadingAnchor.constraint(equalTo: self.userInfoEntryView.leadingAnchor)
         ])
     }
     
@@ -89,8 +105,8 @@ class UserProfileConfiguratorViewController: UIViewController {
         questionSuffix.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            questionSuffix.bottomAnchor.constraint(equalTo: selectorView.topAnchor, constant: -16),
-            questionSuffix.leadingAnchor.constraint(equalTo: selectorView.leadingAnchor)
+            questionSuffix.bottomAnchor.constraint(equalTo: userInfoEntryView.topAnchor, constant: -16),
+            questionSuffix.leadingAnchor.constraint(equalTo: userInfoEntryView.leadingAnchor)
         ])
     }
 }

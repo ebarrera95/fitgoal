@@ -13,23 +13,27 @@
 		05012CA3240D21F00065E560 /* Roboto-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012CA0240D1FD70065E560 /* Roboto-Light.ttf */; };
 		05012CA4240D21F30065E560 /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05012C9E240D1FD70065E560 /* Roboto-Regular.ttf */; };
 		050507ED24315B3800CE58BC /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 050507EC24315B3800CE58BC /* GoogleService-Info.plist */; };
-		050507F52431C54400CE58BC /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserInformation.swift */; };
+		050507F52431C54400CE58BC /* UserIdentification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050507F42431C54400CE58BC /* UserIdentification.swift */; };
 		050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */; };
-		05133A60245A4BC60008DFA5 /* TrainingLevelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */; };
-		05133A62245A5D880008DFA5 /* UserPlanningViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */; };
 		0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518224501266001A72AA /* WalkthroughIconView.swift */; };
 		0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518324501266001A72AA /* WalkthroughIcon.swift */; };
-		0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */; };
+		0516265A2478C7FA002A4329 /* IconListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051626592478C7FA002A4329 /* IconListView.swift */; };
+		05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */; };
+		05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */; };
+		05162664247DE317002A4329 /* UserPlannerTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */; };
+		05162666247E3C83002A4329 /* UserPlannerTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
 		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		0530E84A246A452F0033302B /* CountDownViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E849246A452F0033302B /* CountDownViewController.swift */; };
+		051C6BFC2484A0F400E02ED5 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */; };
+		051C6C002485CA4A00E02ED5 /* UserInfoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFF2485CA4A00E02ED5 /* UserInfoEditor.swift */; };
 		053E78A6245538B700A8CF37 /* WalkthroughPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */; };
 		053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */; };
-		053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053E78A9245556EC00A8CF37 /* GenderView.swift */; };
 		0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */; };
 		0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DD241511CF004A0F65 /* ExerciseCell.swift */; };
 		0546E2E02415134C004A0F65 /* Exersice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546E2DF2415134C004A0F65 /* Exersice.swift */; };
+		054B905F24627CF600E9BCD2 /* AccountInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B905E24627CF600E9BCD2 /* AccountInfoCell.swift */; };
 		054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8A824344CDA008B2B4F /* Authenticator.swift */; };
 		054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054DC8AA2434602C008B2B4F /* AppPreferences.swift */; };
 		055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055284CD244EC00700ACBF5F /* UITextField+.swift */; };
@@ -38,6 +42,9 @@
 		0555BA9C245BA9BD00422BCD /* SettingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */; };
 		055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F18252456AD14004A49C5 /* LoginValidator.swift */; };
 		055F62CD2429868B0054934F /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055F62CC2429868B0054934F /* IconView.swift */; };
+		0562319F2483A0BC001FC32D /* IconListViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */; };
+		056231A12483A4A6001FC32D /* UserInfoTextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056231A02483A4A6001FC32D /* UserInfoTextFieldDelegate.swift */; };
+		05644D4E2461381F00E32434 /* UserInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05644D4D2461381F00E32434 /* UserInfoCell.swift */; };
 		057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057E23C8244009DC004CAD01 /* SignUpValidator.swift */; };
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
 		058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */; };
@@ -60,6 +67,7 @@
 		05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */; };
 		05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */; };
 		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
+		05FC8A8A247F9FE8005C3FF6 /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */; };
 		1D7FE1880AE1195404A71B35 /* libPods-FitGoal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6537303486DC6B0C92115EB1 /* libPods-FitGoal.a */; };
 		C0E9C52B32FD169709712A9E /* libPods-FitGoalUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26CC521159F56056E916FD2 /* libPods-FitGoalUITests.a */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
@@ -97,23 +105,27 @@
 		05012C9F240D1FD70065E560 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
 		05012CA0240D1FD70065E560 /* Roboto-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Light.ttf"; sourceTree = "<group>"; };
 		050507EC24315B3800CE58BC /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		050507F42431C54400CE58BC /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
+		050507F42431C54400CE58BC /* UserIdentification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserIdentification.swift; sourceTree = "<group>"; };
 		050DC1262411FED9009BF1E5 /* RoutineSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineSectionHeader.swift; sourceTree = "<group>"; };
-		05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingLevelView.swift; sourceTree = "<group>"; };
-		05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlanningViewController.swift; sourceTree = "<group>"; };
 		0515518224501266001A72AA /* WalkthroughIconView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIconView.swift; sourceTree = "<group>"; };
 		0515518324501266001A72AA /* WalkthroughIcon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalkthroughIcon.swift; sourceTree = "<group>"; };
-		0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitnessLevelChooserView.swift; sourceTree = "<group>"; };
+		051626592478C7FA002A4329 /* IconListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListView.swift; sourceTree = "<group>"; };
+		0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerViewController.swift; sourceTree = "<group>"; };
+		05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewCell.swift; sourceTree = "<group>"; };
+		05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewDataSource.swift; sourceTree = "<group>"; };
+		05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewDelegate.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
 		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		0530E849246A452F0033302B /* CountDownViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountDownViewController.swift; sourceTree = "<group>"; };
+		051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
+		051C6BFF2485CA4A00E02ED5 /* UserInfoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditor.swift; sourceTree = "<group>"; };
 		053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkthroughPageViewController.swift; sourceTree = "<group>"; };
 		053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileConfiguratorViewController.swift; sourceTree = "<group>"; };
-		053E78A9245556EC00A8CF37 /* GenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderView.swift; sourceTree = "<group>"; };
 		0546E2DB24151090004A0F65 /* RoutineInspectorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineInspectorCell.swift; sourceTree = "<group>"; };
 		0546E2DD241511CF004A0F65 /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
 		0546E2DF2415134C004A0F65 /* Exersice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exersice.swift; sourceTree = "<group>"; };
+		054B905E24627CF600E9BCD2 /* AccountInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountInfoCell.swift; path = FitGoal/Setting/AccountInfoCell.swift; sourceTree = SOURCE_ROOT; };
 		054DC8A824344CDA008B2B4F /* Authenticator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Authenticator.swift; sourceTree = "<group>"; };
 		054DC8AA2434602C008B2B4F /* AppPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPreferences.swift; sourceTree = "<group>"; };
 		055284CD244EC00700ACBF5F /* UITextField+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+.swift"; sourceTree = "<group>"; };
@@ -122,6 +134,9 @@
 		0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingHeaderView.swift; sourceTree = "<group>"; };
 		055F18252456AD14004A49C5 /* LoginValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidator.swift; sourceTree = "<group>"; };
 		055F62CC2429868B0054934F /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconListViewDelegate.swift; sourceTree = "<group>"; };
+		056231A02483A4A6001FC32D /* UserInfoTextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoTextFieldDelegate.swift; sourceTree = "<group>"; };
+		05644D4D2461381F00E32434 /* UserInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoCell.swift; sourceTree = "<group>"; };
 		057E23C8244009DC004CAD01 /* SignUpValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpValidator.swift; sourceTree = "<group>"; };
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
 		058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
@@ -144,6 +159,7 @@
 		05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeSwitcherView.swift; sourceTree = "<group>"; };
 		05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFormView.swift; sourceTree = "<group>"; };
 		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
 		4EE093ADD58E1D7923CE8C65 /* Pods-FitGoal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.release.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.release.xcconfig"; sourceTree = "<group>"; };
 		4F50A60850CCD7C728954905 /* Pods-FitGoalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoalTests.debug.xcconfig"; path = "Target Support Files/Pods-FitGoalTests/Pods-FitGoalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6498C1122412C9CA50CDACC3 /* Pods-FitGoal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.debug.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.debug.xcconfig"; sourceTree = "<group>"; };
@@ -211,11 +227,12 @@
 		0515518824501594001A72AA /* UserProfileConfiguration */ = {
 			isa = PBXGroup;
 			children = (
-				053E78A9245556EC00A8CF37 /* GenderView.swift */,
 				0515518324501266001A72AA /* WalkthroughIcon.swift */,
 				0515518224501266001A72AA /* WalkthroughIconView.swift */,
-				0515518C2450614D001A72AA /* FitnessLevelChooserView.swift */,
-				05133A5F245A4BC60008DFA5 /* TrainingLevelView.swift */,
+				051626592478C7FA002A4329 /* IconListView.swift */,
+				0562319E2483A0BC001FC32D /* IconListViewDelegate.swift */,
+				056231A02483A4A6001FC32D /* UserInfoTextFieldDelegate.swift */,
+				05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */,
 				05155189245015D0001A72AA /* ViewControllers */,
 			);
 			path = UserProfileConfiguration;
@@ -224,7 +241,10 @@
 		05155189245015D0001A72AA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				05133A61245A5D880008DFA5 /* UserPlanningViewController.swift */,
+				05162661247DE04A002A4329 /* UserPlannerTableViewCell.swift */,
+				05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */,
+				05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */,
+				0516265F247DDFF8002A4329 /* UserPlannerViewController.swift */,
 				053E78A72455472B00A8CF37 /* UserProfileConfiguratorViewController.swift */,
 				053E78A5245538B700A8CF37 /* WalkthroughPageViewController.swift */,
 			);
@@ -234,7 +254,7 @@
 		0517AD52242442F20049E48B /* Singup&Singin */ = {
 			isa = PBXGroup;
 			children = (
-				050507F42431C54400CE58BC /* UserInformation.swift */,
+				050507F42431C54400CE58BC /* UserIdentification.swift */,
 				054DC8AA2434602C008B2B4F /* AppPreferences.swift */,
 				054DC8A824344CDA008B2B4F /* Authenticator.swift */,
 				05EB1B3D242473D400E7984B /* SignUpViewController.swift */,
@@ -252,7 +272,11 @@
 			isa = PBXGroup;
 			children = (
 				0555BA99245BA51100422BCD /* SettingsViewController.swift */,
+				051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */,
+				05644D4D2461381F00E32434 /* UserInfoCell.swift */,
+				051C6BFF2485CA4A00E02ED5 /* UserInfoEditor.swift */,
 				0555BA9B245BA9BD00422BCD /* SettingHeaderView.swift */,
+				054B905E24627CF600E9BCD2 /* AccountInfoCell.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -666,36 +690,44 @@
 			buildActionMask = 2147483647;
 			files = (
 				0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */,
+				051C6BFC2484A0F400E02ED5 /* UserPreferences.swift in Sources */,
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
-				0515518D2450614D001A72AA /* FitnessLevelChooserView.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
 				0546E2E02415134C004A0F65 /* Exersice.swift in Sources */,
 				054DC8A924344CDA008B2B4F /* Authenticator.swift in Sources */,
 				05CDE5082421FCE9000AF5EE /* DetailViewController.swift in Sources */,
 				050DC1272411FED9009BF1E5 /* RoutineSectionHeader.swift in Sources */,
+				051C6C002485CA4A00E02ED5 /* UserInfoEditor.swift in Sources */,
+				056231A12483A4A6001FC32D /* UserInfoTextFieldDelegate.swift in Sources */,
 				05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */,
 				055F62CD2429868B0054934F /* IconView.swift in Sources */,
 				05B2E20B240F95AF009B0443 /* HomeViewController + UICollectionViewDelegateFlowLayout.swift in Sources */,
+				05162660247DDFF8002A4329 /* UserPlannerViewController.swift in Sources */,
+				05FC8A8A247F9FE8005C3FF6 /* UserInformation.swift in Sources */,
+				0516265A2478C7FA002A4329 /* IconListView.swift in Sources */,
 				055F18262456AD14004A49C5 /* LoginValidator.swift in Sources */,
 				0546E2DE241511CF004A0F65 /* ExerciseCell.swift in Sources */,
+				05162664247DE317002A4329 /* UserPlannerTableViewDataSource.swift in Sources */,
 				05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */,
 				0555BA9C245BA9BD00422BCD /* SettingHeaderView.swift in Sources */,
 				05CDE50A24235DC2000AF5EE /* UIView+.swift in Sources */,
 				05BBF74F2414B5B700EF42E9 /* GoalTrakerCell.swift in Sources */,
 				F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */,
 				05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */,
+				05644D4E2461381F00E32434 /* UserInfoCell.swift in Sources */,
 				058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */,
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
+				05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */,
 				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,
 				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
 				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
 				054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */,
 				058312A9242C291900708195 /* AuthenticationType.swift in Sources */,
 				053E78A82455472B00A8CF37 /* UserProfileConfiguratorViewController.swift in Sources */,
-				050507F52431C54400CE58BC /* UserInformation.swift in Sources */,
+				050507F52431C54400CE58BC /* UserIdentification.swift in Sources */,
 				F14233AD240CF77D000E8873 /* SceneDelegate.swift in Sources */,
 				05904C45246B9C0000961BF4 /* ExercisePlayerViewController.swift in Sources */,
 				0530E84A246A452F0033302B /* CountDownViewController.swift in Sources */,
@@ -704,15 +736,15 @@
 				05A370C42415AA33009A654E /* URL+.swift in Sources */,
 				05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */,
 				05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */,
+				05162666247E3C83002A4329 /* UserPlannerTableViewDelegate.swift in Sources */,
 				0555BA9A245BA51100422BCD /* SettingsViewController.swift in Sources */,
-				053E78AA245556EC00A8CF37 /* GenderView.swift in Sources */,
 				05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */,
 				0515518624501266001A72AA /* WalkthroughIcon.swift in Sources */,
-				05133A60245A4BC60008DFA5 /* TrainingLevelView.swift in Sources */,
+				0562319F2483A0BC001FC32D /* IconListViewDelegate.swift in Sources */,
 				0515518524501266001A72AA /* WalkthroughIconView.swift in Sources */,
 				05BBF751241503F200EF42E9 /* String+.swift in Sources */,
 				05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */,
-				05133A62245A5D880008DFA5 /* UserPlanningViewController.swift in Sources */,
+				054B905F24627CF600E9BCD2 /* AccountInfoCell.swift in Sources */,
 				05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */,
 				057E23C9244009DC004CAD01 /* SignUpValidator.swift in Sources */,
 				F14233F624127500000E8873 /* UIColor+.swift in Sources */,
