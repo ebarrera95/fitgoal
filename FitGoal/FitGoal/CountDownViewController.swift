@@ -74,6 +74,15 @@ class CountDownViewController: UIViewController {
         return [gradientBackgroundView, topLeftGradientView, topRightGradientView, bottomRightGradientView]
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
+        view.addMultipleSubviews(views)
+        setConstraints()
+        runCountdown()
+        stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
+    }
+    
     private func runCountdown() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
             if self.countdownSeconds > 0 {
@@ -94,12 +103,10 @@ class CountDownViewController: UIViewController {
         countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
-        view.addMultipleSubviews(views)
-        setConstraints()
-        runCountdown()
+    @objc private func handleCountdownStop() {
+        self.dismiss(animated: true) {
+            self.timer.invalidate()
+        }
     }
     
     private func setConstraints() {
