@@ -57,44 +57,60 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     
     private lazy var walkthroughViewControllers: [UIViewController] = {
         let gender = UserProfileConfiguratorViewController(
-            selectorView: GenderView(),
+            iconListView: IconListView(iconList: [
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.male))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .gender(.female)))
+            ]),
             questionPrefix: "What is",
             questionSuffix: "your gender".uppercased()
         )
         
-        let fitnessLevel = UserProfileConfiguratorViewController(
-            selectorView: FitnessLevelChooserView(),
+        let currentFitnessLevel = UserProfileConfiguratorViewController(
+            iconListView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessLevel(.athletic)))
+            ]),
             questionPrefix: "What is your current fitness",
             questionSuffix: "level".uppercased()
         )
         
         let fitnessGoal = UserProfileConfiguratorViewController(
-            selectorView: FitnessLevelChooserView(),
+            iconListView: IconListView(iconList:[
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.skinny))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.normal))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.obese))),
+                WalkthroughIconView(icon: WalkthroughIcon(iconType: .fitnessGoal(.athletic)))
+            ]),
             questionPrefix: "What is",
-            questionSuffix: "your goal".uppercased()
+            questionSuffix:  "your goal".uppercased()
         )
         
         let age = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your age".uppercased()
+            questionSuffix: "your age".uppercased(),
+            quantitativeUserInfo: .age
         )
         
         let height = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your height".uppercased()
+            questionSuffix: "your height".uppercased(),
+            quantitativeUserInfo: .height
         )
         
         let weight = UserProfileConfiguratorViewController(
-            selectorView: getTextField(),
+            textField: getTextField(),
             questionPrefix: "What is",
-            questionSuffix: "your weight".uppercased()
+            questionSuffix: "your weight".uppercased(),
+            quantitativeUserInfo: .weight
         )
+
+        let planning = UserPlannerViewController()
         
-        let planning = UserPlanningViewController()
-        
-        return [gender, fitnessLevel, fitnessGoal, age, height, weight, planning]
+        return [gender, currentFitnessLevel, fitnessGoal, age, height, weight, planning]
     }()
     
     private lazy var pageControl: UIPageControl = {
@@ -153,7 +169,7 @@ class WalkthroughPageViewController: UIPageViewController, UIPageViewControllerD
     }
     
     private func changeTitle(forLabel label: UILabel, vcIndex index: Int) {
-        if walkthroughViewControllers[index] is UserPlanningViewController {
+        if walkthroughViewControllers[index] is UserPlannerViewController {
              label.attributedText = "Planing".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
         } else if walkthroughViewControllers[index] is UserProfileConfiguratorViewController {
             label.attributedText = "Create your profile".uppercased().formattedText(font: "Oswald-Medium", size: 18, color: .white, kern: 0.50)
