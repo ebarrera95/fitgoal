@@ -8,15 +8,14 @@
 
 import UIKit
 
-protocol CountDownViewControllerDelegate {
+protocol CountDownViewControllerDelegate: AnyObject {
     func countDownViewController(_ viewController: CountDownViewController, didDismiss: Bool)
 }
 
 class CountDownViewController: UIViewController {
     
-    private let exercise: Exercise
-    private let exercises: [Exercise]
-   
+    weak var delegate: CountDownViewControllerDelegate?
+    
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
     
@@ -29,16 +28,6 @@ class CountDownViewController: UIViewController {
     private var timer = Timer()
     private var countdownSeconds = 3
     private let countdownMessages = ["Let's start!", "You can do it!", "Ready!"]
-    
-    init(exercises: [Exercise], exercise: Exercise) {
-        self.exercises = exercises
-        self.exercise = exercise
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,9 +45,8 @@ class CountDownViewController: UIViewController {
             self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
             self.countdownSeconds -= 1
         } else {
-            let viewController = ExercisePlayerViewController(exercise: self.exercise)
-            viewController.modalPresentationStyle = .fullScreen
-            self.present(viewController, animated: true) {
+            self.dismiss(animated: true) {
+                self.delegate?.countDownViewController(self, didDismiss: true)
                 self.timer.invalidate()
             }
         }
