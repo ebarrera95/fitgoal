@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol CountDownViewControllerDelegate {
+    func countDownViewController(_ viewController: CountDownViewController, didDismiss: Bool)
+}
+
 class CountDownViewController: UIViewController {
     
     private let exercise: Exercise
