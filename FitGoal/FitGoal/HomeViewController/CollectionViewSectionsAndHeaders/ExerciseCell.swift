@@ -16,12 +16,10 @@ class ExerciseCell: UICollectionViewCell {
             case .inProgress:
                 gradientView.isHidden = true
                 placeholder.startAnimating()
-                exersiceStatus.isHidden = true
             case .finished(let image):
                 gradientView.isHidden = false
                 placeholder.stopAnimating()
                 backgroundImage.image = image
-                exersiceStatus.isHidden = false
             case .failed(let error):
                 print("Unable to load image with error: \(error)")
             }
@@ -109,14 +107,7 @@ class ExerciseCell: UICollectionViewCell {
             kern: 0)
         return title
     }()
-    
-    private var exersiceStatus: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
-        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        return imageView
-    }()
-
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -124,7 +115,7 @@ class ExerciseCell: UICollectionViewCell {
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
         
-        let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator, exersiceStatus]
+        let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator]
         addSubviewsToContentView(views: views)
         
         dayIndicator.addSubview(dayIndicatorLabel)
@@ -153,7 +144,6 @@ class ExerciseCell: UICollectionViewCell {
         setIndicatorLabelConstraints()
         setDayIndicatorConstraints()
         setTitleLabelConstraints()
-        setExerciseSatusConstraints()
     }
 
     override func prepareForReuse() {
@@ -192,15 +182,6 @@ class ExerciseCell: UICollectionViewCell {
            NSLayoutConstraint.activate([
                dayIndicatorLabel.centerYAnchor.constraint(equalTo: dayIndicator.centerYAnchor),
                dayIndicatorLabel.centerXAnchor.constraint(equalTo: dayIndicator.centerXAnchor)
-           ])
-    }
-    
-    private func setExerciseSatusConstraints() {
-           exersiceStatus.translatesAutoresizingMaskIntoConstraints = false
-           
-           NSLayoutConstraint.activate([
-               exersiceStatus.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-               exersiceStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
            ])
     }
 }
