@@ -12,24 +12,6 @@ class ExercisePlayerViewController: UIViewController {
     
     private let exercise: Exercise
     
-    private var imageLoadingState: ImageLoadingState = .inProgress {
-        didSet {
-            switch imageLoadingState {
-            case .inProgress:
-                aboveImageGradientView.isHidden = true
-                playButton.isHidden = true
-                placeholder.startAnimating()
-            case .finished(let image):
-                aboveImageGradientView.isHidden = false
-                playButton.isHidden = false
-                placeholder.stopAnimating()
-                exerciseImage.image = image
-            case .failed(let error):
-                print("Unable to load image with error: \(error)")
-            }
-        }
-    }
-
     private let exerciseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -90,7 +72,11 @@ class ExercisePlayerViewController: UIViewController {
     init(exercise: Exercise) {
         self.exercise = exercise
         super.init(nibName: nil, bundle: nil)
-        fetchImage(with: exercise.url)
+        guard let image = imageCache[exercise.url] else {
+            assertionFailure("image for this url is not in cache")
+            return
+        }
+        exerciseImage.image = image
     }
     
     required init?(coder: NSCoder) {
@@ -120,20 +106,6 @@ class ExercisePlayerViewController: UIViewController {
         exerciseImage.frame = belowImageShadowView.bounds
         aboveImageGradientView.frame = belowImageShadowView.frame
         playButton.center = belowImageShadowView.center
-    }
-    
-    private func fetchImage(with imageURL: URL) {
-        imageURL.fetchImage { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    self.imageLoadingState = .failed(error)
-                case .success(let image):
-                    imageCache[imageURL] = image
-                    self.imageLoadingState = .finished(image)
-                }
-            }
-        }
     }
     
     private func setColourfulImageShadowViewConstraints() {
