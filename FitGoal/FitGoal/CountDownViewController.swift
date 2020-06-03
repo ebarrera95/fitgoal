@@ -1,5 +1,5 @@
 //
-//  ExercisePlayerViewController.swift
+//  CountDownViewController.swift
 //  FitGoal
 //
 //  Created by Eliany Barrera on 12/5/20.
