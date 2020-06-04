@@ -10,8 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    private let imageFetcher: ImageFetcher
-    private var exerciseImageFetcherDelegate: ExerciseImageFetcherDelegate?
+    private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -130,9 +129,9 @@ class DetailViewController: UIViewController {
     }()
     
     //MARK: -VC life cycle
-    
+    private let exercise: Exercise
     init(exercise: Exercise) {
-        let imageURL = exercise.url
+        self.exercise = exercise
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
@@ -146,18 +145,10 @@ class DetailViewController: UIViewController {
             kern: 0.3,
             lineSpacing: 6
         )
-        self.imageFetcher = ImageFetcher(url: imageURL)
+        
         super.init(nibName: nil, bundle: nil)
         startExerciseButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
-        
-        self.exerciseImageFetcherDelegate = ExerciseImageFetcherDelegate(
-            exerciseImageView: exerciseImage,
-            imageGradient: imageGradient,
-            placeholder: placeholder,
-            playExerciseButton: playButton
-        )
-        self.imageFetcher.delegate = self.exerciseImageFetcherDelegate
     }
     
     override func viewDidLoad() {
@@ -179,6 +170,14 @@ class DetailViewController: UIViewController {
         ]
         add(subviews: views, to: scrollView)
         setConstraints()
+        
+        let imageFetcher = ImageFetcher(url: exercise.url)
+        self.exerciseImageFetcherConfigurator = ExerciseImageFetcherConfigurator(
+            imageFetcher: imageFetcher, exerciseImageView: exerciseImage,
+            imageGradient: imageGradient,
+            placeholder: placeholder,
+            playExerciseButton: playButton
+        )
     }
     
     override func viewDidLayoutSubviews() {

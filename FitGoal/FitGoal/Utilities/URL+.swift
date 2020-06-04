@@ -31,15 +31,15 @@ extension URL {
     
     @discardableResult
     func fetchImage(completion: @escaping(Result <UIImage, Error>) -> Void) -> URLSessionTask? {
-        if let cachedImage = imageCache[self] {
-            completion(.success(cachedImage))
-            return nil
-        }
-        else {
+//        if let cachedImage = ImageCache.read(url: self) {
+//            completion(.success(cachedImage))
+//            return nil
+//        }
+//        else {
             let task = downloadImage(completion: completion)
             task?.resume()
             return task
-        }
+//        }
     }
     
     func downloadImage(completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {

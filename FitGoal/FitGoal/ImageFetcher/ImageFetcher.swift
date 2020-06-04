@@ -12,7 +12,7 @@ var imageCache: [URL: UIImage] = [:]
 
 protocol ImageFetcherDelegate: AnyObject {
     
-    func imageFetcherIsInProgress()
+    func imageFetcherStartedFetching(_ imageFetcher: ImageFetcher)
     
     func imageFetcher(_ imageFetcher: ImageFetcher, didFinishFetchingWith image: UIImage)
     
@@ -23,15 +23,13 @@ class ImageFetcher {
     
     weak var delegate: ImageFetcherDelegate?
     private var currentImageDownloadTask: URLSessionTask?
+    private var imageURL: URL
     
-    init(url: URL) {
-        self.currentImageDownloadTask = fetchImage(with: url)
-    }
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
             switch imageLoadingState {
             case .inProgress:
-                delegate?.imageFetcherIsInProgress()
+                delegate?.imageFetcherStartedFetching(self)
             case .finished(let image):
                 delegate?.imageFetcher(self, didFinishFetchingWith: image)
             case .failed(let error):
@@ -40,15 +38,26 @@ class ImageFetcher {
         }
     }
     
-    private func fetchImage(with imageURL: URL) -> URLSessionTask? {
-        return imageURL.fetchImage { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    self.imageLoadingState = .failed(error)
-                case .success(let image):
-                    imageCache[imageURL] = image
-                    self.imageLoadingState = .finished(image)
+    init(url: URL) {
+        self.imageURL = url
+    }
+    
+    func fetchImage() {
+        imageLoadingState = .inProgress
+        
+        if let cachedImage = ImageCache.read(url: imageURL) {
+            self.imageLoadingState = .finished(cachedImage)
+        }
+        else {
+            currentImageDownloadTask = imageURL.fetchImage { (result) in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .failure(let error):
+                        self.imageLoadingState = .failed(error)
+                    case .success(let image):
+                        ImageCache.write(url: self.imageURL, image: image)
+                        self.imageLoadingState = .finished(image)
+                    }
                 }
             }
         }
@@ -56,6 +65,18 @@ class ImageFetcher {
     
     func cancelFetching() {
         self.currentImageDownloadTask?.cancel()
+    }
+}
+
+class ImageCache {
+    static private var imageCache: [URL: UIImage] = [:]
+    
+    static func write(url: URL, image: UIImage) {
+        imageCache[url] = image
+    }
+    
+    static func read(url: URL) -> UIImage? {
+        return imageCache[url]
     }
 }
 
