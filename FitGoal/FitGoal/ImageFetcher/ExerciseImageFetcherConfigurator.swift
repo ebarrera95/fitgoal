@@ -16,24 +16,20 @@ class ExerciseImageFetcherConfigurator: NSObject, ImageFetcherDelegate {
     private let placeholder: UIActivityIndicatorView
     private var playExerciseButton: UIButton?
     
-    init(imageFetcher: ImageFetcher, exerciseImageView: UIImageView, imageGradient: UIView, placeholder: UIActivityIndicatorView) {
+    init(imageFetcher: ImageFetcher, exerciseImageView: UIImageView, imageGradient: UIView, placeholder: UIActivityIndicatorView, playExerciseButton: UIButton? = nil) {
         self.imageGradient = imageGradient
         self.placeholder = placeholder
         self.exerciseImageView = exerciseImageView
         self.imageFetcher = imageFetcher
+        self.playExerciseButton = playExerciseButton
         super.init()
         imageFetcher.delegate = self
         imageFetcher.startFetching()
     }
     
-    convenience init(imageFetcher: ImageFetcher, exerciseImageView: UIImageView, imageGradient: UIView, placeholder: UIActivityIndicatorView, playExerciseButton: UIButton) {
-        self.init(imageFetcher: imageFetcher, exerciseImageView: exerciseImageView, imageGradient: imageGradient, placeholder: placeholder)
-        self.playExerciseButton = playExerciseButton
-    }
-    
     private func configureViews(forFetchingState isImageFetched: Bool) {
-        imageGradient.isHidden = isImageFetched
-        playExerciseButton?.isHidden = isImageFetched
+        imageGradient.isHidden = !isImageFetched
+        playExerciseButton?.isHidden = !isImageFetched
         
         if isImageFetched {
             placeholder.startAnimating()
