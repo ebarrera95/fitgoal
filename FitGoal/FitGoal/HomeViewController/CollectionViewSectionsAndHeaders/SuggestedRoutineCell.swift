@@ -17,22 +17,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     static let identifier: String = "Suggestions"
     
     weak var delegate: SuggestedRoutineCellDelegate?
-    
-    private var imageLoadingState: ImageLoadingState = .inProgress {
-        didSet {
-            switch imageLoadingState {
-            case .inProgress:
-                gradientView.isHidden = true
-                placeholder.startAnimating()
-            case .finished(let image):
-                gradientView.isHidden = false
-                placeholder.stopAnimating()
-                backgroundImage.image = image
-            case .failed(let error):
-                print("Unable to load image with error: \(error)")
-            }
-        }
-    }
+    private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
     
     var routine: Routine? {
         didSet {
@@ -64,28 +49,10 @@ class SuggestedRoutineCell: UICollectionViewCell {
 
     private var imageURL: URL? {
         didSet {
-            guard let imageURL = imageURL else {
-                return
-            }
-            
-            imageLoadingState = .inProgress
-            
-            currentImageDownloadTask = imageURL.fetchImage { result in
-                DispatchQueue.main.async {
-                    guard self.imageURL == imageURL else { return }
-                    switch result {
-                    case .failure(let error):
-                        self.imageLoadingState = .failed(error)
-                    case .success(let image):
-                        imageCache[imageURL] = image
-                        self.imageLoadingState = .finished(image)
-                    }
-                }
-            }
+            let imageFetcher = ImageFetcher.init(url: imageURL)
+            exerciseImageFetcherConfigurator = ExerciseImageFetcherConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }
     }
-    
-    private var currentImageDownloadTask: URLSessionTask?
 
     private var gradientView: UIView = {
         let gradientView = GradientView(frame: .zero)
@@ -147,7 +114,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.image = nil
         imageURL = nil
         gradientView.isHidden = true
-        currentImageDownloadTask?.cancel()
+        exerciseImageFetcherConfigurator?.cancelFetching()
     }
     
     override func layoutSubviews() {

@@ -23,7 +23,7 @@ class ImageFetcher {
     
     weak var delegate: ImageFetcherDelegate?
     private var currentImageDownloadTask: URLSessionTask?
-    private var imageURL: URL
+    private var imageURL: URL?
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -38,24 +38,28 @@ class ImageFetcher {
         }
     }
     
-    init(url: URL) {
+    init(url: URL?) {
         self.imageURL = url
     }
     
     func startFetching() {
+        guard let currentImageURL = self.imageURL else {
+            return
+        }
         imageLoadingState = .inProgress
         
-        if let cachedImage = ImageCache.read(url: imageURL) {
+        if let cachedImage = ImageCache.read(url: currentImageURL) {
             self.imageLoadingState = .finished(cachedImage)
         }
         else {
-            currentImageDownloadTask = imageURL.downloadImage(completion: { (result) in
+            currentImageDownloadTask = currentImageURL.downloadImage(completion: { (result) in
                 DispatchQueue.main.async {
+                    guard self.imageURL == currentImageURL else { return }
                     switch result {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
                     case .success(let image):
-                        ImageCache.write(url: self.imageURL, image: image)
+                        ImageCache.write(url: currentImageURL, image: image)
                         self.imageLoadingState = .finished(image)
                     }
                 }

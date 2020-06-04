@@ -31,11 +31,15 @@ class ExerciseImageFetcherConfigurator: NSObject, ImageFetcherDelegate {
         imageGradient.isHidden = !isImageFetched
         playExerciseButton?.isHidden = !isImageFetched
         
-        if isImageFetched {
+        if !isImageFetched {
             placeholder.startAnimating()
         } else {
             placeholder.stopAnimating()
         }
+    }
+    
+    func cancelFetching() {
+        imageFetcher.cancelFetching()
     }
     
     func imageFetcherStartedFetching(_ imageFetcher: ImageFetcher) {
