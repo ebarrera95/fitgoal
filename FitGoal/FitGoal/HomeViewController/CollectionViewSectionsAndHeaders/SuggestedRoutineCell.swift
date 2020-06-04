@@ -18,7 +18,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     
     weak var delegate: SuggestedRoutineCellDelegate?
     
-    private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
     var routine: Routine? {
         didSet {
@@ -51,7 +51,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     private var imageURL: URL? {
         didSet {
             let imageFetcher = ImageFetcher.init(url: imageURL)
-            exerciseImageFetcherConfigurator = ExerciseImageFetcherConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
+            exerciseImageConfigurator = ExerciseImageConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }
     }
 
@@ -115,7 +115,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
         backgroundImage.image = nil
         imageURL = nil
         gradientView.isHidden = true
-        exerciseImageFetcherConfigurator?.cancelFetching()
+        exerciseImageConfigurator?.cancelConfiguration()
     }
     
     override func layoutSubviews() {

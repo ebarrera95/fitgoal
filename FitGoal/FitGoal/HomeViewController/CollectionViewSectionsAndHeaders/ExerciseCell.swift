@@ -10,7 +10,7 @@ import UIKit
 
 class ExerciseCell: UICollectionViewCell {
     
-    private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
     var exercise: Exercise? {
         didSet {
@@ -40,7 +40,7 @@ class ExerciseCell: UICollectionViewCell {
     private var imageURL: URL? {
         didSet {
             let imageFetcher = ImageFetcher.init(url: imageURL)
-            exerciseImageFetcherConfigurator = ExerciseImageFetcherConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
+            exerciseImageConfigurator = ExerciseImageConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }
     }
 
@@ -121,7 +121,7 @@ class ExerciseCell: UICollectionViewCell {
         backgroundImage.image = nil
         imageURL = nil
         gradientView.isHidden = true
-        exerciseImageFetcherConfigurator?.cancelFetching()
+        exerciseImageConfigurator?.cancelConfiguration()
     }
     
     //MARK: - Constraints

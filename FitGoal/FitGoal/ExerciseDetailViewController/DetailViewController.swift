@@ -10,7 +10,7 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
-    private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -172,7 +172,7 @@ class DetailViewController: UIViewController {
         setConstraints()
         
         let imageFetcher = ImageFetcher(url: exercise.url)
-        self.exerciseImageFetcherConfigurator = ExerciseImageFetcherConfigurator(
+        self.exerciseImageConfigurator = ExerciseImageConfigurator(
             imageFetcher: imageFetcher, exerciseImageView: exerciseImage,
             imageGradient: imageGradient,
             placeholder: placeholder,

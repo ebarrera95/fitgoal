@@ -1,5 +1,5 @@
 //
-//  ExerciseImageFetcherConfigurator.swift
+//  ExerciseImageConfigurator.swift
 //  FitGoal
 //
 //  Created by Eliany Barrera on 4/6/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ExerciseImageFetcherConfigurator: NSObject, ImageFetcherDelegate {
+class ExerciseImageConfigurator: NSObject, ImageFetcherDelegate {
     
     private let imageFetcher: ImageFetcher
     private let exerciseImageView: UIImageView
@@ -38,7 +38,7 @@ class ExerciseImageFetcherConfigurator: NSObject, ImageFetcherDelegate {
         }
     }
     
-    func cancelFetching() {
+    func cancelConfiguration() {
         imageFetcher.cancelFetching()
     }
     
