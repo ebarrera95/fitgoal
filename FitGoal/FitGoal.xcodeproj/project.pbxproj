@@ -69,6 +69,7 @@
 		05EB1B442424AC4900E7984B /* AuthenticationFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */; };
 		05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B452424D27600E7984B /* LoginViewController.swift */; };
 		05FC8A8A247F9FE8005C3FF6 /* UserInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */; };
+		05FF99082488F2EF00CC3E09 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FF99072488F2EF00CC3E09 /* ImageCache.swift */; };
 		1D7FE1880AE1195404A71B35 /* libPods-FitGoal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6537303486DC6B0C92115EB1 /* libPods-FitGoal.a */; };
 		C0E9C52B32FD169709712A9E /* libPods-FitGoalUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B26CC521159F56056E916FD2 /* libPods-FitGoalUITests.a */; };
 		F14233AB240CF77D000E8873 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14233AA240CF77D000E8873 /* AppDelegate.swift */; };
@@ -162,6 +163,7 @@
 		05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationFormView.swift; sourceTree = "<group>"; };
 		05EB1B452424D27600E7984B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		05FC8A89247F9FE8005C3FF6 /* UserInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformation.swift; sourceTree = "<group>"; };
+		05FF99072488F2EF00CC3E09 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		4EE093ADD58E1D7923CE8C65 /* Pods-FitGoal.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.release.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.release.xcconfig"; sourceTree = "<group>"; };
 		4F50A60850CCD7C728954905 /* Pods-FitGoalTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoalTests.debug.xcconfig"; path = "Target Support Files/Pods-FitGoalTests/Pods-FitGoalTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6498C1122412C9CA50CDACC3 /* Pods-FitGoal.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitGoal.debug.xcconfig"; path = "Target Support Files/Pods-FitGoal/Pods-FitGoal.debug.xcconfig"; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 			isa = PBXGroup;
 			children = (
 				05CD555724885AC900CCB470 /* ImageFetcher.swift */,
+				05FF99072488F2EF00CC3E09 /* ImageCache.swift */,
 				05CD555C248864C500CCB470 /* ExerciseImageFetcherConfigurator.swift */,
 			);
 			path = ImageFetcher;
@@ -730,6 +733,7 @@
 				05644D4E2461381F00E32434 /* UserInfoCell.swift in Sources */,
 				058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */,
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
+				05FF99082488F2EF00CC3E09 /* ImageCache.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
 				05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */,
 				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,

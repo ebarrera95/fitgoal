@@ -8,8 +8,6 @@
 
 import UIKit
 
-var imageCache: [URL: UIImage] = [:]
-
 protocol ImageFetcherDelegate: AnyObject {
     
     func imageFetcherStartedFetching(_ imageFetcher: ImageFetcher)
@@ -77,24 +75,8 @@ class ImageFetcher {
     }
 }
 
-class ImageCache {
-    static private var imageCache: [URL: UIImage] = [:]
-    
-    static func write(url: URL, image: UIImage) {
-        imageCache[url] = image
-    }
-    
-    static func read(url: URL) -> UIImage? {
-        return imageCache[url]
-    }
-}
-
-enum ImageLoadingState {
+private enum ImageLoadingState {
     case inProgress
     case finished(UIImage)
     case failed(Error)
-}
-
-enum NetworkError: Error {
-    case invalidImage
 }

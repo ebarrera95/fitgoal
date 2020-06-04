@@ -29,13 +29,6 @@ extension URL {
         }.resume()
     }
     
-    @discardableResult
-    func fetchImage(completion: @escaping(Result <UIImage, Error>) -> Void) -> URLSessionTask? {
-            let task = downloadImage(completion: completion)
-            task?.resume()
-            return task
-    }
-    
     func downloadImage(completion: @escaping (Result<UIImage, Error>) -> Void) -> URLSessionDataTask? {
         return URLSession.shared.dataTask(with: self) { (data, response, error) in
             guard let data = data else {
@@ -53,4 +46,8 @@ extension URL {
             completion(.success(image))
         }
     }
+}
+
+private enum NetworkError: Error {
+    case invalidImage
 }
