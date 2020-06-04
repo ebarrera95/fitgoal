@@ -23,7 +23,7 @@ class ExerciseImageFetcherConfigurator: NSObject, ImageFetcherDelegate {
         self.imageFetcher = imageFetcher
         super.init()
         imageFetcher.delegate = self
-        imageFetcher.fetchImage()
+        imageFetcher.startFetching()
     }
     
     convenience init(imageFetcher: ImageFetcher, exerciseImageView: UIImageView, imageGradient: UIView, placeholder: UIActivityIndicatorView, playExerciseButton: UIButton) {

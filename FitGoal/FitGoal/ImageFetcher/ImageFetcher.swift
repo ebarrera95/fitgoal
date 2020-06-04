@@ -42,14 +42,14 @@ class ImageFetcher {
         self.imageURL = url
     }
     
-    func fetchImage() {
+    func startFetching() {
         imageLoadingState = .inProgress
         
         if let cachedImage = ImageCache.read(url: imageURL) {
             self.imageLoadingState = .finished(cachedImage)
         }
         else {
-            currentImageDownloadTask = imageURL.fetchImage { (result) in
+            currentImageDownloadTask = imageURL.downloadImage(completion: { (result) in
                 DispatchQueue.main.async {
                     switch result {
                     case .failure(let error):
@@ -59,8 +59,13 @@ class ImageFetcher {
                         self.imageLoadingState = .finished(image)
                     }
                 }
-            }
+            })
+            resumeFetchingTask()
         }
+    }
+    
+    private func resumeFetchingTask() {
+        currentImageDownloadTask?.resume()
     }
     
     func cancelFetching() {
