@@ -17,6 +17,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
     static let identifier: String = "Suggestions"
     
     weak var delegate: SuggestedRoutineCellDelegate?
+    
     private var exerciseImageFetcherConfigurator: ExerciseImageFetcherConfigurator?
     
     var routine: Routine? {
