@@ -9,8 +9,11 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    private let exercise: Exercise
 
     private var exerciseImageConfigurator: ExerciseImageConfigurator?
+    
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -129,7 +132,7 @@ class DetailViewController: UIViewController {
     }()
     
     //MARK: -VC life cycle
-    private let exercise: Exercise
+    
     init(exercise: Exercise) {
         self.exercise = exercise
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
