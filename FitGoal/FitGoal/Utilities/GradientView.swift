@@ -35,18 +35,28 @@ class GradientView: UIView {
             gradientLayer.endPoint = endPoint
         }
     }
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
+}
+
+extension GradientView {
     
-    convenience init(frame: CGRect, cornerRadius: CGFloat, maskedCorners: CACornerMask, alpha: CGFloat) {
-        self.init(frame: frame)
-        gradientLayer.cornerRadius = cornerRadius
-        gradientLayer.maskedCorners = maskedCorners
+    func customiseGradientView(
+        cornerRadius: CGFloat,
+        maskedCorners: CACornerMask,
+        colors: [UIColor],
+        alpha: CGFloat)
+    {
+        self.layer.cornerRadius = cornerRadius
+        self.layer.maskedCorners = maskedCorners
+        self.colors = colors
         self.alpha = alpha
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    func transformGradientView(
+        rotationAngle: CGFloat,
+        translationInX: CGFloat,
+        translationInY: CGFloat)
+    {
+        let rotation = CGAffineTransform(rotationAngle: rotationAngle / 180 * CGFloat.pi)
+        self.transform =  rotation.translatedBy(x: translationInX, y: translationInY)
     }
 }
