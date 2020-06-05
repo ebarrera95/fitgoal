@@ -35,4 +35,18 @@ class GradientView: UIView {
             gradientLayer.endPoint = endPoint
         }
     }
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
+    
+    convenience init(frame: CGRect, cornerRadius: CGFloat, maskedCorners: CACornerMask, alpha: CGFloat) {
+        self.init(frame: frame)
+        gradientLayer.cornerRadius = cornerRadius
+        gradientLayer.maskedCorners = maskedCorners
+        self.alpha = alpha
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
