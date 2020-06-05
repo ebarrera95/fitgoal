@@ -10,7 +10,7 @@ import UIKit
 
 class GreetingViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate {
     
-    private let backgroundView = BackgroundView()
+    private let backgroundView = AuthenticationBackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
     
