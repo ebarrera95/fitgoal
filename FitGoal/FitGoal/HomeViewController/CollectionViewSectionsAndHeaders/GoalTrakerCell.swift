@@ -12,13 +12,19 @@ class GoalTrakerCell: UICollectionViewCell {
     
     static let identifier = "GoalTraker"
     
-    private lazy var gradientBackgroundView: UIView = {
+    private var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
-        gradientView.layer.cornerRadius = 150
-        gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
-        gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
-        let rotation = CGAffineTransform(rotationAngle: -26 / 180 * CGFloat.pi)
-        gradientView.transform = rotation.translatedBy(x: 15, y: -650)
+        gradientView.customiseGradientView(
+            cornerRadius: 150,
+            maskedCorners: [.layerMinXMaxYCorner],
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 1
+        )
+        gradientView.transformGradientView(
+            rotationAngle: -26,
+            translationInX: 15,
+            translationInY: -650
+        )
         return gradientView
     }()
     
