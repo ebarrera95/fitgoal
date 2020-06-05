@@ -20,11 +20,17 @@ class SettingHeaderView: UIView {
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
-        gradientView.layer.cornerRadius = 75
-        gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
-        gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
-        let translation = CGAffineTransform(translationX: 0, y: -350)
-        gradientView.transform = translation
+        gradientView.customiseGradientView(
+            cornerRadius: 75,
+            maskedCorners: [.layerMinXMaxYCorner],
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 1
+        )
+        gradientView.transformGradientView(
+            rotationAngle: 0,
+            translationInX: 0,
+            translationInY: -350
+        )
         return gradientView
     }()
     
