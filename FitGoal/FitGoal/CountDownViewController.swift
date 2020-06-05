@@ -76,7 +76,9 @@ class CountDownViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let views = generateBackgroundView() + [countdownLabel, countdownMessageLabel, stopButton]
+        let background = ExercisePlayerBackgroundView(frame: view.bounds)
+        view.addSubview(background)
+        let views = [countdownLabel, countdownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
         setConstraints()
         runCountdown()

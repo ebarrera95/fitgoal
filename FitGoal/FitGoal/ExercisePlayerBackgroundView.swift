@@ -9,13 +9,71 @@
 import UIKit
 
 class ExercisePlayerBackgroundView: UIView {
-
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    
+    var topLeftView: GradientView = {
+        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+        gradientView.customiseGradientView(
+            cornerRadius: 175,
+            maskedCorners: .layerMinXMaxYCorner,
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 0.1
+        )
+        gradientView.transformGradientView(
+            rotationAngle: -30,
+            translationInX: 60,
+            translationInY: -730
+        )
+        return gradientView
+    }()
+    
+    var topRightView: GradientView = {
+        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+        gradientView.customiseGradientView(
+            cornerRadius: 175,
+            maskedCorners: .layerMaxXMaxYCorner,
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 0.25
+        )
+        gradientView.transformGradientView(
+            rotationAngle: 35,
+            translationInX: -350,
+            translationInY: -630
+        )
+        return gradientView
+    }()
+    
+    var bottomLeftView: GradientView = {
+        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+        gradientView.customiseGradientView(
+            cornerRadius: 130,
+            maskedCorners: .layerMinXMinYCorner,
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 0.70
+        )
+        gradientView.transformGradientView(
+            rotationAngle: 60,
+            translationInX: 620,
+            translationInY: 450
+        )
+        return gradientView
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let background = GradientView(frame: frame)
+        background.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
+        addSubview(background)
+        
+        addMultipleSubviews([
+            topLeftView,
+            topRightView,
+            bottomLeftView
+        ])
     }
-    */
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
 }

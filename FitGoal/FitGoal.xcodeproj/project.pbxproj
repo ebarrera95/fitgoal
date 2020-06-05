@@ -49,7 +49,6 @@
 		058312A9242C291900708195 /* AuthenticationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058312A8242C291800708195 /* AuthenticationType.swift */; };
 		058380B524370E5F0027E9E0 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */; };
 		05A370C42415AA33009A654E /* URL+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A370C32415AA33009A654E /* URL+.swift */; };
-		05A57FD12489C95A0052C2C1 /* BackgroundView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05A57FD02489C95A0052C2C1 /* BackgroundView1.swift */; };
 		05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E1240F28EB009B0443 /* Routine.swift */; };
 		05B2E1E4240F2C5D009B0443 /* SuggestedRoutineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */; };
 		05B2E209240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */; };
@@ -62,6 +61,7 @@
 		05CDEFD2241A294500C1822D /* CoreDataPersistance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */; };
 		05CDEFD4241A319D00C1822D /* RoutineStateInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */; };
 		05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05CDEFD5241B3DFF00C1822D /* GradientView.swift */; };
+		05DA3730248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DA372F248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift */; };
 		05EB1B3E242473D400E7984B /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3D242473D400E7984B /* SignUpViewController.swift */; };
 		05EB1B402424759400E7984B /* SocialMediaAuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */; };
 		05EB1B422424A6C900E7984B /* AuthenticationTypeSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */; };
@@ -141,7 +141,6 @@
 		058312A8242C291800708195 /* AuthenticationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationType.swift; sourceTree = "<group>"; };
 		058380B424370E5F0027E9E0 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
 		05A370C32415AA33009A654E /* URL+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+.swift"; sourceTree = "<group>"; };
-		05A57FD02489C95A0052C2C1 /* BackgroundView1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView1.swift; sourceTree = "<group>"; };
 		05B2E1E1240F28EB009B0443 /* Routine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routine.swift; sourceTree = "<group>"; };
 		05B2E1E3240F2C5D009B0443 /* SuggestedRoutineCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuggestedRoutineCell.swift; sourceTree = "<group>"; };
 		05B2E208240F955C009B0443 /* HomeViewController + UICollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController + UICollectionViewDataSource.swift"; sourceTree = "<group>"; };
@@ -154,6 +153,7 @@
 		05CDEFD1241A294500C1822D /* CoreDataPersistance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataPersistance.swift; sourceTree = "<group>"; };
 		05CDEFD3241A319D00C1822D /* RoutineStateInspector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutineStateInspector.swift; sourceTree = "<group>"; };
 		05CDEFD5241B3DFF00C1822D /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		05DA372F248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisePlayerBackgroundView.swift; sourceTree = "<group>"; };
 		05EB1B3D242473D400E7984B /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialMediaAuthenticationView.swift; sourceTree = "<group>"; };
 		05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationTypeSwitcherView.swift; sourceTree = "<group>"; };
@@ -295,7 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				05CDEFD5241B3DFF00C1822D /* GradientView.swift */,
-				05A57FD02489C95A0052C2C1 /* BackgroundView1.swift */,
 				F14233F524127500000E8873 /* UIColor+.swift */,
 				05BBF750241503F100EF42E9 /* String+.swift */,
 				05A370C32415AA33009A654E /* URL+.swift */,
@@ -428,6 +427,7 @@
 				056A49B7241F287A00707791 /* CoreData */,
 				056A49B8241F288A00707791 /* Utilities */,
 				0530E849246A452F0033302B /* CountDownViewController.swift */,
+				05DA372F248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift */,
 				056A49B9241F28BB00707791 /* HomeViewController */,
 				056A49BC241F29F300707791 /* Model */,
 				056A49BD241F2A2B00707791 /* ExerciseDetailViewController */,
@@ -692,7 +692,6 @@
 				0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */,
 				051C6BFC2484A0F400E02ED5 /* UserPreferences.swift in Sources */,
 				05CDEFAC2418D28100C1822D /* ExerciseMO+CoreDataClass.swift in Sources */,
-				05A57FD12489C95A0052C2C1 /* BackgroundView1.swift in Sources */,
 				055284CE244EC00700ACBF5F /* UITextField+.swift in Sources */,
 				F14233AF240CF77D000E8873 /* HomeViewController.swift in Sources */,
 				05CDEFD6241B3DFF00C1822D /* GradientView.swift in Sources */,
@@ -722,6 +721,7 @@
 				05B2E1E2240F28EB009B0443 /* Routine.swift in Sources */,
 				0546E2DC24151090004A0F65 /* RoutineInspectorCell.swift in Sources */,
 				05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */,
+				05DA3730248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift in Sources */,
 				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,
 				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
 				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
