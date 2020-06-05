@@ -10,12 +10,15 @@ import UIKit
 
 class ExercisePlayerBackgroundView: UIView {
     
-    var topLeftView: GradientView = {
-        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+    private let colours = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
+    private let gradientViewFrame = CGRect(x: 0, y: 0, width: 600, height: 812)
+    
+    private lazy var topLeftView: GradientView = {
+        let gradientView = GradientView(frame: gradientViewFrame)
         gradientView.customiseGradientView(
             cornerRadius: 175,
             maskedCorners: .layerMinXMaxYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            colors: colours,
             alpha: 0.1
         )
         gradientView.transformGradientView(
@@ -26,12 +29,12 @@ class ExercisePlayerBackgroundView: UIView {
         return gradientView
     }()
     
-    var topRightView: GradientView = {
-        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+    private lazy var topRightView: GradientView = {
+        let gradientView = GradientView(frame: gradientViewFrame)
         gradientView.customiseGradientView(
             cornerRadius: 175,
             maskedCorners: .layerMaxXMaxYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            colors: colours,
             alpha: 0.25
         )
         gradientView.transformGradientView(
@@ -42,12 +45,12 @@ class ExercisePlayerBackgroundView: UIView {
         return gradientView
     }()
     
-    var bottomLeftView: GradientView = {
-        let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
+    private lazy var bottomLeftView: GradientView = {
+        let gradientView = GradientView(frame: gradientViewFrame)
         gradientView.customiseGradientView(
             cornerRadius: 130,
             maskedCorners: .layerMinXMinYCorner,
-            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            colors: colours,
             alpha: 0.70
         )
         gradientView.transformGradientView(
@@ -62,7 +65,7 @@ class ExercisePlayerBackgroundView: UIView {
         super.init(frame: frame)
         
         let background = GradientView(frame: frame)
-        background.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
+        background.colors = colours
         addSubview(background)
         
         addMultipleSubviews([
@@ -75,5 +78,4 @@ class ExercisePlayerBackgroundView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
 }
