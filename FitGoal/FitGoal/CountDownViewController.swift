@@ -35,7 +35,7 @@ class CountDownViewController: UIViewController {
         view.addSubview(background)
         let views = [countdownLabel, countdownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
-        setConstraints()
+        setConstraintsForCountDownRelatedViews()
         runCountdown()
         stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
     }

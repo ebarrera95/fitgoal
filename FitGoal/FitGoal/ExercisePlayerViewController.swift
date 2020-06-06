@@ -12,6 +12,8 @@ class ExercisePlayerViewController: UIViewController {
     
     private let exercise: Exercise
     
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
+    
     private let exerciseImage: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -72,11 +74,13 @@ class ExercisePlayerViewController: UIViewController {
     init(exercise: Exercise) {
         self.exercise = exercise
         super.init(nibName: nil, bundle: nil)
-        guard let image = imageCache[exercise.url] else {
-            assertionFailure("image for this url is not in cache")
-            return
-        }
-        exerciseImage.image = image
+        let imageFetcher = ImageFetcher(url: exercise.url)
+        self.exerciseImageConfigurator = ExerciseImageConfigurator(
+            imageFetcher: imageFetcher,
+            exerciseImageView: exerciseImage,
+            imageGradient: aboveImageGradientView,
+            placeholder: placeholder
+        )
     }
     
     required init?(coder: NSCoder) {
@@ -86,7 +90,7 @@ class ExercisePlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         belowImageShadowView.addSubview(exerciseImage)
-        view.addSubview(BackgroundGradientView(frame: view.bounds))
+        view.addSubview(ExercisePlayerBackgroundView(frame: view.frame))
         let views = [
             colourfulImageShadowView,
             belowImageShadowView,
