@@ -39,7 +39,7 @@ class GradientView: UIView {
 
 extension GradientView {
     
-    func customiseGradientView(
+    func customise(
         cornerRadius: CGFloat,
         maskedCorners: CACornerMask,
         colors: [UIColor],
@@ -51,7 +51,7 @@ extension GradientView {
         self.alpha = alpha
     }
     
-    func transformGradientView(
+    func transform(
         rotationAngle: CGFloat,
         translationInX: CGFloat,
         translationInY: CGFloat)
