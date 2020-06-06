@@ -10,7 +10,7 @@ import UIKit
 
 class LoginViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, SocialMediaAuthenticationViewDelegate, AuthenticationFormViewDelegate {
     
-    private let backgroundView = BackgroundView()
+    private let backgroundView = AuthenticationBackgroundView()
     
     private let appIconView = IconView(iconType: .appIcon)
     

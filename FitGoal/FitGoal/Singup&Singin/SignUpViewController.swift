@@ -10,7 +10,7 @@ import UIKit
 
 class SignUpViewController: UIViewController, AuthenticationTypeSwitcherViewDelegate, IconViewDelegate, AuthenticationFormViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    private let backgroundView = BackgroundView()
+    private let backgroundView = AuthenticationBackgroundView()
     
     private let avatarView = IconView(iconType: .avatarChooser)
     

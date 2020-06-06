@@ -23,7 +23,7 @@
 		05162664247DE317002A4329 /* UserPlannerTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */; };
 		05162666247E3C83002A4329 /* UserPlannerTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */; };
 		0517AD4D242426FC0049E48B /* FitGoal.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD4B242426FC0049E48B /* FitGoal.xcdatamodeld */; };
-		0517AD542424432E0049E48B /* BackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* BackgroundView.swift */; };
+		0517AD542424432E0049E48B /* AuthenticationBackgroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD532424432E0049E48B /* AuthenticationBackgroundView.swift */; };
 		0517AD5624244DD40049E48B /* GreetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0517AD5524244DD40049E48B /* GreetingViewController.swift */; };
 		051C6BFC2484A0F400E02ED5 /* UserPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */; };
 		051C6C002485CA4A00E02ED5 /* UserInfoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C6BFF2485CA4A00E02ED5 /* UserInfoEditor.swift */; };
@@ -118,7 +118,7 @@
 		05162663247DE317002A4329 /* UserPlannerTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewDataSource.swift; sourceTree = "<group>"; };
 		05162665247E3C83002A4329 /* UserPlannerTableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlannerTableViewDelegate.swift; sourceTree = "<group>"; };
 		0517AD4C242426FC0049E48B /* FitGoal.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FitGoal.xcdatamodel; sourceTree = "<group>"; };
-		0517AD532424432E0049E48B /* BackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundView.swift; sourceTree = "<group>"; };
+		0517AD532424432E0049E48B /* AuthenticationBackgroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationBackgroundView.swift; sourceTree = "<group>"; };
 		0517AD5524244DD40049E48B /* GreetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreetingViewController.swift; sourceTree = "<group>"; };
 		051C6BFB2484A0F400E02ED5 /* UserPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferences.swift; sourceTree = "<group>"; };
 		051C6BFF2485CA4A00E02ED5 /* UserInfoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoEditor.swift; sourceTree = "<group>"; };
@@ -387,7 +387,7 @@
 				05EB1B432424AC4900E7984B /* AuthenticationFormView.swift */,
 				055284CF244FDEC300ACBF5F /* TextFieldType.swift */,
 				058312A8242C291800708195 /* AuthenticationType.swift */,
-				0517AD532424432E0049E48B /* BackgroundView.swift */,
+				0517AD532424432E0049E48B /* AuthenticationBackgroundView.swift */,
 				05EB1B412424A6C900E7984B /* AuthenticationTypeSwitcherView.swift */,
 				05EB1B3F2424759400E7984B /* SocialMediaAuthenticationView.swift */,
 			);
@@ -741,7 +741,7 @@
 				05162662247DE04A002A4329 /* UserPlannerTableViewCell.swift in Sources */,
 				05DA3730248AF6CC00A28D0E /* ExercisePlayerBackgroundView.swift in Sources */,
 				055284D0244FDEC300ACBF5F /* TextFieldType.swift in Sources */,
-				0517AD542424432E0049E48B /* BackgroundView.swift in Sources */,
+				0517AD542424432E0049E48B /* AuthenticationBackgroundView.swift in Sources */,
 				05EB1B462424D27600E7984B /* LoginViewController.swift in Sources */,
 				054DC8AB2434602C008B2B4F /* AppPreferences.swift in Sources */,
 				058312A9242C291900708195 /* AuthenticationType.swift in Sources */,
