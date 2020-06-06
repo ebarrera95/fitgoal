@@ -14,14 +14,14 @@ class AuthenticationBackgroundView: UIView {
     
     private lazy var topLeftView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 812))
-        gradientView.customiseGradientView(
+        gradientView.customise(
             cornerRadius: 175,
             maskedCorners: [.layerMinXMaxYCorner],
             colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
             alpha: 1
         )
 
-        gradientView.transformGradientView(
+        gradientView.transform(
             rotationAngle: -30,
             translationInX: 60,
             translationInY: -700
@@ -31,14 +31,14 @@ class AuthenticationBackgroundView: UIView {
     
     private lazy var topRightView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 600, height: 812))
-        gradientView.customiseGradientView(
+        gradientView.customise(
             cornerRadius: 175,
             maskedCorners: [.layerMaxXMaxYCorner],
             colors: [#colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1), #colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1)],
             alpha: 0.43
         )
         
-        gradientView.transformGradientView(
+        gradientView.transform(
             rotationAngle: 23,
             translationInX: -350,
             translationInY: -550
