@@ -9,7 +9,7 @@
 import UIKit
 
 protocol CountDownViewControllerDelegate: AnyObject {
-    func countDownViewController(_ viewController: CountDownViewController, didDismiss: Bool)
+    func countDownViewControllerDidDismiss(_ viewController: CountDownViewController)
 }
 
 class CountDownViewController: UIViewController {
@@ -47,7 +47,7 @@ class CountDownViewController: UIViewController {
             self.countdownSeconds -= 1
         } else {
             self.dismiss(animated: true) {
-                self.delegate?.countDownViewController(self, didDismiss: true)
+                self.delegate?.countDownViewControllerDidDismiss(self)
                 self.timer.invalidate()
             }
         }

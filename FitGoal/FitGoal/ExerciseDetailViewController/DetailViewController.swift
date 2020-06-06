@@ -284,7 +284,7 @@ class DetailViewController: UIViewController {
     }
 }
 extension DetailViewController: CountDownViewControllerDelegate {
-    func countDownViewController(_ viewController: CountDownViewController, didDismiss: Bool) {
+    func countDownViewControllerDidDismiss(_ viewController: CountDownViewController) {
         let viewController = ExercisePlayerViewController(exercise: self.exercise)
         self.present(viewController, animated: true, completion: nil)
     }
