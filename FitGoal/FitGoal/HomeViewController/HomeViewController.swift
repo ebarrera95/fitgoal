@@ -8,8 +8,6 @@
 
 import UIKit
 
-var imageCache: [URL: UIImage] = [:]
-
 class HomeViewController: UIViewController {
 
     var routineState  = RoutineStateInspector.unset
