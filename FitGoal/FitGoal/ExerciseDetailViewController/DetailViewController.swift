@@ -137,7 +137,6 @@ class DetailViewController: UIViewController {
     init(exercise: Exercise, exercises: [Exercise]) {
         self.exercise = exercise
         self.exercises = exercises
-        let imageURL = exercise.url
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
