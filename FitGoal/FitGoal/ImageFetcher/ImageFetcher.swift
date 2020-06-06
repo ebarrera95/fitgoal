@@ -22,6 +22,7 @@ class ImageFetcher {
     weak var delegate: ImageFetcherDelegate?
     private var currentImageDownloadTask: URLSessionTask?
     private var imageURL: URL
+    private var fetchingWasCancelled = false
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -41,21 +42,20 @@ class ImageFetcher {
     }
     
     func startFetching() {
-        let currentImageURL = self.imageURL
         imageLoadingState = .inProgress
         
-        if let cachedImage = ImageCache.read(url: currentImageURL) {
+        if let cachedImage = ImageCache.read(url: imageURL) {
             self.imageLoadingState = .finished(cachedImage)
         }
         else {
-            currentImageDownloadTask = currentImageURL.downloadImage(completion: { (result) in
+            currentImageDownloadTask = imageURL.downloadImage(completion: { (result) in
                 DispatchQueue.main.async {
-                    guard self.imageURL == currentImageURL else { return }
+                    guard !self.fetchingWasCancelled else { return }
                     switch result {
                     case .failure(let error):
                         self.imageLoadingState = .failed(error)
                     case .success(let image):
-                        ImageCache.write(url: currentImageURL, image: image)
+                        ImageCache.write(url: self.imageURL, image: image)
                         self.imageLoadingState = .finished(image)
                     }
                 }
@@ -69,7 +69,8 @@ class ImageFetcher {
     }
     
     func cancelFetching() {
-        self.currentImageDownloadTask?.cancel()
+        currentImageDownloadTask?.cancel()
+        fetchingWasCancelled = true
     }
 }
 
