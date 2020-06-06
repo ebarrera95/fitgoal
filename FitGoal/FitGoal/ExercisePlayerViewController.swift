@@ -14,7 +14,7 @@ class ExercisePlayerViewController: UIViewController {
     
     private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
-    private let exerciseImage: UIImageView = {
+    private let exerciseImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.masksToBounds = true
@@ -23,14 +23,14 @@ class ExercisePlayerViewController: UIViewController {
         return imageView
     }()
     
-    private let aboveImageGradientView: UIView = {
+    private let transparentGradientView: GradientView = {
            let gradientView = GradientView(frame: .zero)
            gradientView.layer.cornerRadius = 7
            gradientView.colors = [#colorLiteral(red: 0.9411764706, green: 0.7137254902, blue: 0.7137254902, alpha: 0), #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0.06), #colorLiteral(red: 0.6980392157, green: 0.7294117647, blue: 0.9490196078, alpha: 0.55)]
            return gradientView
     }()
     
-    private let belowImageShadowView: UIView = {
+    private let grayShadowView: UIView = {
         var shadow = UIView()
         shadow.clipsToBounds = false
         shadow.layer.shadowOffset = CGSize(width: 0, height: 6)
@@ -40,7 +40,7 @@ class ExercisePlayerViewController: UIViewController {
         return shadow
     }()
     
-    private let colourfulImageShadowView: UIView = {
+    private let gradientShadowView: UIView = {
         let gradientView = GradientView(frame: .zero)
         gradientView.layer.cornerRadius = 9
         gradientView.colors = [#colorLiteral(red: 0.18, green: 0.74, blue: 0.89, alpha: 1), #colorLiteral(red: 0.51, green: 0.09, blue: 0.86, alpha: 1)]
@@ -77,8 +77,8 @@ class ExercisePlayerViewController: UIViewController {
         let imageFetcher = ImageFetcher(url: exercise.url)
         self.exerciseImageConfigurator = ExerciseImageConfigurator(
             imageFetcher: imageFetcher,
-            exerciseImageView: exerciseImage,
-            imageGradient: aboveImageGradientView,
+            exerciseImageView: exerciseImageView,
+            imageGradient: transparentGradientView,
             placeholder: placeholder
         )
     }
@@ -89,48 +89,48 @@ class ExercisePlayerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        belowImageShadowView.addSubview(exerciseImage)
+        grayShadowView.addSubview(exerciseImageView)
         view.addSubview(ExercisePlayerBackgroundView(frame: view.frame))
         let views = [
-            colourfulImageShadowView,
-            belowImageShadowView,
-            aboveImageGradientView,
+            gradientShadowView,
+            grayShadowView,
+            transparentGradientView,
             playButton,
             placeholder,
             stopButton
         ]
         view.addMultipleSubviews(views)
-        setBelowImageShadowViewConstraints()
-        setColourfulImageShadowViewConstraints()
+        setGrayShadowViewConstraints()
+        setGradientShadowViewConstraints()
         setStopButtonConstraints()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        exerciseImage.frame = belowImageShadowView.bounds
-        aboveImageGradientView.frame = belowImageShadowView.frame
-        playButton.center = belowImageShadowView.center
+        exerciseImageView.frame = grayShadowView.bounds
+        transparentGradientView.frame = grayShadowView.frame
+        playButton.center = grayShadowView.center
     }
     
-    private func setColourfulImageShadowViewConstraints() {
-       colourfulImageShadowView.translatesAutoresizingMaskIntoConstraints = false
+    private func setGradientShadowViewConstraints() {
+       gradientShadowView.translatesAutoresizingMaskIntoConstraints = false
        
        NSLayoutConstraint.activate([
-           colourfulImageShadowView.bottomAnchor.constraint(equalTo: belowImageShadowView.bottomAnchor, constant: 16),
-           colourfulImageShadowView.leadingAnchor.constraint(equalTo: belowImageShadowView.leadingAnchor, constant: 16),
-           colourfulImageShadowView.trailingAnchor.constraint(equalTo: belowImageShadowView.trailingAnchor, constant: -16),
-           colourfulImageShadowView.heightAnchor.constraint(equalToConstant: 30)
+           gradientShadowView.bottomAnchor.constraint(equalTo: grayShadowView.bottomAnchor, constant: 16),
+           gradientShadowView.leadingAnchor.constraint(equalTo: grayShadowView.leadingAnchor, constant: 16),
+           gradientShadowView.trailingAnchor.constraint(equalTo: grayShadowView.trailingAnchor, constant: -16),
+           gradientShadowView.heightAnchor.constraint(equalToConstant: 30)
        ])
     }
     
-    private func setBelowImageShadowViewConstraints() {
-        belowImageShadowView.translatesAutoresizingMaskIntoConstraints = false
+    private func setGrayShadowViewConstraints() {
+        grayShadowView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            belowImageShadowView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
-            belowImageShadowView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            belowImageShadowView.heightAnchor.constraint(equalToConstant: 228),
-            belowImageShadowView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
+            grayShadowView.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
+            grayShadowView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            grayShadowView.heightAnchor.constraint(equalToConstant: 228),
+            grayShadowView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
         ])
     }
     
