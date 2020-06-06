@@ -198,7 +198,9 @@ class DetailViewController: UIViewController {
     }
     
     @objc func handlePlayButton() {
-        self.present(CountDownViewController(), animated: true, completion: nil)
+        let viewController = CountDownViewController()
+        viewController.delegate = self
+        self.present(viewController, animated: true, completion: nil)
     }
     
     private func setConstraints(){
@@ -277,5 +279,11 @@ class DetailViewController: UIViewController {
             text.trailingAnchor.constraint(equalTo: descriptionView.trailingAnchor, constant: -16),
             text.bottomAnchor.constraint(equalTo: descriptionView.bottomAnchor, constant: -16)
         ])
+    }
+}
+extension DetailViewController: CountDownViewControllerDelegate {
+    func countDownViewControllerDidDismiss(_ viewController: CountDownViewController) {
+        let viewController = ExercisePlayerViewController(exercise: self.exercise)
+        self.present(viewController, animated: true, completion: nil)
     }
 }

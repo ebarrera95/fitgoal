@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CountDownViewControllerDelegate: AnyObject {
+    func countDownViewControllerDidDismiss(_ viewController: CountDownViewController)
+}
+
 class CountDownViewController: UIViewController {
+    
+    weak var delegate: CountDownViewControllerDelegate?
     
     private let countdownLabel = UILabel()
     private let countdownMessageLabel = UILabel()
@@ -34,24 +40,17 @@ class CountDownViewController: UIViewController {
         stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
     }
     
-    private func runCountdown() {
-        timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { timer in
-            if self.countdownSeconds > 0 {
-                self.setCountdownTime(time: String(self.countdownSeconds))
-                self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
-                self.countdownSeconds -= 1
-            } else {
-                timer.invalidate()
+    @objc private func fireTimer() {
+        if self.countdownSeconds > 0 {
+            self.setCountdownTime(time: String(self.countdownSeconds))
+            self.setCountdownMessage(message: self.countdownMessages[self.countdownSeconds - 1])
+            self.countdownSeconds -= 1
+        } else {
+            self.dismiss(animated: true) {
+                self.delegate?.countDownViewControllerDidDismiss(self)
+                self.timer.invalidate()
             }
-        })
-    }
-
-    private func setCountdownMessage(message: String) {
-        countdownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
-    }
-    
-    private func setCountdownTime(time: String) {
-        countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
+        }
     }
     
     @objc private func handleCountdownStop() {
@@ -60,6 +59,19 @@ class CountDownViewController: UIViewController {
         }
     }
     
+    private func runCountdown() {
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    }
+    
+    private func setCountdownMessage(message: String) {
+        countdownMessageLabel.attributedText = message.formattedText(font: "Roboto-Regular", size: 35, color: .white, kern: -0.13)
+    }
+    
+    private func setCountdownTime(time: String) {
+        countdownLabel.attributedText = time.formattedText(font: "Oswald-Medium", size: 181, color: .white, kern: 2.18)
+    }
+    
+    //MARK: -Constraints
     private func setConstraints() {
         setStopButtonConstraints()
         setCountDownLabelConstraints()
