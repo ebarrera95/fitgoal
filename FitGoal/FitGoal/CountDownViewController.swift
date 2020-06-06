@@ -35,7 +35,7 @@ class CountDownViewController: UIViewController {
         view.addSubview(background)
         let views = [countdownLabel, countdownMessageLabel, stopButton]
         view.addMultipleSubviews(views)
-        setConstraintsForCountDownRelatedViews()
+        setConstraints()
         runCountdown()
         stopButton.addTarget(self, action: #selector(handleCountdownStop), for: .touchUpInside)
     }
@@ -72,7 +72,7 @@ class CountDownViewController: UIViewController {
     }
     
     //MARK: -Constraints
-    private func setConstraintsForCountDownRelatedViews() {
+    private func setConstraints() {
         setStopButtonConstraints()
         setCountDownLabelConstraints()
         setCountDownMessageLabelConstraint()
