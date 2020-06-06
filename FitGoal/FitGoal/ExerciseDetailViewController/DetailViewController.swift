@@ -11,7 +11,6 @@ import UIKit
 class DetailViewController: UIViewController {
     
     private let exercise: Exercise
-    private let exercises: [Exercise]
 
     private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
@@ -134,9 +133,8 @@ class DetailViewController: UIViewController {
     
     //MARK: -VC life cycle
     
-    init(exercise: Exercise, exercises: [Exercise]) {
+    init(exercise: Exercise) {
         self.exercise = exercise
-        self.exercises = exercises
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
