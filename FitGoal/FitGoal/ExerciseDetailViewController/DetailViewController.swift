@@ -9,7 +9,11 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    
+    private let exercise: Exercise
 
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
+    
     private var scrollView = UIScrollView()
     
     required init?(coder: NSCoder) {
@@ -29,24 +33,6 @@ class DetailViewController: UIViewController {
         button.setAttributedTitle(string, for: .normal)
         return button
     }()
-    
-    private var imageLoadingState: ImageLoadingState = .inProgress {
-        didSet {
-            switch imageLoadingState {
-            case .inProgress:
-                imageGradient.isHidden = true
-                playButton.isHidden = true
-                placeholder.startAnimating()
-            case .finished(let image):
-                imageGradient.isHidden = false
-                playButton.isHidden = false
-                placeholder.stopAnimating()
-                exerciseImage.image = image
-            case .failed(let error):
-                print("Unable to load image with error: \(error)")
-            }
-        }
-    }
     
     private var cellTitle = UILabel()
     
@@ -148,7 +134,7 @@ class DetailViewController: UIViewController {
     //MARK: -VC life cycle
     
     init(exercise: Exercise) {
-        let imageURL = exercise.url
+        self.exercise = exercise
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
@@ -162,8 +148,8 @@ class DetailViewController: UIViewController {
             kern: 0.3,
             lineSpacing: 6
         )
+        
         super.init(nibName: nil, bundle: nil)
-        fetchImage(with: imageURL)
         startExerciseButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
         playButton.addTarget(self, action: #selector(handlePlayButton), for: .touchUpInside)
     }
@@ -187,6 +173,14 @@ class DetailViewController: UIViewController {
         ]
         add(subviews: views, to: scrollView)
         setConstraints()
+        
+        let imageFetcher = ImageFetcher(url: exercise.url)
+        self.exerciseImageConfigurator = ExerciseImageConfigurator(
+            imageFetcher: imageFetcher, exerciseImageView: exerciseImage,
+            imageGradient: imageGradient,
+            placeholder: placeholder,
+            playExerciseButton: playButton
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -219,20 +213,6 @@ class DetailViewController: UIViewController {
     private func add(subviews: [UIView],  to parentView: UIView) {
         subviews.forEach { view in
             parentView.addSubview(view)
-        }
-    }
-    
-    private func fetchImage(with imageURL: URL) {
-        imageURL.fetchImage { result in
-            DispatchQueue.main.async {
-                switch result {
-                case .failure(let error):
-                    self.imageLoadingState = .failed(error)
-                case .success(let image):
-                    imageCache[imageURL] = image
-                    self.imageLoadingState = .finished(image)
-                }
-            }
         }
     }
     

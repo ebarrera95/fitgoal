@@ -10,21 +10,7 @@ import UIKit
 
 class ExerciseCell: UICollectionViewCell {
     
-    private var imageLoadingState: ImageLoadingState = .inProgress {
-        didSet {
-            switch imageLoadingState {
-            case .inProgress:
-                gradientView.isHidden = true
-                placeholder.startAnimating()
-            case .finished(let image):
-                gradientView.isHidden = false
-                placeholder.stopAnimating()
-                backgroundImage.image = image
-            case .failed(let error):
-                print("Unable to load image with error: \(error)")
-            }
-        }
-    }
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
     var exercise: Exercise? {
         didSet {
@@ -51,26 +37,11 @@ class ExerciseCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var currentImageDownloadTask: URLSessionTask?
-
     private var imageURL: URL? {
         didSet {
-            guard let imageURL = imageURL else { return }
-            
-            imageLoadingState = .inProgress
-            
-            currentImageDownloadTask = imageURL.fetchImage { result in
-                DispatchQueue.main.async {
-                    guard self.imageURL == imageURL else { return }
-                    switch result {
-                    case .failure(let error):
-                        self.imageLoadingState = .failed(error)
-                    case .success(let image):
-                        imageCache[imageURL] = image
-                        self.imageLoadingState = .finished(image)
-                    }
-                }
-            }
+            guard let imageURL = self.imageURL else { return }
+            let imageFetcher = ImageFetcher.init(url: imageURL)
+            exerciseImageConfigurator = ExerciseImageConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }
     }
 
@@ -151,7 +122,7 @@ class ExerciseCell: UICollectionViewCell {
         backgroundImage.image = nil
         imageURL = nil
         gradientView.isHidden = true
-        currentImageDownloadTask?.cancel()
+        exerciseImageConfigurator?.cancelConfiguration()
     }
     
     //MARK: - Constraints

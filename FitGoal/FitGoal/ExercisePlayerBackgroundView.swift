@@ -15,13 +15,13 @@ class ExercisePlayerBackgroundView: UIView {
     
     private lazy var topLeftView: GradientView = {
         let gradientView = GradientView(frame: gradientViewFrame)
-        gradientView.customiseGradientView(
+        gradientView.customise(
             cornerRadius: 175,
             maskedCorners: .layerMinXMaxYCorner,
             colors: colours,
             alpha: 0.1
         )
-        gradientView.transformGradientView(
+        gradientView.transform(
             rotationAngle: -30,
             translationInX: 60,
             translationInY: -730
@@ -31,13 +31,13 @@ class ExercisePlayerBackgroundView: UIView {
     
     private lazy var topRightView: GradientView = {
         let gradientView = GradientView(frame: gradientViewFrame)
-        gradientView.customiseGradientView(
+        gradientView.customise(
             cornerRadius: 175,
             maskedCorners: .layerMaxXMaxYCorner,
             colors: colours,
             alpha: 0.25
         )
-        gradientView.transformGradientView(
+        gradientView.transform(
             rotationAngle: 35,
             translationInX: -350,
             translationInY: -630
@@ -47,13 +47,13 @@ class ExercisePlayerBackgroundView: UIView {
     
     private lazy var bottomLeftView: GradientView = {
         let gradientView = GradientView(frame: gradientViewFrame)
-        gradientView.customiseGradientView(
+        gradientView.customise(
             cornerRadius: 130,
             maskedCorners: .layerMinXMinYCorner,
             colors: colours,
             alpha: 0.70
         )
-        gradientView.transformGradientView(
+        gradientView.transform(
             rotationAngle: 60,
             translationInX: 620,
             translationInY: 450
