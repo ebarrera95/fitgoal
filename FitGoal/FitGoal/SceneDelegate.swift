@@ -30,7 +30,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 //            let helloVC = GreetingViewController()
 //            window.rootViewController = helloVC
 //        }
-        
         let vc = WalkthroughPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
         window.rootViewController = vc
     }

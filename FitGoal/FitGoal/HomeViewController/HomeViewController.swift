@@ -149,6 +149,5 @@ extension HomeViewController: RoutineInspectorCellDelegate {
             let vc = DetailViewController(exercise: exercise, exercises: exercises)
             show(vc, sender: self.homeCollectionView)
         }
-        
     }
 }
