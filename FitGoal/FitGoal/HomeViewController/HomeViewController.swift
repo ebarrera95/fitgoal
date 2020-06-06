@@ -148,7 +148,13 @@ extension HomeViewController: RoutineInspectorCellDelegate {
             let orderedExercises = exercises.sorted { (ex1, ex2) -> Bool in
                 return ex1.id < ex2.id
             }
-            let vc = DetailViewController(exercise: exercise, exercises: orderedExercises)
+            
+            guard let selectedExerciseIndex = orderedExercises.firstIndex(of: exercise) else {
+                assertionFailure("SelectedExercise should be in routine")
+                return
+            }
+            
+            let vc = DetailViewController(selectedExerciseIndex: selectedExerciseIndex, routine: orderedExercises)
             show(vc, sender: self.homeCollectionView)
         }
     }

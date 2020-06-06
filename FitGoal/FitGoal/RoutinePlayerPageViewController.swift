@@ -12,8 +12,8 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     
     private var currentIndex = 0
     
-    private let firstExercise: Exercise
     private let routine: [Exercise]
+    private let firstExerciseIndex: Int
     
     private var exercisePlayerViewControllers: [UIViewController] = []
     
@@ -23,23 +23,14 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
         return button
     }()
     
-    init(firstExercise: Exercise, exercises: [Exercise]) {
-        self.firstExercise = firstExercise
-        self.routine = exercises
+    init(firstExerciseIndex: Int, routine: [Exercise]) {
+        self.firstExerciseIndex = firstExerciseIndex
+        self.routine = routine
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func getInitialIndex(of exercise: Exercise, in exercises: [Exercise] ) -> Int  {
-        for index in exercises.indices {
-            if exercises[index] == exercise {
-                return index
-            }
-        }
-        return 0
     }
     
     private func getViewControllers(for exercises: [Exercise]) -> [UIViewController] {
@@ -52,7 +43,7 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.insertSubview(BackgroundGradientView(frame: view.bounds), at: 0)
+        view.insertSubview(ExercisePlayerBackgroundView(frame: view.bounds), at: 0)
         view.addSubview(stopButton)
         
         setStopButtonConstraints()
@@ -60,7 +51,7 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
         self.delegate = self
         self.dataSource = self
         
-        currentIndex = getInitialIndex(of: firstExercise, in: routine)
+        currentIndex = self.firstExerciseIndex
         self.setViewControllers(
             [exercisePlayerViewControllers[currentIndex]],
             direction: .forward,
