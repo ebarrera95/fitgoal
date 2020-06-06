@@ -50,6 +50,7 @@ class SuggestedRoutineCell: UICollectionViewCell {
 
     private var imageURL: URL? {
         didSet {
+            guard let imageURL = self.imageURL else { return }
             let imageFetcher = ImageFetcher.init(url: imageURL)
             exerciseImageConfigurator = ExerciseImageConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }

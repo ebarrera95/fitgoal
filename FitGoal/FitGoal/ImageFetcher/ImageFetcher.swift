@@ -36,7 +36,7 @@ class ImageFetcher {
         }
     }
     
-    init(url: URL?) {
+    init(url: URL) {
         self.imageURL = url
     }
     
