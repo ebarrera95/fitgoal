@@ -36,3 +36,27 @@ class GradientView: UIView {
         }
     }
 }
+
+extension GradientView {
+    
+    func customise(
+        cornerRadius: CGFloat,
+        maskedCorners: CACornerMask,
+        colors: [UIColor],
+        alpha: CGFloat)
+    {
+        self.layer.cornerRadius = cornerRadius
+        self.layer.maskedCorners = maskedCorners
+        self.colors = colors
+        self.alpha = alpha
+    }
+    
+    func transform(
+        rotationAngle: CGFloat,
+        translationInX: CGFloat,
+        translationInY: CGFloat)
+    {
+        let rotation = CGAffineTransform(rotationAngle: rotationAngle / 180 * CGFloat.pi)
+        self.transform =  rotation.translatedBy(x: translationInX, y: translationInY)
+    }
+}
