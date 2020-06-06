@@ -10,23 +10,7 @@ import UIKit
 
 class ExerciseCell: UICollectionViewCell {
     
-    private var imageLoadingState: ImageLoadingState = .inProgress {
-        didSet {
-            switch imageLoadingState {
-            case .inProgress:
-                gradientView.isHidden = true
-                placeholder.startAnimating()
-                exersiceStatus.isHidden = true
-            case .finished(let image):
-                gradientView.isHidden = false
-                placeholder.stopAnimating()
-                backgroundImage.image = image
-                exersiceStatus.isHidden = false
-            case .failed(let error):
-                print("Unable to load image with error: \(error)")
-            }
-        }
-    }
+    private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
     var exercise: Exercise? {
         didSet {
@@ -53,26 +37,11 @@ class ExerciseCell: UICollectionViewCell {
         return imageView
     }()
     
-    private var currentImageDownloadTask: URLSessionTask?
-
     private var imageURL: URL? {
         didSet {
-            guard let imageURL = imageURL else { return }
-            
-            imageLoadingState = .inProgress
-            
-            currentImageDownloadTask = imageURL.fetchImage { result in
-                DispatchQueue.main.async {
-                    guard self.imageURL == imageURL else { return }
-                    switch result {
-                    case .failure(let error):
-                        self.imageLoadingState = .failed(error)
-                    case .success(let image):
-                        imageCache[imageURL] = image
-                        self.imageLoadingState = .finished(image)
-                    }
-                }
-            }
+            guard let imageURL = self.imageURL else { return }
+            let imageFetcher = ImageFetcher.init(url: imageURL)
+            exerciseImageConfigurator = ExerciseImageConfigurator(imageFetcher: imageFetcher, exerciseImageView: backgroundImage, imageGradient: gradientView, placeholder: placeholder)
         }
     }
 
@@ -109,14 +78,7 @@ class ExerciseCell: UICollectionViewCell {
             kern: 0)
         return title
     }()
-    
-    private var exersiceStatus: UIImageView = {
-        let imageView = UIImageView()
-        //imageView.image = UIImage(imageLiteralResourceName: "selectedExercise")
-        imageView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
-        return imageView
-    }()
-
+   
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -124,7 +86,7 @@ class ExerciseCell: UICollectionViewCell {
         self.layer.cornerRadius = 7
         self.clipsToBounds = true
         
-        let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator, exersiceStatus]
+        let views = [backgroundImage, placeholder, gradientView,  title, dayIndicator]
         addSubviewsToContentView(views: views)
         
         dayIndicator.addSubview(dayIndicatorLabel)
@@ -153,7 +115,6 @@ class ExerciseCell: UICollectionViewCell {
         setIndicatorLabelConstraints()
         setDayIndicatorConstraints()
         setTitleLabelConstraints()
-        setExerciseSatusConstraints()
     }
 
     override func prepareForReuse() {
@@ -161,7 +122,7 @@ class ExerciseCell: UICollectionViewCell {
         backgroundImage.image = nil
         imageURL = nil
         gradientView.isHidden = true
-        currentImageDownloadTask?.cancel()
+        exerciseImageConfigurator?.cancelConfiguration()
     }
     
     //MARK: - Constraints
@@ -192,15 +153,6 @@ class ExerciseCell: UICollectionViewCell {
            NSLayoutConstraint.activate([
                dayIndicatorLabel.centerYAnchor.constraint(equalTo: dayIndicator.centerYAnchor),
                dayIndicatorLabel.centerXAnchor.constraint(equalTo: dayIndicator.centerXAnchor)
-           ])
-    }
-    
-    private func setExerciseSatusConstraints() {
-           exersiceStatus.translatesAutoresizingMaskIntoConstraints = false
-           
-           NSLayoutConstraint.activate([
-               exersiceStatus.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
-               exersiceStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -8)
            ])
     }
 }

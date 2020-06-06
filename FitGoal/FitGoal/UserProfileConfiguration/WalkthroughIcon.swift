@@ -22,32 +22,36 @@ struct WalkthroughIcon {
         }
     }
     
+    private var iconNamePrefix: String {
+        return name.lowercased()
+    }
+    
     var name: String {
-        return iconType.rawValue.capitalized
+        switch iconType {
+        case .fitnessLevel(let fitness):
+            return fitness.rawValue.capitalized
+        case .fitnessGoal(let fitnessGoal):
+            return fitnessGoal.rawValue.capitalized
+        case .gender(let gender):
+            return gender.rawValue.capitalized
+        }
     }
     
     var image: UIImage {
         switch iconType {
-        case .athletic, .normal, .obese, .skinny:
+        case .fitnessLevel, .fitnessGoal:
             let coreName = "BodyShape"
-            let bodyShapeImageName = iconType.prefix + coreName + iconNameSuffix
+            let bodyShapeImageName = iconNamePrefix + coreName + iconNameSuffix
             return UIImage(imageLiteralResourceName: bodyShapeImageName)
-        case .female, .male:
-            let genderImageName = iconType.prefix + iconNameSuffix
+        case .gender:
+            let genderImageName = iconNamePrefix + iconNameSuffix
             return UIImage(imageLiteralResourceName: genderImageName)
         }
     }
 }
 
-enum WalkThroughIconType: String {
-    case skinny
-    case normal
-    case obese
-    case athletic
-    case female
-    case male
-    
-    var prefix: String {
-        return self.rawValue
-    }
+enum WalkThroughIconType {
+    case gender(Gender)
+    case fitnessLevel(Fitness)
+    case fitnessGoal(Fitness)
 }

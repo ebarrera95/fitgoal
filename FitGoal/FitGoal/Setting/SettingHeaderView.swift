@@ -8,15 +8,29 @@
 
 import UIKit
 
+protocol SettingHeaderViewDelegate: AnyObject {
+    func userWillEditProfile()
+    func userDidEditProfile()
+}
+
 class SettingHeaderView: UIView {
+    
+    weak var delegate: SettingHeaderViewDelegate?
+    private var userWillEditProfile = false
     
     private lazy var gradientBackgroundView: UIView = {
         let gradientView = GradientView(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
-        gradientView.layer.cornerRadius = 75
-        gradientView.layer.maskedCorners = [.layerMinXMaxYCorner]
-        gradientView.colors = [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)]
-        let translation = CGAffineTransform(translationX: 0, y: -350)
-        gradientView.transform = translation
+        gradientView.customise(
+            cornerRadius: 75,
+            maskedCorners: [.layerMinXMaxYCorner],
+            colors: [#colorLiteral(red: 0.2816967666, green: 0.8183022738, blue: 0.9222241044, alpha: 1), #colorLiteral(red: 0.5647058824, green: 0.07450980392, blue: 0.9568627451, alpha: 1)],
+            alpha: 1
+        )
+        gradientView.transform(
+            rotationAngle: 0,
+            translationInX: 0,
+            translationInY: -350
+        )
         return gradientView
     }()
     
@@ -53,6 +67,8 @@ class SettingHeaderView: UIView {
         self.init(frame: frame)
         configureUserNameLabel(withText: userName)
         configureUserFitnessLabelLevel(withText: userFitnessLevel)
+        
+        editProfileButton.addTarget(self, action: #selector(handleEditProfile), for: .touchUpInside)
     }
     
     override init(frame: CGRect) {
@@ -86,6 +102,20 @@ class SettingHeaderView: UIView {
         userFitnessLevelLabel.attributedText = text.formattedText(font: "Roboto-Light", size: 14, color: .white, kern: 0.17)
     }
     
+    @objc func handleEditProfile() {
+        if userWillEditProfile {
+            editProfileButton.setImage(UIImage(imageLiteralResourceName: "editProfile"), for: .normal)
+            editProfileButton.setAttributedTitle(nil, for: .normal)
+            userWillEditProfile = false
+            self.delegate?.userDidEditProfile()
+        } else {
+            editProfileButton.setImage(nil, for: .normal)
+            editProfileButton.setAttributedTitle("Done".formattedText(font: "Roboto-Bold", size: 16, color: .white, kern: 0.12), for: .normal)
+            userWillEditProfile = true
+            self.delegate?.userWillEditProfile()
+        }
+    }
+
     //MARK: - Constraints
     private func setConstraints() {
         setMainLabelConstraints()
@@ -121,8 +151,8 @@ class SettingHeaderView: UIView {
         NSLayoutConstraint.activate([
             editProfileButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             editProfileButton.centerYAnchor.constraint(equalTo: mainTitleLabel.centerYAnchor, constant: -4),
-            editProfileButton.widthAnchor.constraint(equalToConstant: 26),
-            editProfileButton.heightAnchor.constraint(equalToConstant: 26)
+            editProfileButton.widthAnchor.constraint(equalToConstant: 40),
+            editProfileButton.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     

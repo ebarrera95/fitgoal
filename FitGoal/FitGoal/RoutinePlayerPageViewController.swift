@@ -13,7 +13,7 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     private var currentIndex = 0
     
     private let firstExercise: Exercise
-    private let exercises: [Exercise]
+    private let routine: [Exercise]
     
     private var exercisePlayerViewControllers: [UIViewController] = []
     
@@ -25,7 +25,7 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     
     init(firstExercise: Exercise, exercises: [Exercise]) {
         self.firstExercise = firstExercise
-        self.exercises = exercises
+        self.routine = exercises
         super.init(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
     }
     
@@ -56,11 +56,11 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
         view.addSubview(stopButton)
         
         setStopButtonConstraints()
-        exercisePlayerViewControllers = getViewControllers(for: self.exercises)
+        exercisePlayerViewControllers = getViewControllers(for: self.routine)
         self.delegate = self
         self.dataSource = self
         
-        currentIndex = getInitialIndex(of: firstExercise, in: exercises)
+        currentIndex = getInitialIndex(of: firstExercise, in: routine)
         self.setViewControllers(
             [exercisePlayerViewControllers[currentIndex]],
             direction: .forward,
