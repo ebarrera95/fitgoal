@@ -21,7 +21,7 @@ class ImageFetcher {
     
     weak var delegate: ImageFetcherDelegate?
     private var currentImageDownloadTask: URLSessionTask?
-    private var imageURL: URL?
+    private var imageURL: URL
     
     private var imageLoadingState: ImageLoadingState = .inProgress {
         didSet {
@@ -41,9 +41,7 @@ class ImageFetcher {
     }
     
     func startFetching() {
-        guard let currentImageURL = self.imageURL else {
-            return
-        }
+        let currentImageURL = self.imageURL
         imageLoadingState = .inProgress
         
         if let cachedImage = ImageCache.read(url: currentImageURL) {
