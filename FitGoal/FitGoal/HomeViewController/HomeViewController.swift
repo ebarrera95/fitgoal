@@ -154,7 +154,7 @@ extension HomeViewController: RoutineInspectorCellDelegate {
                 return
             }
             
-            let vc = DetailViewController(selectedExerciseIndex: selectedExerciseIndex, routine: orderedExercises)
+            let vc = DetailViewController(displayedExerciseIndex: selectedExerciseIndex, routine: orderedExercises)
             show(vc, sender: self.homeCollectionView)
         }
     }

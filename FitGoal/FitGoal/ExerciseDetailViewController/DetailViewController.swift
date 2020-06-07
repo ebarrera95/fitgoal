@@ -12,7 +12,7 @@ class DetailViewController: UIViewController {
     
     private let exercise: Exercise
     private let routine: [Exercise]
-    private let selectedExerciseIndex: Int
+    private let displayedExerciseIndex: Int
 
     private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
@@ -135,10 +135,10 @@ class DetailViewController: UIViewController {
     
     //MARK: -VC life cycle
     
-    init(selectedExerciseIndex: Int, routine: [Exercise]) {
+    init(displayedExerciseIndex: Int, routine: [Exercise]) {
         self.routine = routine
-        self.exercise = routine[selectedExerciseIndex]
-        self.selectedExerciseIndex = selectedExerciseIndex
+        self.exercise = routine[displayedExerciseIndex]
+        self.displayedExerciseIndex = displayedExerciseIndex
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
@@ -287,7 +287,7 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController: CountDownViewControllerDelegate {
     func countDownViewControllerDidDismiss(_ viewController: CountDownViewController) {
-        let viewController = RoutinePlayerPageViewController(firstExerciseIndex: selectedExerciseIndex, routine: routine)
+        let viewController = RoutinePlayerPageViewController(firstExerciseIndex: displayedExerciseIndex, routine: routine)
         self.present(viewController, animated: true, completion: nil)
     }
 }
