@@ -65,12 +65,6 @@ class ExercisePlayerViewController: UIViewController {
         return placeholder
     }()
     
-    private let stopButton: UIButton = {
-        let button = UIButton()
-        button.setAttributedTitle("stop".uppercased().formattedText(font: "Roboto-Light", size: 15, color: .white, kern: 0.18), for: .normal)
-        return button
-    }()
-    
     init(exercise: Exercise) {
         self.exercise = exercise
         super.init(nibName: nil, bundle: nil)
@@ -90,19 +84,17 @@ class ExercisePlayerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         grayShadowView.addSubview(exerciseImageView)
-        view.addSubview(ExercisePlayerBackgroundView(frame: view.frame))
+        view.backgroundColor = .clear
         let views = [
             gradientShadowView,
             grayShadowView,
             transparentGradientView,
             playButton,
-            placeholder,
-            stopButton
+            placeholder
         ]
         view.addMultipleSubviews(views)
         setGrayShadowViewConstraints()
         setGradientShadowViewConstraints()
-        setStopButtonConstraints()
     }
     
     override func viewDidLayoutSubviews() {
@@ -131,14 +123,6 @@ class ExercisePlayerViewController: UIViewController {
             grayShadowView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             grayShadowView.heightAnchor.constraint(equalToConstant: 228),
             grayShadowView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
-        ])
-    }
-    
-    private func setStopButtonConstraints() {
-        stopButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stopButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stopButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -54)
         ])
     }
 }

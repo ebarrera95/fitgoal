@@ -11,6 +11,8 @@ import UIKit
 class DetailViewController: UIViewController {
     
     private let exercise: Exercise
+    private let routine: [Exercise]
+    private let displayedExerciseIndex: Int
 
     private var exerciseImageConfigurator: ExerciseImageConfigurator?
     
@@ -133,8 +135,10 @@ class DetailViewController: UIViewController {
     
     //MARK: -VC life cycle
     
-    init(exercise: Exercise) {
-        self.exercise = exercise
+    init(displayedExerciseIndex: Int, routine: [Exercise]) {
+        self.routine = routine
+        self.exercise = routine[displayedExerciseIndex]
+        self.displayedExerciseIndex = displayedExerciseIndex
         self.cellTitle.attributedText = exercise.name.uppercased().formattedText(
             font: "Oswald-Medium",
             size: 34,
@@ -283,7 +287,7 @@ class DetailViewController: UIViewController {
 }
 extension DetailViewController: CountDownViewControllerDelegate {
     func countDownViewControllerDidDismiss(_ viewController: CountDownViewController) {
-        let viewController = ExercisePlayerViewController(exercise: self.exercise)
+        let viewController = RoutinePlayerPageViewController(firstExerciseIndex: displayedExerciseIndex, routine: routine)
         self.present(viewController, animated: true, completion: nil)
     }
 }

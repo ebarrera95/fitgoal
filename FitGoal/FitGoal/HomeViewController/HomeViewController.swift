@@ -97,7 +97,6 @@ extension HomeViewController: SuggestedRoutineCellDelegate {
         persitence.clearData()
         persitence.save(exercises: routineExercises)
         routineState = .inspecting(routineExercises)
-        
         homeCollectionView.performBatchUpdates({
             homeCollectionView.reloadSections([1])
         }, completion: nil)
@@ -142,7 +141,21 @@ extension HomeViewController {
 
 extension HomeViewController: RoutineInspectorCellDelegate {
     func userDidSelectExercise(_ exercise: Exercise) {
-        let vc = DetailViewController(exercise: exercise)
-        show(vc, sender: self.homeCollectionView)
+        switch routineState {
+        case .unset:
+            return
+        case .inspecting(let exercises):
+            let orderedExercises = exercises.sorted { (ex1, ex2) -> Bool in
+                return ex1.id < ex2.id
+            }
+            
+            guard let selectedExerciseIndex = orderedExercises.firstIndex(of: exercise) else {
+                assertionFailure("SelectedExercise should be in routine")
+                return
+            }
+            
+            let vc = DetailViewController(displayedExerciseIndex: selectedExerciseIndex, routine: orderedExercises)
+            show(vc, sender: self.homeCollectionView)
+        }
     }
 }
