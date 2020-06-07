@@ -10,8 +10,6 @@ import UIKit
 
 class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     
-    private var currentIndex = 0
-    
     private let routine: [Exercise]
     private let firstExerciseIndex: Int
     
@@ -34,11 +32,7 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
     }
     
     private func getViewControllers(for exercises: [Exercise]) -> [UIViewController] {
-        var viewControllers: [UIViewController] = []
-        for index in exercises.indices {
-            viewControllers.append(ExercisePlayerViewController(exercise: exercises[index]))
-        }
-        return viewControllers
+        return exercises.map { ExercisePlayerViewController(exercise: $0) }
     }
     
     override func viewDidLoad() {
@@ -51,9 +45,8 @@ class RoutinePlayerPageViewController: UIPageViewController, UIPageViewControlle
         self.delegate = self
         self.dataSource = self
         
-        currentIndex = self.firstExerciseIndex
         self.setViewControllers(
-            [exercisePlayerViewControllers[currentIndex]],
+            [exercisePlayerViewControllers[self.firstExerciseIndex]],
             direction: .forward,
             animated: true,
             completion: nil
